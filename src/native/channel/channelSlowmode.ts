@@ -6,7 +6,7 @@ export default new NativeFunction({
     version: "1.5.0",
     description: "Returns the channel slowmode in seconds",
     unwrap: true,
-    brackets: false,
+    brackets: true,
     output: ArgType.Number,
     args: [
         {

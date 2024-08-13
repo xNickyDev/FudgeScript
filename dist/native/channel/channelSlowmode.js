@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     description: "Returns the channel slowmode in seconds",
     unwrap: true,
-    brackets: false,
+    brackets: true,
     output: structures_1.ArgType.Number,
     args: [
         {

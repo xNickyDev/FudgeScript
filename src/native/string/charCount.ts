@@ -20,8 +20,7 @@ export default new NativeFunction({
             name: "char",
             description: "The character to count in the text",
             rest: false,
-            type: ArgType.String,
-            required: false,
+            type: ArgType.String
         }
     ],
     execute(ctx, [str, char]) {
