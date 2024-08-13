@@ -12,11 +12,11 @@ export default new NativeFunction({
             description: "The number to check",
             required: true,
             rest: false,
-            type: ArgType.Number,
+            type: ArgType.String,
         },
     ],
     brackets: true,
     execute(ctx, [n]) {
-        return this.success(n % 1 === 0)
+        return this.success(!isNaN(Number(n)) && Number.isInteger(n))
     },
 })
