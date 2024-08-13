@@ -4,7 +4,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$modifyForumTags",
     version: "1.5.0",
-    description: "Modifiers a forum's tags, returns bool",
+    description: "Modifies a forum's tags, returns bool",
     unwrap: true,
     output: structures_1.ArgType.Boolean,
     args: [
@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     async execute(ctx, [channel, tags]) {
         const forum = channel;
-        return this.success(!!(await forum.setAppliedTags(tags).catch(ctx.noop)));
+        return this.success(!!(await forum.setAppliedTags(forum.appliedTags || tags).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=modifyForumTags.js.map

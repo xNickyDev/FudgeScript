@@ -5,7 +5,7 @@ import noop from "../../functions/noop"
 export default new NativeFunction({
     name: "$modifyForumTags",
     version: "1.5.0",
-    description: "Modifiers a forum's tags, returns bool",
+    description: "Modifies a forum's tags, returns bool",
     unwrap: true,
     output: ArgType.Boolean,
     args: [
@@ -29,6 +29,6 @@ export default new NativeFunction({
     async execute(ctx, [channel, tags]) {
         const forum = channel as ThreadChannel
 
-        return this.success(!!(await forum.setAppliedTags(tags).catch(ctx.noop)))
+        return this.success(!!(await forum.setAppliedTags(forum.appliedTags || tags).catch(ctx.noop)))
     },
 })
