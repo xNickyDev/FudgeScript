@@ -18,8 +18,11 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        const num = typeof n === 'number' ? n : parseFloat(n);
-        return this.success(Number.isInteger(num) && num === Math.floor(num));
+        const num = typeof n === "number" ? n : parseFloat(n);
+        if (isNaN(num) || typeof num !== "number") {
+            return this.success(false);
+        }
+        return this.success(Number.isInteger(num) && Number(num.toFixed(0)) === num);
     },
 });
 //# sourceMappingURL=isInteger.js.map
