@@ -19,6 +19,12 @@ export default new NativeFunction({
             description: "The post to edit tags on",
         },
         {
+            name: "reason",
+            description: "The reason for adding post tags",
+            rest: false,
+            type: ArgType.String,
+        },
+        {
             name: "tags",
             description: "The tags for the post",
             rest: true,
@@ -27,9 +33,9 @@ export default new NativeFunction({
         }
     ],
     brackets: true,
-    async execute(ctx, [channel, tags]) {
+    async execute(ctx, [ channel, reason, tags ]) {
         const forum = channel as ThreadChannel
 
-        return this.success(!!(await forum.setAppliedTags(tags).catch(ctx.noop)))
+        return this.success(!!(await forum.setAppliedTags(tags, reason || undefined).catch(ctx.noop)))
     },
 })

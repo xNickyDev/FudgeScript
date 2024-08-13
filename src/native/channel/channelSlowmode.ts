@@ -7,12 +7,13 @@ export default new NativeFunction({
     description: "Returns the channel slowmode in seconds",
     unwrap: true,
     output: ArgType.Number,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "channel ID",
             description: "The id of the channel to get its slowmode",
             rest: false,
+            required: true,
             type: ArgType.Channel,
             check: (i: BaseChannel) => i.isTextBased()
         },

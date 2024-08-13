@@ -18,6 +18,12 @@ exports.default = new structures_1.NativeFunction({
             description: "The post to edit tags on",
         },
         {
+            name: "reason",
+            description: "The reason for modifying post tags",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
+        {
             name: "tags",
             description: "The tags for the post",
             rest: true,
@@ -26,9 +32,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     brackets: true,
-    async execute(ctx, [channel, tags]) {
+    async execute(ctx, [channel, reason, tags]) {
         const post = channel;
-        return this.success(!!(await post.setAppliedTags([...new Set(post.appliedTags.filter(tag => !tags.includes(tag)).concat(tags.filter(tag => !post.appliedTags.includes(tag))))]).catch(ctx.noop)));
+        return this.success(!!(await post.setAppliedTags([...new Set(post.appliedTags.filter(tag => !tags.includes(tag)).concat(tags.filter(tag => !post.appliedTags.includes(tag))))], reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=modifyForumTags.js.map
