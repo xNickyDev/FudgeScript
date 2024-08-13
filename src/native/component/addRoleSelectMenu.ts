@@ -37,15 +37,13 @@ export default new NativeFunction({
             name: "disabled",
             description: "Whether the menu is disabled by default",
             rest: false,
-            required: false,
             type: ArgType.Boolean
         },
         {
             name: "default roles",
             rest: true,
             type: ArgType.String,
-            description: "The default selected roles to use",
-            required: true
+            description: "The default selected roles to use"
         }
     ],
     execute(ctx, [ id, placeholder, min, max, disabled, roles ]) {

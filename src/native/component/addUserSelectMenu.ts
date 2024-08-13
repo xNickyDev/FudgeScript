@@ -37,15 +37,13 @@ export default new NativeFunction({
             name: "disabled",
             description: "Whether the menu is disabled by default",
             rest: false,
-            required: false,
             type: ArgType.Boolean
         },
         {
             name: "default users",
             rest: true,
             type: ArgType.String,
-            description: "The default selected users to use",
-            required: true
+            description: "The default selected users to use"
         }
     ],
     execute(ctx, [ id, placeholder, min, max, disabled, users ]) {

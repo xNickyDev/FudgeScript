@@ -37,12 +37,18 @@ export default new NativeFunction({
             name: "disabled",
             description: "Whether the menu is disabled by default",
             rest: false,
-            required: false,
             type: ArgType.Boolean
+        },
+        {
+            name: "default channels",
+            rest: true,
+            type: ArgType.String,
+            description: "The default selected channels to use"
         }
     ],
-    execute(ctx, [ id, placeholder, min, max, disabled ]) {
+    execute(ctx, [ id, placeholder, min, max, disabled, channels ]) {
         const menu = new ChannelSelectMenuBuilder()
+            .setDefaultChannels(channels)
             .setDisabled(disabled ?? false)
             .setCustomId(id)
             

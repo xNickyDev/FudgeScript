@@ -38,15 +38,13 @@ exports.default = new structures_1.NativeFunction({
             name: "disabled",
             description: "Whether the menu is disabled by default",
             rest: false,
-            required: false,
             type: structures_1.ArgType.Boolean
         },
         {
             name: "default roles",
             rest: true,
             type: structures_1.ArgType.String,
-            description: "The default selected roles to use",
-            required: true
+            description: "The default selected roles to use"
         }
     ],
     execute(ctx, [id, placeholder, min, max, disabled, roles]) {
