@@ -5,7 +5,8 @@ import array from "../../functions/array"
 export default new NativeFunction({
     name: "$channelTags",
     version: "1.0.3",
-    description: "Retrieves tags from a forum thread",
+    aliases: ["$postTags"],
+    description: "Retrieves tags from a forum post",
     unwrap: true,
     output: array<ArgType.String>(),
     args: [

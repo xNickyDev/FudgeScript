@@ -3,10 +3,10 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 import noop from "../../functions/noop"
 
 export default new NativeFunction({
-    name: "$modifyForumTags",
+    name: "$addForumTags",
     version: "1.5.0",
-    aliases: ["$modifyPostTags"],
-    description: "Modifies tags of a forum post, returns bool",
+    aliases: ["$addPostTags"],
+    description: "Adds tags to a forum post, returns bool",
     unwrap: true,
     output: ArgType.Boolean,
     args: [
@@ -30,6 +30,6 @@ export default new NativeFunction({
     async execute(ctx, [channel, tags]) {
         const forum = channel as ThreadChannel
 
-        return this.success(!!(await forum.setAppliedTags([...forum.appliedTags, ...tags]).catch(ctx.noop)))
+        return this.success(!!(await forum.setAppliedTags(tags).catch(ctx.noop)))
     },
 })

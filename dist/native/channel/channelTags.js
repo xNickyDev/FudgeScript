@@ -8,7 +8,8 @@ const array_1 = __importDefault(require("../../functions/array"));
 exports.default = new structures_1.NativeFunction({
     name: "$channelTags",
     version: "1.0.3",
-    description: "Retrieves tags from a forum thread",
+    aliases: ["$postTags"],
+    description: "Retrieves tags from a forum post",
     unwrap: true,
     output: (0, array_1.default)(),
     args: [
