@@ -19,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     execute(ctx, [n]) {
         const num = typeof n === 'number' ? n : parseFloat(n);
-        return this.success(!isNaN(num) && Number.isInteger(num));
+        return this.success(Number.isInteger(num) && num === Math.floor(num));
     },
 });
 //# sourceMappingURL=isInteger.js.map
