@@ -27,8 +27,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [channel, tags]) {
-        const forum = channel;
-        return this.success(!!(await forum.setAppliedTags([...forum.appliedTags, ...tags]).catch(ctx.noop)));
+        const post = channel;
+        return this.success(!!(await post.setAppliedTags([...new Set(post.appliedTags.filter(tag => !tags.includes(tag)).concat(tags.filter(tag => !post.appliedTags.includes(tag))))]).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=modifyForumTags.js.map

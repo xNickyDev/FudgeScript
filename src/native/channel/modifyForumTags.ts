@@ -28,8 +28,8 @@ export default new NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [channel, tags]) {
-        const forum = channel as ThreadChannel
-
-        return this.success(!!(await forum.setAppliedTags([...forum.appliedTags, ...tags]).catch(ctx.noop)))
+        const post = channel as ThreadChannel
+        
+        return this.success(!!(await post.setAppliedTags([...new Set(post.appliedTags.filter(tag => !tags.includes(tag)).concat(tags.filter(tag => !post.appliedTags.includes(tag))))]).catch(ctx.noop)))
     },
 })
