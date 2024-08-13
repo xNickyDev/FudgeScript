@@ -18,10 +18,10 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        if (isNaN(Number(n))) {
-            return this.success(false)
-        } else {
+        if (isNumber(n)) {
             return this.success(Number.isInteger(n))
+        } else {
+            return this.success(false)
         }
     },
 })
