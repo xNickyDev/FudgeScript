@@ -18,10 +18,7 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        if (isNumber(n)) {
-            return this.success(Number.isInteger(n))
-        } else {
-            return this.success(false)
-        }
+        const num = typeof n === 'number' ? n : parseFloat(n)
+        return this.success(!isNaN(num) && Number.isInteger(num))
     },
 })

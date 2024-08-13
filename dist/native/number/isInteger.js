@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lodash_1 = require("lodash");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$isInteger",
@@ -19,12 +18,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        if ((0, lodash_1.isNumber)(n)) {
-            return this.success(Number.isInteger(n));
-        }
-        else {
-            return this.success(false);
-        }
+        const num = typeof n === 'number' ? n : parseFloat(n);
+        return this.success(!isNaN(num) && Number.isInteger(num));
     },
 });
 //# sourceMappingURL=isInteger.js.map
