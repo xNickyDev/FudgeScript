@@ -16,17 +16,10 @@ export default new NativeFunction({
             type: ArgType.String,
             rest: true,
         },
-        {
-            name: "spaces",
-            description: "The spaces to use for formatting",
-            required: false,
-            type: ArgType.Number,
-            rest: false
-        }
     ],
     brackets: true,
     unwrap: true,
-    execute(ctx, [args, spaces]) {
-        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(...args)))
+    execute(ctx, [keys]) {
+        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(...keys)))
     },
 })
