@@ -13,8 +13,7 @@ export default new NativeFunction({
             description: "The id of the channel to get its slowmode",
             rest: false,
             type: ArgType.Channel,
-            check: (i: BaseChannel) => i.isTextBased(),
-            required: true,
+            check: (i: BaseChannel) => i.isTextBased()
         },
     ],
     execute(ctx, [ch]) {

@@ -4,7 +4,7 @@ import noop from "../../functions/noop"
 export default new NativeFunction({
     name: "$webhookEdit",
     version: "1.0.0",
-    description: "Edits webhook with given id",
+    description: "Edits webhook with given id, returns bool",
     brackets: true,
     unwrap: true,
     output: ArgType.Boolean,

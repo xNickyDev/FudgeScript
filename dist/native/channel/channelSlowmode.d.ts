@@ -6,7 +6,6 @@ declare const _default: NativeFunction<[{
     rest: false;
     type: ArgType.Channel;
     check: (i: BaseChannel) => i is import("discord.js").DMChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | TextChannel | import("discord.js").PrivateThreadChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").VoiceChannel;
-    required: true;
 }], true>;
 export default _default;
 //# sourceMappingURL=channelSlowmode.d.ts.map

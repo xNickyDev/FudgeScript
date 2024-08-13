@@ -6,7 +6,6 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     description: "Returns the channel slowmode in seconds",
     unwrap: true,
-    brackets: true,
     output: structures_1.ArgType.Number,
     args: [
         {
@@ -14,8 +13,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The id of the channel to get its slowmode",
             rest: false,
             type: structures_1.ArgType.Channel,
-            check: (i) => i.isTextBased(),
-            required: true,
+            check: (i) => i.isTextBased()
         },
     ],
     execute(ctx, [ch]) {
