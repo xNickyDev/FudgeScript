@@ -4,6 +4,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$archiveThread",
     version: "1.0.0",
+    aliases: ["$archivePost"],
     description: "Archives a thread, returns bool",
     brackets: true,
     unwrap: true,

@@ -5,6 +5,7 @@ import noop from "../../functions/noop"
 export default new NativeFunction({
     name: "$unarchiveThread",
     version: "1.0.0",
+    aliases: ["$unarchivePost"],
     description: "Unarchives a thread, returns bool",
     brackets: true,
     unwrap: true,

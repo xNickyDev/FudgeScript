@@ -3,17 +3,17 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 import noop from "../../functions/noop"
 
 export default new NativeFunction({
-    name: "$archiveThread",
-    version: "1.0.0",
-    aliases: ["$archivePost"],
-    description: "Archives a thread, returns bool",
+    name: "$unlockThread",
+    version: "1.5.0",
+    aliases: ["$unlockPost"],
+    description: "Unlocks a thread, returns bool",
     brackets: true,
     unwrap: true,
     output: ArgType.Boolean,
     args: [
         {
             name: "channel ID",
-            description: "The thread to archive",
+            description: "The thread to unlock",
             rest: false,
             required: true,
             type: ArgType.Channel,
@@ -21,7 +21,7 @@ export default new NativeFunction({
         },
         {
             name: "reason",
-            description: "The reason to archive this thread",
+            description: "The reason to unlock this thread",
             rest: false,
             type: ArgType.String,
         },
@@ -29,7 +29,7 @@ export default new NativeFunction({
     async execute(ctx, [channel, reason]) {
         const thread = channel as ThreadChannel
 
-        const success = await thread.setArchived(true, reason || undefined).catch(ctx.noop)
+        const success = await thread.setLocked(false, reason || undefined).catch(ctx.noop)
 
         return this.success(!!success)
     },

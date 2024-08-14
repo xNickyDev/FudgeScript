@@ -2,17 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$unarchiveThread",
-    version: "1.0.0",
-    aliases: ["$unarchivePost"],
-    description: "Unarchives a thread, returns bool",
+    name: "$lockThread",
+    version: "1.5.0",
+    aliases: ["$lockPost"],
+    description: "Locks a thread, returns bool",
     brackets: true,
     unwrap: true,
     output: structures_1.ArgType.Boolean,
     args: [
         {
             name: "channel ID",
-            description: "The thread to unarchive",
+            description: "The thread to lock",
             rest: false,
             required: true,
             type: structures_1.ArgType.Channel,
@@ -20,15 +20,15 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "reason",
-            description: "The reason to unarchive this thread",
+            description: "The reason to lock this thread",
             rest: false,
             type: structures_1.ArgType.String,
         },
     ],
     async execute(ctx, [channel, reason]) {
         const thread = channel;
-        const success = await thread.setArchived(false, reason || undefined).catch(ctx.noop);
+        const success = await thread.setLocked(true, reason || undefined).catch(ctx.noop);
         return this.success(!!success);
     },
 });
-//# sourceMappingURL=unarchiveThread.js.map
+//# sourceMappingURL=lockThread.js.map
