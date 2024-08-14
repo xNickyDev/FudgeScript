@@ -8,17 +8,23 @@ exports.default = new NativeFunction_1.NativeFunction({
     description: "Returns the JSON in stringified format",
     args: [
         {
-            name: "key",
-            description: "The key to return its value",
+            name: "variable",
+            description: "The variable to stringify",
             required: true,
             type: NativeFunction_1.ArgType.String,
-            rest: true,
+            rest: false
         },
+        {
+            name: "space",
+            description: "The space to use",
+            type: NativeFunction_1.ArgType.String,
+            rest: false
+        }
     ],
     brackets: true,
     unwrap: true,
-    execute(ctx, [keys]) {
-        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(...keys)));
-    },
+    execute(ctx, [env, space]) {
+        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(env), null, space || undefined));
+    }
 });
 //# sourceMappingURL=jsonStringify.js.map

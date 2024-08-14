@@ -4,7 +4,12 @@ declare const _default: NativeFunction<[{
     description: string;
     required: true;
     type: ArgType.String;
-    rest: true;
+    rest: false;
+}, {
+    name: string;
+    description: string;
+    type: ArgType.String;
+    rest: false;
 }], true>;
 export default _default;
 //# sourceMappingURL=jsonStringify.d.ts.map
