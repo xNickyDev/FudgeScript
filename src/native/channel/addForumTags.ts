@@ -34,8 +34,8 @@ export default new NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [ channel, reason, tags ]) {
-        const forum = channel as ThreadChannel
+        const post = channel as ThreadChannel
 
-        return this.success(!!(await forum.setAppliedTags(tags, reason || undefined).catch(ctx.noop)))
+        return this.success(!!(await post.setAppliedTags(tags, reason || undefined).catch(ctx.noop)))
     },
 })

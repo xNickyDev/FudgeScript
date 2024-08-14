@@ -33,8 +33,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [channel, reason, tags]) {
-        const forum = channel;
-        return this.success(!!(await forum.setAppliedTags(tags, reason || undefined).catch(ctx.noop)));
+        const post = channel;
+        return this.success(!!(await post.setAppliedTags(tags, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=addForumTags.js.map
