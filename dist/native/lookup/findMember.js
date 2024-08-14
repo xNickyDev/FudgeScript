@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MemberMentionCharRegex = void 0;
 const structures_1 = require("../../structures");
-exports.MemberMentionCharRegex = /[<>@!]/g;
+exports.MemberMentionCharRegex = /^<@!?(\d+)>$/;
 exports.default = new structures_1.NativeFunction({
     name: "$findMember",
     version: "1.0.0",
