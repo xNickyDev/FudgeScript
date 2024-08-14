@@ -35,7 +35,7 @@ export default new NativeFunction({
 
         if (CompiledFunction.IdRegex.test(id)) {
             const m = await guild.members.fetch(id).catch(ctx.noop)
-            if (m) this.success(m.id)
+            if (m) return this.success(m.id)
         }
 
         q = q.toLowerCase()

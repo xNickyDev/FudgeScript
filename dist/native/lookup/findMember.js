@@ -35,7 +35,7 @@ exports.default = new structures_1.NativeFunction({
         if (structures_1.CompiledFunction.IdRegex.test(id)) {
             const m = await guild.members.fetch(id).catch(ctx.noop);
             if (m)
-                this.success(m.id);
+                return this.success(m.id);
         }
         q = q.toLowerCase();
         const query = await guild.members
