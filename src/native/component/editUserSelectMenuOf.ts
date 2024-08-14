@@ -81,7 +81,7 @@ export default new NativeFunction({
                 if (disabled) menu.setDisabled(disabled)
                 if (min) menu.setMinValues(min)
                 if (max) menu.setMaxValues(max)
-                if (users) menu.setDefaultUsers(users)
+                if (users) menu.setDefaultUsers(users ?? menu.data.default_values)
 
                 break
             }

@@ -85,7 +85,7 @@ exports.default = new structures_1.NativeFunction({
                 if (max)
                     menu.setMaxValues(max);
                 if (users)
-                    menu.setDefaultUsers(users);
+                    menu.setDefaultUsers(users ?? menu.data.default_values);
                 break;
             }
         }
