@@ -35,6 +35,6 @@ export default new NativeFunction({
         const webhook = new WebhookClient({ url })
         const edit = await webhook.editMessage(msg, content).catch(ctx.noop)
 
-        return this.successJSON(!!edit)
+        return this.success(!!edit)
     },
 })
