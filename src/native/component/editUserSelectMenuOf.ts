@@ -78,10 +78,10 @@ export default new NativeFunction({
                 menu.setCustomId(id)
                 
                 if (placeholder) menu.setPlaceholder(placeholder)
-                if (disabled !== null) menu.setDisabled(disabled)
-                if (min !== null) menu.setMinValues(min)
-                if (max !== null) menu.setMaxValues(max)
-                if (users !== null) menu.setDefaultUsers(users)
+                if (disabled) menu.setDisabled(disabled)
+                if (min) menu.setMinValues(min)
+                if (max) menu.setMaxValues(max)
+                if (users) menu.setDefaultUsers(users)
 
                 break
             }
