@@ -8,7 +8,7 @@ declare const _default: NativeFunction<[{
 }, {
     name: string;
     description: string;
-    type: ArgType.String;
+    type: ArgType.Number;
     rest: false;
 }], true>;
 export default _default;

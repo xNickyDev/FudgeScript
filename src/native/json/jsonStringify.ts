@@ -19,13 +19,13 @@ export default new NativeFunction({
         {
             name: "space",
             description: "The space to use",
-            type: ArgType.String,
+            type: ArgType.Number,
             rest: false
         }
     ],
     brackets: true,
     unwrap: true,
     execute(ctx, [ env, space ]) {
-        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(env), null, space || undefined))
+        return this.successJSON(JSON.stringify(ctx.getEnvironmentKey(env), undefined, space || undefined))
     }
 })
