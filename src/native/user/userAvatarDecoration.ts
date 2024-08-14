@@ -29,7 +29,7 @@ export default new NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [user, size, ext]) {
+    async execute(ctx, [user, size, ext]) {
         return this.success(
             (user ?? ctx.user)?.avatarDecorationURL({
                 extension: (ext as ImageExtension) || undefined,
