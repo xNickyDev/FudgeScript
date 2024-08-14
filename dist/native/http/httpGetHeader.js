@@ -17,10 +17,13 @@ exports.default = new NativeFunction_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [name]) {
-        if (ctx.http.headers) {
-            return this.success(ctx.http.headers[name]);
+        const header = ctx.http.headers;
+        if (header) {
+            return this.success(header[name]);
         }
-        return this.success();
+        else {
+            return this.success();
+        }
     },
 });
 //# sourceMappingURL=httpGetHeader.js.map
