@@ -32,7 +32,7 @@ export default new NativeFunction({
         if (ctx.guild) {
             const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 1)
             if (!this["isValidReturnType"](rt)) return rt
-            ok = args[0].some(x => x.id === (ctx.channel as CategoryChannel ?? null).parent) ?? false
+            ok = args[0].some(x => x.id === (ctx.channel as CategoryChannel).parent) ?? false
         }
 
         if (!ok)

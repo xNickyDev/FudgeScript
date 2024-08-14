@@ -33,7 +33,7 @@ exports.default = new structures_1.NativeFunction({
             const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 1);
             if (!this["isValidReturnType"](rt))
                 return rt;
-            ok = args[0].some(x => x.id === (ctx.channel ?? null).parent) ?? false;
+            ok = args[0].some(x => x.id === ctx.channel.parent) ?? false;
         }
         if (!ok)
             return this["fail"](ctx, code);
