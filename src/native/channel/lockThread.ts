@@ -7,7 +7,7 @@ export default new NativeFunction({
     version: "1.5.0",
     aliases: ["$lockPost"],
     description: "Locks a thread, returns bool",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     output: ArgType.Boolean,
     args: [
@@ -27,7 +27,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [channel, reason]) {
-        const thread = channel as ThreadChannel
+        const thread = (channel ?? ctx.channel) as ThreadChannel
 
         const success = await thread.setLocked(true, reason || undefined).catch(ctx.noop)
 

@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     aliases: ["$unlockPost"],
     description: "Unlocks a thread, returns bool",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     output: structures_1.ArgType.Boolean,
     args: [
@@ -26,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [channel, reason]) {
-        const thread = channel;
+        const thread = (channel ?? ctx.channel);
         const success = await thread.setLocked(false, reason || undefined).catch(ctx.noop);
         return this.success(!!success);
     },

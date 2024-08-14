@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     version: "1.0.0",
     aliases: ["$archivePost"],
     description: "Archives a thread, returns bool",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     output: structures_1.ArgType.Boolean,
     args: [
@@ -26,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [channel, reason]) {
-        const thread = channel;
+        const thread = (channel ?? ctx.channel);
         const success = await thread.setArchived(true, reason || undefined).catch(ctx.noop);
         return this.success(!!success);
     },
