@@ -17,9 +17,8 @@ exports.default = new NativeFunction_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [name]) {
-        const header = ctx.http.headers;
-        if (header) {
-            return this.success(header[name]);
+        if (ctx.http.headers) {
+            return this.success(ctx.http.headers[name]);
         }
         else {
             return this.success();
