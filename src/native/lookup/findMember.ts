@@ -1,8 +1,6 @@
 import noop from "../../functions/noop"
 import { ArgType, CompiledFunction, NativeFunction, Return } from "../../structures"
 
-export const MemberMentionCharRegex = /^<@!?(\d+)>$/
-
 export default new NativeFunction({
     name: "$findMember",
     version: "1.0.0",
@@ -33,7 +31,7 @@ export default new NativeFunction({
     ],
     unwrap: true,
     async execute(ctx, [guild, q, rt]) {
-        const id = q.replace(MemberMentionCharRegex, "")
+        const id = q.replace(/[\\<>@!]/g, '').trim()
 
         if (CompiledFunction.IdRegex.test(id)) {
             const m = await guild.members.fetch(id).catch(ctx.noop)
