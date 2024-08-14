@@ -1,6 +1,5 @@
+import { WebhookClient } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
-import messageID from "../message/messageID"
 
 export default new NativeFunction({
     name: "$webhookEditMessage",
@@ -32,7 +31,10 @@ export default new NativeFunction({
             type: ArgType.String,
         }
     ],
-    async execute(ctx, [web, msg, cont]) {
-        return this.successJSON(web)
+    async execute(ctx, [ url, msg, content ]) {
+        const webhook = new WebhookClient({ url })
+        const edit = await webhook.editMessage(msg, content).catch(ctx.noop)
+
+        return this.successJSON(!!edit)
     },
 })
