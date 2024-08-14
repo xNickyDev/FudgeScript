@@ -1,11 +1,11 @@
-import { ActionRowBuilder, RoleSelectMenuBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addUserSelectMenuTo",
     version: "1.5.0",
     output: ArgType.Boolean,
-    description: "Creates a user select menu on a message",
+    description: "Adds a user select menu to a message, returns bool",
     brackets: true,
     unwrap: true,
     args: [

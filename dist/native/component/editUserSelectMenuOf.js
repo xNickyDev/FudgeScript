@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editUserSelectMenuOf",
     version: "1.5.0",
-    description: "Edits a user select menu of a message",
+    description: "Edits a user select menu of a message, returns bool",
     unwrap: true,
     brackets: true,
     args: [
@@ -69,6 +69,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The default selected users of the menu"
         }
     ],
+    output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, users]) {
         const components = m.components.map(x => discord_js_1.ActionRowBuilder.from(x));
         for (let i = 0, len = components.length; i < len; i++) {

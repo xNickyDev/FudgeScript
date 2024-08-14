@@ -1,10 +1,10 @@
-import { ActionRowBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, MentionableSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addMentionableSelectMenuTo",
     version: "1.5.0",
-    description: "Creates a mentionable select menu to a message",
+    description: "Adds a mentionable select menu to a message, returns bool",
     brackets: true,
     output: ArgType.Boolean,
     unwrap: true,

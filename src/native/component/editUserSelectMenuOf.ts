@@ -4,7 +4,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$editUserSelectMenuOf",
     version: "1.5.0",
-    description: "Edits a user select menu of a message",
+    description: "Edits a user select menu of a message, returns bool",
     unwrap: true,
     brackets: true,
     args: [
@@ -68,6 +68,7 @@ export default new NativeFunction({
             description: "The default selected users of the menu"
         }
     ],
+    output: ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, users]) {
         const components = m.components.map(x => ActionRowBuilder.from(x))
 

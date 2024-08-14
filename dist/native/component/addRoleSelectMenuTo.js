@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addRoleSelectMenuTo",
     version: "1.5.0",
-    description: "Creates a role select menu on a message",
+    description: "Adds a role select menu to a message, returns bool",
     output: structures_1.ArgType.Boolean,
     brackets: true,
     unwrap: true,

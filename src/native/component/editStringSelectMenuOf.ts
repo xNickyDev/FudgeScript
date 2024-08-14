@@ -4,7 +4,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$editStringSelectMenuOf",
     version: "1.5.0",
-    description: "Edits a string select menu of a message",
+    description: "Edits a string select menu of a message, returns bool",
     unwrap: true,
     brackets: true,
     args: [

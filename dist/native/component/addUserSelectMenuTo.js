@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     name: "$addUserSelectMenuTo",
     version: "1.5.0",
     output: structures_1.ArgType.Boolean,
-    description: "Creates a user select menu on a message",
+    description: "Adds a user select menu to a message, returns bool",
     brackets: true,
     unwrap: true,
     args: [

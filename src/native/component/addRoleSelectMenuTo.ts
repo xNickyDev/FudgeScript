@@ -4,7 +4,7 @@ import { ArgType, NativeFunction } from "../../structures"
 export default new NativeFunction({
     name: "$addRoleSelectMenuTo",
     version: "1.5.0",
-    description: "Creates a role select menu on a message",
+    description: "Adds a role select menu to a message, returns bool",
     output: ArgType.Boolean,
     brackets: true,
     unwrap: true,

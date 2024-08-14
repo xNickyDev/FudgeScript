@@ -5,7 +5,7 @@ import { noop } from "lodash"
 export default new NativeFunction({
     name: "$deleteActionRowFrom",
     version: "1.5.0",
-    description: "Deletes an action row at given index",
+    description: "Deletes an action row at given index, returns bool",
     brackets: true,
     args: [
         {

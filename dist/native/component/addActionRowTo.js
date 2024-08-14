@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     name: "$addActionRowTo",
     version: "1.5.0",
     brackets: true,
-    description: "Adds an action row (or rows) to a message",
+    description: "Adds an action row (or rows) to a message, returns bool",
     unwrap: false,
     aliases: [
         "$addActionRowsTo"

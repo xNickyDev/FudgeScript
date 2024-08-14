@@ -1,4 +1,4 @@
-import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder, UserSelectMenuBuilder } from "discord.js"
+import { MentionableSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({

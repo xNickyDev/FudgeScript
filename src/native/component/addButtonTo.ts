@@ -4,7 +4,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$addButtonTo",
     version: "1.5.0",
-    description: "Adds a button component to the newest row in a message",
+    description: "Adds a button component to the newest row in a message, returns bool",
     unwrap: true,
     brackets: true,
     args: [
