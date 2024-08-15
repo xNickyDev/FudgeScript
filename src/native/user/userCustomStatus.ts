@@ -12,6 +12,7 @@ export default new NativeFunction({
         {
             name: "guild ID",
             description: "The guild to pull the user from",
+            required: true,
             rest: false,
             type: ArgType.Guild,
         },
@@ -24,16 +25,14 @@ export default new NativeFunction({
         },
         {
             name: "type",
-            description: "The type of the status to fetch",
+            description: "The type of the custom status to fetch",
             rest: false,
             type: ArgType.String,
             enum: ["state", "emoji"]
         },
     ],
     brackets: false,
-    async execute(ctx, [ g, user, opt ]) {
-        const id = g ?? ctx.guild?.id
-        const guild = await ctx.client.guilds.fetch(id).catch(ctx.noop)
+    async execute(ctx, [, user, opt]) {
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop)
         const status = member?.presence?.activities?.find(x => x.type === ActivityType.Custom)
 
