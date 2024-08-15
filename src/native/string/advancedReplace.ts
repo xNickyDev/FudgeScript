@@ -28,14 +28,14 @@ export default new NativeFunction({
             name: "new value",
             description: "The text to replace matches with",
             type: ArgType.String,
-            rest: true,
+            rest: false,
             required: true
         },
     ],
     brackets: true,
-    async execute(ctx, [text]) {
-        const { args } = await this["resolveMultipleArgs"](ctx, 1)
-
+    async execute(ctx, [...args]) {
+        let text = args[0]
+        
         for (let i = 0; i < args.length; i += 2) {
             const match = args[i] as string
             const replacement = args[i + 1] as string

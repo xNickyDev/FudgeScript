@@ -29,13 +29,13 @@ exports.default = new structures_1.NativeFunction({
             name: "new value",
             description: "The text to replace matches with",
             type: structures_1.ArgType.String,
-            rest: true,
+            rest: false,
             required: true
         },
     ],
     brackets: true,
-    async execute(ctx, [text]) {
-        const { args } = await this["resolveMultipleArgs"](ctx, 1);
+    async execute(ctx, [...args]) {
+        let text = args[0];
         for (let i = 0; i < args.length; i += 2) {
             const match = args[i];
             const replacement = args[i + 1];
