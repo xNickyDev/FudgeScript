@@ -29,8 +29,7 @@ export default new NativeFunction({
             description: "The text to replace matches with",
             type: ArgType.String,
             rest: true,
-            required: true,
-            pointer: 0
+            required: true
         },
     ],
     brackets: true,
