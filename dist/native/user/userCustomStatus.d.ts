@@ -10,8 +10,7 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     type: ArgType.Enum;
-    enum: string[];
-    default: string;
+    enum: String;
 }, {
     name: string;
     description: string;

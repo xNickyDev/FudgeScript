@@ -1,1 +1,1 @@
-{"version":3,"file":"userCustomStatus.d.ts","sourceRoot":"","sources":["../../../src/native/user/userCustomStatus.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;;;;;;;;AAElE,wBAuCE"}
+{"version":3,"file":"userCustomStatus.d.ts","sourceRoot":"","sources":["../../../src/native/user/userCustomStatus.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;UAsBlB,MAAM;;;;;;;AApBtD,wBA0CE"}
