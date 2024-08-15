@@ -11,6 +11,12 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.String,
     args: [
         {
+            name: "guild ID",
+            description: "The guild to pull the user from",
+            rest: false,
+            type: structures_1.ArgType.Guild,
+        },
+        {
             name: "user ID",
             description: "The user to return its custom status",
             required: true,
@@ -21,18 +27,12 @@ exports.default = new structures_1.NativeFunction({
             name: "type",
             description: "The type of the status to fetch",
             rest: false,
-            type: structures_1.ArgType.Enum,
-            enum: typeof discord_js_1.ActivityType.Custom
-        },
-        {
-            name: "guild ID",
-            description: "The guild to pull the user from",
-            rest: false,
-            type: structures_1.ArgType.Guild,
+            type: structures_1.ArgType.String,
+            enum: ["state", "emoji"]
         },
     ],
     brackets: false,
-    async execute(ctx, [user, opt, g]) {
+    async execute(ctx, [g, user, opt]) {
         const id = g ?? ctx.guild?.id;
         const guild = await ctx.client.guilds.fetch(id).catch(ctx.noop);
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop);
