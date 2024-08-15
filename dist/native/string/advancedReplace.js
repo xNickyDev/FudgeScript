@@ -34,7 +34,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     brackets: true,
-    execute(ctx, [text, ...args]) {
+    async execute(ctx, [text]) {
+        const { args } = await this["resolveMultipleArgs"](ctx, 1);
         for (let i = 0; i < args.length; i += 2) {
             const match = args[i];
             const replacement = args[i + 1];
