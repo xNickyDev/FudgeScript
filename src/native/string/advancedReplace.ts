@@ -8,7 +8,7 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     description: "Replaces text in a string multiple times",
-    unwrap: true,
+    unwrap: false,
     args: [
         {
             name: "text",
@@ -33,9 +33,11 @@ export default new NativeFunction({
         },
     ],
     brackets: true,
-    async execute(ctx, [...args]) {
+    async execute(ctx) {
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 1)
+        if (!this["isValidReturnType"](rt)) return rt
         let text = args[0]
-        
+
         for (let i = 0; i < args.length; i += 2) {
             const match = args[i] as string
             const replacement = args[i + 1] as string
