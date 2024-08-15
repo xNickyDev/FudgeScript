@@ -1,4 +1,4 @@
-import { PresenceStatus } from "discord.js"
+import { PresenceStatusData } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -34,7 +34,7 @@ export default new NativeFunction({
         if (!status || status === "all") {
             return this.success(guild?.memberCount)
         } else {
-            return this.success(guild?.members.cache.filter(member => member.presence?.status === (status as PresenceStatus)).size)
+            return this.success(guild?.members.cache.filter(member => member.presence?.status === (status as PresenceStatusData)).size)
         }
         
     },
