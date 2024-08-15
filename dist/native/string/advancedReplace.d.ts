@@ -15,8 +15,8 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     type: ArgType.String;
-    rest: false;
+    rest: true;
     required: true;
-}], false>;
+}], true>;
 export default _default;
 //# sourceMappingURL=advancedReplace.d.ts.map
