@@ -29,19 +29,19 @@ exports.default = new structures_1.NativeFunction({
             description: "The type of the custom status to fetch",
             rest: false,
             type: structures_1.ArgType.String,
-            enum: ["state", "emoji"]
         },
     ],
     brackets: false,
     async execute(ctx, [, user, opt]) {
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop);
         const status = member?.presence?.activities?.find(x => x.type === discord_js_1.ActivityType.Custom);
-        if (opt === "emoji") {
-            return this.success(status?.emoji?.toString() || undefined);
-        }
-        else {
+        if (!opt || opt === "state") {
             return this.success(status?.state || undefined);
         }
+        else if (opt === "emoji") {
+            return this.success(status?.emoji?.toString() || undefined);
+        }
+        return this.success();
     },
 });
 //# sourceMappingURL=userCustomStatus.js.map

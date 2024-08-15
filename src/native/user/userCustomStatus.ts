@@ -28,7 +28,6 @@ export default new NativeFunction({
             description: "The type of the custom status to fetch",
             rest: false,
             type: ArgType.String,
-            enum: ["state", "emoji"]
         },
     ],
     brackets: false,
@@ -36,10 +35,11 @@ export default new NativeFunction({
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop)
         const status = member?.presence?.activities?.find(x => x.type === ActivityType.Custom)
 
-        if (opt === "emoji") {
-            return this.success(status?.emoji?.toString() || undefined)
-        } else {
+        if (!opt || opt === "state") {
             return this.success(status?.state || undefined)
+        } else if (opt === "emoji") {
+            return this.success(status?.emoji?.toString() || undefined)
         }
+        return this.success()
     },
 })

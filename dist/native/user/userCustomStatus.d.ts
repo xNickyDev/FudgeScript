@@ -16,7 +16,6 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     type: ArgType.String;
-    enum: string[];
 }], true>;
 export default _default;
 //# sourceMappingURL=userCustomStatus.d.ts.map
