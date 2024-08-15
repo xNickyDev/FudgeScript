@@ -27,14 +27,15 @@ export default new NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [guild, presence]) {
+    execute(ctx, [guild, pres]) {
         guild ??= ctx.guild!
+        const presence = pres?.toLowerCase()
 
         if (!presence || presence === "all") {
             return this.success(guild?.memberCount)
         } else {
-            const status = presence.toLowerCase() as PresenceStatusData
-            return this.success(guild.members.cache.filter(member => member.presence?.status === status).size)
+            const status = presence as PresenceStatusData
+            return this.success(guild?.members.cache.filter(member => member.presence?.status === status).size)
         }
         
     },
