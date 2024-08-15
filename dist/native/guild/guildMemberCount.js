@@ -27,14 +27,13 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [guild, pres]) {
+    execute(ctx, [guild, presence]) {
         guild ??= ctx.guild;
-        const presence = pres?.toLowerCase();
-        if (!presence || presence === "all") {
+        const status = presence?.toLowerCase();
+        if (!status || status === "all") {
             return this.success(guild?.memberCount);
         }
         else {
-            const status = presence;
             return this.success(guild?.members.cache.filter(member => member.presence?.status === status).size);
         }
     },
