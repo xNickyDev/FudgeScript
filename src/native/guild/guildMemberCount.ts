@@ -23,7 +23,7 @@ export default new NativeFunction({
             name: "presence",
             description: "The presence of the users to count",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.String
         },
     ],
     unwrap: true,
@@ -33,8 +33,8 @@ export default new NativeFunction({
         if (!presence) {
             return this.success(guild?.memberCount)
         } else {
-            const status = presence as PresenceStatusData || undefined
-            return this.success(status)
+            const status = presence as PresenceStatusData
+            return this.success(guild.members.cache.filter(member => member.presence?.status === status).size)
         }
         
     },
