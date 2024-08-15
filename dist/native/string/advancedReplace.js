@@ -29,8 +29,9 @@ exports.default = new structures_1.NativeFunction({
             name: "new value",
             description: "The text to replace matches with",
             type: structures_1.ArgType.String,
-            rest: false,
-            required: true
+            rest: true,
+            required: true,
+            pointer: 0
         },
     ],
     brackets: true,

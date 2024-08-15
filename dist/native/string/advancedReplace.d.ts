@@ -15,8 +15,9 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     type: ArgType.String;
-    rest: false;
+    rest: true;
     required: true;
+    pointer: number;
 }], false>;
 export default _default;
 //# sourceMappingURL=advancedReplace.d.ts.map
