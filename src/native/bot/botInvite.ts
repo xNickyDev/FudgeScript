@@ -1,4 +1,4 @@
-import { OAuth2Scopes, PermissionFlagsBits } from "discord.js"
+import { OAuth2Scopes, PermissionFlagsBits, PermissionsBitField } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -15,8 +15,8 @@ export default new NativeFunction({
             name: "perms",
             description: "The perms for the invite link",
             rest: true,
-            type: ArgType.Enum,
-            enum: PermissionFlagsBits,
+            type: ArgType.Enum || ArgType.Number,
+            enum: PermissionFlagsBits || Number,
             required: true,
         },
     ],
