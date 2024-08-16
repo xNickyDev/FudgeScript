@@ -23,8 +23,8 @@ export default new NativeFunction({
     execute(ctx, [perms]) {
         return this.success(
             ctx.client.generateInvite({
-                scopes: [OAuth2Scopes.Bot],
-                permissions: (perms as PermissionsString[]) || ["Administrator"],
+                scopes: ctx.client.application.installParams?.scopes as OAuth2Scopes[] || [OAuth2Scopes.Bot],
+                permissions: (perms || ctx.client.application.installParams?.permissions) as PermissionsString[],
             })
         )
     },
