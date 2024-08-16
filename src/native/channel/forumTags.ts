@@ -1,5 +1,6 @@
 import { BaseChannel, ChannelType, ForumChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { ForumTagProperty } from "../../properties/forumTag"
 import array from "../../functions/array"
 
 export default new NativeFunction({
@@ -17,6 +18,13 @@ export default new NativeFunction({
             check: (i: BaseChannel) => i.type === ChannelType.GuildForum,
         },
         {
+            name: "property",
+            description: "The property to return for every tag",
+            rest: false,
+            type: ArgType.Enum,
+            enum: ForumTagProperty
+        },
+        {
             name: "separator",
             description: "The separator to use for every tag",
             rest: false,
@@ -24,8 +32,13 @@ export default new NativeFunction({
         },
     ],
     brackets: false,
-    execute(ctx, [ch, sep]) {
+    execute(ctx, [ch, property, sep]) {
         const channel = (ch ?? ctx.channel) as ForumChannel | undefined
-        return this.success(channel?.availableTags?.join(sep || ", "))
+
+        if (!property) {
+            return this.successJSON(channel?.availableTags)
+        } else {
+            return this.success(channel?.availableTags?.map(tag => tag?.[property]).join(sep || ", "))
+        }
     },
 })
