@@ -4,10 +4,14 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$memberTimeoutDuration",
     version: "1.5.0",
+    aliases: [
+        "$timeoutDuration",
+        "$getTimeoutDuration"
+    ],
     description: "Returns the left timeout duration of a member",
     unwrap: true,
     brackets: false,
-    output: structures_1.ArgType.Number,
+    output: structures_1.ArgType.Time,
     args: [
         {
             name: "guild ID",
@@ -27,7 +31,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member;
-        return this.success(member?.communicationDisabledUntil);
+        return this.success(member?.communicationDisabledUntilTimestamp);
     },
 });
 //# sourceMappingURL=memberTimeoutDuration.js.map

@@ -3,10 +3,14 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$memberTimeoutDuration",
     version: "1.5.0",
+    aliases: [
+        "$timeoutDuration",
+        "$getTimeoutDuration"
+    ],
     description: "Returns the left timeout duration of a member",
     unwrap: true,
     brackets: false,
-    output: ArgType.Number,
+    output: ArgType.Time,
     args: [
         {
             name: "guild ID",
@@ -26,6 +30,6 @@ export default new NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member!
-        return this.success(member?.communicationDisabledUntil)
+        return this.success(member?.communicationDisabledUntilTimestamp)
     },
 })
