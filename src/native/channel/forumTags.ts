@@ -1,6 +1,6 @@
 import { BaseChannel, ChannelType, ForumChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { ForumTagProperty } from "../../properties/forumTag"
+import { ForumTagProperty, ForumTagProperties } from "../../properties/forumTag"
 import array from "../../functions/array"
 
 export default new NativeFunction({
@@ -38,7 +38,7 @@ export default new NativeFunction({
         if (!property) {
             return this.successJSON(channel?.availableTags)
         } else {
-            return this.success(channel?.availableTags?.map(tag => tag?.[property]).join(sep || ", "))
+            return this.success(channel?.availableTags?.map(tag => tag?.[property as ForumTagProperty]).join(sep || ", "))
         }
     },
 })
