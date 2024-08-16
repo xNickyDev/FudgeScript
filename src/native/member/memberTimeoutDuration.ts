@@ -5,12 +5,14 @@ export default new NativeFunction({
     version: "1.5.0",
     aliases: [
         "$timeoutDuration",
-        "$getTimeoutDuration"
+        "$getTimeoutDuration",
+        "$timedOutUntil",
+        "$memberTimedOutUntil"
     ],
-    description: "Returns the left timeout duration of a member",
+    description: "Returns the timeout duration of a member",
     unwrap: true,
     brackets: false,
-    output: ArgType.Time,
+    output: ArgType.Number,
     args: [
         {
             name: "guild ID",

@@ -6,12 +6,14 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     aliases: [
         "$timeoutDuration",
-        "$getTimeoutDuration"
+        "$getTimeoutDuration",
+        "$timedOutUntil",
+        "$memberTimedOutUntil"
     ],
-    description: "Returns the left timeout duration of a member",
+    description: "Returns the timeout duration of a member",
     unwrap: true,
     brackets: false,
-    output: structures_1.ArgType.Time,
+    output: structures_1.ArgType.Number,
     args: [
         {
             name: "guild ID",
