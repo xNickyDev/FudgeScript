@@ -16,7 +16,8 @@ exports.default = new structures_1.NativeFunction({
             name: "perms",
             description: "The perms for the invite link",
             rest: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Enum,
+            enum: discord_js_1.PermissionFlagsBits,
             required: true,
         },
     ],
@@ -24,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [perms]) {
         return this.success(ctx.client.generateInvite({
             scopes: ctx.client.application.installParams?.scopes || [discord_js_1.OAuth2Scopes.Bot],
-            permissions: (perms || ctx.client.application.installParams?.permissions),
+            permissions: perms || ctx.client.application.installParams?.permissions,
         }));
     },
 });

@@ -1,4 +1,4 @@
-import { OAuth2Scopes, PermissionFlagsBits, PermissionsString } from "discord.js"
+import { OAuth2Scopes, PermissionFlagsBits } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -15,7 +15,8 @@ export default new NativeFunction({
             name: "perms",
             description: "The perms for the invite link",
             rest: true,
-            type: ArgType.String,
+            type: ArgType.Enum,
+            enum: PermissionFlagsBits,
             required: true,
         },
     ],
@@ -24,7 +25,7 @@ export default new NativeFunction({
         return this.success(
             ctx.client.generateInvite({
                 scopes: ctx.client.application.installParams?.scopes as OAuth2Scopes[] || [OAuth2Scopes.Bot],
-                permissions: (perms || ctx.client.application.installParams?.permissions) as PermissionsString[],
+                permissions: perms || ctx.client.application.installParams?.permissions,
             })
         )
     },
