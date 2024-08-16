@@ -20,13 +20,15 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Channel,
             check: (i) => i.type === discord_js_1.ChannelType.GuildForum,
+            required: true
         },
         {
             name: "property",
             description: "The property to return for every tag",
             rest: false,
             type: structures_1.ArgType.Enum,
-            enum: forumTag_1.ForumTagProperty
+            enum: forumTag_1.ForumTagProperty,
+            required: true
         },
         {
             name: "separator",
@@ -42,7 +44,7 @@ exports.default = new structures_1.NativeFunction({
         if (!property) {
             return this.successJSON(tags);
         }
-        return this.success(tags?.map(tag => forumTag_1.ForumTagProperties[property](tag)).join(sep || ", "));
+        return this.success(tags?.map(tag => forumTag_1.ForumTagProperties[property](tag)).join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=forumTags.js.map

@@ -7,12 +7,14 @@ declare const _default: NativeFunction<[{
     rest: false;
     type: ArgType.Channel;
     check: (i: BaseChannel) => boolean;
+    required: true;
 }, {
     name: string;
     description: string;
     rest: false;
     type: ArgType.Enum;
     enum: typeof ForumTagProperty;
+    required: true;
 }, {
     name: string;
     description: string;
