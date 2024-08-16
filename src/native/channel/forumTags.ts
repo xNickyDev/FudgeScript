@@ -1,4 +1,4 @@
-import { BaseChannel, ChannelType, ForumChannel } from "discord.js"
+import { BaseChannel, ChannelType, ForumChannel, GuildForumTag } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ForumTagProperty, ForumTagProperties } from "../../properties/forumTag"
 import array from "../../functions/array"
@@ -34,11 +34,12 @@ export default new NativeFunction({
     brackets: false,
     execute(ctx, [ch, property, sep]) {
         const channel = (ch ?? ctx.channel) as ForumChannel | undefined
+        const tags = channel?.availableTags
 
         if (!property) {
-            return this.successJSON(channel?.availableTags)
-        } else {
-            return this.success(channel?.availableTags?.map(tag => tag?.[property as ForumTagProperty]).join(sep || ", "))
+            return this.successJSON(tags)
         }
+
+        return this.success(tags?.map(tag => ForumTagProperties[property](tag)).join(sep || ", "))
     },
 })
