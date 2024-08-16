@@ -1,14 +1,13 @@
 import { BaseChannel, ChannelType, ForumChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ForumTagProperty, ForumTagProperties } from "../../properties/forumTag"
-import array from "../../functions/array"
 
 export default new NativeFunction({
     name: "$forumTags",
     version: "1.5.0",
     description: "Returns all available tags of a forum",
     unwrap: true,
-    output: array<ArgType.String>(),
+    output: ArgType.Unknown,
     args: [
         {
             name: "channel ID",
@@ -23,8 +22,7 @@ export default new NativeFunction({
             description: "The property to return for every tag",
             rest: false,
             type: ArgType.Enum,
-            enum: ForumTagProperty,
-            required: true
+            enum: ForumTagProperty
         },
         {
             name: "separator",
@@ -33,9 +31,9 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    brackets: false,
+    brackets: true,
     execute(ctx, [ch, property, sep]) {
-        const channel = (ch ?? ctx.channel) as ForumChannel | undefined
+        const channel = ch as ForumChannel | undefined
         const tags = channel?.availableTags
 
         if (!property) {
