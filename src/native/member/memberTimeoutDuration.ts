@@ -32,6 +32,6 @@ export default new NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member!
-        return this.success(member?.communicationDisabledUntil?.getTime())
+        return this.success(member?.communicationDisabledUntil?.getTime() ?? 0)
     },
 })
