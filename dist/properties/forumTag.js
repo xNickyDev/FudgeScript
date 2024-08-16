@@ -13,7 +13,11 @@ var ForumTagProperty;
     ForumTagProperty["name"] = "name";
 })(ForumTagProperty || (exports.ForumTagProperty = ForumTagProperty = {}));
 exports.ForumTagProperties = (0, defineProperties_1.default)({
-    emoji: (i) => i?.emoji !== null,
+    emoji: (i) => i && "emoji" in i
+        ? i.emoji?.id
+            ? `<${i.emoji?.name}:${i.emoji?.id}>`
+            : i.emoji?.name
+        : null,
     id: (i) => i?.id,
     moderated: (i) => i?.moderated,
     name: (i) => i?.name,
