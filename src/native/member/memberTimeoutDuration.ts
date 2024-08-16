@@ -1,15 +1,12 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$isTimedOut",
-    version: "1.0.0",
-    description: "Whether a member is timed out",
+    name: "$memberTimeoutDuration",
+    version: "1.5.0",
+    description: "Returns the left timeout duration of a member",
     unwrap: true,
     brackets: false,
-    aliases: [
-        "$memberIsTimedOut"
-    ],
-    output: ArgType.Boolean,
+    output: ArgType.Number,
     args: [
         {
             name: "guild ID",
@@ -29,6 +26,6 @@ export default new NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member!
-        return this.success(member?.isCommunicationDisabled() ?? false)
+        return this.success(member?.communicationDisabledUntil)
     },
 })

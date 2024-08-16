@@ -2,15 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$isTimedOut",
-    version: "1.0.0",
-    description: "Whether a member is timed out",
+    name: "$memberTimeoutDuration",
+    version: "1.5.0",
+    description: "Returns the left timeout duration of a member",
     unwrap: true,
     brackets: false,
-    aliases: [
-        "$memberIsTimedOut"
-    ],
-    output: structures_1.ArgType.Boolean,
+    output: structures_1.ArgType.Number,
     args: [
         {
             name: "guild ID",
@@ -30,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member;
-        return this.success(member?.isCommunicationDisabled() ?? false);
+        return this.success(member?.communicationDisabledUntil);
     },
 });
-//# sourceMappingURL=isTimedOut.js.map
+//# sourceMappingURL=memberTimeoutDuration.js.map
