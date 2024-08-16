@@ -31,7 +31,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member;
-        return this.success(member?.communicationDisabledUntilTimestamp);
+        return this.success(member?.communicationDisabledUntil?.getTime());
     },
 });
 //# sourceMappingURL=memberTimeoutDuration.js.map
