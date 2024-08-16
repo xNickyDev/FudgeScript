@@ -18,7 +18,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     output: structures_1.ArgType.String,
     execute(ctx, [sep]) {
-        return this.success(ctx.client.application.tags?.join(sep || ", "));
+        return this.success(ctx.client.application.tags?.join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=botTags.js.map

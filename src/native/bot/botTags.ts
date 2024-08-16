@@ -17,6 +17,6 @@ export default new NativeFunction({
     brackets: false,
     output: ArgType.String,
     execute(ctx, [sep]) {
-        return this.success(ctx.client.application.tags?.join(sep || ", "))
+        return this.success(ctx.client.application.tags?.join(sep ?? ", "))
     },
 })
