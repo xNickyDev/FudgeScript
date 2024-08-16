@@ -30,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     execute(ctx, [ch, sep]) {
         const channel = (ch ?? ctx.channel);
-        return this.success(channel?.availableTags.join(sep || ", "));
+        return this.success(channel?.availableTags?.join(sep || ", "));
     },
 });
 //# sourceMappingURL=forumTags.js.map

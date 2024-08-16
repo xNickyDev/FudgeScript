@@ -26,6 +26,6 @@ export default new NativeFunction({
     brackets: false,
     execute(ctx, [ch, sep]) {
         const channel = (ch ?? ctx.channel) as ForumChannel | undefined
-        return this.success(channel?.availableTags.join(sep || ", "))
+        return this.success(channel?.availableTags?.join(sep || ", "))
     },
 })
