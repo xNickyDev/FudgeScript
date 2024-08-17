@@ -20,8 +20,8 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [types]) {
-        const menu = ctx.container.components.at(-1);
-        if (menu && menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
+        const menu = ctx.container.components.at(-1)?.components;
+        if (menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
             menu.addChannelTypes(types);
         }
         return this.success();

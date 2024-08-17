@@ -6,7 +6,7 @@ exports.default = new structures_1.NativeFunction({
     name: "$setChannelType",
     version: "1.5.0",
     aliases: ["$setChannelTypes"],
-    description: "Adds channel types to the last select menu",
+    description: "Sets channel types for the last select menu",
     unwrap: true,
     brackets: true,
     args: [
@@ -20,8 +20,8 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [types]) {
-        const menu = ctx.container.components.at(-1);
-        if (menu && menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
+        const menu = ctx.container.components.at(-1)?.components;
+        if (menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
             menu.setChannelTypes(types);
         }
         return this.success();

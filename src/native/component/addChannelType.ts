@@ -20,9 +20,8 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ types ]) {
-        const menu = ctx.container.components.at(-1)
-        
-        if (menu && menu instanceof ChannelSelectMenuBuilder) {
+        const menu = ctx.container.components.at(-1)?.components
+        if (menu instanceof ChannelSelectMenuBuilder) {
             menu.addChannelTypes(types)
         }
 

@@ -5,25 +5,26 @@ import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder } from "@discordjs/
 export default new NativeFunction({
     name: "$addDefaultRoleOption",
     version: "1.4.0",
-    description: "Adds a default role option to the last select menu",
+    aliases: ["$addDefaultRoles"],
+    description: "Adds default role options to the last select menu",
     unwrap: true,
     brackets: true,
     args: [
         {
-            name: "role ID",
-            description: "The role id",
-            rest: false,
+            name: "role IDs",
+            description: "The role ids",
+            rest: true,
             required: true,
             type: ArgType.String
         }
     ],
-    execute(ctx, [ id ]) {
-        const menu = ctx.container.components.at(-1)
+    execute(ctx, [ ids ]) {
+        const menu = ctx.container.components.at(-1)?.components
         if (menu instanceof BaseSelectMenuBuilder) {
             if (menu instanceof RoleSelectMenuBuilder)
-                menu.addDefaultRoles(id)
+                menu.addDefaultRoles(ids)
             else if (menu instanceof MentionableSelectMenuBuilder)
-                menu.addDefaultRoles(id)
+                menu.addDefaultRoles(ids)
         }
 
         return this.success()

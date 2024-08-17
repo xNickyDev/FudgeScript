@@ -6,26 +6,26 @@ export default new NativeFunction({
     name: "$addDefaultChannelOption",
     version: "1.4.0",
     aliases: ["$addDefaultChannels"],
-    description: "Adds a default channel option to the last select menu",
+    description: "Adds default channel options to the last select menu",
     unwrap: true,
     brackets: true,
     args: [
         {
-            name: "channel ID",
-            description: "The channel id",
+            name: "channel IDs",
+            description: "The channel ids",
             rest: true,
             required: true,
             type: ArgType.String
         }
     ],
-    execute(ctx, [ channels ]) {
-        const menu = ctx.container.components.at(-1)
+    execute(ctx, [ ids ]) {
+        const menu = ctx.container.components.at(-1)?.components
 
         console.log("Type:", menu?.constructor.name)
         console.log(menu)
 
-        if (menu && menu instanceof ChannelSelectMenuBuilder) {
-            menu.addDefaultChannels(channels)
+        if (menu instanceof ChannelSelectMenuBuilder) {
+            menu.addDefaultChannels(ids)
             console.log("success")
         }
 

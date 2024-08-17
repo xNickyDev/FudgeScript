@@ -6,7 +6,7 @@ export default new NativeFunction({
     name: "$setChannelType",
     version: "1.5.0",
     aliases: ["$setChannelTypes"],
-    description: "Adds channel types to the last select menu",
+    description: "Sets channel types for the last select menu",
     unwrap: true,
     brackets: true,
     args: [
@@ -20,9 +20,8 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ types ]) {
-        const menu = ctx.container.components.at(-1)
-        
-        if (menu && menu instanceof ChannelSelectMenuBuilder) {
+        const menu = ctx.container.components.at(-1)?.components
+        if (menu instanceof ChannelSelectMenuBuilder) {
             menu.setChannelTypes(types)
         }
 
