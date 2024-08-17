@@ -77,15 +77,14 @@ exports.default = new structures_1.NativeFunction({
             const menu = comp.components[0];
             if (menu instanceof discord_js_1.ChannelSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id);
-                if (placeholder)
-                    menu.setPlaceholder(placeholder);
-                if (disabled !== null)
+                menu.setPlaceholder(placeholder ?? "");
+                if (disabled)
                     menu.setDisabled(disabled);
-                if (min !== null)
+                if (min)
                     menu.setMinValues(min);
-                if (max !== null)
+                if (max)
                     menu.setMaxValues(max);
-                if (channels !== null)
+                if (channels)
                     menu.setDefaultChannels(channels);
                 break;
             }
