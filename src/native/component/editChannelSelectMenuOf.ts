@@ -1,5 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ChannelSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { channel } from "node:diagnostics_channel"
 
 export default new NativeFunction({
     name: "$editChannelSelectMenuOf",
@@ -82,7 +83,7 @@ export default new NativeFunction({
                 if (typeof disabled === "boolean") menu.setDisabled(disabled)
                 if (typeof min === "number") menu.setMinValues(min)
                 if (typeof max === "number") menu.setMaxValues(max)
-                if (channels) menu.setDefaultChannels(channels)
+                if (channels !== undefined && channels !== null) menu.setDefaultChannels(channels)
 
                 break
             }
