@@ -78,11 +78,11 @@ export default new NativeFunction({
             if (menu instanceof ChannelSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id)
                 
-                if (placeholder) menu.setPlaceholder(placeholder ?? menu.data.placeholder)
+                if (placeholder) menu.setPlaceholder(placeholder)
                 if (disabled !== null) menu.setDisabled(disabled ?? menu.data.disabled)
                 if (min) menu.setMinValues(min ?? menu.data.min_values)
                 if (max) menu.setMaxValues(max ?? menu.data.max_values)
-                menu.setDefaultChannels(channels || menu.data.default_values)
+                if (disabled !== null) menu.setDefaultChannels(channels || menu.data.default_values)
 
                 break
             }
