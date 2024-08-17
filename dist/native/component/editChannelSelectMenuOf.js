@@ -79,13 +79,13 @@ exports.default = new structures_1.NativeFunction({
                 menu.setCustomId(id);
                 if (placeholder)
                     menu.setPlaceholder(placeholder ?? menu.data.placeholder);
-                if (disabled !== null)
+                if (disabled)
                     menu.setDisabled(disabled ?? menu.data.disabled);
-                if (min !== null)
+                if (min)
                     menu.setMinValues(min ?? menu.data.min_values);
-                if (max !== null)
+                if (max)
                     menu.setMaxValues(max ?? menu.data.max_values);
-                if (channels !== null)
+                if (channels)
                     menu.setDefaultChannels(channels ?? menu.data.default_values);
                 break;
             }
