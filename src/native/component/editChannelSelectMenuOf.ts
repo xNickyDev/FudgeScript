@@ -78,20 +78,15 @@ export default new NativeFunction({
             if (menu instanceof ChannelSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id)
                 
-                if (placeholder) 
-                    menu.setPlaceholder(placeholder)
+                if (placeholder !== null) menu.setPlaceholder(placeholder)
                     console.log("placeholder")
-                if (disabled) 
-                    menu.setDisabled(disabled)
+                if (disabled !== null) menu.setDisabled(disabled)
                     console.log("disabled")
-                if (min) 
-                    menu.setMinValues(min)
+                if (min !== null) menu.setMinValues(min)
                     console.log("min")
-                if (max) 
-                    menu.setMaxValues(max)
+                if (max !== null) menu.setMaxValues(max)
                     console.log("max")
-                if (channels) 
-                    menu.setDefaultChannels(channels)
+                if (channels !== null) menu.setDefaultChannels(channels)
                     console.log("channels")
 
                 break
