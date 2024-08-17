@@ -85,7 +85,7 @@ exports.default = new structures_1.NativeFunction({
                     menu.setMinValues(min ?? menu.data.min_values);
                 if (max)
                     menu.setMaxValues(max ?? menu.data.max_values);
-                menu.setDefaultChannels(channels ?? menu.data.default_values);
+                menu.setDefaultChannels(channels || menu.data.default_values);
                 break;
             }
         }
