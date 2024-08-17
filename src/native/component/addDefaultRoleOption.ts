@@ -5,7 +5,10 @@ import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder } from "@discordjs/
 export default new NativeFunction({
     name: "$addDefaultRoleOption",
     version: "1.4.0",
-    aliases: ["$addDefaultRoles"],
+    aliases: [
+        "$addDefaultRoles",
+        "$addDefaultRoleOptions"
+    ],
     description: "Adds default role options to the last select menu",
     unwrap: true,
     brackets: true,
