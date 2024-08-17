@@ -19,7 +19,7 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ ids ]) {
-        const menu = ctx.container.components.at(-1)?.components
+        const menu = ctx.container.components.at(-1)?.components.at(0)
         if (menu instanceof BaseSelectMenuBuilder) {
             if (menu instanceof UserSelectMenuBuilder)
                 menu.addDefaultUsers(ids)

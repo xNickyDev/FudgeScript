@@ -19,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [ids]) {
-        const menu = ctx.container.components.at(-1)?.components;
+        const menu = ctx.container.components.at(-1)?.components.at(0);
         console.log("Type:", menu?.constructor.name);
         console.log(menu);
         if (menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
