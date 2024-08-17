@@ -3,26 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$addDefaultChannelOption",
-    version: "1.4.0",
-    description: "Adds a default channel option to the last select menu",
+    name: "$setChannelType",
+    version: "1.5.0",
+    aliases: ["$setChannelTypes"],
+    description: "Adds channel types to the last select menu",
     unwrap: true,
     brackets: true,
     args: [
         {
-            name: "channel ID",
-            description: "The channel id",
+            name: "types",
+            description: "The channel types to set",
             rest: true,
+            enum: discord_js_1.ChannelType,
             required: true,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Enum
         }
     ],
-    execute(ctx, [channels]) {
+    execute(ctx, [types]) {
         const menu = ctx.container.components.at(-1);
         if (menu && menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
-            menu.addDefaultChannels(channels);
+            menu.setChannelTypes(types);
         }
         return this.success();
     },
 });
-//# sourceMappingURL=addDefaultChannelOption.js.map
+//# sourceMappingURL=setChannelType.js.map
