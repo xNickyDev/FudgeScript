@@ -77,21 +77,16 @@ exports.default = new structures_1.NativeFunction({
             const menu = comp.components[0];
             if (menu instanceof discord_js_1.ChannelSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id);
-                if (placeholder !== null)
-                    menu.setPlaceholder(placeholder);
-                console.log("placeholder");
+                if (placeholder)
+                    menu.setPlaceholder(placeholder ?? menu.data.placeholder);
                 if (disabled !== null)
-                    menu.setDisabled(disabled);
-                console.log("disabled");
+                    menu.setDisabled(disabled ?? menu.data.disabled);
                 if (min !== null)
-                    menu.setMinValues(min);
-                console.log("min");
+                    menu.setMinValues(min ?? menu.data.min_values);
                 if (max !== null)
-                    menu.setMaxValues(max);
-                console.log("max");
+                    menu.setMaxValues(max ?? menu.data.max_values);
                 if (channels !== null)
-                    menu.setDefaultChannels(channels);
-                console.log("channels");
+                    menu.setDefaultChannels(channels ?? menu.data.default_values);
                 break;
             }
         }
