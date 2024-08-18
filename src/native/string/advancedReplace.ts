@@ -27,17 +27,11 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [ text, args ]) {
-        console.log(text)
-
         for (let i = 0; i < args.length; i += 2) {
-            console.log(i)
-            const [ match, replacement ] = args.slice(i, i + 1)
-            console.log(match)
-            console.log(replacement)
-            console.log(i)
+            const [ match, replacement ] = args.slice(i, i + 2)
             text = text.replaceAll(match as string, replacement as string)
         }
-
+        
         return this.success(text)
     },
 })
