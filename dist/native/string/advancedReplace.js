@@ -27,8 +27,7 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     brackets: true,
-    execute(ctx, [args]) {
-        let text = args[0];
+    execute(ctx, [text, args]) {
         console.log(text);
         for (let i = 1; i < args.length; i += 2) {
             console.log(i);
