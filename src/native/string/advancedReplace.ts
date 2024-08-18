@@ -30,9 +30,8 @@ export default new NativeFunction({
         let text = args[0]
 
         for (let i = 1; i < args.length; i += 2) {
-            const match = args[i] as string
-            const replacement = args[i + 1] as string
-            text = text.replaceAll(match, replacement)
+            const [ match, replacement ] = args.slice(i, i + 1)
+            text = text.replaceAll(match as string, replacement as string)
         }
 
         return this.success(text)
