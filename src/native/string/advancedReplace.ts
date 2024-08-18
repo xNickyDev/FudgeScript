@@ -29,9 +29,9 @@ export default new NativeFunction({
     execute(ctx, [ text, args ]) {
         for (let i = 0; i < args.length; i += 2) {
             const [ match, replacement ] = args.slice(i, i + 2)
-            text = text.replaceAll(match as string, replacement as string)
+            text = text.replaceAll((match as string) ?? "", (replacement as string) ?? "")
         }
-        
+
         return this.success(text)
     },
 })

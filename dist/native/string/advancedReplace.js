@@ -30,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [text, args]) {
         for (let i = 0; i < args.length; i += 2) {
             const [match, replacement] = args.slice(i, i + 2);
-            text = text.replaceAll(match, replacement);
+            text = text.replaceAll(match ?? "", replacement ?? "");
         }
         return this.success(text);
     },
