@@ -17,9 +17,9 @@ exports.default = new NativeFunction_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [name]) {
-        console.log("HTTP Context:", ctx.http);
-        console.log("Headers:", ctx.http?.headers);
-        console.log("Header Keys:", Object.keys(ctx.http?.headers || {}));
+        console.log("HTTP Context:", ctx.http.contentType);
+        console.log("Headers:", ctx.http.headers);
+        console.log("Header Keys:", Object.keys(ctx.http.headers || {}));
         return this.success();
     },
 });
