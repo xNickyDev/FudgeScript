@@ -17,7 +17,8 @@ exports.default = new NativeFunction_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [name]) {
-        return this.success(ctx.http?.headers?.[name.toLowerCase()]);
+        console.log(ctx.http?.headers?.[name.toLowerCase()]);
+        return this.success();
     },
 });
 //# sourceMappingURL=httpGetHeader.js.map

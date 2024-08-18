@@ -17,6 +17,7 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [name]) {
-        return this.success(ctx.http?.headers?.[name.toLowerCase()])
+        console.log(ctx.http?.headers?.[name.toLowerCase()])
+        return this.success()
     },
 })
