@@ -29,9 +29,9 @@ export default new NativeFunction({
     execute(ctx, [ text, args ]) {
         console.log(text)
 
-        for (let i = 1; i < args.length; i += 2) {
+        for (let i = 0; i < args.length; i += 2) {
             console.log(i)
-            const [ match, replacement ] = args.slice(i, i + 2)
+            const [ match, replacement ] = args.slice(i, i + 1)
             console.log(match)
             console.log(replacement)
             console.log(i)
