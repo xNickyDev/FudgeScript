@@ -16,10 +16,9 @@ export default new NativeFunction({
         }
     ],
     brackets: true,
-    execute(ctx, [name]) {
-        console.log("HTTP Context:", ctx.http.contentType)
-        console.log("Headers:", ctx.http.headers)
-        console.log("Header Keys:", Object.keys(ctx.http.headers || {}))
+    async execute(ctx, [name]) {
+        const header = await ctx.http?.headers?.[name]
+        console.log(header)
         return this.success()
     },
 })
