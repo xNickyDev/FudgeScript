@@ -5,10 +5,17 @@ export enum CalendarType {
     Week
 }
 
+function getDayOfYear(date: Date) {
+    const start = new Date(date.getFullYear(), 0, 1)
+    const diff = date.getTime() - start.getTime()
+    const ms = 1000 * 60 * 60 * 24
+    return Math.floor(diff / ms) + 1
+}
+
 function getWeekOfYear(date: Date) {
-    const yearStart = new Date(date.getFullYear(), 0, 1)
-    const yearDays = (date.getTime() - yearStart.getTime()) / 86400000
-    return Math.ceil((yearDays + yearStart.getDay() + 1) / 7)
+    const start = new Date(date.getFullYear(), 0, 1)
+    const days = (date.getTime() - start.getTime()) / 86400000
+    return Math.ceil((days + start.getDay() + 1) / 7)
 }
 
 export default new NativeFunction({
@@ -33,7 +40,7 @@ export default new NativeFunction({
 
         return this.success(
             type === CalendarType.Day
-                ? date.getDay()
+                ? getDayOfYear(date)
                 : type === CalendarType.Week
                     ? getWeekOfYear(date)
                     : (null as never)

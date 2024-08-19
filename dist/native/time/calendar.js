@@ -7,10 +7,16 @@ var CalendarType;
     CalendarType[CalendarType["Day"] = 0] = "Day";
     CalendarType[CalendarType["Week"] = 1] = "Week";
 })(CalendarType || (exports.CalendarType = CalendarType = {}));
+function getDayOfYear(date) {
+    const start = new Date(date.getFullYear(), 0, 1);
+    const diff = date.getTime() - start.getTime();
+    const ms = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / ms) + 1;
+}
 function getWeekOfYear(date) {
-    const yearStart = new Date(date.getFullYear(), 0, 1);
-    const yearDays = (date.getTime() - yearStart.getTime()) / 86400000;
-    return Math.ceil((yearDays + yearStart.getDay() + 1) / 7);
+    const start = new Date(date.getFullYear(), 0, 1);
+    const days = (date.getTime() - start.getTime()) / 86400000;
+    return Math.ceil((days + start.getDay() + 1) / 7);
 }
 exports.default = new structures_1.NativeFunction({
     name: "$calendar",
@@ -32,7 +38,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [type]) {
         const date = new Date();
         return this.success(type === CalendarType.Day
-            ? date.getDay()
+            ? getDayOfYear(date)
             : type === CalendarType.Week
                 ? getWeekOfYear(date)
                 : null);
