@@ -4,11 +4,11 @@ exports.PresenceStatus = void 0;
 const structures_1 = require("../../structures");
 var PresenceStatus;
 (function (PresenceStatus) {
-    PresenceStatus[PresenceStatus["online"] = 0] = "online";
-    PresenceStatus[PresenceStatus["idle"] = 1] = "idle";
-    PresenceStatus[PresenceStatus["dnd"] = 2] = "dnd";
-    PresenceStatus[PresenceStatus["offline"] = 3] = "offline";
-    PresenceStatus[PresenceStatus["invisible"] = 4] = "invisible";
+    PresenceStatus["online"] = "online";
+    PresenceStatus["idle"] = "idle";
+    PresenceStatus["dnd"] = "dnd";
+    PresenceStatus["offline"] = "offline";
+    PresenceStatus["invisible"] = "invisible";
 })(PresenceStatus || (exports.PresenceStatus = PresenceStatus = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$guildMemberCount",

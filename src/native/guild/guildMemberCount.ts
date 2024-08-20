@@ -1,12 +1,11 @@
-import { PresenceStatusData } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export enum PresenceStatus {
-    online,
-    idle,
-    dnd,
-    offline,
-    invisible
+    online = "online",
+    idle = "idle",
+    dnd = "dnd",
+    offline = "offline",
+    invisible = "invisible"
 }
 
 export default new NativeFunction({
@@ -42,8 +41,7 @@ export default new NativeFunction({
         if (!status) {
             return this.success(guild?.memberCount)
         } else {
-            return this.success(guild?.members.cache.filter(member => member.presence?.status === (status as unknown)).size)
+            return this.success(guild?.members.cache.filter(member => member.presence?.status === status).size)
         }
-        
     },
 })

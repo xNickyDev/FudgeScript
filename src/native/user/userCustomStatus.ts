@@ -2,8 +2,8 @@ import { ActivityType } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export enum CustomStatusType {
-    state,
-    emoji
+    state = "state",
+    emoji = "emoji"
 }
 
 export default new NativeFunction({
@@ -41,12 +41,10 @@ export default new NativeFunction({
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop)
         const status = member?.presence?.activities?.find(x => x.type === ActivityType.Custom)
 
-        return this.success(
-            type === CustomStatusType.state
-                ? status?.state
-                : type === CustomStatusType.emoji
-                    ? status?.emoji?.toString()
-                    : (null as never)
-        )
+        if (!type) {
+            return this.success(status?.state)
+        } else {
+            return this.success(status?.[type as CustomStatusType]?.toString())
+        }
     },
 })

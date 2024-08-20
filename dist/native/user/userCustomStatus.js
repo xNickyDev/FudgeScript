@@ -5,8 +5,8 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 var CustomStatusType;
 (function (CustomStatusType) {
-    CustomStatusType[CustomStatusType["state"] = 0] = "state";
-    CustomStatusType[CustomStatusType["emoji"] = 1] = "emoji";
+    CustomStatusType["state"] = "state";
+    CustomStatusType["emoji"] = "emoji";
 })(CustomStatusType || (exports.CustomStatusType = CustomStatusType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$userCustomStatus",
@@ -42,11 +42,12 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [, user, type]) {
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop);
         const status = member?.presence?.activities?.find(x => x.type === discord_js_1.ActivityType.Custom);
-        return this.success(type === CustomStatusType.state
-            ? status?.state
-            : type === CustomStatusType.emoji
-                ? status?.emoji?.toString()
-                : null);
+        if (!type) {
+            return this.success(status?.state);
+        }
+        else {
+            return this.success(status?.[type]?.toString());
+        }
     },
 });
 //# sourceMappingURL=userCustomStatus.js.map

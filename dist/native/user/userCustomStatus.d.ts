@@ -1,7 +1,7 @@
 import { ArgType, NativeFunction } from "../../structures";
 export declare enum CustomStatusType {
-    state = 0,
-    emoji = 1
+    state = "state",
+    emoji = "emoji"
 }
 declare const _default: NativeFunction<[{
     name: string;

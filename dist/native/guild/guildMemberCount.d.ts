@@ -1,10 +1,10 @@
 import { ArgType, NativeFunction } from "../../structures";
 export declare enum PresenceStatus {
-    online = 0,
-    idle = 1,
-    dnd = 2,
-    offline = 3,
-    invisible = 4
+    online = "online",
+    idle = "idle",
+    dnd = "dnd",
+    offline = "offline",
+    invisible = "invisible"
 }
 declare const _default: NativeFunction<[{
     name: string;
