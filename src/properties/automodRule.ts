@@ -17,16 +17,16 @@ export enum AutomodRuleProperty {
 }
 
 export const AutomodRuleProperties = defineProperties<typeof AutomodRuleProperty, AutoModerationRule>({
-    actions: (i) => JSON.stringify(i?.actions) ?? [],
+    actions: (i) => JSON.stringify(i?.actions),
     client: (i) => JSON.stringify(i?.client),
     creatorId: (i) => i?.creatorId,
     enabled: (i) => i?.enabled,
     eventType: (i) => i?.eventType,
-    exemptChannels: (i) => JSON.stringify(i?.exemptChannels) ?? [],
-    exemptRoles: (i) => JSON.stringify(i?.exemptRoles) ?? [],
+    exemptChannels: (i, sep) => Object.keys(i?.exemptChannels ?? []).join(sep ?? ", "),
+    exemptRoles: (i) => JSON.stringify(i?.exemptRoles),
     guild: (i) => JSON.stringify(i?.guild),
     id: (i) => i?.id,
     name: (i) => i?.name,
-    triggerMetadata: (i) => JSON.stringify(i?.triggerMetadata) ?? {},
+    triggerMetadata: (i, sep) => Object.keys(i?.triggerMetadata ?? {}).join(sep ?? ", "),
     triggerType: (i) => i?.triggerType,
 })
