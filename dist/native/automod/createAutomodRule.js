@@ -31,10 +31,47 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.AutoModerationRuleTriggerType
         },
+        {
+            name: "event",
+            description: "The event of the automod rule",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Enum,
+            enum: discord_js_1.AutoModerationRuleEventType
+        },
+        {
+            name: "action",
+            description: "The action of the automod rule",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Enum,
+            enum: discord_js_1.AutoModerationActionType
+        },
+        {
+            name: "enabled",
+            description: "Whether the automod rule should be enabled",
+            rest: false,
+            required: false,
+            type: structures_1.ArgType.Boolean
+        },
+        {
+            name: "reason",
+            description: "The reason for creating the automod rule",
+            rest: false,
+            required: false,
+            type: structures_1.ArgType.String
+        },
     ],
     output: structures_1.ArgType.Boolean,
-    execute(ctx, [guild, name, trigger]) {
-        return this.success();
+    async execute(ctx, [guild, name, trigger, event, action, enabled, reason]) {
+        const create = await guild.autoModerationRules.create({
+            name: name,
+            triggerType: trigger,
+            eventType: event,
+            actions: [{ type: action }],
+            reason: reason || undefined
+        }).catch(ctx.noop);
+        return this.success(!!create);
     },
 });
 //# sourceMappingURL=createAutomodRule.js.map
