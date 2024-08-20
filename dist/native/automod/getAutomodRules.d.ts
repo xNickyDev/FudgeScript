@@ -10,14 +10,12 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    required: false;
     type: ArgType.Enum;
     enum: typeof AutomodRuleProperty;
 }, {
     name: string;
     description: string;
     rest: false;
-    required: false;
     type: ArgType.String;
 }], true>;
 export default _default;

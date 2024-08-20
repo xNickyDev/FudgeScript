@@ -20,7 +20,6 @@ exports.default = new structures_1.NativeFunction({
             name: "property",
             description: "The property of each automod rule to return",
             rest: false,
-            required: false,
             type: structures_1.ArgType.Enum,
             enum: automodRule_1.AutomodRuleProperty
         },
@@ -28,13 +27,12 @@ exports.default = new structures_1.NativeFunction({
             name: "separator",
             description: "The separator to use for each property",
             rest: false,
-            required: false,
             type: structures_1.ArgType.String,
         },
     ],
     output: structures_1.ArgType.Boolean,
-    execute(ctx, [guild, prop, sep]) {
-        const rules = (guild ?? ctx.guild).autoModerationRules.cache;
+    async execute(ctx, [guild, prop, sep]) {
+        const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop);
         if (!prop) {
             return this.successJSON(rules);
         }

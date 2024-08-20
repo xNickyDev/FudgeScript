@@ -19,7 +19,6 @@ export default new NativeFunction({
             name: "property",
             description: "The property of each automod rule to return",
             rest: false,
-            required: false,
             type: ArgType.Enum,
             enum: AutomodRuleProperty
         },
@@ -27,13 +26,12 @@ export default new NativeFunction({
             name: "separator",
             description: "The separator to use for each property",
             rest: false,
-            required: false,
             type: ArgType.String,
         },
     ],
     output: ArgType.Boolean,
-    execute(ctx, [ guild, prop, sep ]) {
-        const rules = (guild ?? ctx.guild).autoModerationRules.cache
+    async execute(ctx, [ guild, prop, sep ]) {
+        const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop)
 
         if (!prop) {
             return this.successJSON(rules)
