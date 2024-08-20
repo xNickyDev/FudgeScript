@@ -14,24 +14,24 @@ var AutomodRuleProperty;
     AutomodRuleProperty["eventType"] = "eventType";
     AutomodRuleProperty["exemptChannels"] = "exemptChannels";
     AutomodRuleProperty["exemptRoles"] = "exemptRoles";
-    AutomodRuleProperty["guild"] = "guild";
+    AutomodRuleProperty["guildId"] = "guildId";
     AutomodRuleProperty["id"] = "id";
     AutomodRuleProperty["name"] = "name";
     AutomodRuleProperty["triggerMetadata"] = "triggerMetadata";
     AutomodRuleProperty["triggerType"] = "triggerType";
 })(AutomodRuleProperty || (exports.AutomodRuleProperty = AutomodRuleProperty = {}));
 exports.AutomodRuleProperties = (0, defineProperties_1.default)({
-    actions: (i) => JSON.stringify(i?.actions),
-    client: (i) => JSON.stringify(i?.client),
+    actions: (i) => JSON.stringify(i?.actions, undefined, 4),
+    client: (i) => JSON.stringify(i?.client, undefined, 4),
     creatorId: (i) => i?.creatorId,
     enabled: (i) => i?.enabled,
     eventType: (i) => i?.eventType,
-    exemptChannels: (i, sep) => Object.keys(i?.exemptChannels ?? []).join(sep ?? ", "),
-    exemptRoles: (i) => JSON.stringify(i?.exemptRoles),
-    guild: (i) => JSON.stringify(i?.guild),
+    exemptChannels: (i) => JSON.stringify(i?.exemptChannels?.map((x) => x.id)),
+    exemptRoles: (i) => JSON.stringify(i?.exemptRoles?.map((x) => x.id)),
+    guildId: (i) => i?.guild.id,
     id: (i) => i?.id,
     name: (i) => i?.name,
-    triggerMetadata: (i, sep) => Object.keys(i?.triggerMetadata ?? {}).join(sep ?? ", "),
+    triggerMetadata: (i) => JSON.stringify(i?.triggerMetadata, undefined, 4),
     triggerType: (i) => i?.triggerType,
 });
 //# sourceMappingURL=automodRule.js.map

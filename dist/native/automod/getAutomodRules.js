@@ -30,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    output: structures_1.ArgType.Boolean,
+    output: structures_1.ArgType.Unknown,
     async execute(ctx, [guild, prop, sep]) {
         const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop);
         if (!prop) {

@@ -7,7 +7,7 @@ export declare enum AutomodRuleProperty {
     eventType = "eventType",
     exemptChannels = "exemptChannels",
     exemptRoles = "exemptRoles",
-    guild = "guild",
+    guildId = "guildId",
     id = "id",
     name = "name",
     triggerMetadata = "triggerMetadata",

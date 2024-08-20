@@ -29,7 +29,7 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    output: ArgType.Boolean,
+    output: ArgType.Unknown,
     async execute(ctx, [ guild, prop, sep ]) {
         const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop)
 
