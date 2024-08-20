@@ -1,4 +1,4 @@
-import { BaseChannel, AutoModerationActionType, TextChannel, ThreadChannel } from "discord.js"
+import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -8,6 +8,20 @@ export default new NativeFunction({
     unwrap: true,
     brackets: true,
     args: [
+        {
+            name: "guild ID",
+            description: "The guild of the automod rule",
+            rest: false,
+            required: true,
+            type: ArgType.Guild,
+        },
+        {
+            name: "rule ID",
+            description: "The ID of the automod rule",
+            rest: false,
+            required: true,
+            type: ArgType.String,
+        },
         {
             name: "type",
             description: "The type of the automod rule action",
@@ -39,16 +53,20 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    output: ArgType.Boolean,
-    async execute(ctx, [ type, channel, duration, message ]) {
-        actions: [{ 
+    async execute(ctx, [ guild, id, type, channel, duration, message ]) {
+        const rule = await guild.autoModerationRules.fetch(id).catch(ctx.noop)
+        const action = { 
             type: type,
             metadata: {
-                channel: channel,
+                channel: channel as GuildTextChannelResolvable,
                 customMessage: message,
                 durationSeconds: duration
             }
-        }]
+        }
+
+        await rule?.edit({
+            actions: [...rule?.actions, action],
+        })
 
         return this.success()
     },

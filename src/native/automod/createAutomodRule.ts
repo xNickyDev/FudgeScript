@@ -4,7 +4,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$createAutomodRule",
     version: "1.5.0",
-    description: "Creates a new automod rule, returns bool",
+    description: "Creates a new automod rule, returns rule id",
     unwrap: true,
     brackets: true,
     args: [
@@ -53,9 +53,9 @@ export default new NativeFunction({
             type: ArgType.String
         },
     ],
-    output: ArgType.Boolean,
+    output: ArgType.Number,
     async execute(ctx, [ guild, name, trigger, event, enabled, reason ]) {
-        const create = await guild.autoModerationRules.create({
+        const rule = await guild.autoModerationRules.create({
             name: name,
             triggerType: trigger,
             eventType: event,
@@ -64,6 +64,6 @@ export default new NativeFunction({
             actions: []
         }).catch(ctx.noop)
 
-        return this.success(!!create)
+        return this.success(rule?.id)
     },
 })

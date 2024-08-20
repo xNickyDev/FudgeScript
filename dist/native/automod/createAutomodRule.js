@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createAutomodRule",
     version: "1.5.0",
-    description: "Creates a new automod rule, returns bool",
+    description: "Creates a new automod rule, returns rule id",
     unwrap: true,
     brackets: true,
     args: [
@@ -54,9 +54,9 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String
         },
     ],
-    output: structures_1.ArgType.Boolean,
+    output: structures_1.ArgType.Number,
     async execute(ctx, [guild, name, trigger, event, enabled, reason]) {
-        const create = await guild.autoModerationRules.create({
+        const rule = await guild.autoModerationRules.create({
             name: name,
             triggerType: trigger,
             eventType: event,
@@ -64,7 +64,7 @@ exports.default = new structures_1.NativeFunction({
             reason: reason || undefined,
             actions: []
         }).catch(ctx.noop);
-        return this.success(!!create);
+        return this.success(rule?.id);
     },
 });
 //# sourceMappingURL=createAutomodRule.js.map

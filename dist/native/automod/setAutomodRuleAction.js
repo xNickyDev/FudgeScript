@@ -10,6 +10,20 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     args: [
         {
+            name: "guild ID",
+            description: "The guild of the automod rule",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Guild,
+        },
+        {
+            name: "rule ID",
+            description: "The ID of the automod rule",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.String,
+        },
+        {
             name: "type",
             description: "The type of the automod rule action",
             rest: false,
@@ -40,16 +54,19 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    output: structures_1.ArgType.Boolean,
-    async execute(ctx, [type, channel, duration, message]) {
-        actions: [{
-                type: type,
-                metadata: {
-                    channel: channel,
-                    customMessage: message,
-                    durationSeconds: duration
-                }
-            }];
+    async execute(ctx, [guild, id, type, channel, duration, message]) {
+        const rule = await guild.autoModerationRules.fetch(id).catch(ctx.noop);
+        const action = {
+            type: type,
+            metadata: {
+                channel: channel,
+                customMessage: message,
+                durationSeconds: duration
+            }
+        };
+        await rule?.edit({
+            actions: [...rule?.actions, action],
+        });
         return this.success();
     },
 });

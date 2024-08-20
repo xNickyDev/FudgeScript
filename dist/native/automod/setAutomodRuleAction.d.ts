@@ -1,6 +1,18 @@
-import { BaseChannel, AutoModerationActionType, TextChannel } from "discord.js";
+import { BaseChannel, AutoModerationActionType } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
 declare const _default: NativeFunction<[{
+    name: string;
+    description: string;
+    rest: false;
+    required: true;
+    type: ArgType.Guild;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    required: true;
+    type: ArgType.String;
+}, {
     name: string;
     description: string;
     rest: false;
@@ -13,7 +25,7 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: false;
     type: ArgType.Channel;
-    check: (i: BaseChannel) => i is import("discord.js").DMChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | TextChannel | import("discord.js").PrivateThreadChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").VoiceChannel;
+    check: (i: BaseChannel) => i is import("discord.js").DMChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | import("discord.js").TextChannel | import("discord.js").PrivateThreadChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").VoiceChannel;
 }, {
     name: string;
     description: string;
