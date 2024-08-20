@@ -1,4 +1,4 @@
-import { AutoModerationRuleTriggerType, AutoModerationRuleEventType, AutoModerationActionType } from "discord.js"
+import { AutoModerationRuleTriggerType, AutoModerationRuleEventType } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -39,14 +39,6 @@ export default new NativeFunction({
             enum: AutoModerationRuleEventType
         },
         {
-            name: "action",
-            description: "The action of the automod rule",
-            rest: false,
-            required: true,
-            type: ArgType.Enum,
-            enum: AutoModerationActionType
-        },
-        {
             name: "enabled",
             description: "Whether the automod rule should be enabled",
             rest: false,
@@ -62,13 +54,14 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [ guild, name, trigger, event, action, enabled, reason ]) {
+    async execute(ctx, [ guild, name, trigger, event, enabled, reason ]) {
         const create = await guild.autoModerationRules.create({
             name: name,
             triggerType: trigger,
             eventType: event,
-            actions: [{ type: action }],
-            reason: reason || undefined
+            enabled: enabled ?? true,
+            reason: reason || undefined,
+            actions: []
         }).catch(ctx.noop)
 
         return this.success(!!create)
