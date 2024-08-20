@@ -1,4 +1,8 @@
 import { ArgType, NativeFunction } from "../../structures";
+export declare enum CustomStatusType {
+    state = 0,
+    emoji = 1
+}
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
@@ -15,7 +19,8 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    type: ArgType.String;
+    type: ArgType.Enum;
+    enum: typeof CustomStatusType;
 }], true>;
 export default _default;
 //# sourceMappingURL=userCustomStatus.d.ts.map

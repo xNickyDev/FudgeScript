@@ -1,7 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CustomStatusType = void 0;
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+var CustomStatusType;
+(function (CustomStatusType) {
+    CustomStatusType[CustomStatusType["state"] = 0] = "state";
+    CustomStatusType[CustomStatusType["emoji"] = 1] = "emoji";
+})(CustomStatusType || (exports.CustomStatusType = CustomStatusType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$userCustomStatus",
     version: "1.5.0",
@@ -28,21 +34,19 @@ exports.default = new structures_1.NativeFunction({
             name: "type",
             description: "The type of the custom status to fetch",
             rest: false,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Enum,
+            enum: CustomStatusType
         },
     ],
     brackets: false,
-    async execute(ctx, [, user, opt]) {
+    async execute(ctx, [, user, type]) {
         const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop);
         const status = member?.presence?.activities?.find(x => x.type === discord_js_1.ActivityType.Custom);
-        const type = opt?.toLowerCase();
-        if (!type || type === "state") {
-            return this.success(status?.state || undefined);
-        }
-        else if (type === "emoji") {
-            return this.success(status?.emoji?.toString() || undefined);
-        }
-        return this.success();
+        return this.success(type === CustomStatusType.state
+            ? status?.state
+            : type === CustomStatusType.emoji
+                ? status?.emoji?.toString()
+                : null);
     },
 });
 //# sourceMappingURL=userCustomStatus.js.map

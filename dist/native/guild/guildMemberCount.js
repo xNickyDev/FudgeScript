@@ -1,6 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PresenceStatus = void 0;
 const structures_1 = require("../../structures");
+var PresenceStatus;
+(function (PresenceStatus) {
+    PresenceStatus[PresenceStatus["online"] = 0] = "online";
+    PresenceStatus[PresenceStatus["idle"] = 1] = "idle";
+    PresenceStatus[PresenceStatus["dnd"] = 2] = "dnd";
+    PresenceStatus[PresenceStatus["offline"] = 3] = "offline";
+    PresenceStatus[PresenceStatus["invisible"] = 4] = "invisible";
+})(PresenceStatus || (exports.PresenceStatus = PresenceStatus = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$guildMemberCount",
     version: "1.0.0",
@@ -23,14 +32,14 @@ exports.default = new structures_1.NativeFunction({
             name: "presence",
             description: "The presence of the users to count",
             rest: false,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Enum,
+            enum: PresenceStatus
         },
     ],
     unwrap: true,
-    execute(ctx, [guild, presence]) {
+    execute(ctx, [guild, status]) {
         guild ??= ctx.guild;
-        const status = presence?.toLowerCase();
-        if (!status || status === "all") {
+        if (!status) {
             return this.success(guild?.memberCount);
         }
         else {
