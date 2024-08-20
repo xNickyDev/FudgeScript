@@ -2,11 +2,11 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 import { AutomodRuleProperty, AutomodRuleProperties } from "../../properties/automodRule"
 
 export default new NativeFunction({
-    name: "$getAutomodRuleNames",
+    name: "$getAutomodRules",
     version: "1.5.0",
     description: "Returns all automod rules of a guild",
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "guild ID",
@@ -33,12 +33,12 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     execute(ctx, [ guild, prop, sep ]) {
-        const rules = guild.autoModerationRules.cache
+        const rules = (guild ?? ctx.guild).autoModerationRules.cache
 
         if (!prop) {
-            return this.success(rules)
+            return this.successJSON(rules)
         }
 
-        return this.success(rules?.map(rule => AutomodRuleProperties[prop](rule)).join(sep ?? ", "))
+        return this.successJSON(rules?.map(rule => AutomodRuleProperties[prop](rule)).join(sep ?? ", "))
     },
 })
