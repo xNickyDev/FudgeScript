@@ -36,6 +36,6 @@ export default new NativeFunction({
             return this.successJSON(dirs)
         }
 
-        return this.success(dirs?.join(sep ?? ", "))
+        return this.success(dirs?.join(sep))
     },
 })

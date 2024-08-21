@@ -35,7 +35,7 @@ exports.default = new structures_1.NativeFunction({
         if (!sep) {
             return this.successJSON(dirs);
         }
-        return this.success(dirs?.join(sep ?? ", "));
+        return this.success(dirs?.join(sep));
     },
 });
 //# sourceMappingURL=readDir.js.map
