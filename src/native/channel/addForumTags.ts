@@ -19,21 +19,21 @@ export default new NativeFunction({
             description: "The post to edit tags on",
         },
         {
+            name: "reason",
+            description: "The reason for adding post tags",
+            rest: false,
+            type: ArgType.String,
+        },
+        {
             name: "tags",
             description: "The tags for the post",
             rest: true,
             required: true,
             type: ArgType.String,
         },
-        {
-            name: "reason",
-            description: "The reason for adding post tags",
-            rest: false,
-            type: ArgType.String,
-        },
     ],
     brackets: true,
-    async execute(ctx, [ channel, tags, reason ]) {
+    async execute(ctx, [ channel, reason, tags ]) {
         const post = channel as ThreadChannel
 
         return this.success(!!(await post.setAppliedTags(tags, reason || undefined).catch(ctx.noop)))
