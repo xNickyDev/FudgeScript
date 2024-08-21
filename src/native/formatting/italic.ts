@@ -1,7 +1,7 @@
 import { italic } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
-export const ItalicEscapeRegex = /(\_)/gim
+export const ItalicEscapeRegex = /([*_])/gim
 
 export default new NativeFunction({
     name: "$italic",
@@ -13,7 +13,7 @@ export default new NativeFunction({
     args: [
         {
             name: "text",
-            description: "The text to make italic, this will attempt to escape all _",
+            description: "The text to make italic, this will attempt to escape all _ and *",
             rest: false,
             required: true,
             type: ArgType.String
