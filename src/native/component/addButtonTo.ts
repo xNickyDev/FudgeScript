@@ -65,7 +65,7 @@ export default new NativeFunction({
             .setStyle(style)
 
         if (style === ButtonStyle.Link) btn.setURL(id)
-            if (style === ButtonStyle.Premium) btn.setSKUId(id)
+            else if (style === ButtonStyle.Premium) btn.setSKUId(id)
                 else btn.setCustomId(id)
 
         if (style !== ButtonStyle.Premium) {

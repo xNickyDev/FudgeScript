@@ -66,7 +66,7 @@ exports.default = new structures_1.NativeFunction({
             .setStyle(style);
         if (style === discord_js_1.ButtonStyle.Link)
             btn.setURL(id);
-        if (style === discord_js_1.ButtonStyle.Premium)
+        else if (style === discord_js_1.ButtonStyle.Premium)
             btn.setSKUId(id);
         else
             btn.setCustomId(id);
