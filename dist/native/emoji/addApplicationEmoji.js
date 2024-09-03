@@ -4,7 +4,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addApplicationEmoji",
     version: "1.5.0",
-    description: "Adds an application emoji",
+    description: "Adds an application emoji, returns the emoji id",
     brackets: true,
     unwrap: true,
     args: [
@@ -31,6 +31,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.ApplicationEmoji,
     async execute(ctx, [name, url, returnEmojiID]) {
+        returnEmojiID ??= true;
         const emoji = await ctx.client.application.emojis.create({
             name: name,
             attachment: url

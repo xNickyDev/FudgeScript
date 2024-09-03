@@ -6,8 +6,8 @@ import emoji from "../emoji/emoji"
 export default new NativeFunction({
     name: "$getApplicationEmojis",
     version: "1.5.0",
-    description: "Gets application emojis",
-    brackets: true,
+    description: "Gets all application emojis",
+    brackets: false,
     unwrap: true,
     args: [
         {
@@ -25,7 +25,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Unknown,
-    async execute(ctx, [prop, sep]) {
+    execute(ctx, [prop, sep]) {
         const emojis = ctx.client.application.emojis.cache
 
         if (!prop) {

@@ -5,8 +5,8 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$getApplicationEmojis",
     version: "1.5.0",
-    description: "Gets application emojis",
-    brackets: true,
+    description: "Gets all application emojis",
+    brackets: false,
     unwrap: true,
     args: [
         {
@@ -24,7 +24,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Unknown,
-    async execute(ctx, [prop, sep]) {
+    execute(ctx, [prop, sep]) {
         const emojis = ctx.client.application.emojis.cache;
         if (!prop) {
             return this.successJSON(emojis);

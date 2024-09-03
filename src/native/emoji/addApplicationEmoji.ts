@@ -1,11 +1,10 @@
-import { ApplicationEmoji } from "discord.js"
 import noop from "../../functions/noop"
 import { Arg, ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$addApplicationEmoji",
     version: "1.5.0",
-    description: "Adds an application emoji",
+    description: "Adds an application emoji, returns the emoji id",
     brackets: true,
     unwrap: true,
     args: [
@@ -32,6 +31,7 @@ export default new NativeFunction({
     ],
     output: ArgType.ApplicationEmoji,
     async execute(ctx, [name, url, returnEmojiID]) {
+        returnEmojiID ??= true
         const emoji = await ctx.client.application.emojis.create({
             name: name,
             attachment: url
