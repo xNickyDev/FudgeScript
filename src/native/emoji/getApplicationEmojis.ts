@@ -1,7 +1,7 @@
+import { Collection } from "discord.js"
 import noop from "../../functions/noop"
 import { ApplicationEmojiProperties, ApplicationEmojiProperty } from "../../properties/applicationEmoji"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import emoji from "../emoji/emoji"
 
 export default new NativeFunction({
     name: "$getApplicationEmojis",
@@ -26,7 +26,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Unknown,
     execute(ctx, [prop, sep]) {
-        const emojis = ctx.client.application.emojis.cache
+        const emojis = ctx.client.application.emojis.cache.toJSON()
 
         if (!prop) {
             return this.successJSON(emojis)

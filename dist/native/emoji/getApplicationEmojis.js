@@ -25,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Unknown,
     execute(ctx, [prop, sep]) {
-        const emojis = ctx.client.application.emojis.cache;
+        const emojis = ctx.client.application.emojis.cache.toJSON();
         if (!prop) {
             return this.successJSON(emojis);
         }
