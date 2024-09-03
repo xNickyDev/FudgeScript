@@ -67,6 +67,8 @@ exports.default = new structures_1.NativeFunction({
             .setLabel(label);
         if (style === discord_js_1.ButtonStyle.Link)
             btn.setURL(id);
+        if (style === discord_js_1.ButtonStyle.Premium)
+            btn.setSKUId(id);
         else
             btn.setCustomId(id);
         if (emoji)

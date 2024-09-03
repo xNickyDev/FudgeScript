@@ -50,7 +50,8 @@ export default new NativeFunction({
             .setLabel(label)
 
         if (style === ButtonStyle.Link) btn.setURL(id)
-        else btn.setCustomId(id)
+            if (style === ButtonStyle.Premium) btn.setSKUId(id)
+                else btn.setCustomId(id)
 
         if (emoji) btn.setEmoji(emoji)
 
