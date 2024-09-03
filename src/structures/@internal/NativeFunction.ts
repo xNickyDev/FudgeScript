@@ -1,4 +1,5 @@
 import {
+    ApplicationEmoji,
     AttachmentBuilder,
     BaseChannel,
     Emoji,
@@ -56,6 +57,7 @@ export enum ArgType {
     Sticker,
     Time,
     Member,
+    ApplicationEmoji
 }
 
 export interface IArg<
@@ -190,6 +192,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? number
     : T extends ArgType.Permission
     ? PermissionsString
+    : T extends ArgType.ApplicationEmoji
+    ? ApplicationEmoji
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true
