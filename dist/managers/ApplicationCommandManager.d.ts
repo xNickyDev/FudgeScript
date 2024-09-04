@@ -12,10 +12,6 @@ export interface IApplicationCommandData {
     type?: RegistrationType;
     independent?: boolean;
     path?: string | null;
-    config?: {
-        description?: string;
-        name?: string;
-    };
 }
 export declare class ApplicationCommandManager {
     readonly client: ForgeClient;
