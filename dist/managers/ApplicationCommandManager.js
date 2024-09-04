@@ -161,7 +161,13 @@ class ApplicationCommandManager {
         const config = configPath && (0, fs_1.existsSync)(configPath)
             ? JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"))
             : null;
-        return this.resolve(value, reqPath, config);
+        if (config) {
+            if (value.data && "setName" in value.data && config.name)
+                value.data.setName(config.name);
+            if (value.data && "setDescription" in value.data && config.description)
+                value.data.setDescription(config.description);
+        }
+        return this.resolve(value, reqPath);
     }
     validate(app, path) {
         const json = app.toJSON();
@@ -170,15 +176,8 @@ class ApplicationCommandManager {
             throw new Error(`Attempted to define subcommand / subcommand group without using path tree definition. (${path ?? "index file"})`);
         }
     }
-    resolve(value, path, config) {
+    resolve(value, path) {
         const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand({ ...value, path });
-        // Applies configuration from config.json, if any
-        if (config) {
-            if ("setName" in v.options.data && config.name)
-                v.options.data.setName(config.name);
-            if ("setDescription" in v.options.data && config.description)
-                v.options.data.setDescription(config.description);
-        }
         this.validate(v, path);
         return v;
     }

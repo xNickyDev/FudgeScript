@@ -190,18 +190,23 @@ export class ApplicationCommandManager {
 
     private loadOne(reqPath: string, configPath?: string) {
         if (!reqPath.endsWith(".js")) return null
-
+    
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
-
+    
         const config = configPath && existsSync(configPath) 
                         ? JSON.parse(readFileSync(configPath, "utf-8")) 
                         : null
 
-        return this.resolve(value, reqPath, config)
+        if (config) {
+            if (value.data && "setName" in value.data && config.name) value.data.setName(config.name)
+            if (value.data && "setDescription" in value.data && config.description) value.data.setDescription(config.description)
+        }
+
+        return this.resolve(value, reqPath)
     }
 
     private validate(app: ApplicationCommand, path: string | null) {
@@ -221,18 +226,13 @@ export class ApplicationCommandManager {
         }
     }
 
-    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any) {
+    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
         const v = value instanceof ApplicationCommand ? value : new ApplicationCommand({ ...value, path })
-
-        // Applies configuration from config.json, if any
-        if (config) {
-            if ("setName" in v.options.data && config.name) v.options.data.setName(config.name)
-            if ("setDescription" in v.options.data && config.description) v.options.data.setDescription(config.description)
-        }
 
         this.validate(v, path)
         return v
     }
+    
 
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()
