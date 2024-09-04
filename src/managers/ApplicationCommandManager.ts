@@ -190,20 +190,21 @@ export class ApplicationCommandManager {
 
     private loadOne(reqPath: string, configPath?: string) {
         if (!reqPath.endsWith(".js")) return null
-    
+
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
-    
+
         const config = configPath && existsSync(configPath) 
                         ? JSON.parse(readFileSync(configPath, "utf-8")) 
                         : null
 
         if (config) {
-            if (value.data && "setName" in value.data && config.name) value.data.setName(config.name)
-            if (value.data && "setDescription" in value.data && config.description) value.data.setDescription(config.description)
+            console.log(`Loaded config for ${reqPath}:`, config)
+        } else {
+            console.log(`No config found for ${reqPath}`)
         }
 
         return this.resolve(value, reqPath)
@@ -226,13 +227,28 @@ export class ApplicationCommandManager {
         }
     }
 
-    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
-        const v = value instanceof ApplicationCommand ? value : new ApplicationCommand({ ...value, path })
+    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any) {
+        if (!(value instanceof ApplicationCommand)) {
+            // Applies configuration from config.json, if any
+            if (config) {
+                if (value.data && "setName" in value.data && config.name) {
+                    value.data.setName(config.name)
+                    console.log(`Set name to ${config.name}`)
+                }
+                if (value.data && "setDescription" in value.data && config.description) {
+                    value.data.setDescription(config.description)
+                    console.log(`Set description to ${config.description}`)
+                }
+            }
 
-        this.validate(v, path)
-        return v
+            const appCommand = new ApplicationCommand({ ...value, path })
+            this.validate(appCommand, path)
+            return appCommand
+        }
+
+        this.validate(value, path)
+        return value
     }
-    
 
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()

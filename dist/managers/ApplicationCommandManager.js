@@ -162,10 +162,10 @@ class ApplicationCommandManager {
             ? JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"))
             : null;
         if (config) {
-            if (value.data && "setName" in value.data && config.name)
-                value.data.setName(config.name);
-            if (value.data && "setDescription" in value.data && config.description)
-                value.data.setDescription(config.description);
+            console.log(`Loaded config for ${reqPath}:`, config);
+        }
+        else {
+            console.log(`No config found for ${reqPath}`);
         }
         return this.resolve(value, reqPath);
     }
@@ -176,10 +176,25 @@ class ApplicationCommandManager {
             throw new Error(`Attempted to define subcommand / subcommand group without using path tree definition. (${path ?? "index file"})`);
         }
     }
-    resolve(value, path) {
-        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand({ ...value, path });
-        this.validate(v, path);
-        return v;
+    resolve(value, path, config) {
+        if (!(value instanceof ApplicationCommand_1.ApplicationCommand)) {
+            // Applies configuration from config.json, if any
+            if (config) {
+                if (value.data && "setName" in value.data && config.name) {
+                    value.data.setName(config.name);
+                    console.log(`Set name to ${config.name}`);
+                }
+                if (value.data && "setDescription" in value.data && config.description) {
+                    value.data.setDescription(config.description);
+                    console.log(`Set description to ${config.description}`);
+                }
+            }
+            const appCommand = new ApplicationCommand_1.ApplicationCommand({ ...value, path });
+            this.validate(appCommand, path);
+            return appCommand;
+        }
+        this.validate(value, path);
+        return value;
     }
     toJSON(type) {
         const arr = new Array();
