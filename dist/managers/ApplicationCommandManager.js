@@ -158,16 +158,13 @@ class ApplicationCommandManager {
             return null;
         else if (Array.isArray(value))
             throw new Error("Disallowed");
-        const config = configPath && (0, fs_1.existsSync)(configPath)
+        // Only load config.json for folders representing subcommand groups
+        const isSubcommandGroup = configPath && (0, fs_1.existsSync)(configPath);
+        const config = isSubcommandGroup
             ? JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"))
             : null;
-        if (config) {
-            console.log(`Loaded config for ${reqPath}:`, config);
-        }
-        else {
-            console.log(`No config found for ${reqPath}`);
-        }
-        return this.resolve(value, reqPath);
+        console.log(`Loaded config for ${reqPath}:`, config);
+        return this.resolve(value, reqPath, config);
     }
     validate(app, path) {
         const json = app.toJSON();
@@ -178,7 +175,7 @@ class ApplicationCommandManager {
     }
     resolve(value, path, config) {
         if (!(value instanceof ApplicationCommand_1.ApplicationCommand)) {
-            // Applies configuration from config.json, if any
+            // Applies configuration from config.json, if any (for subcommand groups)
             if (config) {
                 if (value.data && "setName" in value.data && config.name) {
                     value.data.setName(config.name);

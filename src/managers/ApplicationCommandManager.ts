@@ -194,21 +194,20 @@ export class ApplicationCommandManager {
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
+
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
 
-        const config = configPath && existsSync(configPath) 
-                        ? JSON.parse(readFileSync(configPath, "utf-8")) 
-                        : null
+        // Only load config.json for folders representing subcommand groups
+        const isSubcommandGroup = configPath && existsSync(configPath)
+        const config = isSubcommandGroup
+            ? JSON.parse(readFileSync(configPath, "utf-8"))
+            : null
 
-        if (config) {
-            console.log(`Loaded config for ${reqPath}:`, config)
-        } else {
-            console.log(`No config found for ${reqPath}`)
-        }
+        console.log(`Loaded config for ${reqPath}:`, config)
 
-        return this.resolve(value, reqPath)
-    }
+        return this.resolve(value, reqPath, config)
+    }    
 
     private validate(app: ApplicationCommand, path: string | null) {
         const json = app.toJSON()
@@ -229,7 +228,7 @@ export class ApplicationCommandManager {
 
     public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any) {
         if (!(value instanceof ApplicationCommand)) {
-            // Applies configuration from config.json, if any
+            // Applies configuration from config.json, if any (for subcommand groups)
             if (config) {
                 if (value.data && "setName" in value.data && config.name) {
                     value.data.setName(config.name)
