@@ -20,10 +20,9 @@ import {
     SlashCommandBuilder,
 } from "discord.js"
 import { ApplicationCommand } from "../structures/base/ApplicationCommand"
-import recursiveReaddirSync from "../functions/recursiveReaddirSync"
 import { ForgeClient } from "../core"
 import { NativeEventName } from "./EventManager"
-import { readdirSync, statSync } from "fs"
+import { readdirSync, statSync, existsSync, readFileSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
 
@@ -74,21 +73,25 @@ export class ApplicationCommandManager {
         for (const mainPath of readdirSync(path)) {
             const resolved = join(path, mainPath)
             const stats = statSync(resolved)
+
             if (stats.isDirectory()) {
                 const col = new Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>()
+                const configPath = join(resolved, "config.json")
 
                 for (const secondPath of readdirSync(resolved)) {
                     const secondResolved = join(resolved, secondPath)
                     const stats = statSync(secondResolved)
+
                     if (stats.isDirectory()) {
                         const nextCol = new Collection<string, ApplicationCommand>()
+                        const subConfigPath = join(secondResolved, "config.json")
 
                         for (const lastPath of readdirSync(secondResolved)) {
                             const thirdResolved = join(secondResolved, lastPath)
                             const stats = statSync(thirdResolved)
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`)
-                            const loaded = this.loadOne(join(cwd(), thirdResolved))
+                            const loaded = this.loadOne(join(cwd(), thirdResolved), subConfigPath)
                             if (!loaded) continue
                             else if (loaded.options.independent) {
                                 this.commands.set(loaded.name, loaded)
@@ -101,7 +104,7 @@ export class ApplicationCommandManager {
                         if (nextCol.size === 0) continue
                         col.set(secondPath, nextCol)
                     } else {
-                        const loaded = this.loadOne(join(cwd(), secondResolved))
+                        const loaded = this.loadOne(join(cwd(), secondResolved), configPath)
                         if (!loaded) continue
                         else if (loaded.options.independent) {
                             this.commands.set(loaded.name, loaded)
@@ -187,14 +190,23 @@ export class ApplicationCommandManager {
         }
     }
 
-    private loadOne(reqPath: string) {
+    private loadOne(reqPath: string, configPath?: string) {
         if (!reqPath.endsWith(".js")) return null
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
-        return this.resolve(value, reqPath)
+
+        const command = this.resolve(value, reqPath)
+
+        // If there's a config file, load and apply it
+        if (configPath && existsSync(configPath)) {
+            const config = JSON.parse(readFileSync(configPath, "utf-8"))
+            Object.assign(command.options.data, config)
+        }
+
+        return command
     }
 
     private validate(app: ApplicationCommand, path: string | null) {
