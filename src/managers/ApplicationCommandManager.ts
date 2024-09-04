@@ -42,6 +42,11 @@ export interface IApplicationCommandData {
     type?: RegistrationType
     independent?: boolean
     path?: string | null
+    config?: {
+        description?: string
+        name?: string
+        // Other configurable properties here
+    }
 }
 
 export class ApplicationCommandManager {
@@ -66,41 +71,39 @@ export class ApplicationCommandManager {
      */
     public load(path: string = this.path) {
         if (!path) return
-
+    
         this.path ??= path
         this.commands.clear()
-
+    
         for (const mainPath of readdirSync(path)) {
             const resolved = join(path, mainPath)
             const stats = statSync(resolved)
-
             if (stats.isDirectory()) {
-                const col = new Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>()
                 const configPath = join(resolved, "config.json")
-
+                const col = new Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>()
+    
                 for (const secondPath of readdirSync(resolved)) {
                     const secondResolved = join(resolved, secondPath)
                     const stats = statSync(secondResolved)
-
                     if (stats.isDirectory()) {
                         const nextCol = new Collection<string, ApplicationCommand>()
-                        const subConfigPath = join(secondResolved, "config.json")
-
+                        const groupConfigPath = join(secondResolved, "config.json")
+    
                         for (const lastPath of readdirSync(secondResolved)) {
                             const thirdResolved = join(secondResolved, lastPath)
                             const stats = statSync(thirdResolved)
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`)
-                            const loaded = this.loadOne(join(cwd(), thirdResolved), subConfigPath)
+                            const loaded = this.loadOne(join(cwd(), thirdResolved), groupConfigPath)
                             if (!loaded) continue
                             else if (loaded.options.independent) {
                                 this.commands.set(loaded.name, loaded)
                                 continue
                             }
-
+    
                             nextCol.set(loaded.name, loaded)
                         }
-
+    
                         if (nextCol.size === 0) continue
                         col.set(secondPath, nextCol)
                     } else {
@@ -110,11 +113,11 @@ export class ApplicationCommandManager {
                             this.commands.set(loaded.name, loaded)
                             continue
                         }
-
+    
                         col.set(loaded.name, loaded)
                     }
                 }
-
+    
                 if (col.size === 0) continue
                 this.commands.set(mainPath, col)
             } else {
@@ -192,21 +195,18 @@ export class ApplicationCommandManager {
 
     private loadOne(reqPath: string, configPath?: string) {
         if (!reqPath.endsWith(".js")) return null
+    
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
-
-        const command = this.resolve(value, reqPath)
-
-        // If there's a config file, load and apply it
-        if (configPath && existsSync(configPath)) {
-            const config = JSON.parse(readFileSync(configPath, "utf-8"))
-            Object.assign(command.options.data, config)
-        }
-
-        return command
+    
+        const config = configPath && existsSync(configPath) 
+                        ? JSON.parse(readFileSync(configPath, "utf-8")) 
+                        : null
+    
+        return this.resolve(value, reqPath, config)
     }
 
     private validate(app: ApplicationCommand, path: string | null) {
@@ -226,8 +226,15 @@ export class ApplicationCommandManager {
         }
     }
 
-    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
+    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any) {
         const v = value instanceof ApplicationCommand ? value : new ApplicationCommand({ ...value, path })
+    
+        // Applies configuration from config.json, if any
+        if (config) {
+            if ("setName" in v.options.data && config.name) v.options.data.setName(config.name)
+            if ("setDescription" in v.options.data && config.description) v.options.data.setDescription(config.description)
+        }
+    
         this.validate(v, path)
         return v
     }

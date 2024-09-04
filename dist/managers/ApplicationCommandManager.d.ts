@@ -12,6 +12,10 @@ export interface IApplicationCommandData {
     type?: RegistrationType;
     independent?: boolean;
     path?: string | null;
+    config?: {
+        description?: string;
+        name?: string;
+    };
 }
 export declare class ApplicationCommandManager {
     readonly client: ForgeClient;
@@ -41,7 +45,7 @@ export declare class ApplicationCommandManager {
     add(...values: (ApplicationCommand | IApplicationCommandData | ApplicationCommand[] | IApplicationCommandData[])[]): void;
     private loadOne;
     private validate;
-    resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null): ApplicationCommand;
+    resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any): ApplicationCommand;
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[];
     registerGlobal(): Promise<Collection<string, import("discord.js").ApplicationCommand<{
         guild: import("discord.js").GuildResolvable;
