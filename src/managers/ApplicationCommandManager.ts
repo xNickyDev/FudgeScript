@@ -20,9 +20,10 @@ import {
     SlashCommandBuilder,
 } from "discord.js"
 import { ApplicationCommand } from "../structures/base/ApplicationCommand"
+import recursiveReaddirSync from "../functions/recursiveReaddirSync"
 import { ForgeClient } from "../core"
 import { NativeEventName } from "./EventManager"
-import { readdirSync, statSync, existsSync, readFileSync } from "fs"
+import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
 
@@ -74,7 +75,6 @@ export class ApplicationCommandManager {
             const resolved = join(path, mainPath)
             const stats = statSync(resolved)
             if (stats.isDirectory()) {
-                const configPath = join(resolved, "config.json")
                 const col = new Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>()
 
                 for (const secondPath of readdirSync(resolved)) {
@@ -82,14 +82,13 @@ export class ApplicationCommandManager {
                     const stats = statSync(secondResolved)
                     if (stats.isDirectory()) {
                         const nextCol = new Collection<string, ApplicationCommand>()
-                        const groupConfigPath = join(secondResolved, "config.json")
 
                         for (const lastPath of readdirSync(secondResolved)) {
                             const thirdResolved = join(secondResolved, lastPath)
                             const stats = statSync(thirdResolved)
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`)
-                            const loaded = this.loadOne(join(cwd(), thirdResolved), groupConfigPath)
+                            const loaded = this.loadOne(join(cwd(), thirdResolved))
                             if (!loaded) continue
                             else if (loaded.options.independent) {
                                 this.commands.set(loaded.name, loaded)
@@ -102,7 +101,7 @@ export class ApplicationCommandManager {
                         if (nextCol.size === 0) continue
                         col.set(secondPath, nextCol)
                     } else {
-                        const loaded = this.loadOne(join(cwd(), secondResolved), configPath)
+                        const loaded = this.loadOne(join(cwd(), secondResolved))
                         if (!loaded) continue
                         else if (loaded.options.independent) {
                             this.commands.set(loaded.name, loaded)
@@ -188,26 +187,15 @@ export class ApplicationCommandManager {
         }
     }
 
-    private loadOne(reqPath: string, configPath?: string) {
+    private loadOne(reqPath: string) {
         if (!reqPath.endsWith(".js")) return null
-
         delete require.cache[require.resolve(reqPath)]
         const req = require(reqPath)
         let value = req.default ?? req
-
         if (!value || !Object.keys(value).length) return null
         else if (Array.isArray(value)) throw new Error("Disallowed")
-
-        // Only load config.json for folders representing subcommand groups
-        const isSubcommandGroup = configPath && existsSync(configPath)
-        const config = isSubcommandGroup
-            ? JSON.parse(readFileSync(configPath, "utf-8"))
-            : null
-
-        console.log(`Loaded config for ${reqPath}:`, config)
-
-        return this.resolve(value, reqPath, config)
-    }    
+        return this.resolve(value, reqPath)
+    }
 
     private validate(app: ApplicationCommand, path: string | null) {
         const json = app.toJSON()
@@ -226,27 +214,10 @@ export class ApplicationCommandManager {
         }
     }
 
-    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null, config?: any) {
-        if (!(value instanceof ApplicationCommand)) {
-            // Applies configuration from config.json, if any (for subcommand groups)
-            if (config) {
-                if (value.data && "setName" in value.data && config.name) {
-                    value.data.setName(config.name)
-                    console.log(`Set name to ${config.name}`)
-                }
-                if (value.data && "setDescription" in value.data && config.description) {
-                    value.data.setDescription(config.description)
-                    console.log(`Set description to ${config.description}`)
-                }
-            }
-
-            const appCommand = new ApplicationCommand({ ...value, path })
-            this.validate(appCommand, path)
-            return appCommand
-        }
-
-        this.validate(value, path)
-        return value
+    public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
+        const v = value instanceof ApplicationCommand ? value : new ApplicationCommand({ ...value, path })
+        this.validate(v, path)
+        return v
     }
 
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {

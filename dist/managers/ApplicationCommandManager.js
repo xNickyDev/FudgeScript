@@ -41,20 +41,18 @@ class ApplicationCommandManager {
             const resolved = (0, path_1.join)(path, mainPath);
             const stats = (0, fs_1.statSync)(resolved);
             if (stats.isDirectory()) {
-                const configPath = (0, path_1.join)(resolved, "config.json");
                 const col = new discord_js_1.Collection();
                 for (const secondPath of (0, fs_1.readdirSync)(resolved)) {
                     const secondResolved = (0, path_1.join)(resolved, secondPath);
                     const stats = (0, fs_1.statSync)(secondResolved);
                     if (stats.isDirectory()) {
                         const nextCol = new discord_js_1.Collection();
-                        const groupConfigPath = (0, path_1.join)(secondResolved, "config.json");
                         for (const lastPath of (0, fs_1.readdirSync)(secondResolved)) {
                             const thirdResolved = (0, path_1.join)(secondResolved, lastPath);
                             const stats = (0, fs_1.statSync)(thirdResolved);
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`);
-                            const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), thirdResolved), groupConfigPath);
+                            const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), thirdResolved));
                             if (!loaded)
                                 continue;
                             else if (loaded.options.independent) {
@@ -68,7 +66,7 @@ class ApplicationCommandManager {
                         col.set(secondPath, nextCol);
                     }
                     else {
-                        const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), secondResolved), configPath);
+                        const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), secondResolved));
                         if (!loaded)
                             continue;
                         else if (loaded.options.independent) {
@@ -148,7 +146,7 @@ class ApplicationCommandManager {
             this.commands.set(resolved.name, resolved);
         }
     }
-    loadOne(reqPath, configPath) {
+    loadOne(reqPath) {
         if (!reqPath.endsWith(".js"))
             return null;
         delete require.cache[require.resolve(reqPath)];
@@ -158,13 +156,7 @@ class ApplicationCommandManager {
             return null;
         else if (Array.isArray(value))
             throw new Error("Disallowed");
-        // Only load config.json for folders representing subcommand groups
-        const isSubcommandGroup = configPath && (0, fs_1.existsSync)(configPath);
-        const config = isSubcommandGroup
-            ? JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"))
-            : null;
-        console.log(`Loaded config for ${reqPath}:`, config);
-        return this.resolve(value, reqPath, config);
+        return this.resolve(value, reqPath);
     }
     validate(app, path) {
         const json = app.toJSON();
@@ -173,25 +165,10 @@ class ApplicationCommandManager {
             throw new Error(`Attempted to define subcommand / subcommand group without using path tree definition. (${path ?? "index file"})`);
         }
     }
-    resolve(value, path, config) {
-        if (!(value instanceof ApplicationCommand_1.ApplicationCommand)) {
-            // Applies configuration from config.json, if any (for subcommand groups)
-            if (config) {
-                if (value.data && "setName" in value.data && config.name) {
-                    value.data.setName(config.name);
-                    console.log(`Set name to ${config.name}`);
-                }
-                if (value.data && "setDescription" in value.data && config.description) {
-                    value.data.setDescription(config.description);
-                    console.log(`Set description to ${config.description}`);
-                }
-            }
-            const appCommand = new ApplicationCommand_1.ApplicationCommand({ ...value, path });
-            this.validate(appCommand, path);
-            return appCommand;
-        }
-        this.validate(value, path);
-        return value;
+    resolve(value, path) {
+        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand({ ...value, path });
+        this.validate(v, path);
+        return v;
     }
     toJSON(type) {
         const arr = new Array();
