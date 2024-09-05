@@ -10,7 +10,10 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
         const commands = this.commands.get("guildBanRemove");
         for (const command of commands) {
             core_1.Interpreter.run({
-                obj: [m.user, m.guild],
+                obj: {
+                    guild: m.guild,
+                    user: m.user
+                },
                 command,
                 client: this,
                 states: {
