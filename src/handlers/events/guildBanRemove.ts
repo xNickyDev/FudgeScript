@@ -11,7 +11,7 @@ export default new DiscordEventHandler({
         
         for (const command of commands) {
             Interpreter.run({
-                obj: m.user,
+                obj: [m.user, m.guild],
                 command,
                 client: this,
                 states: {

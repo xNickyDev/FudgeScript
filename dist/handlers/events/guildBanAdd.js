@@ -10,7 +10,7 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
         const commands = this.commands.get("guildBanAdd");
         for (const command of commands) {
             core_1.Interpreter.run({
-                obj: m.user,
+                obj: [m.user, m.guild],
                 command,
                 client: this,
                 states: {
