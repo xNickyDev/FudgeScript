@@ -26,6 +26,6 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
             });
         }
     },
-    intents: ["GuildModeration"],
+    intents: ["GuildMembers", "GuildModeration"],
 });
 //# sourceMappingURL=guildBanRemove.js.map

@@ -27,5 +27,5 @@ export default new DiscordEventHandler({
             })
         }
     },
-    intents: ["GuildModeration"],
+    intents: ["GuildMembers", "GuildModeration"],
 })
