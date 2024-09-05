@@ -25,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [g, cmds]) {
         g ??= ctx.guild;
-        if (!cmds) {
+        if (!cmds || cmds.length === 0) {
             return this.success(!!(await g.commands.set([]).catch(ctx.noop)));
         }
         cmds = Array.isArray(cmds) ? cmds : [cmds];

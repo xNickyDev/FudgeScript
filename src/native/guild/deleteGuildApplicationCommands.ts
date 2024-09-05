@@ -26,7 +26,7 @@ export default new NativeFunction({
     async execute(ctx, [g, cmds]) {
         g ??= ctx.guild!
 
-        if (!cmds) {
+        if (!cmds || cmds.length === 0) {
             return this.success(!!(await g.commands.set([]).catch(ctx.noop)))
         }
 
