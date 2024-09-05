@@ -1,4 +1,3 @@
-import { ApplicationCommandDataResolvable } from "discord.js"
 import { Arg, ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
