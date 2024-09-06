@@ -2,7 +2,7 @@ import { ApplicationEmoji } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum ApplicationEmojiProperty {
-    author = "author",
+    authorID = "authorID",
     name = "name",
     id = "id",
     identifier = "identifier",
@@ -15,7 +15,7 @@ export enum ApplicationEmojiProperty {
 }
 
 export const ApplicationEmojiProperties = defineProperties<typeof ApplicationEmojiProperty, ApplicationEmoji>({
-    author: (i) => i?.author?.id,
+    authorID: (i) => i?.author?.id,
     id: (i) => i?.id,
     identifier: (i) => i?.identifier,
     name: (i) => i?.name,

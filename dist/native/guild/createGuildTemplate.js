@@ -13,7 +13,7 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "guild ID",
-            description: "The guild to create template for",
+            description: "The guild to create template on",
             rest: false,
             required: true,
             type: structures_1.ArgType.Guild,
@@ -32,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    output: structures_1.ArgType.Unknown,
+    output: structures_1.ArgType.String,
     async execute(ctx, [guild, name, desc]) {
         return this.successJSON((await guild.createTemplate(name, desc || undefined)).code);
     },

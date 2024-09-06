@@ -12,7 +12,7 @@ export default new NativeFunction({
     args: [
         {
             name: "guild ID",
-            description: "The guild to create template for",
+            description: "The guild to create template on",
             rest: false,
             required: true,
             type: ArgType.Guild,
@@ -31,7 +31,7 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    output: ArgType.Unknown,
+    output: ArgType.String,
     async execute(ctx, [guild, name, desc]) {
         return this.successJSON((await guild.createTemplate(name, desc || undefined)).code)
     },

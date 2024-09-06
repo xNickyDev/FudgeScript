@@ -7,7 +7,7 @@ exports.ApplicationEmojiProperties = exports.ApplicationEmojiProperty = void 0;
 const defineProperties_1 = __importDefault(require("../functions/defineProperties"));
 var ApplicationEmojiProperty;
 (function (ApplicationEmojiProperty) {
-    ApplicationEmojiProperty["author"] = "author";
+    ApplicationEmojiProperty["authorID"] = "authorID";
     ApplicationEmojiProperty["name"] = "name";
     ApplicationEmojiProperty["id"] = "id";
     ApplicationEmojiProperty["identifier"] = "identifier";
@@ -19,7 +19,7 @@ var ApplicationEmojiProperty;
     ApplicationEmojiProperty["format"] = "format";
 })(ApplicationEmojiProperty || (exports.ApplicationEmojiProperty = ApplicationEmojiProperty = {}));
 exports.ApplicationEmojiProperties = (0, defineProperties_1.default)({
-    author: (i) => i?.author?.id,
+    authorID: (i) => i?.author?.id,
     id: (i) => i?.id,
     identifier: (i) => i?.identifier,
     name: (i) => i?.name,

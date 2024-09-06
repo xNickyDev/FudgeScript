@@ -12,7 +12,7 @@ export default new NativeFunction({
     args: [
         {
             name: "template code",
-            description: "The guild to delete template from",
+            description: "The code of the template",
             rest: false,
             required: true,
             type: ArgType.String,
@@ -20,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [code]) {
-        return this.success()
+        return this.success(!!((await ctx.client.fetchGuildTemplate(code)).delete()))
     },
 })

@@ -1,6 +1,6 @@
 import { ApplicationEmoji } from "discord.js";
 export declare enum ApplicationEmojiProperty {
-    author = "author",
+    authorID = "authorID",
     name = "name",
     id = "id",
     identifier = "identifier",

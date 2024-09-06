@@ -1,18 +1,18 @@
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
-    name: "$guildHasTemplates",
+    name: "$guildHasTemplate",
     version: "1.5.0",
-    description: "Returns whether this guild has any templates",
+    description: "Returns whether this guild has a template",
     unwrap: true,
     brackets: false,
     aliases: [
-        "$hasGuildTemplates"
+        "$hasGuildTemplate"
     ],
     args: [
         {
             name: "guild ID",
-            description: "The guild to check for templates",
+            description: "The guild to check for template",
             rest: false,
             required: true,
             type: ArgType.Guild
