@@ -13,7 +13,7 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "template code",
-            description: "The code of the template",
+            description: "The code of the template to delete",
             rest: false,
             required: true,
             type: structures_1.ArgType.String,
