@@ -7,8 +7,19 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     description: "Disables all buttons on the current message",
     unwrap: true,
-    async execute(ctx) {
-        const components = ctx.container.components;
+    args: [
+        {
+            name: "index",
+            description: "The index of the row to disable",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Number,
+        },
+    ],
+    brackets: false,
+    async execute(ctx, [index]) {
+        const data = ctx.container.components;
+        const components = index ? [data[index]] : data;
         components.map(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row.components.forEach(component => {
