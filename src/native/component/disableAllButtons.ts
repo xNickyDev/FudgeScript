@@ -21,9 +21,9 @@ export default new NativeFunction({
         const data = ctx.container.components
         const components = isNumber(index) ? [data[index]] : data
 
-        components?.map(row => {
+        components.map(row => {
             const actionRow = new ActionRowBuilder()
-            row.components.forEach(component => {
+            row?.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {
                     const disabledButton = component.setDisabled(true)
                     actionRow.addComponents(disabledButton)

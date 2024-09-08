@@ -21,9 +21,9 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [index]) {
         const data = ctx.container.components;
         const components = (0, lodash_1.isNumber)(index) ? [data[index]] : data;
-        components?.map(row => {
+        components.map(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
-            row.components.forEach(component => {
+            row?.components.forEach(component => {
                 if (component instanceof discord_js_1.ButtonBuilder) {
                     const disabledButton = component.setDisabled(true);
                     actionRow.addComponents(disabledButton);
