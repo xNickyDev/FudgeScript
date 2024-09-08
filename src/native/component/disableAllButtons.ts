@@ -19,7 +19,7 @@ export default new NativeFunction({
     brackets: false,
     async execute(ctx, [index]) {
         const data = ctx.container.components
-        const components = !index ? [data[index]] : data
+        const components = isNumber(index) ? [data[index]] : data
 
         components?.map(row => {
             const actionRow = new ActionRowBuilder()
