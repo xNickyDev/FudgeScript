@@ -1,5 +1,6 @@
 import { ButtonBuilder, ActionRowBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { isNumber } from "lodash"
 
 export default new NativeFunction({
     name: "$disableAllButtons",
@@ -18,9 +19,9 @@ export default new NativeFunction({
     brackets: false,
     async execute(ctx, [index]) {
         const data = ctx.container.components
-        const components = index ? [data[index]] : data
+        const components = !index ? [data[index]] : data
 
-        components.map(row => {
+        components?.map(row => {
             const actionRow = new ActionRowBuilder()
             row.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {

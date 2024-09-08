@@ -19,8 +19,8 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     async execute(ctx, [index]) {
         const data = ctx.container.components;
-        const components = index ? [data[index]] : data;
-        components.map(row => {
+        const components = !index ? [data[index]] : data;
+        components?.map(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row.components.forEach(component => {
                 if (component instanceof discord_js_1.ButtonBuilder) {
