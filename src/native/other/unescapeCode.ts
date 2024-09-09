@@ -21,6 +21,11 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [code]) {
+        code = code
+            .replace("\;", ";")
+            .replace("\]", "]")
+            .replace("\$", "$")
+
         return this.success(code)
     },
 })
