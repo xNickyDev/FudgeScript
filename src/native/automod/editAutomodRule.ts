@@ -16,7 +16,7 @@ export default new NativeFunction({
             type: ArgType.Guild,
         },
         {
-            name: "role ID",
+            name: "rule ID",
             description: "The id of the automod rule to edit",
             rest: false,
             required: true,
@@ -26,14 +26,12 @@ export default new NativeFunction({
             name: "name",
             description: "The new name for the automod rule",
             rest: false,
-            required: true,
             type: ArgType.String,
         },
         {
             name: "event",
             description: "The new event type for the automod rule",
             rest: false,
-            required: true,
             type: ArgType.Enum,
             enum: AutoModerationRuleEventType
         },
@@ -55,12 +53,12 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     async execute(ctx, [ guild, id, name, event, enabled, reason ]) {
         const rule = await guild.autoModerationRules.edit(id as AutoModerationRuleResolvable, {
-            name: name,
-            eventType: event,
-            triggerMetadata: ctx.automodRule.triggerMetadata,
-            actions: ctx.automodRule.actions,
-            exemptRoles: ctx.automodRule.exemptRoles,
-            exemptChannels: ctx.automodRule.exemptChannels,
+            name: name || undefined,
+            eventType: event || undefined,
+            triggerMetadata: ctx.automodRule.triggerMetadata || undefined,
+            actions: ctx.automodRule.actions || undefined,
+            exemptRoles: ctx.automodRule.exemptRoles || undefined,
+            exemptChannels: ctx.automodRule.exemptChannels || undefined,
             enabled: enabled || undefined,
             reason: reason || undefined
         }).catch(ctx.noop)
