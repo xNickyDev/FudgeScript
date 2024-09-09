@@ -16,7 +16,7 @@ export default new NativeFunction({
             type: ArgType.Boolean,
         },
     ],
-    async execute(ctx, [enabled]) {
+    execute(ctx, [enabled]) {
         if (ctx.automodRule.triggerMetadata) ctx.automodRule.triggerMetadata.mentionRaidProtectionEnabled = enabled
 
         return this.success()

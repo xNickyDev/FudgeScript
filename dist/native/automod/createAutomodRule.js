@@ -56,12 +56,14 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Number,
     async execute(ctx, [guild, name, trigger, event, enabled, reason]) {
+        console.log("Rule Trigger Metadata", ctx.automodRule.triggerMetadata);
+        console.log("Rule Action", ctx.automodRule.actions);
         const rule = await guild.autoModerationRules.create({
             name: name,
             eventType: event,
             triggerType: trigger,
-            triggerMetadata: ctx.automodRule.triggerMetadata || {},
-            actions: ctx.automodRule.actions || [],
+            triggerMetadata: ctx.automodRule.triggerMetadata,
+            actions: ctx.automodRule.actions ?? [],
             exemptRoles: [],
             exemptChannels: [],
             enabled: enabled ?? true,

@@ -37,7 +37,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    async execute(ctx, [type, channel, duration, message]) {
+    execute(ctx, [type, channel, duration, message]) {
         const action = {
             type: type,
             metadata: {
@@ -47,6 +47,7 @@ exports.default = new structures_1.NativeFunction({
             }
         };
         ctx.automodRule.actions?.push(action);
+        console.log("Action", action);
         return this.success();
     },
 });
