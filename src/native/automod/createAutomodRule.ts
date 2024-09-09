@@ -55,8 +55,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Number,
     async execute(ctx, [ guild, name, trigger, event, enabled, reason ]) {
-        console.log("Rule Trigger Metadata", ctx.automodRule.triggerMetadata)
-        console.log("Rule Action", ctx.automodRule.actions)
         const rule = await guild.autoModerationRules.create({
             name: name,
             eventType: event,

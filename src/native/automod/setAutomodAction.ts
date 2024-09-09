@@ -36,7 +36,7 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    execute(ctx, [ type, channel, duration, message ]) {
+    async execute(ctx, [ type, channel, duration, message ]) {
         const action = {
             type: type,
             metadata: {
@@ -45,8 +45,9 @@ export default new NativeFunction({
                 durationSeconds: duration
             }
         } as AutoModerationActionOptions
-        ctx.automodRule.actions?.push(action)
-        console.log("Action", action)
+
+        ctx.automodRule.actions ??= []
+        ctx.automodRule.actions.push(action)
 
         return this.success()
     },

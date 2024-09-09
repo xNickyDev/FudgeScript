@@ -17,7 +17,8 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [enabled]) {
-        if (ctx.automodRule.triggerMetadata) ctx.automodRule.triggerMetadata.mentionRaidProtectionEnabled = enabled
+        ctx.automodRule.triggerMetadata ??= {}
+        ctx.automodRule.triggerMetadata.mentionRaidProtectionEnabled = enabled
 
         return this.success()
     },
