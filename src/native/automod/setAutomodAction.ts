@@ -36,7 +36,7 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    async execute(ctx, [ type, channel, duration, message ]) {
+    execute(ctx, [ type, channel, duration, message ]) {
         const action = {
             type: type,
             metadata: {
