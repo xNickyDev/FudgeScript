@@ -4,22 +4,37 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const lodash_1 = require("lodash");
 exports.default = new structures_1.NativeFunction({
-    name: "$disableAllButtons",
+    name: "$disableAllButtonsOf",
     version: "1.5.0",
-    description: "Disables all buttons on the current message",
+    description: "Disables all buttons of a message, returns bool",
     unwrap: true,
     args: [
+        {
+            name: "channel ID",
+            description: "The channel id to pull message from",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.TextChannel
+        },
+        {
+            name: "message ID",
+            description: "The message to disable buttons on",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Message,
+            pointer: 0
+        },
         {
             name: "index",
             description: "The index of the row to disable",
             rest: false,
-            required: true,
             type: structures_1.ArgType.Number,
         },
     ],
-    brackets: false,
-    async execute(ctx, [index]) {
-        const data = ctx.container.components;
+    brackets: true,
+    output: structures_1.ArgType.Boolean,
+    async execute(ctx, [, msg, index]) {
+        const data = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
         const components = (0, lodash_1.isNumber)(index) ? [data[index]] : data;
         components.map(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
@@ -33,7 +48,7 @@ exports.default = new structures_1.NativeFunction({
             });
             return actionRow;
         });
-        return this.success();
+        return this.success(!!(await msg.edit({ components: components }).catch(ctx.noop)));
     },
 });
-//# sourceMappingURL=disableAllButtons.js.map
+//# sourceMappingURL=disableAllButtonsOf.js.map

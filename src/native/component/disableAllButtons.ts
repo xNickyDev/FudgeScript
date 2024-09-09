@@ -25,8 +25,7 @@ export default new NativeFunction({
             const actionRow = new ActionRowBuilder()
             row?.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {
-                    const disabledButton = component.setDisabled(true)
-                    actionRow.addComponents(disabledButton)
+                    actionRow.addComponents(component.setDisabled(true))
                 } else {
                     actionRow.addComponents(component)
                 }
