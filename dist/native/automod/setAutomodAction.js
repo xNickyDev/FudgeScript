@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setAutomodAction",
     version: "1.5.0",
-    description: "Sets a new automod rule action",
+    description: "Sets a new action for current automod rule",
     unwrap: true,
     brackets: true,
     args: [

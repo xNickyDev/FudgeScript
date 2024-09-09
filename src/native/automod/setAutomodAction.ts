@@ -4,7 +4,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$setAutomodAction",
     version: "1.5.0",
-    description: "Sets a new automod rule action",
+    description: "Sets a new action for current automod rule",
     unwrap: true,
     brackets: true,
     args: [

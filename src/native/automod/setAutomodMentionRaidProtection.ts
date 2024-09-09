@@ -1,4 +1,3 @@
-import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, ThreadChannel, AutoModerationTriggerMetadata, AutoModerationTriggerMetadataOptions } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -19,7 +18,6 @@ export default new NativeFunction({
     execute(ctx, [enabled]) {
         ctx.automodRule.triggerMetadata ??= {}
         ctx.automodRule.triggerMetadata.mentionRaidProtectionEnabled = enabled
-
         return this.success()
     },
 })

@@ -20,6 +20,8 @@ export interface IHttpOptions {
 export interface IAutomodRuleOptions {
     actions: AutoModerationActionOptions[];
     triggerMetadata?: AutoModerationTriggerMetadataOptions;
+    exemptRoles?: string[];
+    exemptChannels?: string[];
 }
 export declare enum CalendarType {
     Buddhist = "buddhist",
