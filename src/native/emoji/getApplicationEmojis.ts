@@ -1,5 +1,3 @@
-import { Collection } from "discord.js"
-import noop from "../../functions/noop"
 import { ApplicationEmojiProperties, ApplicationEmojiProperty } from "../../properties/applicationEmoji"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
@@ -25,13 +23,8 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Unknown,
-    execute(ctx, [prop, sep]) {
-        const emojis = ctx.client.application.emojis.cache
-
-        if (!prop) {
-            return this.successJSON(emojis)
-        }
-
-        return this.success(emojis?.map(emoji => ApplicationEmojiProperties[prop](emoji)).join(sep ?? ", "))
+    async execute(ctx, [prop, sep]) {
+        const emojis = await ctx.client.application.emojis.fetch().catch(ctx.noop)
+        return this.successJSON(!prop ? emojis : emojis?.map(emoji => ApplicationEmojiProperties[prop](emoji)).join(sep ?? ", "))
     },
 })
