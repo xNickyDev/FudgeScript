@@ -21,6 +21,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [code]) {
-        return this.success(code.toString())
+        return this.successFormatted(code.toString())
     },
 })

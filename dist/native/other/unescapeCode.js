@@ -22,7 +22,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.String,
     execute(ctx, [code]) {
-        return this.success(code.toString());
+        return this.successFormatted(code.toString());
     },
 });
 //# sourceMappingURL=unescapeCode.js.map
