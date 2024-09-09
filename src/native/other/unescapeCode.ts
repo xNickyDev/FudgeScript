@@ -21,11 +21,29 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [code]) {
-        code = code
+        const unescaped = code
+            .replace(/\\\\/g, "\\")
             .replace(/\\;/g, ";")
-            .replace(/\\\]/g, "]")
+            .replace(/\\]/g, "]")
+            .replace(/\\:/g, ":")
+            .replace(/\\,/g, ",")
+            .replace(/\\=/g, "=")
+            .replace(/\\&/g, "&")
+            .replace(/\\#/g, "#")
+            .replace(/\\!/g, "!")
+            .replace(/\\@/g, "@")
             .replace(/\\\$/g, "$")
+            .replace(/\\%/g, "%")
+            .replace(/\\\^/g, "^")
+            .replace(/\\\*/g, "*")
+            .replace(/\\\(/g, "(")
+            .replace(/\\\)/g, ")")
+            .replace(/\\\+/g, "+")
+            .replace(/\\\?/g, "?")
+            .replace(/\\</g, "<")
+            .replace(/\\>/g, ">")
+            .replace(/\\\|/g, "|")
 
-        return this.success(code.split(";"))
+        return this.success(unescaped)
     },
 })
