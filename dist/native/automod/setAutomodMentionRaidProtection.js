@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$setAutomodAction",
+    name: "$setAutomodMentionRaidProtection",
     version: "1.5.0",
-    description: "Sets a new automod rule action",
+    description: "Sets mention raid protection for current automod rule",
     unwrap: true,
     brackets: true,
     args: [

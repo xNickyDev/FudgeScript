@@ -2,9 +2,9 @@ import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, Thre
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$setAutomodAction",
+    name: "$setAutomodMentionRaidProtection",
     version: "1.5.0",
-    description: "Sets a new automod rule action",
+    description: "Sets mention raid protection for current automod rule",
     unwrap: true,
     brackets: true,
     args: [
