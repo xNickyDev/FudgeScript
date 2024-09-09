@@ -1,4 +1,4 @@
-import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, ThreadChannel } from "discord.js"
+import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, ThreadChannel, AutoModerationActionOptions } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -37,14 +37,15 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [ type, channel, duration, message ]) {
-        ctx.automodRule.actions?.push({
+        const action = {
             type: type,
             metadata: {
                 channel: channel as GuildTextChannelResolvable | ThreadChannel,
                 customMessage: message,
                 durationSeconds: duration
             }
-        })
+        } as AutoModerationActionOptions
+        ctx.automodRule.actions?.push(action)
 
         return this.success()
     },

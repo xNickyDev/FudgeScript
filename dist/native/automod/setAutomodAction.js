@@ -38,14 +38,15 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [type, channel, duration, message]) {
-        ctx.automodRule.actions?.push({
+        const action = {
             type: type,
             metadata: {
                 channel: channel,
                 customMessage: message,
                 durationSeconds: duration
             }
-        });
+        };
+        ctx.automodRule.actions?.push(action);
         return this.success();
     },
 });

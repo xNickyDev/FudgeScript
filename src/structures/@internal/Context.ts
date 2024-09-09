@@ -2,7 +2,7 @@ import {
     AnySelectMenuInteraction,
     AutoModerationActionExecution,
     AutoModerationActionOptions,
-    AutoModerationTriggerMetadata,
+    AutoModerationTriggerMetadataOptions,
     BaseChannel,
     BaseInteraction,
     ChatInputCommandInteraction,
@@ -48,7 +48,7 @@ export interface IHttpOptions {
 
 export interface IAutomodRuleOptions {
     actions: AutoModerationActionOptions[]
-    triggerMetadata: AutoModerationTriggerMetadata
+    triggerMetadata: AutoModerationTriggerMetadataOptions
 }
 
 export enum CalendarType {

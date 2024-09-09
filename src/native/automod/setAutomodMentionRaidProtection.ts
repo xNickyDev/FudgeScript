@@ -1,4 +1,4 @@
-import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, ThreadChannel } from "discord.js"
+import { BaseChannel, AutoModerationActionType, GuildTextChannelResolvable, ThreadChannel, AutoModerationTriggerMetadata, AutoModerationTriggerMetadataOptions } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
