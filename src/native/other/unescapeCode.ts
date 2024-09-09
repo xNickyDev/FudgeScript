@@ -26,6 +26,6 @@ export default new NativeFunction({
             .replace(/\\\]/g, "]")
             .replace(/\\\$/g, "$")
 
-        return this.success(code)
+        return this.success(code.split(";"))
     },
 })

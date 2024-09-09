@@ -26,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
             .replace(/\\;/g, ";")
             .replace(/\\\]/g, "]")
             .replace(/\\\$/g, "$");
-        return this.success(code);
+        return this.success(code.split(";"));
     },
 });
 //# sourceMappingURL=unescapeCode.js.map
