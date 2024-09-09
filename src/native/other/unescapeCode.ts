@@ -22,9 +22,9 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx, [code]) {
         code = code
-            .replace("\;", ";")
-            .replace("\]", "]")
-            .replace("\$", "$")
+            .replace(/\\;/g, ";")
+            .replace(/\\\]/g, "]")
+            .replace(/\\\$/g, "$")
 
         return this.success(code)
     },
