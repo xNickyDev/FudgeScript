@@ -28,11 +28,11 @@ export default new NativeFunction({
         },
         {
             name: "emoji",
-            description: "The message reaction to remove user from",
+            description: "The reaction emoji to remove user from",
             rest: false,
             required: true,
             pointer: 1,
-            type: ArgType.Reaction,
+            type: ArgType.ReactionEmoji,
         },
         {
             name: "user ID",
@@ -42,7 +42,8 @@ export default new NativeFunction({
             type: ArgType.User,
         },
     ],
-    async execute(ctx, [, , emoji, user]) {
-        return this.success(!!(await emoji.users.remove(user).catch(ctx.noop)))
+    async execute(ctx, [, message, emoji, user]) {
+        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
+        return this.success(!!(await reaction.users.remove(user).catch(ctx.noop)))
     },
 })

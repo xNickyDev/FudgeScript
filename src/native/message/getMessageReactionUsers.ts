@@ -32,7 +32,7 @@ export default new NativeFunction({
             required: true,
             pointer: 1,
             rest: false,
-            type: ArgType.Reaction,
+            type: ArgType.ReactionEmoji,
         },
         {
             name: "separator",
@@ -41,12 +41,13 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    async execute(ctx, [, , reaction, sep]) {
+    async execute(ctx, [, message, emoji, sep]) {
         const users = new Array<string>()
+        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
 
         let afterID: undefined | string = undefined
 
-        if (reaction.users.cache.size <= reaction.count) {
+        if (reaction.users.cache.size <= reaction?.count) {
             for (;;) {
                 const bulk = await reaction.users.fetch({
                     limit: 100,

@@ -20,7 +20,7 @@ declare const _default: NativeFunction<[{
     required: true;
     pointer: number;
     rest: false;
-    type: ArgType.Reaction;
+    type: ArgType.ReactionEmoji;
 }], true>;
 export default _default;
 //# sourceMappingURL=getMessageReactionCount.d.ts.map

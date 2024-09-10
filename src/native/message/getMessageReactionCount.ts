@@ -31,10 +31,11 @@ export default new NativeFunction({
             required: true,
             pointer: 1,
             rest: false,
-            type: ArgType.Reaction,
+            type: ArgType.ReactionEmoji,
         },
     ],
-    execute(ctx, [, , reaction]) {
+    execute(ctx, [, message, emoji]) {
+        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
         return this.success(reaction.count)
     },
 })

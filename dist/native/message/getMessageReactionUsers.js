@@ -35,7 +35,7 @@ exports.default = new structures_1.NativeFunction({
             required: true,
             pointer: 1,
             rest: false,
-            type: structures_1.ArgType.Reaction,
+            type: structures_1.ArgType.ReactionEmoji,
         },
         {
             name: "separator",
@@ -44,10 +44,11 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    async execute(ctx, [, , reaction, sep]) {
+    async execute(ctx, [, message, emoji, sep]) {
         const users = new Array();
+        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
         let afterID = undefined;
-        if (reaction.users.cache.size <= reaction.count) {
+        if (reaction.users.cache.size <= reaction?.count) {
             for (;;) {
                 const bulk = await reaction.users.fetch({
                     limit: 100,
