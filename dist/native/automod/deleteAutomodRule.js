@@ -31,12 +31,10 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [guild, id, reason]) {
-        try {
-            await guild.autoModerationRules.delete(id, reason || undefined).catch(ctx.noop);
-        }
-        catch {
+        await guild.autoModerationRules.delete(id, reason || undefined).catch(error => {
+            ctx.noop(error);
             return this.success(false);
-        }
+        });
         return this.success(true);
     },
 });

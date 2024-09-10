@@ -31,11 +31,10 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ guild, id, reason ]) {
-        try {
-            await guild.autoModerationRules.delete(id as AutoModerationRuleResolvable, reason || undefined).catch(ctx.noop)
-        } catch {
+        await guild.autoModerationRules.delete(id as AutoModerationRuleResolvable, reason || undefined).catch(error => {
+            ctx.noop(error)
             return this.success(false)
-        }
+        })
 
         return this.success(true)
     },
