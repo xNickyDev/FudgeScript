@@ -21,8 +21,8 @@ export const AutomodRuleProperties = defineProperties<typeof AutomodRuleProperty
     authorID: (i) => i?.creatorId,
     enabled: (i) => i?.enabled,
     eventType: (i) => i?.eventType,
-    exemptChannels: (i) => JSON.stringify(i?.exemptChannels?.map((x) => x.id)) || null,
-    exemptRoles: (i) => JSON.stringify(i?.exemptRoles?.map((x) => x.id)) || null,
+    exemptChannels: (i, sep) => i?.exemptChannels?.map((x) => x.id).join(sep ?? ", "),
+    exemptRoles: (i, sep) => i?.exemptRoles?.map((x) => x.id).join(sep ?? ", "),
     triggerMetadata: (i) => JSON.stringify(i?.triggerMetadata, undefined, 4) || null,
     triggerType: (i) => i?.triggerType,
 })

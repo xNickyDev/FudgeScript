@@ -24,6 +24,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Number,
     execute(ctx, [ name, begin ]) {
-        return this.success(void ctx.getEnvironmentInstance(Buffer, name)?.readInt32LE(begin) ?? 0)
+        return this.success(ctx.getEnvironmentInstance(Buffer, name)?.readInt32LE(begin) ?? 0)
     },
 })

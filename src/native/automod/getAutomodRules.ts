@@ -1,5 +1,6 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { AutomodRuleProperty, AutomodRuleProperties } from "../../properties/automodRule"
+import { AutoModerationRule } from "discord.js"
 
 export default new NativeFunction({
     name: "$getAutomodRules",
@@ -32,6 +33,6 @@ export default new NativeFunction({
     output: ArgType.Unknown,
     async execute(ctx, [ guild, prop, sep ]) {
         const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop)
-        return this.successJSON(!prop ? rules : rules?.map(rule => AutomodRuleProperties[prop](rule)).join(sep ?? ", "))
+        return this.successJSON(!prop ? rules : rules?.map(rule => AutomodRuleProperties[prop](rule, sep)).join(prop !== "actions" && prop !== "triggerMetadata" ? sep ?? ", " : undefined))
     },
 })

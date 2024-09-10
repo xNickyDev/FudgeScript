@@ -59,7 +59,7 @@ export default new NativeFunction({
             actions: ctx.automodRule.actions || undefined,
             exemptRoles: ctx.automodRule.exemptRoles || undefined,
             exemptChannels: ctx.automodRule.exemptChannels || undefined,
-            enabled: enabled || undefined,
+            enabled: enabled ?? undefined,
             reason: reason || undefined
         }).catch(ctx.noop)
 

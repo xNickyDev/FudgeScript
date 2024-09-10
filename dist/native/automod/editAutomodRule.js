@@ -60,7 +60,7 @@ exports.default = new structures_1.NativeFunction({
             actions: ctx.automodRule.actions || undefined,
             exemptRoles: ctx.automodRule.exemptRoles || undefined,
             exemptChannels: ctx.automodRule.exemptChannels || undefined,
-            enabled: enabled || undefined,
+            enabled: enabled ?? undefined,
             reason: reason || undefined
         }).catch(ctx.noop);
         return this.success(!!rule);
