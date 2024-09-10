@@ -32,12 +32,12 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [guild, id, reason]) {
         try {
-            await guild.autoModerationRules.delete(id, reason || undefined);
-            return this.success(true);
+            await guild.autoModerationRules.delete(id, reason || undefined).catch(ctx.noop);
         }
         catch {
             return this.success(false);
         }
+        return this.success(true);
     },
 });
 //# sourceMappingURL=deleteAutomodRule.js.map

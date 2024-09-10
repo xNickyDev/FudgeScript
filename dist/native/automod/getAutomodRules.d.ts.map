@@ -1,1 +1,1 @@
-{"version":3,"file":"getAutomodRules.d.ts","sourceRoot":"","sources":["../../../src/native/automod/getAutomodRules.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;AAClE,OAAO,EAAE,mBAAmB,EAAyB,MAAM,8BAA8B,CAAA;;;;;;;;;;;;;;;;;;;AAIzF,wBAuCE"}
+{"version":3,"file":"getAutomodRules.d.ts","sourceRoot":"","sources":["../../../src/native/automod/getAutomodRules.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;AAClE,OAAO,EAAE,mBAAmB,EAAyB,MAAM,8BAA8B,CAAA;;;;;;;;;;;;;;;;;;;AAIzF,wBAiCE"}
