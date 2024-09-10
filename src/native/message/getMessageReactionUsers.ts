@@ -43,7 +43,7 @@ export default new NativeFunction({
     ],
     async execute(ctx, [, message, emoji, sep]) {
         const users = new Array<string>()
-        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
 
         let afterID: undefined | string = undefined
 

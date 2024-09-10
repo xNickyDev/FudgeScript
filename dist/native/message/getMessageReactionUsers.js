@@ -46,7 +46,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [, message, emoji, sep]) {
         const users = new Array();
-        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
         let afterID = undefined;
         if (reaction.users.cache.size <= reaction?.count) {
             for (;;) {

@@ -35,7 +35,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [, message, emoji]) {
-        const reaction = message.reactions.cache.find(r => r.emoji === emoji || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
         return this.success(reaction.count)
     },
 })
