@@ -1,5 +1,6 @@
 import { AutoModerationRuleTriggerType, AutoModerationRuleEventType } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { isBoolean } from "lodash"
 
 export default new NativeFunction({
     name: "$createAutomodRule",
@@ -63,7 +64,7 @@ export default new NativeFunction({
             actions: ctx.automodRule.actions || [],
             exemptRoles: ctx.automodRule.exemptRoles,
             exemptChannels: ctx.automodRule.exemptChannels,
-            enabled: enabled ?? true,
+            enabled: isBoolean(enabled) ? enabled : undefined,
             reason: reason || undefined
         }).catch(ctx.noop)
 
