@@ -1,3 +1,4 @@
+import { isNumber } from "lodash"
 import array from "../../functions/array"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
@@ -25,8 +26,8 @@ export default new NativeFunction({
     execute(ctx, [index, sep]) {
         if (!ctx.isSelectMenu()) return this.success()
 
-        if (this.displayField(0)) {
-            return this.success(ctx.interaction.values[index!])
+        if (index) {
+            return this.success(ctx.interaction.values[index])
         } else {
             return this.success(ctx.interaction.values.join(sep ?? ", "))
         }

@@ -29,7 +29,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [index, sep]) {
         if (!ctx.isSelectMenu())
             return this.success();
-        if (this.displayField(0)) {
+        if (index) {
             return this.success(ctx.interaction.values[index]);
         }
         else {
