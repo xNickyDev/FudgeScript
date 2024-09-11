@@ -61,7 +61,7 @@ exports.default = new structures_1.NativeFunction({
             eventType: event,
             triggerType: trigger,
             triggerMetadata: ctx.automodRule.triggerMetadata,
-            actions: ctx.automodRule.actions ?? [],
+            actions: ctx.automodRule.actions || [],
             exemptRoles: ctx.automodRule.exemptRoles,
             exemptChannels: ctx.automodRule.exemptChannels,
             enabled: enabled ?? true,
