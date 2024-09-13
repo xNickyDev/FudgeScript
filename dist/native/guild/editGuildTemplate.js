@@ -33,9 +33,9 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [code, name, desc]) {
-        const edit = await (await ctx.client.fetchGuildTemplate(code)).edit({
+        const edit = await (await ctx.client.fetchGuildTemplate(code).catch(ctx.noop))?.edit({
             name: name || undefined,
-            description: desc || undefined
+            description: desc ?? undefined
         }).catch(ctx.noop);
         return this.success(!!edit);
     },
