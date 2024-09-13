@@ -23,7 +23,7 @@ import { ApplicationCommand } from "../structures/base/ApplicationCommand"
 import recursiveReaddirSync from "../functions/recursiveReaddirSync"
 import { ForgeClient } from "../core"
 import { NativeEventName } from "./EventManager"
-import { readdirSync, statSync } from "fs"
+import { readdirSync, statSync, readFileSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
 
@@ -43,6 +43,25 @@ export interface IApplicationCommandData {
     type?: RegistrationType
     independent?: boolean
     path?: string | null
+}
+
+function readConfig(path: string): any {
+    try {
+        const configPath = join(path, "config.json")
+        if (statSync(configPath).isFile()) {
+            return JSON.parse(readFileSync(configPath, "utf8"))
+        }
+    } catch (error) {
+        return {}
+    }
+    return {}
+}
+
+function applyConfigToCommandData(data: any, config: any): any {
+    return {
+        ...data,
+        ...config,
+    }
 }
 
 export class ApplicationCommandManager {
@@ -75,12 +94,14 @@ export class ApplicationCommandManager {
             const resolved = join(path, mainPath)
             const stats = statSync(resolved)
             if (stats.isDirectory()) {
+                const mainConfig = readConfig(resolved)
                 const col = new Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>()
 
                 for (const secondPath of readdirSync(resolved)) {
                     const secondResolved = join(resolved, secondPath)
                     const stats = statSync(secondResolved)
                     if (stats.isDirectory()) {
+                        const secondConfig = readConfig(secondResolved)
                         const nextCol = new Collection<string, ApplicationCommand>()
 
                         for (const lastPath of readdirSync(secondResolved)) {
@@ -117,7 +138,7 @@ export class ApplicationCommandManager {
             } else {
                 const loaded = this.loadOne(join(cwd(), resolved))
                 if (!loaded) continue
-                this.commands.set(loaded.name, loaded)
+                this.commands.set(mainPath, loaded)
             }
         }
     }
@@ -215,18 +236,27 @@ export class ApplicationCommandManager {
     }
 
     public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
-        const v = value instanceof ApplicationCommand ? value : new ApplicationCommand({ ...value, path })
+        const v = value instanceof ApplicationCommand ? value : new ApplicationCommand(value)
         this.validate(v, path)
-        return v
+
+        const configPath = path ? join(this.path, path) : this.path
+        const config = readConfig(configPath)
+        const commandData = applyConfigToCommandData(v.options.data, config)
+
+        return new ApplicationCommand({ ...v.options, data: commandData })
     }
 
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()
-
+    
         for (const [commandName, value] of this.commands) {
             if (value instanceof ApplicationCommand) {
                 if (!value.mustRegisterAs(type)) continue
-                arr.push(value.options.data)
+
+                // Apply configuration settings to command data
+                const config = readConfig(this.path ?? "");
+                const data = value.options.data;
+                arr.push({ ...data, ...config });
             } else {
                 const json: RESTPostAPIChatInputApplicationCommandsJSONBody = {
                     name: commandName,
@@ -246,8 +276,12 @@ export class ApplicationCommandManager {
 
                         for (const [lastName, command] of values) {
                             if (!command.mustRegisterAs(type)) continue
+
+                            const commandData = command.toJSON()
+                            const commandConfig = readConfig(this.path ?? "")
                             raw.options!.push({
-                                ...command.toJSON(),
+                                ...commandData,
+                                ...commandConfig,
                                 name: lastName,
                                 type: ApplicationCommandOptionType.Subcommand,
                             } as APIApplicationCommandSubcommandOption)
@@ -257,16 +291,18 @@ export class ApplicationCommandManager {
                         json.options!.push(raw)
                     } else {
                         if (!values.mustRegisterAs(type)) continue
-                        const raw = values.toJSON()
+
+                        const commandData = values.toJSON()
+                        const commandConfig = readConfig(this.path ?? "")
                         json.options!.push({
-                            ...raw,
+                            ...commandData,
+                            ...commandConfig,
                             type: ApplicationCommandOptionType.Subcommand,
                         } as APIApplicationCommandOption)
                     }
                 }
 
                 if (!json.options?.length) continue
-
                 arr.push(json)
             }
         }

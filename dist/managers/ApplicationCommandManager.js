@@ -14,6 +14,24 @@ var RegistrationType;
     RegistrationType[RegistrationType["Guild"] = 1] = "Guild";
     RegistrationType[RegistrationType["All"] = 2] = "All";
 })(RegistrationType || (exports.RegistrationType = RegistrationType = {}));
+function readConfig(path) {
+    try {
+        const configPath = (0, path_1.join)(path, "config.json");
+        if ((0, fs_1.statSync)(configPath).isFile()) {
+            return JSON.parse((0, fs_1.readFileSync)(configPath, "utf8"));
+        }
+    }
+    catch (error) {
+        return {};
+    }
+    return {};
+}
+function applyConfigToCommandData(data, config) {
+    return {
+        ...data,
+        ...config,
+    };
+}
 class ApplicationCommandManager {
     client;
     /**
@@ -41,11 +59,13 @@ class ApplicationCommandManager {
             const resolved = (0, path_1.join)(path, mainPath);
             const stats = (0, fs_1.statSync)(resolved);
             if (stats.isDirectory()) {
+                const mainConfig = readConfig(resolved);
                 const col = new discord_js_1.Collection();
                 for (const secondPath of (0, fs_1.readdirSync)(resolved)) {
                     const secondResolved = (0, path_1.join)(resolved, secondPath);
                     const stats = (0, fs_1.statSync)(secondResolved);
                     if (stats.isDirectory()) {
+                        const secondConfig = readConfig(secondResolved);
                         const nextCol = new discord_js_1.Collection();
                         for (const lastPath of (0, fs_1.readdirSync)(secondResolved)) {
                             const thirdResolved = (0, path_1.join)(secondResolved, lastPath);
@@ -84,7 +104,7 @@ class ApplicationCommandManager {
                 const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), resolved));
                 if (!loaded)
                     continue;
-                this.commands.set(loaded.name, loaded);
+                this.commands.set(mainPath, loaded);
             }
         }
     }
@@ -166,9 +186,12 @@ class ApplicationCommandManager {
         }
     }
     resolve(value, path) {
-        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand({ ...value, path });
+        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand(value);
         this.validate(v, path);
-        return v;
+        const configPath = path ? (0, path_1.join)(this.path, path) : this.path;
+        const config = readConfig(configPath);
+        const commandData = applyConfigToCommandData(v.options.data, config);
+        return new ApplicationCommand_1.ApplicationCommand({ ...v.options, data: commandData });
     }
     toJSON(type) {
         const arr = new Array();
@@ -176,7 +199,10 @@ class ApplicationCommandManager {
             if (value instanceof ApplicationCommand_1.ApplicationCommand) {
                 if (!value.mustRegisterAs(type))
                     continue;
-                arr.push(value.options.data);
+                // Apply configuration settings to command data
+                const config = readConfig(this.path ?? "");
+                const data = value.options.data;
+                arr.push({ ...data, ...config });
             }
             else {
                 const json = {
@@ -196,8 +222,11 @@ class ApplicationCommandManager {
                         for (const [lastName, command] of values) {
                             if (!command.mustRegisterAs(type))
                                 continue;
+                            const commandData = command.toJSON();
+                            const commandConfig = readConfig(this.path ?? "");
                             raw.options.push({
-                                ...command.toJSON(),
+                                ...commandData,
+                                ...commandConfig,
                                 name: lastName,
                                 type: discord_js_1.ApplicationCommandOptionType.Subcommand,
                             });
@@ -209,9 +238,11 @@ class ApplicationCommandManager {
                     else {
                         if (!values.mustRegisterAs(type))
                             continue;
-                        const raw = values.toJSON();
+                        const commandData = values.toJSON();
+                        const commandConfig = readConfig(this.path ?? "");
                         json.options.push({
-                            ...raw,
+                            ...commandData,
+                            ...commandConfig,
                             type: discord_js_1.ApplicationCommandOptionType.Subcommand,
                         });
                     }
