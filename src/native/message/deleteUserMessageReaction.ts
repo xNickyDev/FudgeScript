@@ -1,4 +1,4 @@
-import { TextBasedChannel } from "discord.js"
+import { Emoji, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import noop from "../../functions/noop"
 
@@ -28,11 +28,11 @@ export default new NativeFunction({
         },
         {
             name: "emoji",
-            description: "The reaction emoji to remove user from",
+            description: "The message reaction to remove user from",
             rest: false,
             required: true,
             pointer: 1,
-            type: ArgType.Emoji,
+            type: ArgType.Reaction,
         },
         {
             name: "user ID",
@@ -42,8 +42,7 @@ export default new NativeFunction({
             type: ArgType.User,
         },
     ],
-    async execute(ctx, [, message, emoji, user]) {
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)
-        return this.success(!!(await reaction?.users.remove(user).catch(ctx.noop)))
+    async execute(ctx, [, , emoji, user]) {
+        return this.success(!!(await emoji.users.remove(user).catch(ctx.noop)))
     },
 })
