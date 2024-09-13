@@ -1,6 +1,5 @@
 import { RawGuildData } from "discord.js/typings/rawDataTypes"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { APIGuild } from "discord.js"
 
 export default new NativeFunction({
     name: "$guildRawData",
