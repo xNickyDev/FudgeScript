@@ -20,10 +20,9 @@ import {
     SlashCommandBuilder,
 } from "discord.js"
 import { ApplicationCommand } from "../structures/base/ApplicationCommand"
-import recursiveReaddirSync from "../functions/recursiveReaddirSync"
 import { ForgeClient } from "../core"
 import { NativeEventName } from "./EventManager"
-import { readdirSync, statSync, readFileSync } from "fs"
+import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
 
@@ -45,33 +44,7 @@ export interface IApplicationCommandData {
     path?: string | null
 }
 
-function readConfig(path: string): any {
-    try {
-        const configPath = join(path, "config.json")
-        if (statSync(configPath).isFile()) {
-            return JSON.parse(readFileSync(configPath, "utf8"))
-        }
-    } catch (error) {
-        return {}
-    }
-    return {}
-}
-
-function applyConfigToCommandData(data: any, config: any): any {
-    return {
-        ...data,
-        ...config,
-    }
-}
-
 export class ApplicationCommandManager {
-    /**
-     * If:
-     * - value is app command = slash command
-     * - value is collection:
-     *  - value is slash command = subcommands
-     *  - value is collection = group with subcommands
-     */
     private commands = new Collection<
         string,
         ApplicationCommand | Collection<string, ApplicationCommand | Collection<string, ApplicationCommand>>
@@ -80,15 +53,20 @@ export class ApplicationCommandManager {
 
     public constructor(public readonly client: ForgeClient) {}
 
-    /**
-     * PATH TREE MATTERS
-     * @param path
-     */
     public load(path: string = this.path) {
         if (!path) return
 
         this.path ??= path
         this.commands.clear()
+
+        const readConfig = (dirPath: string) => {
+            try {
+                const configPath = join(dirPath, "config.json")
+                return require(configPath)
+            } catch {
+                return {}
+            }
+        }
 
         for (const mainPath of readdirSync(path)) {
             const resolved = join(path, mainPath)
@@ -109,7 +87,7 @@ export class ApplicationCommandManager {
                             const stats = statSync(thirdResolved)
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`)
-                            const loaded = this.loadOne(join(cwd(), thirdResolved))
+                            const loaded = this.loadOne(thirdResolved)
                             if (!loaded) continue
                             else if (loaded.options.independent) {
                                 this.commands.set(loaded.name, loaded)
@@ -122,21 +100,21 @@ export class ApplicationCommandManager {
                         if (nextCol.size === 0) continue
                         col.set(secondPath, nextCol)
                     } else {
-                        const loaded = this.loadOne(join(cwd(), secondResolved))
+                        const loaded = this.loadOne(secondResolved)
                         if (!loaded) continue
                         else if (loaded.options.independent) {
                             this.commands.set(loaded.name, loaded)
                             continue
                         }
 
-                        col.set(loaded.name, loaded)
+                        col.set(secondPath, loaded)
                     }
                 }
 
                 if (col.size === 0) continue
                 this.commands.set(mainPath, col)
             } else {
-                const loaded = this.loadOne(join(cwd(), resolved))
+                const loaded = this.loadOne(resolved)
                 if (!loaded) continue
                 this.commands.set(mainPath, loaded)
             }
@@ -193,11 +171,6 @@ export class ApplicationCommandManager {
         return cmd
     }
 
-    /**
-     * **WARNING** This function does not allow subcommand & subcommand group options. Consider using ApplicationCommandManager#load to load a tree from a folder.
-     * @param values
-     * @returns
-     */
     public add(
         ...values: (ApplicationCommand | IApplicationCommandData | ApplicationCommand[] | IApplicationCommandData[])[]
     ): void {
@@ -235,50 +208,62 @@ export class ApplicationCommandManager {
         }
     }
 
+    private readConfig(dirPath: string): any {
+        try {
+            const configPath = join(dirPath, "config.json")
+            return require(configPath)
+        } catch {
+            return {}
+        }
+    }
+
     public resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null) {
         const v = value instanceof ApplicationCommand ? value : new ApplicationCommand(value)
         this.validate(v, path)
 
+        // Apply configuration settings
         const configPath = path ? join(this.path, path) : this.path
-        const config = readConfig(configPath)
-        const commandData = applyConfigToCommandData(v.options.data, config)
+        const config = this.readConfig(configPath)
+        const commandData = { ...v.options.data, ...config }
 
+        // Return a new ApplicationCommand with the updated data
         return new ApplicationCommand({ ...v.options, data: commandData })
     }
 
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()
-    
+
         for (const [commandName, value] of this.commands) {
             if (value instanceof ApplicationCommand) {
                 if (!value.mustRegisterAs(type)) continue
 
-                // Apply configuration settings to command data
-                const config = readConfig(this.path ?? "");
-                const data = value.options.data;
-                arr.push({ ...data, ...config });
+                const configPath = value.options.path ? join(this.path, value.options.path) : this.path
+                const config = this.readConfig(configPath)
+                const commandData = { ...value.options.data, ...config }
+                arr.push(commandData)
             } else {
                 const json: RESTPostAPIChatInputApplicationCommandsJSONBody = {
                     name: commandName,
-                    description: "none",
+                    description: "none", // This will be overwritten by config if available
                     type: ApplicationCommandType.ChatInput,
                     options: [],
-                }
+                };
 
                 for (const [nextName, values] of value) {
                     if (values instanceof Collection) {
                         const raw: APIApplicationCommandOption = {
                             name: nextName,
-                            description: "none",
+                            description: "none", // This will be overwritten by config if available
                             type: ApplicationCommandOptionType.SubcommandGroup,
                             options: [],
-                        }
+                        };
 
                         for (const [lastName, command] of values) {
                             if (!command.mustRegisterAs(type)) continue
 
                             const commandData = command.toJSON()
-                            const commandConfig = readConfig(this.path ?? "")
+                            const commandConfigPath = command.options.path ? join(this.path, command.options.path) : this.path
+                            const commandConfig = this.readConfig(commandConfigPath)
                             raw.options!.push({
                                 ...commandData,
                                 ...commandConfig,
@@ -293,7 +278,8 @@ export class ApplicationCommandManager {
                         if (!values.mustRegisterAs(type)) continue
 
                         const commandData = values.toJSON()
-                        const commandConfig = readConfig(this.path ?? "")
+                        const commandConfigPath = values.options.path ? join(this.path, values.options.path) : this.path
+                        const commandConfig = this.readConfig(commandConfigPath)
                         json.options!.push({
                             ...commandData,
                             ...commandConfig,
@@ -303,7 +289,9 @@ export class ApplicationCommandManager {
                 }
 
                 if (!json.options?.length) continue
-                arr.push(json)
+
+                const config = this.readConfig(this.path)
+                arr.push({ ...json, ...config })
             }
         }
 
