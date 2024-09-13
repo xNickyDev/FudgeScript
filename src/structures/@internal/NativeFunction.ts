@@ -11,7 +11,6 @@ import {
     Message,
     MessageReaction,
     PermissionsString,
-    ReactionEmoji,
     Role,
     Sticker,
     TextBasedChannel,
@@ -47,11 +46,11 @@ export enum ArgType {
     Color,
     Enum,
     ForumTag,
+    Emoji,
     GuildEmoji,
     Boolean,
     Attachment,
     Reaction,
-    ReactionEmoji,
     Message,
     Channel,
     Role,
@@ -196,8 +195,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? PermissionsString
     : T extends ArgType.ApplicationEmoji
     ? ApplicationEmoji
-    : T extends ArgType.ReactionEmoji
-    ? ReactionEmoji
+    : T extends ArgType.Emoji
+    ? Emoji
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true

@@ -20,7 +20,7 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     pointer: number;
-    type: ArgType.ReactionEmoji;
+    type: ArgType.Emoji;
 }, {
     name: string;
     description: string;

@@ -31,12 +31,12 @@ exports.default = new structures_1.NativeFunction({
             required: true,
             pointer: 1,
             rest: false,
-            type: structures_1.ArgType.ReactionEmoji,
+            type: structures_1.ArgType.Emoji,
         },
     ],
     execute(ctx, [, message, emoji]) {
         const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
-        return this.success(reaction.count);
+        return this.success(reaction?.count);
     },
 });
 //# sourceMappingURL=getMessageReactionCount.js.map

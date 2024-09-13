@@ -32,7 +32,7 @@ export default new NativeFunction({
             rest: false,
             required: true,
             pointer: 1,
-            type: ArgType.ReactionEmoji,
+            type: ArgType.Emoji,
         },
         {
             name: "user ID",
@@ -43,7 +43,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [, message, emoji, user]) {
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)!
-        return this.success(!!(await reaction.users.remove(user).catch(ctx.noop)))
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)
+        return this.success(!!(await reaction?.users.remove(user).catch(ctx.noop)))
     },
 })

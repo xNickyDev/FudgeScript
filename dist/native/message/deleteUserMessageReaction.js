@@ -31,7 +31,7 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             required: true,
             pointer: 1,
-            type: structures_1.ArgType.ReactionEmoji,
+            type: structures_1.ArgType.Emoji,
         },
         {
             name: "user ID",
@@ -43,7 +43,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [, message, emoji, user]) {
         const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
-        return this.success(!!(await reaction.users.remove(user).catch(ctx.noop)));
+        return this.success(!!(await reaction?.users.remove(user).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=deleteUserMessageReaction.js.map
