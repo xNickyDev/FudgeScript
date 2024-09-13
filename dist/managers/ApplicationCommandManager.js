@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationCommandManager = exports.RegistrationType = void 0;
 /* eslint-disable indent */
@@ -7,6 +30,7 @@ const ApplicationCommand_1 = require("../structures/base/ApplicationCommand");
 const EventManager_1 = require("./EventManager");
 const fs_1 = require("fs");
 const path_1 = require("path");
+const path = __importStar(require("path"));
 var RegistrationType;
 (function (RegistrationType) {
     RegistrationType[RegistrationType["Global"] = 0] = "Global";
@@ -141,16 +165,24 @@ class ApplicationCommandManager {
         }
     }
     loadOne(reqPath) {
-        if (!reqPath.endsWith(".js"))
+        const absolutePath = path.resolve(reqPath);
+        console.log(`Loading file from: ${absolutePath}`);
+        if (!absolutePath.endsWith(".js"))
             return null;
-        delete require.cache[require.resolve(reqPath)];
-        const req = require(reqPath);
-        let value = req.default ?? req;
-        if (!value || !Object.keys(value).length)
+        delete require.cache[require.resolve(absolutePath)];
+        try {
+            const req = require(absolutePath);
+            let value = req.default ?? req;
+            if (!value || !Object.keys(value).length)
+                return null;
+            else if (Array.isArray(value))
+                throw new Error("Disallowed");
+            return this.resolve(value, reqPath);
+        }
+        catch (err) {
+            console.error(`Failed to load module at ${absolutePath}: ${err}`);
             return null;
-        else if (Array.isArray(value))
-            throw new Error("Disallowed");
-        return this.resolve(value, reqPath);
+        }
     }
     validate(app, path) {
         const json = app.toJSON();

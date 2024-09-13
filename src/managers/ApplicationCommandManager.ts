@@ -25,6 +25,7 @@ import { NativeEventName } from "./EventManager"
 import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { cwd } from "process"
+import * as path from "path"
 
 export enum RegistrationType {
     Global,
@@ -182,14 +183,24 @@ export class ApplicationCommandManager {
     }
 
     private loadOne(reqPath: string) {
-        if (!reqPath.endsWith(".js")) return null
-        delete require.cache[require.resolve(reqPath)]
-        const req = require(reqPath)
-        let value = req.default ?? req
-        if (!value || !Object.keys(value).length) return null
-        else if (Array.isArray(value)) throw new Error("Disallowed")
-        return this.resolve(value, reqPath)
-    }
+        const absolutePath = path.resolve(reqPath)
+        console.log(`Loading file from: ${absolutePath}`)
+
+        if (!absolutePath.endsWith(".js")) return null
+
+        delete require.cache[require.resolve(absolutePath)]
+
+        try {
+            const req = require(absolutePath)
+            let value = req.default ?? req
+            if (!value || !Object.keys(value).length) return null
+            else if (Array.isArray(value)) throw new Error("Disallowed")
+            return this.resolve(value, reqPath)
+        } catch (err) {
+            console.error(`Failed to load module at ${absolutePath}: ${err}`)
+            return null
+        }
+    }    
 
     private validate(app: ApplicationCommand, path: string | null) {
         const json = app.toJSON()
