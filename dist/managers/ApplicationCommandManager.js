@@ -217,6 +217,7 @@ class ApplicationCommandManager {
                             name: nextName,
                             description: subConfig?.description || "none",
                             type: discord_js_1.ApplicationCommandOptionType.SubcommandGroup,
+                            options: [],
                         };
                         // Only assign `options` if this is a SubcommandGroup
                         if (raw.type === discord_js_1.ApplicationCommandOptionType.SubcommandGroup) {

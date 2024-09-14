@@ -272,6 +272,7 @@ export class ApplicationCommandManager {
                             name: nextName,
                             description: subConfig?.description || "none",
                             type: ApplicationCommandOptionType.SubcommandGroup,
+                            options: [],
                         }
 
                         // Only assign `options` if this is a SubcommandGroup
