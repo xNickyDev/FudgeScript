@@ -15,17 +15,32 @@ export interface IApplicationCommandData {
 }
 export declare class ApplicationCommandManager {
     readonly client: ForgeClient;
+    /**
+     * If:
+     * - value is app command = slash command
+     * - value is collection:
+     *  - value is slash command = subcommands
+     *  - value is collection = group with subcommands
+     */
     private commands;
     private path;
     constructor(client: ForgeClient);
+    /**
+     * PATH TREE MATTERS
+     * @param path
+     */
     load(path?: string): void;
     private getDisplayOptions;
     getDisplay(input: Interaction | null, hideName: boolean): string | null;
     get(input: CommandInteraction): ApplicationCommand | null;
+    /**
+     * **WARNING** This function does not allow subcommand & subcommand group options. Consider using ApplicationCommandManager#load to load a tree from a folder.
+     * @param values
+     * @returns
+     */
     add(...values: (ApplicationCommand | IApplicationCommandData | ApplicationCommand[] | IApplicationCommandData[])[]): void;
     private loadOne;
     private validate;
-    private readConfig;
     resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null): ApplicationCommand;
     toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[];
     registerGlobal(): Promise<Collection<string, import("discord.js").ApplicationCommand<{

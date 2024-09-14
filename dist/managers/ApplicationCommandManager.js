@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationCommandManager = exports.RegistrationType = void 0;
 /* eslint-disable indent */
@@ -30,7 +7,7 @@ const ApplicationCommand_1 = require("../structures/base/ApplicationCommand");
 const EventManager_1 = require("./EventManager");
 const fs_1 = require("fs");
 const path_1 = require("path");
-const path = __importStar(require("path"));
+const process_1 = require("process");
 var RegistrationType;
 (function (RegistrationType) {
     RegistrationType[RegistrationType["Global"] = 0] = "Global";
@@ -39,43 +16,43 @@ var RegistrationType;
 })(RegistrationType || (exports.RegistrationType = RegistrationType = {}));
 class ApplicationCommandManager {
     client;
+    /**
+     * If:
+     * - value is app command = slash command
+     * - value is collection:
+     *  - value is slash command = subcommands
+     *  - value is collection = group with subcommands
+     */
     commands = new discord_js_1.Collection();
     path;
     constructor(client) {
         this.client = client;
     }
+    /**
+     * PATH TREE MATTERS
+     * @param path
+     */
     load(path = this.path) {
         if (!path)
             return;
         this.path ??= path;
         this.commands.clear();
-        const readConfig = (dirPath) => {
-            try {
-                const configPath = (0, path_1.join)(dirPath, "config.json");
-                return require(configPath);
-            }
-            catch {
-                return {};
-            }
-        };
         for (const mainPath of (0, fs_1.readdirSync)(path)) {
             const resolved = (0, path_1.join)(path, mainPath);
             const stats = (0, fs_1.statSync)(resolved);
             if (stats.isDirectory()) {
-                const mainConfig = readConfig(resolved);
                 const col = new discord_js_1.Collection();
                 for (const secondPath of (0, fs_1.readdirSync)(resolved)) {
                     const secondResolved = (0, path_1.join)(resolved, secondPath);
                     const stats = (0, fs_1.statSync)(secondResolved);
                     if (stats.isDirectory()) {
-                        const secondConfig = readConfig(secondResolved);
                         const nextCol = new discord_js_1.Collection();
                         for (const lastPath of (0, fs_1.readdirSync)(secondResolved)) {
                             const thirdResolved = (0, path_1.join)(secondResolved, lastPath);
                             const stats = (0, fs_1.statSync)(thirdResolved);
                             if (stats.isDirectory())
                                 throw new Error(`Disallowed folder found for slash command tree: ${thirdResolved}`);
-                            const loaded = this.loadOne(thirdResolved);
+                            const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), thirdResolved));
                             if (!loaded)
                                 continue;
                             else if (loaded.options.independent) {
@@ -89,14 +66,14 @@ class ApplicationCommandManager {
                         col.set(secondPath, nextCol);
                     }
                     else {
-                        const loaded = this.loadOne(secondResolved);
+                        const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), secondResolved));
                         if (!loaded)
                             continue;
                         else if (loaded.options.independent) {
                             this.commands.set(loaded.name, loaded);
                             continue;
                         }
-                        col.set(secondPath, loaded);
+                        col.set(loaded.name, loaded);
                     }
                 }
                 if (col.size === 0)
@@ -104,10 +81,10 @@ class ApplicationCommandManager {
                 this.commands.set(mainPath, col);
             }
             else {
-                const loaded = this.loadOne(resolved);
+                const loaded = this.loadOne((0, path_1.join)((0, process_1.cwd)(), resolved));
                 if (!loaded)
                     continue;
-                this.commands.set(mainPath, loaded);
+                this.commands.set(loaded.name, loaded);
             }
         }
     }
@@ -156,6 +133,11 @@ class ApplicationCommandManager {
         }
         return cmd;
     }
+    /**
+     * **WARNING** This function does not allow subcommand & subcommand group options. Consider using ApplicationCommandManager#load to load a tree from a folder.
+     * @param values
+     * @returns
+     */
     add(...values) {
         for (const value of values) {
             if (Array.isArray(value))
@@ -165,24 +147,16 @@ class ApplicationCommandManager {
         }
     }
     loadOne(reqPath) {
-        const absolutePath = path.resolve(reqPath);
-        console.log(`Loading file from: ${absolutePath}`);
-        if (!absolutePath.endsWith(".js"))
+        if (!reqPath.endsWith(".js"))
             return null;
-        delete require.cache[require.resolve(absolutePath)];
-        try {
-            const req = require(absolutePath);
-            let value = req.default ?? req;
-            if (!value || !Object.keys(value).length)
-                return null;
-            else if (Array.isArray(value))
-                throw new Error("Disallowed");
-            return this.resolve(value, reqPath);
-        }
-        catch (err) {
-            console.error(`Failed to load module at ${absolutePath}: ${err}`);
+        delete require.cache[require.resolve(reqPath)];
+        const req = require(reqPath);
+        let value = req.default ?? req;
+        if (!value || !Object.keys(value).length)
             return null;
-        }
+        else if (Array.isArray(value))
+            throw new Error("Disallowed");
+        return this.resolve(value, reqPath);
     }
     validate(app, path) {
         const json = app.toJSON();
@@ -191,85 +165,97 @@ class ApplicationCommandManager {
             throw new Error(`Attempted to define subcommand / subcommand group without using path tree definition. (${path ?? "index file"})`);
         }
     }
-    readConfig(dirPath) {
-        try {
-            const configPath = (0, path_1.join)(dirPath, "config.json");
-            return require(configPath);
-        }
-        catch {
-            return {};
-        }
-    }
     resolve(value, path) {
-        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand(value);
+        const v = value instanceof ApplicationCommand_1.ApplicationCommand ? value : new ApplicationCommand_1.ApplicationCommand({ ...value, path });
         this.validate(v, path);
-        // Apply configuration settings
-        const configPath = path ? (0, path_1.join)(this.path, path) : this.path;
-        const config = this.readConfig(configPath);
-        const commandData = { ...v.options.data, ...config };
-        // Return a new ApplicationCommand with the updated data
-        return new ApplicationCommand_1.ApplicationCommand({ ...v.options, data: commandData });
+        return v;
     }
     toJSON(type) {
         const arr = new Array();
+        // Helper function to read config.json
+        const readConfig = (folderPath) => {
+            const configPath = (0, path_1.join)(folderPath, "config.json");
+            if ((0, fs_1.existsSync)(configPath)) {
+                try {
+                    return JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"));
+                }
+                catch (err) {
+                    console.error(`Error reading config.json in ${folderPath}:`, err);
+                }
+            }
+            return null;
+        };
         for (const [commandName, value] of this.commands) {
             if (value instanceof ApplicationCommand_1.ApplicationCommand) {
                 if (!value.mustRegisterAs(type))
                     continue;
-                const configPath = value.options.path ? (0, path_1.join)(this.path, value.options.path) : this.path;
-                const config = this.readConfig(configPath);
-                const commandData = { ...value.options.data, ...config };
+                const folderPath = (0, path_1.join)(this.path, commandName);
+                const config = readConfig(folderPath);
+                // Apply config data if available
+                const commandData = {
+                    ...value.options.data,
+                    ...(config ? config : {}),
+                };
                 arr.push(commandData);
             }
             else {
+                const folderPath = (0, path_1.join)(this.path, commandName);
+                const config = readConfig(folderPath);
                 const json = {
-                    name: commandName,
-                    description: "none",
+                    ...config,
+                    name: config?.name || commandName,
+                    description: config?.description || "none",
                     type: discord_js_1.ApplicationCommandType.ChatInput,
                     options: [],
                 };
                 for (const [nextName, values] of value) {
                     if (values instanceof discord_js_1.Collection) {
+                        const subFolderPath = (0, path_1.join)(folderPath, nextName);
+                        const subConfig = readConfig(subFolderPath);
+                        // Apply only for subcommand groups
                         const raw = {
-                            name: nextName,
-                            description: "none",
+                            ...subConfig,
+                            name: subConfig?.name || nextName,
+                            description: subConfig?.description || "none",
                             type: discord_js_1.ApplicationCommandOptionType.SubcommandGroup,
-                            options: [],
                         };
-                        for (const [lastName, command] of values) {
-                            if (!command.mustRegisterAs(type))
-                                continue;
-                            const commandData = command.toJSON();
-                            const commandConfigPath = command.options.path ? (0, path_1.join)(this.path, command.options.path) : this.path;
-                            const commandConfig = this.readConfig(commandConfigPath);
-                            raw.options.push({
-                                ...commandData,
-                                ...commandConfig,
-                                name: lastName,
-                                type: discord_js_1.ApplicationCommandOptionType.Subcommand,
-                            });
+                        // Only assign `options` if this is a SubcommandGroup
+                        if (raw.type === discord_js_1.ApplicationCommandOptionType.SubcommandGroup) {
+                            raw.options = [];
+                            for (const [lastName, command] of values) {
+                                if (!command.mustRegisterAs(type))
+                                    continue;
+                                const commandData = command.toJSON();
+                                raw.options.push({
+                                    ...commandData,
+                                    name: lastName,
+                                    type: discord_js_1.ApplicationCommandOptionType.Subcommand,
+                                });
+                            }
                         }
-                        if (!raw.options?.length)
-                            continue;
-                        json.options.push(raw);
+                        // Only push `json.options` if it contains valid data
+                        if (raw.options?.length) {
+                            json.options.push(raw);
+                        }
                     }
                     else {
                         if (!values.mustRegisterAs(type))
                             continue;
-                        const commandData = values.toJSON();
-                        const commandConfigPath = values.options.path ? (0, path_1.join)(this.path, values.options.path) : this.path;
-                        const commandConfig = this.readConfig(commandConfigPath);
+                        const subFolderPath = (0, path_1.join)(folderPath, nextName);
+                        const subConfig = readConfig(subFolderPath);
+                        // Add subcommand if available
+                        const raw = values.toJSON();
                         json.options.push({
-                            ...commandData,
-                            ...commandConfig,
+                            ...raw,
+                            ...subConfig,
                             type: discord_js_1.ApplicationCommandOptionType.Subcommand,
                         });
                     }
                 }
-                if (!json.options?.length)
-                    continue;
-                const config = this.readConfig(this.path);
-                arr.push({ ...json, ...config });
+                // Only push `json` if it contains valid options
+                if (json.options?.length) {
+                    arr.push(json);
+                }
             }
         }
         return arr;
