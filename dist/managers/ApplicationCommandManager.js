@@ -180,7 +180,7 @@ class ApplicationCommandManager {
                     return JSON.parse((0, fs_1.readFileSync)(configPath, "utf-8"));
                 }
                 catch (err) {
-                    console.error(`Error reading config.json in ${folderPath}:`, err);
+                    throw new Error(`Error reading config.json in ${folderPath}: ${err}`);
                 }
             }
             return null;
@@ -191,7 +191,6 @@ class ApplicationCommandManager {
                     continue;
                 const folderPath = (0, path_1.join)(this.path, commandName);
                 const config = readConfig(folderPath);
-                // Apply config data if available
                 const commandData = {
                     ...value.options.data,
                     ...(config ? config : {}),
@@ -203,7 +202,7 @@ class ApplicationCommandManager {
                 const config = readConfig(folderPath);
                 const json = {
                     ...config,
-                    name: config?.name || commandName,
+                    name: commandName,
                     description: config?.description || "none",
                     type: discord_js_1.ApplicationCommandType.ChatInput,
                     options: [],
@@ -215,7 +214,7 @@ class ApplicationCommandManager {
                         // Apply only for subcommand groups
                         const raw = {
                             ...subConfig,
-                            name: subConfig?.name || nextName,
+                            name: nextName,
                             description: subConfig?.description || "none",
                             type: discord_js_1.ApplicationCommandOptionType.SubcommandGroup,
                         };

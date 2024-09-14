@@ -230,7 +230,7 @@ export class ApplicationCommandManager {
                 try {
                     return JSON.parse(readFileSync(configPath, "utf-8"))
                 } catch (err) {
-                    console.error(`Error reading config.json in ${folderPath}:`, err)
+                    throw new Error(`Error reading config.json in ${folderPath}: ${err}`)
                 }
             }
             return null
@@ -243,7 +243,6 @@ export class ApplicationCommandManager {
                 const folderPath = join(this.path, commandName)
                 const config = readConfig(folderPath)
 
-                // Apply config data if available
                 const commandData = {
                     ...value.options.data,
                     ...(config ? config : {}),
@@ -256,7 +255,7 @@ export class ApplicationCommandManager {
 
                 const json: RESTPostAPIChatInputApplicationCommandsJSONBody = {
                     ...config, // Apply config data if available
-                    name: config?.name || commandName,
+                    name: commandName,
                     description: config?.description || "none",
                     type: ApplicationCommandType.ChatInput,
                     options: [],
@@ -270,7 +269,7 @@ export class ApplicationCommandManager {
                         // Apply only for subcommand groups
                         const raw: Partial<APIApplicationCommandOption> = {
                             ...subConfig, // Apply subcommand group config data
-                            name: subConfig?.name || nextName,
+                            name: nextName,
                             description: subConfig?.description || "none",
                             type: ApplicationCommandOptionType.SubcommandGroup,
                         }
