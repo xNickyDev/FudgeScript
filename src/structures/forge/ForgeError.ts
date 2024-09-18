@@ -1,4 +1,5 @@
 import { CompiledFunction } from "../@internal/CompiledFunction"
+import { EventEmitter } from "events"
 
 export type GetErrorArgs<T extends string> = T extends `${infer L}$${infer R}` ? [unknown, ...GetErrorArgs<R>] : []
 
@@ -21,6 +22,9 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
 
     public constructor(fn: CompiledFunction | null, type: T, ...args: GetErrorArgs<T>) {
         super(ForgeError.make(fn, type, ...args))
+
+        // Emits the functionError event whenever an error is thrown
+        new EventEmitter().emit("functionError", { fn, type, args })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {
