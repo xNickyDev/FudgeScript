@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [guild]) {
-        return this.success(!!(await guild.delete().catch(ctx.noop)));
+        return this.success((await guild?.delete().catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=deleteGuild.js.map

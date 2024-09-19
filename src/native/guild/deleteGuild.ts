@@ -20,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [guild]) {
-        return this.success(!!(await guild.delete().catch(ctx.noop)))
+        return this.success((await guild?.delete().catch(() => false)) !== false)
     },
 })
