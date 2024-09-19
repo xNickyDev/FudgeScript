@@ -38,13 +38,9 @@ export default new NativeFunction({
     ],
     brackets: false,
     async execute(ctx, [, user, type]) {
-        const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop)
+        const member = await ctx.guild?.members.fetch(user ?? ctx.user).catch(ctx.noop)
         const status = member?.presence?.activities?.find(x => x.type === ActivityType.Custom)
-
-        if (!type) {
-            return this.success(status?.state)
-        } else {
-            return this.success(status?.[type as CustomStatusType]?.toString())
-        }
-    },
+        
+        return this.success(type ? status?.[type as CustomStatusType]?.toString() : status?.state)
+    }
 })

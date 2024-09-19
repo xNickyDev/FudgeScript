@@ -40,14 +40,9 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: false,
     async execute(ctx, [, user, type]) {
-        const member = await ctx.guild?.members.fetch(user ?? ctx.user?.id).catch(ctx.noop);
+        const member = await ctx.guild?.members.fetch(user ?? ctx.user).catch(ctx.noop);
         const status = member?.presence?.activities?.find(x => x.type === discord_js_1.ActivityType.Custom);
-        if (!type) {
-            return this.success(status?.state);
-        }
-        else {
-            return this.success(status?.[type]?.toString());
-        }
-    },
+        return this.success(type ? status?.[type]?.toString() : status?.state);
+    }
 });
 //# sourceMappingURL=userCustomStatus.js.map
