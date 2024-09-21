@@ -37,7 +37,6 @@ exports.default = new structures_1.NativeFunction({
             name: "property",
             description: "The property of the activity to return",
             rest: false,
-            required: true,
             type: structures_1.ArgType.Enum,
             enum: activity_1.ActivityProperty
         },
@@ -50,7 +49,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, member, prop, sep]) {
-        return this.success((member ?? ctx.member)?.presence?.activities?.map((x) => activity_1.ActivityProperties[prop](x, sep)).join(sep ?? ", "));
+        const activity = (member ?? ctx.member)?.presence?.activities;
+        return this.success(prop ? activity?.map((x) => activity_1.ActivityProperties[prop](x, sep)).join(sep ?? ", ") : activity);
     }
 });
 //# sourceMappingURL=memberActivity.js.map

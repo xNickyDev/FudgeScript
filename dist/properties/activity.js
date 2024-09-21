@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActivityProperties = exports.ActivityProperty = void 0;
+const discord_js_1 = require("discord.js");
 const defineProperties_1 = __importDefault(require("../functions/defineProperties"));
 var ActivityProperty;
 (function (ActivityProperty) {
@@ -22,7 +23,7 @@ var ActivityProperty;
 })(ActivityProperty || (exports.ActivityProperty = ActivityProperty = {}));
 exports.ActivityProperties = (0, defineProperties_1.default)({
     name: (i) => i?.name,
-    type: (i) => i?.type,
+    type: (i) => discord_js_1.ActivityType[i?.type],
     details: (i) => i?.details,
     buttons: (i, sep) => i?.buttons.join(sep ?? ", "),
     flags: (i, sep) => i?.flags.toArray().join(sep ?? ", "),

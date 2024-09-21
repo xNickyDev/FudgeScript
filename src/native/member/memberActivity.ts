@@ -33,7 +33,6 @@ export default new NativeFunction({
             name: "property",
             description: "The property of the activity to return",
             rest: false,
-            required: true,
             type: ArgType.Enum,
             enum: ActivityProperty
         },
@@ -46,6 +45,7 @@ export default new NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, member, prop, sep]) {
-        return this.success((member ?? ctx.member)?.presence?.activities?.map((x) => ActivityProperties[prop](x, sep)).join(sep ?? ", "))
+        const activity = (member ?? ctx.member)?.presence?.activities
+        return this.success(prop ? activity?.map((x) => ActivityProperties[prop](x, sep)).join(sep ?? ", ") : activity)
     }
 })

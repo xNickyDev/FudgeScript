@@ -1,4 +1,4 @@
-import { Activity } from "discord.js"
+import { Activity, ActivityType } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum ActivityProperty {
@@ -18,7 +18,7 @@ export enum ActivityProperty {
 
 export const ActivityProperties = defineProperties<typeof ActivityProperty, Activity>({
     name: (i) => i?.name,
-    type: (i) => i?.type,
+    type: (i) => ActivityType[i?.type!],
     details: (i) => i?.details,
     buttons: (i, sep) => i?.buttons.join(sep ?? ", "),
     flags: (i, sep) => i?.flags.toArray().join(sep ?? ", "),
