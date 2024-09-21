@@ -8,10 +8,14 @@ export declare enum ActivityProperty {
     timestamp = "timestamp",
     endTimestamp = "endTimestamp",
     startTimestamp = "startTimestamp",
-    partyID = "partyID",
+    partyId = "partyId",
     partySize = "partySize",
-    syncID = "syncID",
-    url = "url"
+    syncId = "syncId",
+    url = "url",
+    largeText = "largeText",
+    largeImage = "largeImage",
+    smallText = "smallText",
+    smallImage = "smallImage"
 }
 export declare const ActivityProperties: import("../functions/defineProperties").Properties<typeof ActivityProperty, Activity>;
 //# sourceMappingURL=activity.d.ts.map

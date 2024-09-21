@@ -10,10 +10,14 @@ export enum ActivityProperty {
     timestamp = "timestamp",
     endTimestamp = "endTimestamp",
     startTimestamp = "startTimestamp",
-    partyID = "partyID",
+    partyId = "partyId",
     partySize = "partySize",
-    syncID = "syncID",
-    url = "url"
+    syncId = "syncId",
+    url = "url",
+    largeText = "largeText",
+    largeImage = "largeImage",
+    smallText = "smallText",
+    smallImage = "smallImage",
 }
 
 export const ActivityProperties = defineProperties<typeof ActivityProperty, Activity>({
@@ -25,8 +29,12 @@ export const ActivityProperties = defineProperties<typeof ActivityProperty, Acti
     timestamp: (i) => i?.createdTimestamp,
     endTimestamp: (i) => i?.timestamps?.end?.getTime(),
     startTimestamp: (i) => i?.timestamps?.start?.getTime(),
-    partyID: (i) => i?.party?.id,
+    partyId: (i) => i?.party?.id,
     partySize: (i) => i?.party?.size[0],
-    syncID: (i) => i?.syncId,
-    url: (i) => i?.url
+    syncId: (i) => i?.syncId,
+    url: (i) => i?.url,
+    largeText: (i) => i?.assets?.largeText,
+    largeImage: (i) => i?.assets?.largeImageURL(),
+    smallText: (i) => i?.assets?.smallText,
+    smallImage: (i) => i?.assets?.smallImageURL(),
 })

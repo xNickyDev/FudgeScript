@@ -16,10 +16,14 @@ var ActivityProperty;
     ActivityProperty["timestamp"] = "timestamp";
     ActivityProperty["endTimestamp"] = "endTimestamp";
     ActivityProperty["startTimestamp"] = "startTimestamp";
-    ActivityProperty["partyID"] = "partyID";
+    ActivityProperty["partyId"] = "partyId";
     ActivityProperty["partySize"] = "partySize";
-    ActivityProperty["syncID"] = "syncID";
+    ActivityProperty["syncId"] = "syncId";
     ActivityProperty["url"] = "url";
+    ActivityProperty["largeText"] = "largeText";
+    ActivityProperty["largeImage"] = "largeImage";
+    ActivityProperty["smallText"] = "smallText";
+    ActivityProperty["smallImage"] = "smallImage";
 })(ActivityProperty || (exports.ActivityProperty = ActivityProperty = {}));
 exports.ActivityProperties = (0, defineProperties_1.default)({
     name: (i) => i?.name,
@@ -30,9 +34,13 @@ exports.ActivityProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i?.createdTimestamp,
     endTimestamp: (i) => i?.timestamps?.end?.getTime(),
     startTimestamp: (i) => i?.timestamps?.start?.getTime(),
-    partyID: (i) => i?.party?.id,
+    partyId: (i) => i?.party?.id,
     partySize: (i) => i?.party?.size[0],
-    syncID: (i) => i?.syncId,
-    url: (i) => i?.url
+    syncId: (i) => i?.syncId,
+    url: (i) => i?.url,
+    largeText: (i) => i?.assets?.largeText,
+    largeImage: (i) => i?.assets?.largeImageURL(),
+    smallText: (i) => i?.assets?.smallText,
+    smallImage: (i) => i?.assets?.smallImageURL(),
 });
 //# sourceMappingURL=activity.js.map
