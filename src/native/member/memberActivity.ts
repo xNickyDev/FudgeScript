@@ -46,6 +46,6 @@ export default new NativeFunction({
     brackets: false,
     execute(ctx, [, member, prop, sep]) {
         const activity = (member ?? ctx.member)?.presence?.activities
-        return this.success(prop ? activity?.map((x) => ActivityProperties[prop](x, sep)).join(sep ?? ", ") : activity?.join(sep ?? ", "))
+        return this.success((prop ? activity?.map((x) => ActivityProperties[prop](x, sep)) : activity)?.join(sep ?? ", "))
     }
 })
