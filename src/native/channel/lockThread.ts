@@ -29,7 +29,7 @@ export default new NativeFunction({
     async execute(ctx, [channel, reason]) {
         const thread = (channel ?? ctx.channel) as ThreadChannel
 
-        const success = await thread.setLocked(true, reason || undefined).catch(ctx.noop)
+        const success = await thread?.setLocked(true, reason || undefined).catch(ctx.noop)
 
         return this.success(!!success)
     },
