@@ -5,7 +5,7 @@ export default new NativeFunction({
     name: "$threadStarterMessageID",
     version: "1.5.0",
     description: "Returns the id of the message that started this thread",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     args: [
         {
@@ -20,8 +20,10 @@ export default new NativeFunction({
     output: ArgType.Message,
     async execute(ctx, [channel]) {
         const thread = (channel ?? ctx.channel) as ThreadChannel
-        const message = await thread?.fetchStarterMessage().catch(ctx.noop)
+        if (!thread.isThread()) return this.success()
 
+        const message = await thread.fetchStarterMessage().catch(ctx.noop)
+        
         return this.success(message?.id)
     },
 })

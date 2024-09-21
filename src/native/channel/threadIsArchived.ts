@@ -10,7 +10,7 @@ export default new NativeFunction({
         "$threadArchived"
     ],
     description: "Archives a thread, returns bool",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     output: ArgType.Boolean,
     args: [
@@ -24,7 +24,9 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [channel]) {
-        const thread = channel as ThreadChannel
+        const thread = (channel ?? ctx.channel) as ThreadChannel
+        if (!thread.isThread()) return this.success()
+            
         return this.success(!!thread.archived)
     },
 })

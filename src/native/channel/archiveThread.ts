@@ -28,8 +28,9 @@ export default new NativeFunction({
     ],
     async execute(ctx, [channel, reason]) {
         const thread = (channel ?? ctx.channel) as ThreadChannel
+        if (!thread.isThread()) return this.success()
 
-        const success = await thread?.setArchived(true, reason || undefined).catch(ctx.noop)
+        const success = await thread.setArchived(true, reason || undefined).catch(ctx.noop)
 
         return this.success(!!success)
     },

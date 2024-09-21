@@ -9,7 +9,7 @@ exports.default = new structures_1.NativeFunction({
         "$threadArchived"
     ],
     description: "Archives a thread, returns bool",
-    brackets: true,
+    brackets: false,
     unwrap: true,
     output: structures_1.ArgType.Boolean,
     args: [
@@ -23,7 +23,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     async execute(ctx, [channel]) {
-        const thread = channel;
+        const thread = (channel ?? ctx.channel);
+        if (!thread.isThread())
+            return this.success();
         return this.success(!!thread.archived);
     },
 });
