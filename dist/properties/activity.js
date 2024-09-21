@@ -38,9 +38,9 @@ exports.ActivityProperties = (0, defineProperties_1.default)({
     partySize: (i) => i?.party?.size[0],
     syncId: (i) => i?.syncId,
     url: (i) => i?.url,
-    largeText: (i) => i?.assets?.largeText || null,
-    largeImage: (i) => i?.assets?.largeImageURL() || null,
-    smallText: (i) => i?.assets?.smallText || null,
-    smallImage: (i) => i?.assets?.smallImageURL() || null,
+    largeText: (i) => i?.assets?.largeText || undefined,
+    largeImage: (i) => i?.assets?.largeImageURL() || undefined,
+    smallText: (i) => i?.assets?.smallText || undefined,
+    smallImage: (i) => i?.assets?.smallImageURL() || undefined,
 });
 //# sourceMappingURL=activity.js.map
