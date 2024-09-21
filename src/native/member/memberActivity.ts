@@ -1,4 +1,5 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { ActivityProperties, ActivityProperty } from "../../properties/activity"
 import array from "../../functions/array"
 
 export default new NativeFunction({
@@ -29,14 +30,22 @@ export default new NativeFunction({
             pointer: 0,
         },
         {
+            name: "property",
+            description: "The property of the activity to return",
+            rest: false,
+            required: true,
+            type: ArgType.Enum,
+            enum: ActivityProperty
+        },
+        {
             name: "separator",
-            description: "The separator to use for every activity",
+            description: "The separator to use for every property",
             rest: false,
             type: ArgType.String,
         },
     ],
     brackets: false,
-    execute(ctx, [, member, sep]) {
-        return this.success((member ?? ctx.member)?.presence?.activities.join(sep ?? ", "))
+    execute(ctx, [, member, prop, sep]) {
+        return this.success((member ?? ctx.member)?.presence?.activities?.map((x) => ActivityProperties[prop](x, sep)).join(sep ?? ", "))
     }
 })

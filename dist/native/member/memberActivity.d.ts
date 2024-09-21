@@ -1,4 +1,5 @@
 import { ArgType, NativeFunction } from "../../structures";
+import { ActivityProperty } from "../../properties/activity";
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
@@ -12,6 +13,13 @@ declare const _default: NativeFunction<[{
     rest: false;
     type: ArgType.Member;
     pointer: number;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    required: true;
+    type: ArgType.Enum;
+    enum: typeof ActivityProperty;
 }, {
     name: string;
     description: string;
