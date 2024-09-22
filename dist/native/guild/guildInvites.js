@@ -14,7 +14,7 @@ exports.default = new structures_1.NativeFunction({
         "$serverInvites"
     ],
     unwrap: true,
-    brackets: false,
+    brackets: true,
     args: [
         {
             name: "guild ID",

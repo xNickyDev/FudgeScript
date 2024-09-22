@@ -11,7 +11,7 @@ export default new NativeFunction({
         "$serverInvites"
     ],
     unwrap: true,
-    brackets: false,
+    brackets: true,
     args: [
         {
             name: "guild ID",

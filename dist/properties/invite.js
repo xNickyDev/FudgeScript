@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InviteProperties = exports.InviteProperty = void 0;
+const discord_js_1 = require("discord.js");
 const defineProperties_1 = __importDefault(require("../functions/defineProperties"));
 var InviteProperty;
 (function (InviteProperty) {
@@ -30,7 +31,7 @@ exports.InviteProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i?.createdTimestamp,
     code: (i) => i?.code,
     url: (i) => i?.url,
-    type: (i) => i?.type,
+    type: (i) => discord_js_1.InviteType[i?.type],
     expiresTimestamp: (i) => i?.expiresTimestamp,
     temporary: (i) => i?.temporary,
 });
