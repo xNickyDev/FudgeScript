@@ -17,6 +17,6 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ name ]) {
-        return this.success(ctx.client.getExtension(name)?.version  )
+        return this.success(ctx.client.getExtension(name)?.version)
     }
 })
