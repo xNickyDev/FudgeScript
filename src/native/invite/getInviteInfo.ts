@@ -26,6 +26,6 @@ export default new NativeFunction({
     ],
     async execute(ctx, [inv, prop]) {
         const invite = await ctx.client.fetchInvite(inv.code).catch(ctx.noop)
-        return this.success(prop ? InviteProperties[prop](invite!) : invite)
+        return this.successJSON(prop ? InviteProperties[prop](invite!) : invite)
     },
 })

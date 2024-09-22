@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [inv, prop]) {
         const invite = await ctx.client.fetchInvite(inv.code).catch(ctx.noop);
-        return this.success(prop ? invite_1.InviteProperties[prop](invite) : invite);
+        return this.successJSON(prop ? invite_1.InviteProperties[prop](invite) : invite);
     },
 });
 //# sourceMappingURL=getInviteInfo.js.map

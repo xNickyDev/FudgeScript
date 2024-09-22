@@ -37,6 +37,6 @@ export default new NativeFunction({
     output: array<ArgType.String>(),
     async execute(ctx, [ guild, prop, sep ]) {
         const invites = await (guild ?? ctx.guild).invites.fetch().catch(ctx.noop)
-        return this.success(prop ? invites?.map(invite => InviteProperties[prop](invite)) : invites)
+        return this.successJSON(prop ? invites?.map(invite => InviteProperties[prop](invite)) : invites)
     },
 })
