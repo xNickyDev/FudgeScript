@@ -9,6 +9,7 @@ export declare enum InviteProperty {
     timestamp = "timestamp",
     code = "code",
     url = "url",
+    type = "type",
     expiresTimestamp = "expiresTimestamp",
     temporary = "temporary"
 }

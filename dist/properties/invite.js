@@ -16,6 +16,7 @@ var InviteProperty;
     InviteProperty["timestamp"] = "timestamp";
     InviteProperty["code"] = "code";
     InviteProperty["url"] = "url";
+    InviteProperty["type"] = "type";
     InviteProperty["expiresTimestamp"] = "expiresTimestamp";
     InviteProperty["temporary"] = "temporary";
 })(InviteProperty || (exports.InviteProperty = InviteProperty = {}));
@@ -29,6 +30,7 @@ exports.InviteProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i?.createdTimestamp,
     code: (i) => i?.code,
     url: (i) => i?.url,
+    type: (i) => i?.type,
     expiresTimestamp: (i) => i?.expiresTimestamp,
     temporary: (i) => i?.temporary,
 });

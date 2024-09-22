@@ -11,6 +11,7 @@ export enum InviteProperty {
     timestamp = "timestamp",
     code = "code",
     url = "url",
+    type = "type",
     expiresTimestamp = "expiresTimestamp",
     temporary = "temporary",
 }
@@ -25,6 +26,7 @@ export const InviteProperties = defineProperties<typeof InviteProperty, Invite>(
     timestamp: (i) => i?.createdTimestamp,
     code: (i) => i?.code,
     url: (i) => i?.url,
+    type: (i) => i?.type,
     expiresTimestamp: (i) => i?.expiresTimestamp,
     temporary: (i) => i?.temporary,
 })
