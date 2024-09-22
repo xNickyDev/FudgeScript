@@ -23,6 +23,7 @@ export default new NativeFunction({
         {
             name: "property",
             rest: false,
+            required: true,
             type: ArgType.Enum,
             description: "The property of the invites to return",
             enum: InviteProperty
@@ -37,6 +38,6 @@ export default new NativeFunction({
     output: array<ArgType.String>(),
     async execute(ctx, [ guild, prop, sep ]) {
         const invites = await (guild ?? ctx.guild).invites.fetch().catch(ctx.noop)
-        return this.successJSON(prop ? invites?.map(invite => InviteProperties[prop](invite)) : invites)
+        return this.successJSON(invites?.map(invite => InviteProperties[prop](invite)).join(sep ?? ", "))
     },
 })
