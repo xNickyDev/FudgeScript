@@ -5,6 +5,11 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.Invite;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.String;
 }], true>;
 export default _default;
 //# sourceMappingURL=deleteInvite.d.ts.map

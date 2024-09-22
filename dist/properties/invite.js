@@ -17,6 +17,7 @@ var InviteProperty;
     InviteProperty["code"] = "code";
     InviteProperty["url"] = "url";
     InviteProperty["expiresTimestamp"] = "expiresTimestamp";
+    InviteProperty["temporary"] = "temporary";
 })(InviteProperty || (exports.InviteProperty = InviteProperty = {}));
 exports.InviteProperties = (0, defineProperties_1.default)({
     authorID: (i) => i?.inviterId,
@@ -29,5 +30,6 @@ exports.InviteProperties = (0, defineProperties_1.default)({
     code: (i) => i?.code,
     url: (i) => i?.url,
     expiresTimestamp: (i) => i?.expiresTimestamp,
+    temporary: (i) => i?.temporary,
 });
 //# sourceMappingURL=invite.js.map

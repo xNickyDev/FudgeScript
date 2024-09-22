@@ -9,7 +9,8 @@ export declare enum InviteProperty {
     timestamp = "timestamp",
     code = "code",
     url = "url",
-    expiresTimestamp = "expiresTimestamp"
+    expiresTimestamp = "expiresTimestamp",
+    temporary = "temporary"
 }
 export declare const InviteProperties: import("../functions/defineProperties").Properties<typeof InviteProperty, Invite>;
 //# sourceMappingURL=invite.d.ts.map

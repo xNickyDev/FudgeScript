@@ -12,6 +12,7 @@ export enum InviteProperty {
     code = "code",
     url = "url",
     expiresTimestamp = "expiresTimestamp",
+    temporary = "temporary",
 }
 
 export const InviteProperties = defineProperties<typeof InviteProperty, Invite>({
@@ -25,4 +26,5 @@ export const InviteProperties = defineProperties<typeof InviteProperty, Invite>(
     code: (i) => i?.code,
     url: (i) => i?.url,
     expiresTimestamp: (i) => i?.expiresTimestamp,
+    temporary: (i) => i?.temporary,
 })

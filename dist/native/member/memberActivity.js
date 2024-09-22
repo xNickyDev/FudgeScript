@@ -50,7 +50,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     execute(ctx, [, member, prop, sep]) {
         const activity = (member ?? ctx.member)?.presence?.activities;
-        return this.success((prop ? activity?.map((x) => activity_1.ActivityProperties[prop](x, sep)).filter((x) => x !== null) : activity)?.join(sep ?? ", "));
+        return this.success((prop ? activity?.map((x) => activity_1.ActivityProperties[prop](x, sep)).filter((x) => x !== "") : activity)?.join(sep ?? ", "));
     }
 });
 //# sourceMappingURL=memberActivity.js.map

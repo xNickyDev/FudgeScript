@@ -5,7 +5,7 @@ export default new NativeFunction({
     name: "$deleteInvite",
     version: "1.0.0",
     brackets: true,
-    description: "Deletes an invite, returns the code",
+    description: "Deletes an invite, returns bool",
     unwrap: true,
     output: ArgType.Boolean,
     args: [
@@ -16,8 +16,14 @@ export default new NativeFunction({
             required: true,
             type: ArgType.Invite,
         },
+        {
+            name: "reason",
+            description: "The reason for deleting the invite",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
-    async execute(ctx, [invite]) {
-        return this.success(!!(await invite.delete().catch(ctx.noop)))
+    async execute(ctx, [invite, reason]) {
+        return this.success(!!(await invite.delete(reason || undefined).catch(ctx.noop)))
     },
 })
