@@ -35,15 +35,25 @@ exports.default = new structures_1.NativeFunction({
             required: true,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "delete pinned",
+            description: "Whether to delete pinned messages",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
+        },
     ],
-    async execute(ctx, [channel, user, amount]) {
+    async execute(ctx, [channel, user, amount, pinned]) {
         let count = 0;
         for (const n of (0, splitNumber_1.default)(amount, 100)) {
             const messages = await channel.messages.fetch({ limit: n }).catch(ctx.noop);
             if (!messages)
                 break;
             const col = await channel
-                .bulkDelete(messages.filter((x) => x.author.id === user.id), true)
+                .bulkDelete(messages.filter(msg => {
+                if (pinned === false && msg.pinned)
+                    return false;
+                return !(msg.author.id === user.id);
+            }), true)
                 .catch(ctx.noop);
             if (!col)
                 break;
