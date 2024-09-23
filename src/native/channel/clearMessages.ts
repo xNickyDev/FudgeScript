@@ -40,21 +40,24 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [channel, amount, pinned, bots]) {
-        const messages = await (channel as TextChannel).messages.fetch({ limit: amount, cache: true }).catch(ctx.noop)
         let count = 0
 
-        if (messages) {
-            const col = await (channel as TextChannel).bulkDelete(
-                messages.filter(msg => {
-                    if (pinned === false && msg.pinned) return false
-                    if (bots === false && msg.author.bot) return false
-                    return true
-                }),
-                true
-            )
-            .catch(ctx.noop)
+        for (const n of splitNumber(amount, 100)) {
+            const messages = await (channel as TextChannel).messages.fetch({ limit: n }).catch(ctx.noop)
+            if (!messages) break
 
-            if (col && col.size) count += col.size
+            const col = await (channel as TextChannel)
+                .bulkDelete(
+                    messages.filter(msg => {
+                        if (pinned === false && msg.pinned) return false
+                        if (bots === false && msg.author.bot) return false
+                        return true
+                    }),
+                    true
+                )
+                .catch(ctx.noop)
+
+            if (col) count += col.size
         }
 
         return this.success(count)

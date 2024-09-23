@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
+const splitNumber_1 = __importDefault(require("../../functions/splitNumber"));
 exports.default = new structures_1.NativeFunction({
     name: "$clearMessages",
     version: "1.0.0",
@@ -38,10 +42,13 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [channel, amount, pinned, bots]) {
-        const messages = await channel.messages.fetch({ limit: amount, cache: true }).catch(ctx.noop);
         let count = 0;
-        if (messages) {
-            const col = await channel.bulkDelete(messages.filter(msg => {
+        for (const n of (0, splitNumber_1.default)(amount, 100)) {
+            const messages = await channel.messages.fetch({ limit: n }).catch(ctx.noop);
+            if (!messages)
+                break;
+            const col = await channel
+                .bulkDelete(messages.filter(msg => {
                 if (pinned === false && msg.pinned)
                     return false;
                 if (bots === false && msg.author.bot)
@@ -49,7 +56,7 @@ exports.default = new structures_1.NativeFunction({
                 return true;
             }), true)
                 .catch(ctx.noop);
-            if (col && col.size)
+            if (col)
                 count += col.size;
         }
         return this.success(count);
