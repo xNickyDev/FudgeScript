@@ -51,7 +51,7 @@ export default new NativeFunction({
                 .bulkDelete(
                     messages.filter(msg => {
                         if (pinned === false && msg.pinned) return false
-                        return !(msg.author.id === user.id)
+                        return !!(msg.author.id === user.id)
                     }),
                     true
                 )
