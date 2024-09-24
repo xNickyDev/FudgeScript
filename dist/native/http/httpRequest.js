@@ -35,7 +35,9 @@ exports.default = new NativeFunction_1.NativeFunction({
     unwrap: true,
     async execute(ctx, [url, method, name]) {
         name ??= "result";
-        delete ctx.http.response;
+        if (ctx.http.response) {
+            delete ctx.http.response;
+        }
         const req = await (0, undici_1.fetch)(url, {
             ...ctx.http,
             method,
@@ -45,6 +47,7 @@ exports.default = new NativeFunction_1.NativeFunction({
         const overrideType = ctx.http.contentType;
         ctx.clearHttpOptions();
         ctx.http.response = { headers: req.headers };
+        console.log(req.headers);
         if (overrideType !== undefined) {
             ctx.setEnvironmentKey(name, await req[structures_1.HTTPContentType[overrideType].toLowerCase()]());
         }
