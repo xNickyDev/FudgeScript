@@ -35,7 +35,9 @@ export default new NativeFunction({
     unwrap: true,
     async execute(ctx, [url, method, name]) {
         name ??= "result"
-        
+
+        delete ctx.http.response
+
         const req = await fetch(url, {
             ...ctx.http,
             method,
@@ -46,6 +48,7 @@ export default new NativeFunction({
         const overrideType = ctx.http.contentType
 
         ctx.clearHttpOptions()
+        ctx.http.response = { headers: req.headers }
         
         if (overrideType !== undefined) {
             ctx.setEnvironmentKey(name, await req[HTTPContentType[overrideType].toLowerCase() as Lowercase<keyof typeof HTTPContentType>]())
