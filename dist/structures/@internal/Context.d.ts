@@ -1,7 +1,7 @@
 import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Entitlement, Guild, GuildEmoji, GuildMember, Interaction, Message, MessageReaction, Role, Sticker, User } from "discord.js";
 import { CompiledFunction } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
-import { IArg, UnwrapArgs } from "./NativeFunction";
+import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
 import { Return } from "./Return";
 import { IRunnable } from "../../core/Interpreter";
 import { FormData, Headers } from "undici";
@@ -16,6 +16,7 @@ export interface IHttpOptions {
     contentType?: HTTPContentType;
     headers: Record<string, string>;
     method: string;
+    timeout?: ArgType.Time;
     response?: {
         headers?: Headers;
         ping?: number;

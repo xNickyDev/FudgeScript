@@ -20,7 +20,7 @@ import {
 } from "discord.js"
 import { CompiledFunction } from "./CompiledFunction"
 import { Container, Sendable } from "./Container"
-import { IArg, NativeFunction, UnwrapArgs } from "./NativeFunction"
+import { ArgType, IArg, NativeFunction, UnwrapArgs } from "./NativeFunction"
 import { Return, ReturnType } from "./Return"
 import { IRunnable } from "../../core/Interpreter"
 import noop from "../../functions/noop"
@@ -44,6 +44,7 @@ export interface IHttpOptions {
     contentType?: HTTPContentType
     headers: Record<string, string>
     method: string
+    timeout?: ArgType.Time
     response?: {
         headers?: Headers
         ping?: number

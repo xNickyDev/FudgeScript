@@ -35,9 +35,11 @@ exports.default = new NativeFunction_1.NativeFunction({
     unwrap: true,
     async execute(ctx, [url, method, name]) {
         name ??= "result";
-        if (ctx.http.response) {
+        let timeout = ctx.http.timeout;
+        if (ctx.http.response)
             delete ctx.http.response;
-        }
+        if (ctx.http.timeout)
+            delete ctx.http.timeout;
         let ms = performance.now();
         const req = await (0, undici_1.fetch)(url, {
             ...ctx.http,
@@ -45,6 +47,8 @@ exports.default = new NativeFunction_1.NativeFunction({
             body: ctx.http.body ?? ctx.http.form
         });
         ms = performance.now() - ms;
+        if (timeout && ms > timeout)
+            return this.stop();
         const contentType = req.headers.get("content-type")?.split(";")[0];
         const overrideType = ctx.http.contentType;
         ctx.clearHttpOptions();
