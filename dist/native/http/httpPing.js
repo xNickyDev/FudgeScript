@@ -4,8 +4,8 @@ const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$httpPing",
     version: "1.5.0",
-    description: "Returns the execution time of the HTTP request",
-    aliases: ["$httpExecutionTime"],
+    description: "Returns the response time of the HTTP request",
+    aliases: ["$httpResponseTime"],
     unwrap: false,
     execute(ctx) {
         return this.success(ctx.http.response?.ping?.toFixed());
