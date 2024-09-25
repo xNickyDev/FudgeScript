@@ -8,6 +8,6 @@ export default new NativeFunction({
     aliases: ["$httpExecutionTime"],
     unwrap: false,
     execute(ctx) {
-        return this.success(ctx.http.response?.ping)
+        return this.success(ctx.http.response?.ping?.toFixed())
     },
 })

@@ -8,7 +8,7 @@ exports.default = new NativeFunction_1.NativeFunction({
     aliases: ["$httpExecutionTime"],
     unwrap: false,
     execute(ctx) {
-        return this.success(ctx.http.response?.ping);
+        return this.success(ctx.http.response?.ping?.toFixed());
     },
 });
 //# sourceMappingURL=httpPing.js.map
