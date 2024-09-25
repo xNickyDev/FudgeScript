@@ -39,7 +39,8 @@ export default new NativeFunction({
         if (ctx.http.response) {
             delete ctx.http.response
         }
-
+        let ping = new Date().getMilliseconds()
+        
         const req = await fetch(url, {
             ...ctx.http,
             method,
@@ -50,8 +51,6 @@ export default new NativeFunction({
         const overrideType = ctx.http.contentType
 
         ctx.clearHttpOptions()
-        ctx.http.response = { headers: req.headers }
-        console.log(req.headers)
         
         if (overrideType !== undefined) {
             ctx.setEnvironmentKey(name, await req[HTTPContentType[overrideType].toLowerCase() as Lowercase<keyof typeof HTTPContentType>]())
@@ -64,6 +63,8 @@ export default new NativeFunction({
                 ctx.setEnvironmentKey(name, await req.text())
             }
         }
+
+        ctx.http.response = { headers: req.headers, ping: new Date().getMilliseconds() - ping }
 
         return this.success(req.status)
     },

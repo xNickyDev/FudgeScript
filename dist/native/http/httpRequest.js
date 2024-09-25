@@ -38,6 +38,7 @@ exports.default = new NativeFunction_1.NativeFunction({
         if (ctx.http.response) {
             delete ctx.http.response;
         }
+        let ping = new Date().getMilliseconds();
         const req = await (0, undici_1.fetch)(url, {
             ...ctx.http,
             method,
@@ -46,8 +47,6 @@ exports.default = new NativeFunction_1.NativeFunction({
         const contentType = req.headers.get("content-type")?.split(";")[0];
         const overrideType = ctx.http.contentType;
         ctx.clearHttpOptions();
-        ctx.http.response = { headers: req.headers };
-        console.log(req.headers);
         if (overrideType !== undefined) {
             ctx.setEnvironmentKey(name, await req[structures_1.HTTPContentType[overrideType].toLowerCase()]());
         }
@@ -62,6 +61,7 @@ exports.default = new NativeFunction_1.NativeFunction({
                 ctx.setEnvironmentKey(name, await req.text());
             }
         }
+        ctx.http.response = { headers: req.headers, ping: new Date().getMilliseconds() - ping };
         return this.success(req.status);
     },
 });
