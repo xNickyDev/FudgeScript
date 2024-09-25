@@ -39,7 +39,7 @@ export default new NativeFunction({
         if (ctx.http.response) {
             delete ctx.http.response
         }
-        let ping = new Date().getMilliseconds()
+        let ms = Date.now()
         
         const req = await fetch(url, {
             ...ctx.http,
@@ -64,7 +64,7 @@ export default new NativeFunction({
             }
         }
 
-        ctx.http.response = { headers: req.headers, ping: new Date().getMilliseconds() - ping }
+        ctx.http.response = { headers: req.headers, ping: Date.now() - ms }
 
         return this.success(req.status)
     },

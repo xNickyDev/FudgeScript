@@ -38,7 +38,7 @@ exports.default = new NativeFunction_1.NativeFunction({
         if (ctx.http.response) {
             delete ctx.http.response;
         }
-        let ping = new Date().getMilliseconds();
+        let ms = Date.now();
         const req = await (0, undici_1.fetch)(url, {
             ...ctx.http,
             method,
@@ -61,7 +61,7 @@ exports.default = new NativeFunction_1.NativeFunction({
                 ctx.setEnvironmentKey(name, await req.text());
             }
         }
-        ctx.http.response = { headers: req.headers, ping: new Date().getMilliseconds() - ping };
+        ctx.http.response = { headers: req.headers, ping: Date.now() - ms };
         return this.success(req.status);
     },
 });
