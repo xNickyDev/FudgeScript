@@ -4,6 +4,7 @@ const structures_1 = require("../../structures");
 const message_1 = require("../../properties/message");
 exports.default = new structures_1.NativeFunction({
     name: "$targetMessage",
+    version: "1.5.0",
     description: "Retrieves data of the target message",
     unwrap: true,
     brackets: true,
@@ -25,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Unknown,
     execute(ctx, [prop, sep]) {
-        return this.success(ctx.interaction?.isMessageContextMenuCommand() ? message_1.MessageProperties[prop](ctx.interaction.targetMessage, sep ?? ", ") : undefined);
+        return this.success(ctx.interaction?.isMessageContextMenuCommand() ? message_1.MessageProperties[prop](ctx.interaction.targetMessage, sep ?? ", ") : null);
     },
 });
 //# sourceMappingURL=targetMessage.js.map
