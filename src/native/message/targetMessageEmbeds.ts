@@ -37,7 +37,7 @@ export default new NativeFunction({
         if (!ctx.interaction?.isMessageContextMenuCommand()) return this.success()
 
         const message = ctx.interaction.targetMessage
-        if (!index) {
+        if (!this.hasFields) {
             return this.successJSON(message.embeds.map(x => x.data))
         }
         

@@ -38,7 +38,7 @@ exports.default = new structures_1.NativeFunction({
         if (!ctx.interaction?.isMessageContextMenuCommand())
             return this.success();
         const message = ctx.interaction.targetMessage;
-        if (!index) {
+        if (!this.hasFields) {
             return this.successJSON(message.embeds.map(x => x.data));
         }
         const embed = message.embeds[index];
