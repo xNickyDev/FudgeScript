@@ -14,7 +14,7 @@ export default new NativeFunction({
             name: "embed index",
             description: "The embed index to get data from",
             rest: false,
-            required: false,
+            required: true,
             type: ArgType.Number,
         },
         {
@@ -37,7 +37,7 @@ export default new NativeFunction({
         if (!ctx.interaction?.isMessageContextMenuCommand()) return this.success()
 
         const message = ctx.interaction.targetMessage
-        if (typeof index !== "number") {
+        if (!index) {
             return this.successJSON(message.embeds.map(x => x.data))
         }
         

@@ -15,7 +15,7 @@ exports.default = new structures_1.NativeFunction({
             name: "embed index",
             description: "The embed index to get data from",
             rest: false,
-            required: false,
+            required: true,
             type: structures_1.ArgType.Number,
         },
         {
@@ -38,7 +38,7 @@ exports.default = new structures_1.NativeFunction({
         if (!ctx.interaction?.isMessageContextMenuCommand())
             return this.success();
         const message = ctx.interaction.targetMessage;
-        if (typeof index !== "number") {
+        if (!index) {
             return this.successJSON(message.embeds.map(x => x.data));
         }
         const embed = message.embeds[index];

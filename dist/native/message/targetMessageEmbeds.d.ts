@@ -4,7 +4,7 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    required: false;
+    required: true;
     type: ArgType.Number;
 }, {
     name: string;
