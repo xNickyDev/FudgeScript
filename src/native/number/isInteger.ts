@@ -18,6 +18,6 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        return this.success(isInteger(n))
+        return this.success(isInteger(Number(n)))
     },
 })
