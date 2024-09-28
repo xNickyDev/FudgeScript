@@ -1,3 +1,4 @@
+import { isNumber } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -12,11 +13,11 @@ export default new NativeFunction({
             description: "The number to check",
             required: true,
             rest: false,
-            type: ArgType.Number,
+            type: ArgType.String,
         },
     ],
     brackets: true,
     execute(ctx, [n]) {
-        return this.success(n % 1 !== 0)
+        return this.success(isNumber(n) ? n % 1 !== 0 : false)
     },
 })
