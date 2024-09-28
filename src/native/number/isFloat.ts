@@ -1,4 +1,3 @@
-import { isNumber } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
