@@ -18,6 +18,6 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        return this.success(isNumber(Number(n)) ? Number(n) % 1 !== 0 : false)
+        return this.success(!!n && !isNaN(Number(n)) ? Number(n) % 1 !== 0 : false)
     },
 })

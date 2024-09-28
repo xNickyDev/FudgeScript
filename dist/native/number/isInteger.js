@@ -19,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [n]) {
-        return this.success((0, lodash_1.isInteger)(Number(n)));
+        return this.success(!isNaN(Number(n)) && (0, lodash_1.isInteger)(Number(n)));
     },
 });
 //# sourceMappingURL=isInteger.js.map
