@@ -1,1 +1,1 @@
-{"version":3,"file":"followChannel.d.ts","sourceRoot":"","sources":["../../../src/native/channel/followChannel.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAmD,MAAM,YAAY,CAAA;AACzF,OAAO,EAAE,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAA;;;;;;;eAcnC,WAAW;;;;;;;eAQX,WAAW;;;;;;;AApBlC,wBAiCE"}
+{"version":3,"file":"followChannel.d.ts","sourceRoot":"","sources":["../../../src/native/channel/followChannel.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAmD,MAAM,YAAY,CAAA;AACzF,OAAO,EAAE,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAA;;;;;;;eAenC,WAAW;;;;;;;eAQX,WAAW;;;;;;;AArBlC,wBAkCE"}
