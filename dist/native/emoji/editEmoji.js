@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editEmoji",
+    version: "1.5.0",
     description: "Edits an emoji of a guild, returns bool",
     brackets: true,
     unwrap: true,
@@ -25,21 +26,19 @@ exports.default = new structures_1.NativeFunction({
             name: "name",
             description: "The new name for the emoji",
             rest: false,
-            required: true,
             type: structures_1.ArgType.String,
         },
         {
             name: "reason",
             description: "The reason for editing the emoji",
             rest: false,
-            required: false,
             type: structures_1.ArgType.String,
         },
         {
             name: "roles",
             description: "The new roles to limit usage of this emoji to",
             rest: true,
-            required: false,
+            required: true,
             type: structures_1.ArgType.Role,
             pointer: 0,
         },
@@ -48,7 +47,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [, emoji, name, reason, roles]) {
         return this.success(!!(await emoji
             .edit({
-            name: name,
+            name: name || undefined,
             roles: roles || undefined,
             reason: reason || undefined
         })

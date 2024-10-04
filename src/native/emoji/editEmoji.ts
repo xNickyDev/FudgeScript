@@ -26,21 +26,19 @@ export default new NativeFunction({
             name: "name",
             description: "The new name for the emoji",
             rest: false,
-            required: true,
             type: ArgType.String,
         },
         {
             name: "reason",
             description: "The reason for editing the emoji",
             rest: false,
-            required: false,
             type: ArgType.String,
         },
         {
             name: "roles",
             description: "The new roles to limit usage of this emoji to",
             rest: true,
-            required: false,
+            required: true,
             type: ArgType.Role,
             pointer: 0,
         },
@@ -50,7 +48,7 @@ export default new NativeFunction({
         return this.success(
             !!(await emoji
                 .edit({
-                    name: name,
+                    name: name || undefined,
                     roles: roles || undefined,
                     reason: reason || undefined
                 })
