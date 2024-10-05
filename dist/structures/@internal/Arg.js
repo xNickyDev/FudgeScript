@@ -325,6 +325,35 @@ class Arg {
             pointer: 0
         });
     }
+    static optionalAutomodRule(name = "rule ID", desc = "The guild automod rule to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.AutomodRule,
+            pointer: 0
+        });
+    }
+    static restAutomodRule(name = "rule IDs", desc = "The guild automod rule to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.AutomodRule,
+            pointer: 0
+        });
+    }
+    static requiredAutomodRule(name = "rule ID", desc = "The guild automod rule to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.AutomodRule,
+            pointer: 0
+        });
+    }
     static restTextChannel(name = "text channel IDs", desc = "The text channels to use") {
         return Arg.create({
             name,
@@ -377,6 +406,35 @@ class Arg {
             rest: false,
             required: true,
             type: NativeFunction_1.ArgType.GuildEmoji,
+            pointer: 0
+        });
+    }
+    static restApplicationEmoji(name = "emoji IDs", desc = "The application emojis to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.ApplicationEmoji,
+            pointer: 0
+        });
+    }
+    static optionalApplicationEmoji(name = "emoji ID", desc = "The application emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.ApplicationEmoji,
+            pointer: 0
+        });
+    }
+    static requiredApplicationEmoji(name = "emoji ID", desc = "The application emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.ApplicationEmoji,
             pointer: 0
         });
     }
