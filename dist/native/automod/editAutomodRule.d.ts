@@ -11,7 +11,7 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.String;
+    type: ArgType.AutomodRule;
 }, {
     name: string;
     description: string;

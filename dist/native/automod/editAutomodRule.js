@@ -22,7 +22,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The id of the automod rule to edit",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.AutomodRule,
         },
         {
             name: "name",
@@ -53,8 +53,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [guild, id, name, event, enabled, reason]) {
-        const rule = await guild.autoModerationRules.edit(id, {
+    async execute(ctx, [, rule, name, event, enabled, reason]) {
+        const success = await rule.edit({
             name: name || undefined,
             eventType: event || undefined,
             triggerMetadata: ctx.automodRule.triggerMetadata || undefined,
@@ -64,7 +64,7 @@ exports.default = new structures_1.NativeFunction({
             enabled: (0, lodash_1.isBoolean)(enabled) ? enabled : undefined,
             reason: reason || undefined
         }).catch(ctx.noop);
-        return this.success(!!rule);
+        return this.success(!!success);
     },
 });
 //# sourceMappingURL=editAutomodRule.js.map
