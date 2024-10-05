@@ -34,7 +34,11 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Unknown,
     async execute(ctx, [guild, prop, sep]) {
         const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop);
-        return this.successJSON(!prop ? rules : rules?.map(rule => automodRule_1.AutomodRuleProperties[prop](rule, sep)).join(sep ?? ", "));
+        if (rules && prop) {
+            const data = rules.map(rule => automodRule_1.AutomodRuleProperties[prop](rule, sep));
+            return this.successJSON(Object(data) ? data : data.join(sep ?? ", "));
+        }
+        return this.successJSON(rules);
     },
 });
 //# sourceMappingURL=guildAutomodRules.js.map
