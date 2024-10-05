@@ -19,4 +19,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.String;
 }], true>;
 export default _default;
-//# sourceMappingURL=getAutomodRules.d.ts.map
+//# sourceMappingURL=guildAutomodRules.d.ts.map

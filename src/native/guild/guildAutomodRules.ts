@@ -1,12 +1,11 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { AutomodRuleProperty, AutomodRuleProperties } from "../../properties/automodRule"
-import { AutoModerationRule } from "discord.js"
-import { filter } from "lodash"
 
 export default new NativeFunction({
-    name: "$getAutomodRules",
+    name: "$guildAutomodRules",
     version: "1.5.0",
     description: "Returns all automod rules of a guild",
+    aliases: ["$getAutomodRules"],
     unwrap: true,
     brackets: false,
     args: [

@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const automodRule_1 = require("../../properties/automodRule");
 exports.default = new structures_1.NativeFunction({
-    name: "$getAutomodRules",
+    name: "$guildAutomodRules",
     version: "1.5.0",
     description: "Returns all automod rules of a guild",
+    aliases: ["$getAutomodRules"],
     unwrap: true,
     brackets: false,
     args: [
@@ -36,4 +37,4 @@ exports.default = new structures_1.NativeFunction({
         return this.successJSON(!prop ? rules : rules?.map(rule => automodRule_1.AutomodRuleProperties[prop](rule, sep)).join(sep ?? ", "));
     },
 });
-//# sourceMappingURL=getAutomodRules.js.map
+//# sourceMappingURL=guildAutomodRules.js.map
