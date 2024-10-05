@@ -255,10 +255,12 @@ class CompiledFunction {
     resolveApplicationEmoji(ctx, arg, str, ref) {
         const fromUrl = CompiledFunction.CDNIdRegex.exec(str);
         if (fromUrl !== null)
-            return ctx.client.application.emojis.cache.get(fromUrl[2]);
+            return ctx.client.application.emojis.fetch(fromUrl[2]).catch(ctx.noop);
         const parsed = (0, discord_js_1.parseEmoji)(str);
         const id = parsed?.id ?? str;
-        return ctx.client.application.emojis.cache.get(id);
+        if (!CompiledFunction.IdRegex.test(id))
+            return;
+        return ctx.client.application.emojis.fetch(id).catch(ctx.noop);
     }
     resolveForumTag(ctx, arg, str, ref) {
         return this.resolvePointer(arg, ref, ctx.channel)?.availableTags.find((x) => x.id === str || x.name === str);

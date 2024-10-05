@@ -319,11 +319,12 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
 
     private resolveApplicationEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         const fromUrl = CompiledFunction.CDNIdRegex.exec(str)
-        if (fromUrl !== null) return ctx.client.application.emojis.cache.get(fromUrl[2])
+        if (fromUrl !== null) return ctx.client.application.emojis.fetch(fromUrl[2]).catch(ctx.noop)
 
         const parsed = parseEmoji(str)
         const id = parsed?.id ?? str
-        return ctx.client.application.emojis.cache.get(id)
+        if (!CompiledFunction.IdRegex.test(id)) return
+        return ctx.client.application.emojis.fetch(id).catch(ctx.noop)
     }
 
     private resolveForumTag(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
