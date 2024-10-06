@@ -36,7 +36,7 @@ exports.default = new structures_1.NativeFunction({
         const rules = await (guild ?? ctx.guild).autoModerationRules?.fetch().catch(ctx.noop);
         if (rules && prop) {
             const data = rules.map(rule => automodRule_1.AutomodRuleProperties[prop](rule, sep));
-            return this.successJSON(data.every((x) => x?.toString instanceof Object) ? data : data.join(sep ?? ", "));
+            return this.successJSON(data.every(item => typeof item === "object" && item !== null) ? data : data.join(sep ?? ", "));
         }
         return this.successJSON(rules);
     },

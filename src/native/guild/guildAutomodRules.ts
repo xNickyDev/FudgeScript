@@ -36,7 +36,7 @@ export default new NativeFunction({
 
         if (rules && prop) {
             const data = rules.map(rule => AutomodRuleProperties[prop](rule, sep))
-            return this.successJSON(data.every((x) => x?.toString instanceof Object) ? data : data.join(sep ?? ", "))
+            return this.successJSON(data.every(item => typeof item === "object" && item !== null) ? data : data.join(sep ?? ", "))
         }
 
         return this.successJSON(rules)
