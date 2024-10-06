@@ -1,4 +1,4 @@
-import { AutoModerationRule, AutoModerationRuleKeywordPresetType } from "discord.js"
+import { AutoModerationRule, AutoModerationRuleEventType, AutoModerationRuleKeywordPresetType, AutoModerationRuleTriggerType } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum AutomodRuleProperty {
@@ -25,10 +25,10 @@ export const AutomodRuleProperties = defineProperties<typeof AutomodRuleProperty
     name: (i) => i?.name,
     authorID: (i) => i?.creatorId,
     enabled: (i) => i?.enabled,
-    eventType: (i) => i?.eventType,
+    eventType: (i) => AutoModerationRuleEventType[i?.eventType!],
     exemptChannels: (i, sep) => i?.exemptChannels?.map((x) => x.id).join(sep ?? ", "),
     exemptRoles: (i, sep) => i?.exemptRoles?.map((x) => x.id).join(sep ?? ", "),
-    triggerType: (i) => i?.triggerType,
+    triggerType: (i) => AutoModerationRuleTriggerType[i?.triggerType!],
     actions: (i) => Object(i?.actions),
     triggerMetadata: (i) => Object(i?.triggerMetadata),
     keywordFilter: (i, sep) => i?.triggerMetadata.keywordFilter.join(sep ?? ", "),
