@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$parseTime",
+    version: "1.5.0",
     description: "Parses valid duration string to time",
     brackets: true,
     output: structures_1.ArgType.Number,
@@ -18,17 +19,17 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     execute(ctx, [str]) {
         return this.success(str
-            .replace("and", "")
-            .replace(",", "")
-            .replace(" ", "")
-            .replace("s", "")
-            .replace("econd", "s")
-            .replace("year", "y")
-            .replace("month", "M")
-            .replace("week", "w")
-            .replace("day", "d")
-            .replace("hour", "h")
-            .replace("minute", "m"));
+            .replaceAll("and", "")
+            .replaceAll(",", "")
+            .replaceAll(" ", "")
+            .replaceAll("s", "")
+            .replaceAll("econd", "s")
+            .replaceAll("year", "y")
+            .replaceAll("month", "M")
+            .replaceAll("week", "w")
+            .replaceAll("day", "d")
+            .replaceAll("hour", "h")
+            .replaceAll("minute", "m"));
     },
 });
 //# sourceMappingURL=parseTime.js.map

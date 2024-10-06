@@ -20,17 +20,17 @@ export default new NativeFunction({
     execute(ctx, [ str ]) {
         return this.success(
             str
-            .replace("and", "")
-            .replace(",", "")
-            .replace(" ", "")
-            .replace("s", "")
-            .replace("econd", "s")
-            .replace("year", "y")
-            .replace("month", "M")
-            .replace("week", "w")
-            .replace("day", "d")
-            .replace("hour", "h")
-            .replace("minute", "m")
+            .replaceAll("and", "")
+            .replaceAll(",", "")
+            .replaceAll(" ", "")
+            .replaceAll("s", "")
+            .replaceAll("econd", "s")
+            .replaceAll("year", "y")
+            .replaceAll("month", "M")
+            .replaceAll("week", "w")
+            .replaceAll("day", "d")
+            .replaceAll("hour", "h")
+            .replaceAll("minute", "m")
         )
     },
 })
