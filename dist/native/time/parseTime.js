@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = require("../../constants");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$parseTime",
@@ -18,26 +17,18 @@ exports.default = new structures_1.NativeFunction({
     ],
     unwrap: true,
     execute(ctx, [str]) {
-        try {
-            const ms = constants_1.TimeParser.parseToMS(str);
-            const time = constants_1.TimeParser.parseToString(ms, {
-                and: false,
-                limit: undefined,
-                separator: ""
-            });
-            return this.success(time
-                .replace("s", "")
-                .replace("year", "y")
-                .replace("month", "M")
-                .replace("week", "w")
-                .replace("day", "d")
-                .replace("hour", "h")
-                .replace("minute", "m")
-                .replace("econd", "s"));
-        }
-        catch (error) {
-            return this.success(0);
-        }
+        return this.success(str
+            .replace("and", "")
+            .replace(",", "")
+            .replace(" ", "")
+            .replace("s", "")
+            .replace("econd", "s")
+            .replace("year", "y")
+            .replace("month", "M")
+            .replace("week", "w")
+            .replace("day", "d")
+            .replace("hour", "h")
+            .replace("minute", "m"));
     },
 });
 //# sourceMappingURL=parseTime.js.map

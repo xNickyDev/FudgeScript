@@ -3,6 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$parseTime",
+    version: "1.5.0",
     description: "Parses valid duration string to time",
     brackets: true,
     output: ArgType.Number,
@@ -17,26 +18,19 @@ export default new NativeFunction({
     ],
     unwrap: true,
     execute(ctx, [ str ]) {
-        try {
-            const ms = TimeParser.parseToMS(str)
-            const time = TimeParser.parseToString(ms, {
-                and: false,
-                limit: undefined,
-                separator: ""
-            })
-            return this.success(
-                time
-                .replace("s", "")
-                .replace("year", "y")
-                .replace("month", "M")
-                .replace("week", "w")
-                .replace("day", "d")
-                .replace("hour", "h")
-                .replace("minute", "m")
-                .replace("econd", "s")
-            )
-        } catch (error) {
-            return this.success(0)
-        }
+        return this.success(
+            str
+            .replace("and", "")
+            .replace(",", "")
+            .replace(" ", "")
+            .replace("s", "")
+            .replace("econd", "s")
+            .replace("year", "y")
+            .replace("month", "M")
+            .replace("week", "w")
+            .replace("day", "d")
+            .replace("hour", "h")
+            .replace("minute", "m")
+        )
     },
 })
