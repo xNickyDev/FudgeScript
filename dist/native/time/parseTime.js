@@ -18,7 +18,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     unwrap: true,
     execute(ctx, [str]) {
-        return this.success(str
+        const time = str
             .replaceAll("and", "")
             .replaceAll(",", "")
             .replaceAll(" ", "")
@@ -29,7 +29,8 @@ exports.default = new structures_1.NativeFunction({
             .replaceAll("week", "w")
             .replaceAll("day", "d")
             .replaceAll("hour", "h")
-            .replaceAll("minute", "m"));
+            .replaceAll("minute", "m");
+        return this.success(isNaN(Number(time)) ? time : `${time}s`);
     },
 });
 //# sourceMappingURL=parseTime.js.map
