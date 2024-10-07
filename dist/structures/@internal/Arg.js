@@ -416,7 +416,6 @@ class Arg {
             rest: true,
             required: true,
             type: NativeFunction_1.ArgType.ApplicationEmoji,
-            pointer: 0
         });
     }
     static optionalApplicationEmoji(name = "emoji ID", desc = "The application emoji to use") {
@@ -425,7 +424,6 @@ class Arg {
             description: desc,
             rest: false,
             type: NativeFunction_1.ArgType.ApplicationEmoji,
-            pointer: 0
         });
     }
     static requiredApplicationEmoji(name = "emoji ID", desc = "The application emoji to use") {
@@ -435,6 +433,34 @@ class Arg {
             rest: false,
             required: true,
             type: NativeFunction_1.ArgType.ApplicationEmoji,
+        });
+    }
+    static restEmoji(name = "emoji IDs", desc = "The emojis to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.Emoji,
+            pointer: 0
+        });
+    }
+    static optionalEmoji(name = "emoji ID", desc = "The emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.Emoji,
+            pointer: 0
+        });
+    }
+    static requiredEmoji(name = "emoji ID", desc = "The emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.Emoji,
             pointer: 0
         });
     }

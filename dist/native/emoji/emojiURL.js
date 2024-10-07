@@ -18,8 +18,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [emoji]) {
-        emoji ?? ctx.emoji;
-        return this.success(emoji?.url);
+        return this.success((emoji ?? ctx.emoji)?.imageURL());
     },
 });
 //# sourceMappingURL=emojiURL.js.map

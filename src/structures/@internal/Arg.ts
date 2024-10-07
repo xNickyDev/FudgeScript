@@ -460,7 +460,6 @@ export class Arg {
             rest: true,
             required: true,
             type: ArgType.ApplicationEmoji,
-            pointer: 0
         })
     }
 
@@ -470,7 +469,6 @@ export class Arg {
             description: desc,
             rest: false,
             type: ArgType.ApplicationEmoji,
-            pointer: 0
         })
     }
 
@@ -481,6 +479,37 @@ export class Arg {
             rest: false,
             required: true,
             type: ArgType.ApplicationEmoji,
+        })
+    }
+
+    public static restEmoji(name: string = "emoji IDs", desc: string = "The emojis to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: ArgType.Emoji,
+            pointer: 0
+        })
+    }
+
+    public static optionalEmoji(name: string = "emoji ID", desc: string = "The emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: ArgType.Emoji,
+            pointer: 0
+        })
+    }
+
+    public static requiredEmoji(name: string = "emoji ID", desc: string = "The emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: ArgType.Emoji,
             pointer: 0
         })
     }
