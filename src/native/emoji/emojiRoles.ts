@@ -1,3 +1,4 @@
+import { GuildEmoji } from "discord.js"
 import array from "../../functions/array"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
@@ -23,8 +24,8 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    execute(ctx, [emoji, sep]) {
-        emoji ??= ctx.emoji!
+    execute(ctx, [em, sep]) {
+        const emoji = em ?? ctx.emoji
         return this.success(emoji && "roles" in emoji ? emoji.roles.cache.map((x) => x.id).join(sep || ", ") : undefined)
     },
 })

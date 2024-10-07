@@ -7,6 +7,7 @@ import {
     BaseInteraction,
     ChatInputCommandInteraction,
     ContextMenuCommandInteraction,
+    Emoji,
     Entitlement,
     Guild,
     GuildEmoji,
@@ -95,7 +96,7 @@ export interface IContextCache {
     role: Role | null
     entitlement: Entitlement | null
     reaction: MessageReaction | null
-    emoji: GuildEmoji | null
+    emoji: Emoji | null
     automod: AutoModerationActionExecution | null
     sticker: Sticker | null
 }

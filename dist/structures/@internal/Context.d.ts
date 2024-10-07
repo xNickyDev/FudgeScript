@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Entitlement, Guild, GuildEmoji, GuildMember, Interaction, Message, MessageReaction, Role, Sticker, User } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, Interaction, Message, MessageReaction, Role, Sticker, User } from "discord.js";
 import { CompiledFunction } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
@@ -63,7 +63,7 @@ export interface IContextCache {
     role: Role | null;
     entitlement: Entitlement | null;
     reaction: MessageReaction | null;
-    emoji: GuildEmoji | null;
+    emoji: Emoji | null;
     automod: AutoModerationActionExecution | null;
     sticker: Sticker | null;
 }
@@ -87,7 +87,7 @@ export declare class Context {
     get automod(): AutoModerationActionExecution | null;
     get entitlement(): Entitlement | null;
     get member(): GuildMember | null;
-    get emoji(): GuildEmoji | null;
+    get emoji(): Emoji | null;
     get sticker(): Sticker | null;
     get role(): Role | null;
     get reaction(): MessageReaction | null;

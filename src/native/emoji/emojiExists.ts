@@ -17,6 +17,6 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [id]) {
-        return this.success(CompiledFunction.IdRegex.test(id) && (ctx.client.emojis.cache.has(id) ?? ctx.client.application.emojis.fetch(id).catch(ctx.noop)))
+        return this.success(CompiledFunction.IdRegex.test(id) && (ctx.client.emojis.cache.has(id) || ctx.client.application.emojis.cache.has(id)))
     },
 })

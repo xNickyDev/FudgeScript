@@ -13,7 +13,7 @@ exports.default = new structures_1.NativeFunction({
             name: "emoji ID",
             description: "The emoji id to format",
             rest: false,
-            type: structures_1.ArgType.GuildEmoji,
+            type: structures_1.ArgType.Emoji,
             required: true,
         },
     ],

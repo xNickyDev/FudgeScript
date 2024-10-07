@@ -12,7 +12,7 @@ export default new NativeFunction({
             name: "emoji ID",
             description: "The emoji id to format",
             rest: false,
-            type: ArgType.GuildEmoji,
+            type: ArgType.Emoji,
             required: true,
         },
     ],
