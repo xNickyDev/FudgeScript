@@ -31,7 +31,7 @@ export class ForgeFunction {
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
-            args: this.data.params?.length ? this.data.params!.map((x, i) => ({
+            args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: x,
                 rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,
@@ -41,13 +41,16 @@ export class ForgeFunction {
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args: string[]) {
                 if (!this.fn.data.unwrap) {
-                    const condition = await this["resolveCondition"](ctx, this.data.fields![0] as IExtendedCompiledFunctionConditionField)
+                    if (!this.data.fields || this.data.fields.length === 0) {
+                        return outer.call(ctx, args ?? [])
+                    }
+                    const condition = await this["resolveCondition"](ctx, this.data.fields[0] as IExtendedCompiledFunctionConditionField)
                     if (!this["isValidReturnType"](condition))
                         return condition
                     else if (!isTrue(condition))
                         return this.stop()
                     // eslint-disable-next-line no-unsafe-optional-chaining
-                    const params = await this["resolveMultipleArgs"](ctx, ...this.data.fields!.slice(1).map((_, i) => i + 1))
+                    const params = await this["resolveMultipleArgs"](ctx, ...this.data.fields.slice(1).map((_, i) => i + 1))
                     if (!this["isValidReturnType"](params.return))
                         return params.return
                     return outer.call(ctx, params.args)
@@ -61,20 +64,20 @@ export class ForgeFunction {
     async call(ctx: Context, args: string[]) {
         this.compiled ??= Compiler.compile(this.data.code, this.data.path)
 
-        if (this.data.params!.length !== args.length)
+        if (this.data.params?.length !== args.length)
             return new Return(
                 ReturnType.Error,
                 new ForgeError(
                     null,
                     ErrorType.Custom,
                     `Calling custom function ${this.data.name} requires ${
-                        this.data.params!.length
+                        this.data.params?.length
                     } arguments, received ${args.length}`
                 )
             )
 
-        for (let i = 0, len = this.data.params!.length; i < len; i++) {
-            ctx.setEnvironmentKey(this.data.params![i], args[i])
+        for (let i = 0, len = this.data.params?.length; i < len; i++) {
+            ctx.setEnvironmentKey(this.data.params[i], args[i])
         }
 
         const result = await Interpreter.run(ctx.clone({

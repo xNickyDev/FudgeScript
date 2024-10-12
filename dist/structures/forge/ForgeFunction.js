@@ -36,6 +36,9 @@ class ForgeFunction {
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args) {
                 if (!this.fn.data.unwrap) {
+                    if (!this.data.fields || this.data.fields.length === 0) {
+                        return outer.call(ctx, args ?? []);
+                    }
                     const condition = await this["resolveCondition"](ctx, this.data.fields[0]);
                     if (!this["isValidReturnType"](condition))
                         return condition;
@@ -55,9 +58,9 @@ class ForgeFunction {
     }
     async call(ctx, args) {
         this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path);
-        if (this.data.params.length !== args.length)
-            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${this.data.params.length} arguments, received ${args.length}`));
-        for (let i = 0, len = this.data.params.length; i < len; i++) {
+        if (this.data.params?.length !== args.length)
+            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${this.data.params?.length} arguments, received ${args.length}`));
+        for (let i = 0, len = this.data.params?.length; i < len; i++) {
             ctx.setEnvironmentKey(this.data.params[i], args[i]);
         }
         const result = await core_1.Interpreter.run(ctx.clone({
