@@ -11,7 +11,6 @@ export declare class Container {
     ephemeral: boolean;
     tts: boolean;
     update: boolean;
-    suppressEmbeds: boolean;
     files: AttachmentBuilder[];
     channel?: Channel;
     stickers: StickerResolvable[];

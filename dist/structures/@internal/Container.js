@@ -18,7 +18,6 @@ class Container {
     ephemeral = false;
     tts = false;
     update = false;
-    suppressEmbeds = false;
     files = new Array();
     channel;
     stickers = new Array();
@@ -116,7 +115,6 @@ class Container {
         this.fetchReply = false;
         this.edit = false;
         this.tts = false;
-        this.suppressEmbeds = false;
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
@@ -152,7 +150,6 @@ class Container {
                 threadId: this.threadId,
                 threadName: this.threadName,
                 appliedTags: this.appliedTags,
-                suppressEmbeds: this.suppressEmbeds
             });
     }
 }

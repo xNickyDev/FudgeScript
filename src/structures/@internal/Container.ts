@@ -69,7 +69,6 @@ export class Container {
     public ephemeral = false
     public tts = false
     public update = false
-    public suppressEmbeds = false
     public files = new Array<AttachmentBuilder>()
     public channel?: Channel
     public stickers = new Array<StickerResolvable>()
@@ -170,7 +169,6 @@ export class Container {
         this.fetchReply = false
         this.edit = false
         this.tts = false
-        this.suppressEmbeds = false
 
         this.stickers.length = 0
         this.choices.length = 0
@@ -211,7 +209,6 @@ export class Container {
                       threadId: this.threadId,
                       threadName: this.threadName,
                       appliedTags: this.appliedTags,
-                      suppressEmbeds: this.suppressEmbeds
                   }
         ) as T
     }

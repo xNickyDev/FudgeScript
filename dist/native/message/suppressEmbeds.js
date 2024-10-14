@@ -3,8 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$suppressEmbeds",
-    description: "Suppresses embeds on a message, returns bool if fields specified",
-    brackets: false,
+    version: "1.5.0",
+    description: "Suppresses embeds on a message, returns bool",
+    brackets: true,
     unwrap: true,
     args: [
         {
@@ -26,10 +27,6 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, message]) {
-        if (!this.hasFields) {
-            ctx.container.suppressEmbeds = true;
-            return this.success();
-        }
         return this.success(!!(await message.suppressEmbeds(true).catch(ctx.noop)));
     },
 });

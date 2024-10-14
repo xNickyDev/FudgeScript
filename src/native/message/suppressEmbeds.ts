@@ -4,8 +4,8 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$suppressEmbeds",
     version: "1.5.0",
-    description: "Suppresses embeds on a message, returns bool if fields specified",
-    brackets: false,
+    description: "Suppresses embeds on a message, returns bool",
+    brackets: true,
     unwrap: true,
     args: [
         {
@@ -27,11 +27,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, message]) {
-        if (!this.hasFields) {
-            ctx.container.suppressEmbeds = true
-            return this.success()
-        }
-
         return this.success(!!(await message.suppressEmbeds(true).catch(ctx.noop)))
     },
 })
