@@ -1,6 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VoiceRegionType = void 0;
 const structures_1 = require("../../structures");
+var VoiceRegionType;
+(function (VoiceRegionType) {
+    VoiceRegionType["brazil"] = "brazil";
+    VoiceRegionType["hongkong"] = "hongkong";
+    VoiceRegionType["india"] = "india";
+    VoiceRegionType["japan"] = "japan";
+    VoiceRegionType["rotterdam"] = "rotterdam";
+    VoiceRegionType["russia"] = "russia";
+    VoiceRegionType["singapore"] = "singapore";
+    VoiceRegionType["southKorea"] = "south-korea";
+    VoiceRegionType["southAfrica"] = "southafrica";
+    VoiceRegionType["sydney"] = "sydney";
+    VoiceRegionType["usCentral"] = "us-central";
+    VoiceRegionType["usEast"] = "us-east";
+    VoiceRegionType["usSouth"] = "us-south";
+    VoiceRegionType["usWest"] = "us-west";
+})(VoiceRegionType || (exports.VoiceRegionType = VoiceRegionType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$setVoiceRegion",
     version: "1.5.0",
@@ -18,10 +36,10 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "region",
-            description: "The region to set",
+            description: "The region to set, leave empty to remove a fixed region",
             rest: false,
-            required: true,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Enum,
+            enum: VoiceRegionType
         },
         {
             name: "reason",
@@ -33,7 +51,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [voice, region, reason]) {
-        return this.success(!!(await voice.setRTCRegion(region, reason ?? undefined).catch(ctx.noop)));
+        return this.success(!!(await voice.setRTCRegion(region || null, reason ?? undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setVoiceRegion.js.map
