@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$forumDefaultReactionEmoji",
+    version: "1.5.0",
     description: "Returns the default recation emoji of a forum",
     unwrap: true,
     brackets: true,
@@ -16,9 +18,11 @@ exports.default = new structures_1.NativeFunction({
             required: true
         },
     ],
-    output: structures_1.ArgType.DefaultReactionEmoji,
+    output: structures_1.ArgType.String,
     execute(ctx, [chan]) {
-        return this.success(chan?.defaultReactionEmoji);
+        const emoji = chan?.defaultReactionEmoji;
+        const parsed = (0, discord_js_1.parseEmoji)(emoji?.id ?? emoji?.name);
+        return this.success(parsed ? parsed.id ? `<${parsed.animated ? "a" : ""}:${parsed.name}:${parsed.id}>` : parsed.name : undefined);
     },
 });
 //# sourceMappingURL=forumDefaultReactionEmoji.js.map
