@@ -1,6 +1,5 @@
 import { BaseChannel, Message, ThreadChannelResolvable, WebhookClient } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { Channel } from "diagnostics_channel"
 
 export default new NativeFunction({
     name: "$webhookSend",
@@ -49,8 +48,8 @@ export default new NativeFunction({
             check: (i: BaseChannel) => i.isThread(),
         },
         {
-            name: "thread name",
-            description: "The name for the created thread channel",
+            name: "post name",
+            description: "The name for the created forum post",
             rest: false,
             type: ArgType.String,
         },
@@ -69,7 +68,7 @@ export default new NativeFunction({
         ctx.container.username = username || undefined
         ctx.container.threadId = thread?.id as ThreadChannelResolvable || undefined
         ctx.container.threadName = name || undefined
-        ctx.container.appliedTags = tags || undefined
+        ctx.container.appliedTags = tags.length > 0 ? tags : undefined
 
         const m = await ctx.container.send<Message>(web)
         return this.success(returnMessageID && m ? m.id : undefined)

@@ -49,8 +49,8 @@ exports.default = new structures_1.NativeFunction({
             check: (i) => i.isThread(),
         },
         {
-            name: "thread name",
-            description: "The name for the created thread channel",
+            name: "post name",
+            description: "The name for the created forum post",
             rest: false,
             type: structures_1.ArgType.String,
         },
@@ -68,7 +68,7 @@ exports.default = new structures_1.NativeFunction({
         ctx.container.username = username || undefined;
         ctx.container.threadId = thread?.id || undefined;
         ctx.container.threadName = name || undefined;
-        ctx.container.appliedTags = tags || undefined;
+        ctx.container.appliedTags = tags.length > 0 ? tags : undefined;
         const m = await ctx.container.send(web);
         return this.success(returnMessageID && m ? m.id : undefined);
     },
