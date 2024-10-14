@@ -1,5 +1,6 @@
-import { BaseChannel, GuildForumTag, Message, ThreadChannel, WebhookClient } from "discord.js"
+import { BaseChannel, Message, ThreadChannelResolvable, WebhookClient } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { Channel } from "diagnostics_channel"
 
 export default new NativeFunction({
     name: "$webhookSend",
@@ -66,7 +67,7 @@ export default new NativeFunction({
         ctx.container.content = content || undefined
         ctx.container.avatarURL = avatarUrl || undefined
         ctx.container.username = username || undefined
-        ctx.container.threadId = thread as ThreadChannel || undefined
+        ctx.container.threadId = thread?.id as ThreadChannelResolvable || undefined
         ctx.container.threadName = name || undefined
         ctx.container.appliedTags = tags || undefined
 

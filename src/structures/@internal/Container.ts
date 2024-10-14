@@ -30,7 +30,7 @@ import {
     StickerResolvable,
     TextChannel,
     TextInputBuilder,
-    ThreadChannel,
+    ThreadChannelResolvable,
     User,
     VoiceState,
     WebhookClient,
@@ -79,7 +79,7 @@ export class Container {
     public avatarURL?: string
     public username?: string
     public poll?: PollData
-    public threadId?: ThreadChannel
+    public threadId?: ThreadChannelResolvable
     public threadName?: string
     public appliedTags?: string[]
 
