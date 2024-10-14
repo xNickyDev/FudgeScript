@@ -276,7 +276,7 @@ class CompiledFunction {
         const parsed = (0, discord_js_1.parseEmoji)(str);
         if (!parsed)
             return;
-        return ctx.guild?.emojis.cache.get(parsed?.id ?? str) ?? parsed.name;
+        return parsed.id ? ctx.guild?.emojis.cache.get(parsed.id) : str.toString();
     }
     resolveForumTag(ctx, arg, str, ref) {
         return this.resolvePointer(arg, ref, ctx.channel)?.availableTags.find((x) => x.id === str || x.name === str);

@@ -340,7 +340,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     private async resolveDefaultReactionEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         const parsed = parseEmoji(str)
         if (!parsed) return
-        return ctx.guild?.emojis.cache.get(parsed?.id ?? str) ?? parsed.name
+        return parsed.id ? ctx.guild?.emojis.cache.get(parsed.id) : str.toString()
     }
 
     private resolveForumTag(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
