@@ -19,10 +19,8 @@ export default new NativeFunction({
     ],
     output: ArgType.Message,
     async execute(ctx, [channel]) {
-        const thread = (channel ?? ctx.channel) as ThreadChannel
-        if (!thread.isThread()) return this.success()
-
-        const message = await thread.fetchStarterMessage().catch(ctx.noop)
+        const thread = (channel ?? ctx.channel) as ThreadChannel | undefined
+        const message = await thread?.fetchStarterMessage().catch(ctx.noop)
         
         return this.success(message?.id)
     },

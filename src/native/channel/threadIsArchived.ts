@@ -24,9 +24,7 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [channel]) {
-        const thread = (channel ?? ctx.channel) as ThreadChannel
-        if (!thread.isThread()) return this.success()
-            
-        return this.success(!!thread.archived)
+        const thread = (channel ?? ctx.channel) as ThreadChannel | undefined
+        return this.success(!!thread?.archived)
     },
 })

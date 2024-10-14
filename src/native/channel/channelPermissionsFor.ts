@@ -1,4 +1,4 @@
-import { BaseChannel, GuildTextBasedChannel, PermissionFlagsBits } from "discord.js"
+import { BaseChannel, GuildChannel, PermissionFlagsBits } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 import array from "../../functions/array"
 
@@ -38,6 +38,6 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [ channel, id, sep ]) {
-        return this.success((channel as GuildTextBasedChannel).permissionsFor(id)?.toArray().join(sep ?? ", "))
+        return this.success((channel as GuildChannel).permissionsFor(id)?.toArray().join(sep ?? ", "))
     },
 })

@@ -24,9 +24,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [channel]) {
         const thread = (channel ?? ctx.channel);
-        if (!thread.isThread())
-            return this.success();
-        return this.success(!!thread.archived);
+        return this.success(!!thread?.archived);
     },
 });
 //# sourceMappingURL=threadIsArchived.js.map
