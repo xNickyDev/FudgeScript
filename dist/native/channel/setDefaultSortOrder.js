@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
             name: "layout",
             description: "The new default sort order, leave empty to reset",
             rest: false,
-            required: false,
+            required: true,
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.SortOrderType
         },

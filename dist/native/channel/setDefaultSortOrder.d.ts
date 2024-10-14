@@ -11,7 +11,7 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    required: false;
+    required: true;
     type: ArgType.Enum;
     enum: typeof SortOrderType;
 }, {

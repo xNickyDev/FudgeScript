@@ -1,4 +1,4 @@
-import { BaseChannel, ChannelType, ForumChannel } from "discord.js"
+import { BaseChannel, ThreadOnlyChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ForumTagProperty, ForumTagProperties } from "../../properties/forumTag"
 
@@ -14,7 +14,7 @@ export default new NativeFunction({
             description: "The channel to get tags of",
             rest: false,
             type: ArgType.Channel,
-            check: (i: BaseChannel) => i.type === ChannelType.GuildForum,
+            check: (i: BaseChannel) => i.isThreadOnly(),
             required: true
         },
         {
@@ -33,7 +33,7 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [ch, property, sep]) {
-        const channel = ch as ForumChannel | undefined
+        const channel = ch as ThreadOnlyChannel | undefined
         const tags = channel?.availableTags
 
         if (!property) {

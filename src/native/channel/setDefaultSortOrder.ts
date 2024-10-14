@@ -20,7 +20,7 @@ export default new NativeFunction({
             name: "layout",
             description: "The new default sort order, leave empty to reset",
             rest: false,
-            required: false,
+            required: true,
             type: ArgType.Enum,
             enum: SortOrderType
         },
