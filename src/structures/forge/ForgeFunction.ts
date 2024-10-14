@@ -18,7 +18,7 @@ export class ForgeFunction {
     public compiled?: IExtendedCompilationResult
 
     public constructor(public readonly data: IForgeFunction) {
-        data.params ??= []
+        this.data.params ??= []
     }
     
     public populate() {
@@ -79,25 +79,26 @@ export class ForgeFunction {
     async call(ctx: Context, args: string[]) {
         this.compiled ??= Compiler.compile(this.data.code, this.data.path)
 
-        const requiredParams = this.data.params?.filter(param => typeof param === "string" || (param as { required?: boolean }).required !== false)
+        const params = Array.isArray(this.data.params) ? this.data.params : []
+        const requiredParams = params.filter(param => typeof param === "string" || (param as { required?: boolean }).required !== false)
 
-        if (requiredParams?.length !== args.length) {
+        if (requiredParams.length !== args.length) {
             return new Return(
                 ReturnType.Error,
                 new ForgeError(
                     null,
                     ErrorType.Custom,
                     `Calling custom function ${this.data.name} requires ${
-                        requiredParams?.length
+                        requiredParams.length
                     } arguments, received ${args.length}`
                 )
             )
         }
 
-        for (let i = 0, len = this.data.params?.length ?? 0; i < len; i++) {
-            const param = this.data.params?.[i]
-            const paramName = typeof param === "string" ? param : param?.name
-            ctx.setEnvironmentKey(paramName!, args[i])
+        for (let i = 0, len = params.length; i < len; i++) {
+            const param = params[i]
+            const paramName = typeof param === "string" ? param : param.name
+            ctx.setEnvironmentKey(paramName, args[i])
         }
 
         const result = await Interpreter.run(ctx.clone({

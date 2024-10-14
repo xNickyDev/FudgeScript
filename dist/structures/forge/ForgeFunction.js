@@ -15,7 +15,7 @@ class ForgeFunction {
     compiled;
     constructor(data) {
         this.data = data;
-        data.params ??= [];
+        this.data.params ??= [];
     }
     populate() {
         managers_1.FunctionManager.add(this.asNative());
@@ -73,13 +73,14 @@ class ForgeFunction {
     }
     async call(ctx, args) {
         this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path);
-        const requiredParams = this.data.params?.filter(param => typeof param === "string" || param.required !== false);
-        if (requiredParams?.length !== args.length) {
-            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${requiredParams?.length} arguments, received ${args.length}`));
+        const params = Array.isArray(this.data.params) ? this.data.params : [];
+        const requiredParams = params.filter(param => typeof param === "string" || param.required !== false);
+        if (requiredParams.length !== args.length) {
+            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${requiredParams.length} arguments, received ${args.length}`));
         }
-        for (let i = 0, len = this.data.params?.length ?? 0; i < len; i++) {
-            const param = this.data.params?.[i];
-            const paramName = typeof param === "string" ? param : param?.name;
+        for (let i = 0, len = params.length; i < len; i++) {
+            const param = params[i];
+            const paramName = typeof param === "string" ? param : param.name;
             ctx.setEnvironmentKey(paramName, args[i]);
         }
         const result = await core_1.Interpreter.run(ctx.clone({
