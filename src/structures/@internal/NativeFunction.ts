@@ -3,6 +3,7 @@ import {
     AttachmentBuilder,
     AutoModerationRule,
     BaseChannel,
+    DefaultReactionEmoji,
     Emoji,
     Guild,
     GuildEmoji,
@@ -60,7 +61,8 @@ export enum ArgType {
     Time,
     Member,
     ApplicationEmoji,
-    AutomodRule
+    AutomodRule,
+    DefaultReactionEmoji
 }
 
 export interface IArg<
@@ -200,6 +202,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? ApplicationEmoji
     : T extends ArgType.Emoji
     ? Emoji
+    : T extends ArgType.DefaultReactionEmoji
+    ? DefaultReactionEmoji
     : T extends ArgType.AutomodRule
     ? AutoModerationRule
     : null
