@@ -18,8 +18,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.String,
     execute(ctx, [ch]) {
-        const channel = (ch ?? ctx.channel);
-        return this.success(channel?.rtcRegion);
+        const chan = (ch ?? ctx.channel);
+        return this.success("rtcRegion" in chan ? chan.rtcRegion : undefined);
     },
 });
 //# sourceMappingURL=channelVoiceRegion.js.map

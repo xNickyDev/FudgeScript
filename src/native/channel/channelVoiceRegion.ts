@@ -1,4 +1,4 @@
-import { BaseChannel, VoiceBasedChannel } from "discord.js"
+import { BaseChannel, VoiceChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -18,7 +18,7 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [ch]) {
-        const channel = (ch ?? ctx.channel) as VoiceBasedChannel | undefined
-        return this.success(channel?.rtcRegion)
+        const chan = (ch ?? ctx.channel) as VoiceChannel
+        return this.success("rtcRegion" in chan ? chan.rtcRegion : undefined)
     },
 })
