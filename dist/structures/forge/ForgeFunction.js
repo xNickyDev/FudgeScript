@@ -22,31 +22,32 @@ class ForgeFunction {
     }
     asNative() {
         const outer = this;
-        const args = this.data.params?.map((x, i) => {
-            if (typeof x === "string") {
-                return {
-                    name: x,
-                    rest: false,
-                    condition: i === 0 && !!this.data.firstParamCondition,
-                    type: __1.ArgType.String,
-                    required: true
-                };
-            }
-            else {
-                return {
-                    name: x.name,
-                    rest: false,
-                    condition: i === 0 && !!this.data.firstParamCondition,
-                    type: __1.ArgType.String,
-                    required: x.required ?? true
-                };
-            }
-        });
+        const args = Array.isArray(this.data.params)
+            ? this.data.params.map((x, i) => {
+                if (typeof x === "string") {
+                    return {
+                        name: x,
+                        rest: false,
+                        condition: i === 0 && !!this.data.firstParamCondition,
+                        type: __1.ArgType.String,
+                        required: true
+                    };
+                }
+                else {
+                    return {
+                        name: x.name,
+                        rest: false,
+                        condition: i === 0 && !!this.data.firstParamCondition,
+                        type: __1.ArgType.String,
+                        required: x.required ?? true
+                    };
+                }
+            }) : [];
         return new __1.NativeFunction({
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition),
-            args: args?.length ? args : undefined,
+            args: args.length ? args : undefined,
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args) {
                 if (!this.fn.data.unwrap) {
