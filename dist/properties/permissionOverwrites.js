@@ -16,7 +16,7 @@ var PermissionOverwritesProperty;
 exports.PermissionOverwritesProperties = (0, defineProperties_1.default)({
     id: (i) => i?.id,
     type: (i) => discord_js_1.OverwriteType[i?.type],
-    allow: (i, sep) => i?.allow.toArray().join(sep ?? ", ") ?? null,
-    deny: (i, sep) => i?.deny.toArray().join(sep ?? ", ") ?? null,
+    allow: (i, sep) => i?.allow.toArray().join(sep ?? ", "),
+    deny: (i, sep) => i?.deny.toArray().join(sep ?? ", "),
 });
 //# sourceMappingURL=permissionOverwrites.js.map

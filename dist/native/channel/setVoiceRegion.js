@@ -11,13 +11,13 @@ var VoiceRegionType;
     VoiceRegionType["rotterdam"] = "rotterdam";
     VoiceRegionType["russia"] = "russia";
     VoiceRegionType["singapore"] = "singapore";
-    VoiceRegionType["southKorea"] = "south-korea";
-    VoiceRegionType["southAfrica"] = "southafrica";
+    VoiceRegionType["south-korea"] = "south-korea";
+    VoiceRegionType["southafrica"] = "southafrica";
     VoiceRegionType["sydney"] = "sydney";
-    VoiceRegionType["usCentral"] = "us-central";
-    VoiceRegionType["usEast"] = "us-east";
-    VoiceRegionType["usSouth"] = "us-south";
-    VoiceRegionType["usWest"] = "us-west";
+    VoiceRegionType["us-central"] = "us-central";
+    VoiceRegionType["us-east"] = "us-east";
+    VoiceRegionType["us-south"] = "us-south";
+    VoiceRegionType["us-west"] = "us-west";
 })(VoiceRegionType || (exports.VoiceRegionType = VoiceRegionType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$setVoiceRegion",

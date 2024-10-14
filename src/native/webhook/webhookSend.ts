@@ -1,4 +1,4 @@
-import { Message, WebhookClient } from "discord.js"
+import { BaseChannel, GuildForumTag, Message, ThreadChannel, WebhookClient } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -40,13 +40,36 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.String,
         },
+        {
+            name: "thread ID",
+            description: "The thread to send message to",
+            rest: false,
+            type: ArgType.Channel,
+            check: (i: BaseChannel) => i.isThread(),
+        },
+        {
+            name: "thread name",
+            description: "The name for the created thread channel",
+            rest: false,
+            required: true,
+            type: ArgType.String,
+        },
+        {
+            name: "tags",
+            description: "The tags for the created forum post",
+            rest: true,
+            type: ArgType.String,
+        },
     ],
-    async execute(ctx, [url, content, returnMessageID, username, avatarUrl]) {
+    async execute(ctx, [url, content, returnMessageID, username, avatarUrl, thread, name, tags]) {
         const web = new WebhookClient({ url })
 
         ctx.container.content = content || undefined
-        ctx.container.avatarURL = avatarUrl ?? undefined
-        ctx.container.username = username ?? undefined
+        ctx.container.avatarURL = avatarUrl || undefined
+        ctx.container.username = username || undefined
+        ctx.container.threadId = thread as ThreadChannel || undefined
+        ctx.container.threadName = name || undefined
+        ctx.container.appliedTags = tags || undefined
 
         const m = await ctx.container.send<Message>(web)
         return this.success(returnMessageID && m ? m.id : undefined)

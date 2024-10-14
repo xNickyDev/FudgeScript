@@ -8,13 +8,13 @@ export declare enum VoiceRegionType {
     rotterdam = "rotterdam",
     russia = "russia",
     singapore = "singapore",
-    southKorea = "south-korea",
-    southAfrica = "southafrica",
+    "south-korea" = "south-korea",
+    southafrica = "southafrica",
     sydney = "sydney",
-    usCentral = "us-central",
-    usEast = "us-east",
-    usSouth = "us-south",
-    usWest = "us-west"
+    "us-central" = "us-central",
+    "us-east" = "us-east",
+    "us-south" = "us-south",
+    "us-west" = "us-west"
 }
 declare const _default: NativeFunction<[{
     name: string;
