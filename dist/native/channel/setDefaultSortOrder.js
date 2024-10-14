@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setDefaultSortOrder",
+    version: "1.5.0",
     description: "Sets a forum's default sort order of posts",
     unwrap: true,
     brackets: true,
@@ -18,9 +19,9 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "layout",
-            description: "The new default sort order",
+            description: "The new default sort order, leave empty to reset",
             rest: false,
-            required: true,
+            required: false,
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.SortOrderType
         },
@@ -33,7 +34,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, sortOrder, reason]) {
-        return this.success(!!(chan.setDefaultSortOrder(sortOrder, reason || undefined)));
+        return this.success(!!(chan.setDefaultSortOrder(sortOrder || null, reason || undefined)));
     },
 });
 //# sourceMappingURL=setDefaultSortOrder.js.map

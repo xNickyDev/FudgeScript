@@ -18,9 +18,9 @@ export default new NativeFunction({
         },
         {
             name: "layout",
-            description: "The new default sort order",
+            description: "The new default sort order, leave empty to reset",
             rest: false,
-            required: true,
+            required: false,
             type: ArgType.Enum,
             enum: SortOrderType
         },
@@ -33,6 +33,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, sortOrder, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultSortOrder(sortOrder, reason || undefined)))
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultSortOrder(sortOrder || null, reason || undefined)))
     },
 })

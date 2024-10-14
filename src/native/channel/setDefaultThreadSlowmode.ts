@@ -2,7 +2,7 @@ import { BaseChannel, SortOrderType, ThreadOnlyChannel } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
-    name: "$setDefaultSlowmode",
+    name: "$setDefaultThreadSlowmode",
     version: "1.5.0",
     description: "Sets a forum's default slowmode for posts",
     unwrap: true,
