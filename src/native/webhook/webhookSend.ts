@@ -51,7 +51,6 @@ export default new NativeFunction({
             name: "thread name",
             description: "The name for the created thread channel",
             rest: false,
-            required: true,
             type: ArgType.String,
         },
         {

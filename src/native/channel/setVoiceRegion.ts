@@ -37,6 +37,7 @@ export default new NativeFunction({
             name: "region",
             description: "The region to set, leave empty to remove a fixed region",
             rest: false,
+            required: true,
             type: ArgType.Enum,
             enum: VoiceRegionType
         },

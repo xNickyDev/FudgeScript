@@ -52,7 +52,6 @@ exports.default = new structures_1.NativeFunction({
             name: "thread name",
             description: "The name for the created thread channel",
             rest: false,
-            required: true,
             type: structures_1.ArgType.String,
         },
         {

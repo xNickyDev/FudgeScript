@@ -38,6 +38,7 @@ exports.default = new structures_1.NativeFunction({
             name: "region",
             description: "The region to set, leave empty to remove a fixed region",
             rest: false,
+            required: true,
             type: structures_1.ArgType.Enum,
             enum: VoiceRegionType
         },
