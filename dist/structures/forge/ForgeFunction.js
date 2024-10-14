@@ -22,17 +22,31 @@ class ForgeFunction {
     }
     asNative() {
         const outer = this;
+        const args = this.data.params?.map((x, i) => {
+            if (typeof x === "string") {
+                return {
+                    name: x,
+                    rest: false,
+                    condition: i === 0 && !!this.data.firstParamCondition,
+                    type: __1.ArgType.String,
+                    required: true
+                };
+            }
+            else {
+                return {
+                    name: x.name,
+                    rest: false,
+                    condition: i === 0 && !!this.data.firstParamCondition,
+                    type: __1.ArgType.String,
+                    required: x.required ?? true
+                };
+            }
+        });
         return new __1.NativeFunction({
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition),
-            args: this.data.params?.length ? this.data.params.map((x, i) => ({
-                name: x,
-                rest: false,
-                condition: i === 0 && !!this.data.firstParamCondition,
-                type: __1.ArgType.String,
-                required: true
-            })) : undefined,
+            args: args?.length ? args : undefined,
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args) {
                 if (!this.fn.data.unwrap) {
@@ -58,10 +72,14 @@ class ForgeFunction {
     }
     async call(ctx, args) {
         this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path);
-        if (this.data.params?.length !== args.length)
-            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${this.data.params?.length} arguments, received ${args.length}`));
-        for (let i = 0, len = this.data.params?.length; i < len; i++) {
-            ctx.setEnvironmentKey(this.data.params[i], args[i]);
+        const requiredParams = this.data.params?.filter(param => typeof param === "string" || param.required !== false);
+        if (requiredParams?.length !== args.length) {
+            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${requiredParams?.length} arguments, received ${args.length}`));
+        }
+        for (let i = 0, len = this.data.params?.length ?? 0; i < len; i++) {
+            const param = this.data.params?.[i];
+            const paramName = typeof param === "string" ? param : param?.name;
+            ctx.setEnvironmentKey(paramName, args[i]);
         }
         const result = await core_1.Interpreter.run(ctx.clone({
             doNotSend: true,

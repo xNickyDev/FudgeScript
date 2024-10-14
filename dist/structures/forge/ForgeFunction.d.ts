@@ -3,7 +3,10 @@ import { IExtendedCompilationResult } from "../../core";
 import { Return, ReturnType } from "../@internal/Return";
 export interface IForgeFunction {
     name: string;
-    params?: string[];
+    params?: Array<string | {
+        name: string;
+        required?: boolean;
+    }>;
     firstParamCondition?: boolean;
     code: string;
     path?: string;
