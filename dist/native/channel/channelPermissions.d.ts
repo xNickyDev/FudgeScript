@@ -1,5 +1,6 @@
 import { BaseChannel } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
+import { PermissionOverwritesProperty } from "../../properties/permissionOverwrites";
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
@@ -12,7 +13,8 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: false;
-    type: ArgType.String;
+    type: ArgType.Enum;
+    enum: typeof PermissionOverwritesProperty;
 }, {
     name: string;
     description: string;

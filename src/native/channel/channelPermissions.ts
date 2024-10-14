@@ -1,5 +1,6 @@
 import { BaseChannel, GuildChannel } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
+import { PermissionOverwritesProperties, PermissionOverwritesProperty } from "../../properties/permissionOverwrites"
 
 export default new NativeFunction({
     name: "$channelPermissions",
@@ -10,7 +11,7 @@ export default new NativeFunction({
         "$channelOverwrites"
     ],
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "channel ID",
@@ -25,7 +26,8 @@ export default new NativeFunction({
             description: "The property of the overwrites to return",
             rest: false,
             required: false,
-            type: ArgType.String
+            type: ArgType.Enum,
+            enum: PermissionOverwritesProperty
         },
         {
             name: "separator",
@@ -38,6 +40,6 @@ export default new NativeFunction({
     execute(ctx, [ ch, prop, sep ]) {
         const chan = (ch ?? ctx.channel) as GuildChannel
         const perms = chan.permissionOverwrites.cache
-        return this.successJSON(prop ? perms.map(perm => perm.id).join(sep ?? ", ") : perms)
+        return this.successJSON(prop ? perms.map(perm => PermissionOverwritesProperties[prop](perm, sep)).join(sep ?? ", ") : perms)
     },
 })
