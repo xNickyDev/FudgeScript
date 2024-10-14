@@ -68,7 +68,7 @@ exports.default = new structures_1.NativeFunction({
         ctx.container.username = username || undefined;
         ctx.container.threadId = thread?.id || undefined;
         ctx.container.threadName = name || undefined;
-        ctx.container.appliedTags = tags.length > 0 ? tags : undefined;
+        ctx.container.appliedTags = tags || undefined;
         const m = await ctx.container.send(web);
         return this.success(returnMessageID && m ? m.id : undefined);
     },
