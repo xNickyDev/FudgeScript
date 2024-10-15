@@ -1,6 +1,5 @@
 import { RawMessageData } from "discord.js/typings/rawDataTypes"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { BaseChannel, TextBasedChannel, TextChannel } from "discord.js"
 
 export default new NativeFunction({
     name: "$messageRawData",
@@ -13,13 +12,12 @@ export default new NativeFunction({
             name: "channel ID",
             rest: false,
             required: true,
-            description: "The channel to get the message from",
+            description: "The channel to get message from",
             type: ArgType.Channel,
-            check: (i: BaseChannel) => "messages" in i,
         },
         {
             name: "message ID",
-            description: "The message to get its raw data from",
+            description: "The message to get raw data from",
             rest: false,
             type: ArgType.Message,
             pointer: 0,
@@ -27,11 +25,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Json,
-    async execute(ctx, [channel, message]) {
-        channel ??= ctx.channel!
-        message ??= ctx.message!
-        const data = (await (channel as TextBasedChannel).messages.fetch(message.id).catch(ctx.noop))?.toJSON()
-        
-        return this.successJSON(data as RawMessageData)
+    async execute(ctx, [, message]) {
+        return this.successJSON((message ?? ctx.message) as unknown as RawMessageData)
     },
 })

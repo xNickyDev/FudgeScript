@@ -20,10 +20,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Json,
-    async execute(ctx, [guild]) {
-        guild ??= ctx.guild!
-        const raw = await ctx.client.rest.get(`/guilds/${guild.id}`) as RawGuildData
-        
-        return this.successJSON(raw)
+    execute(ctx, [guild]) {
+        return this.successJSON((guild ?? ctx.guild) as unknown as RawGuildData)
     },
 })

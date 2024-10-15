@@ -20,10 +20,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Json,
-    async execute(ctx, [guild]) {
-        guild ??= ctx.guild;
-        const raw = await ctx.client.rest.get(`/guilds/${guild.id}`);
-        return this.successJSON(raw);
+    execute(ctx, [guild]) {
+        return this.successJSON((guild ?? ctx.guild));
     },
 });
 //# sourceMappingURL=guildRawData.js.map

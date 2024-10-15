@@ -1,1 +1,1 @@
-{"version":3,"file":"messageRawData.d.ts","sourceRoot":"","sources":["../../../src/native/message/messageRawData.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;AAClE,OAAO,EAAE,WAAW,EAAiC,MAAM,YAAY,CAAA;;;;;;;eAehD,WAAW;;;;;;;;;AAblC,wBAgCE"}
+{"version":3,"file":"messageRawData.d.ts","sourceRoot":"","sources":["../../../src/native/message/messageRawData.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;;;AAElE,wBA2BE"}

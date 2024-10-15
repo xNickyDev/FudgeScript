@@ -18,9 +18,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Json,
     async execute(ctx, [user]) {
-        user ??= ctx.user;
-        const raw = await ctx.client.rest.get(`/users/${user.id}`);
-        return this.successJSON(raw);
+        return this.successJSON((user ?? ctx.user));
     },
 });
 //# sourceMappingURL=userRawData.js.map

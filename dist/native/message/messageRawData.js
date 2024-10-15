@@ -12,13 +12,12 @@ exports.default = new structures_1.NativeFunction({
             name: "channel ID",
             rest: false,
             required: true,
-            description: "The channel to get the message from",
+            description: "The channel to get message from",
             type: structures_1.ArgType.Channel,
-            check: (i) => "messages" in i,
         },
         {
             name: "message ID",
-            description: "The message to get its raw data from",
+            description: "The message to get raw data from",
             rest: false,
             type: structures_1.ArgType.Message,
             pointer: 0,
@@ -26,11 +25,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Json,
-    async execute(ctx, [channel, message]) {
-        channel ??= ctx.channel;
-        message ??= ctx.message;
-        const data = (await channel.messages.fetch(message.id).catch(ctx.noop))?.toJSON();
-        return this.successJSON(data);
+    async execute(ctx, [, message]) {
+        return this.successJSON((message ?? ctx.message));
     },
 });
 //# sourceMappingURL=messageRawData.js.map

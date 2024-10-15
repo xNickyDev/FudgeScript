@@ -18,9 +18,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Json,
     async execute(ctx, [user]) {
-        user ??= ctx.user!
-        const raw = await ctx.client.rest.get(`/users/${user.id}`) as RawUserData
-        
-        return this.successJSON(raw)
+        return this.successJSON((user ?? ctx.user) as unknown as RawUserData)
     },
 })
