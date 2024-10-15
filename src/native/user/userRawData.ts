@@ -1,4 +1,3 @@
-import { RawUserData } from "discord.js/typings/rawDataTypes"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -17,7 +16,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Json,
-    async execute(ctx, [user]) {
-        return this.successJSON((user ?? ctx.user) as unknown as RawUserData)
+    execute(ctx, [user]) {
+        return this.successJSON((user ?? ctx.user)?.toJSON())
     },
 })

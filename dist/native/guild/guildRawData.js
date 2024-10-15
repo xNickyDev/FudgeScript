@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Json,
     execute(ctx, [guild]) {
-        return this.successJSON((guild ?? ctx.guild));
+        return this.successJSON((guild ?? ctx.guild)?.toJSON());
     },
 });
 //# sourceMappingURL=guildRawData.js.map

@@ -1,4 +1,3 @@
-import { RawGuildData } from "discord.js/typings/rawDataTypes"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -21,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Json,
     execute(ctx, [guild]) {
-        return this.successJSON((guild ?? ctx.guild) as unknown as RawGuildData)
+        return this.successJSON((guild ?? ctx.guild)?.toJSON())
     },
 })

@@ -25,8 +25,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Json,
-    async execute(ctx, [, message]) {
-        return this.successJSON((message ?? ctx.message));
+    execute(ctx, [, message]) {
+        return this.successJSON((message ?? ctx.message)?.toJSON());
     },
 });
 //# sourceMappingURL=messageRawData.js.map
