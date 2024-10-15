@@ -11,7 +11,7 @@ export default new NativeFunction({
         "$channelOverwrites"
     ],
     unwrap: true,
-    brackets: false,
+    brackets: true,
     args: [
         {
             name: "channel ID",

@@ -11,7 +11,7 @@ exports.default = new structures_1.NativeFunction({
         "$channelOverwrites"
     ],
     unwrap: true,
-    brackets: false,
+    brackets: true,
     args: [
         {
             name: "channel ID",

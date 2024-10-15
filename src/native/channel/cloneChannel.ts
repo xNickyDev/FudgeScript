@@ -26,6 +26,6 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [ raw, name ]) {
-        return this.success((await (<GuildChannel>raw).clone({ name: name || undefined }).catch(ctx.noop))?.id)
+        return this.success((await (<GuildChannel>raw).clone({ name: name || (raw as GuildChannel).name }).catch(ctx.noop))?.id)
     },
 })
