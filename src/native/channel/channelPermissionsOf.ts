@@ -2,14 +2,17 @@ import { BaseChannel, GuildChannel, PermissionFlagsBits } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 import array from "../../functions/array"
 
+export enum PermissionsStateType {
+    allow = "allow",
+    deny = "deny"
+}
+
 export default new NativeFunction({
-    name: "$channelPermissionsFor",
-    version: "1.4.0",
-    description: "Returns permissions for a role or member in a channel",
+    name: "$channelPermissionsOf",
+    version: "1.5.0",
+    description: "Returns specific permissions of a role or member in a channel",
     aliases: [
-        "$channelPermsFor",
-        "$memberChannelPerms",
-        "$roleChannelPerms"
+        "$channelPermsOf",
     ],
     output: array(PermissionFlagsBits),
     unwrap: true,
@@ -20,14 +23,22 @@ export default new NativeFunction({
             rest: false,
             required: true,
             type: ArgType.Channel,
-            check: (i: BaseChannel) => "permissionsFor" in i
+            check: (i: BaseChannel) => "permissionOverwrites" in i
         },
         {
             name: "id",
-            description: "The role or user to get perms for",
+            description: "The role or user to get perms of",
             rest: false,
             required: true,
             type: ArgType.String
+        },
+        {
+            name: "state",
+            description: "The state of the perms to return",
+            rest: false,
+            required: true,
+            type: ArgType.Enum,
+            enum: PermissionsStateType
         },
         {
             name: "separator",
@@ -37,7 +48,7 @@ export default new NativeFunction({
         }
     ],
     brackets: true,
-    execute(ctx, [ channel, id, sep ]) {
-        return this.success((channel as GuildChannel).permissionsFor(id)?.toArray().join(sep ?? ", "))
+    execute(ctx, [ channel, id, state, sep ]) {
+        return this.success((channel as GuildChannel).permissionOverwrites.cache.get(id)?.[state].toArray().join(sep || ", "))
     },
 })

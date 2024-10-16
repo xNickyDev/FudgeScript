@@ -1,4 +1,4 @@
-import { BaseChannel, GuildChannel, TextChannel } from "discord.js"
+import { BaseChannel, GuildChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -27,6 +27,7 @@ export default new NativeFunction({
     ],
     async execute(ctx, [ch, id]) {
         const perms = (ch as GuildChannel).permissionOverwrites
+
         if (id) {
             return this.success(!!(await perms.delete(id).catch(ctx.noop)))
         } else {
