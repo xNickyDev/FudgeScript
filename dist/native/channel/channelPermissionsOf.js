@@ -14,6 +14,7 @@ var PermissionsStateType;
 })(PermissionsStateType || (exports.PermissionsStateType = PermissionsStateType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$channelPermissionsOf",
+    version: "1.5.0",
     description: "Returns specific permissions of a role or member in a channel",
     aliases: [
         "$channelPermsOf",
@@ -53,7 +54,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     execute(ctx, [channel, id, state, sep]) {
-        return this.success(channel.permissionOverwrites.cache.get(id)?.[state].toArray().join(sep || ", "));
+        return this.success(channel.permissionOverwrites.cache.get(id)?.[state].toArray().join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=channelPermissionsOf.js.map

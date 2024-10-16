@@ -49,6 +49,6 @@ export default new NativeFunction({
     ],
     brackets: true,
     execute(ctx, [ channel, id, state, sep ]) {
-        return this.success((channel as GuildChannel).permissionOverwrites.cache.get(id)?.[state].toArray().join(sep || ", "))
+        return this.success((channel as GuildChannel).permissionOverwrites.cache.get(id)?.[state].toArray().join(sep ?? ", "))
     },
 })
