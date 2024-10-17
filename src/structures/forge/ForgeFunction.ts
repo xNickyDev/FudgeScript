@@ -6,9 +6,14 @@ import callFunction from "../../native/other/callFunction"
 import { Return, ReturnType } from "../@internal/Return"
 import { ForgeError, ErrorType } from "./ForgeError"
 
+export interface IForgeFunctionParam {
+    name: string
+    required?: boolean
+}
+
 export interface IForgeFunction {
     name: string
-    params?: Array<string | { name: string, required?: boolean }>
+    params?: Array<string | IForgeFunctionParam>
     firstParamCondition?: boolean
     code: string
     path?: string
@@ -18,7 +23,7 @@ export class ForgeFunction {
     public compiled?: IExtendedCompilationResult
 
     public constructor(public readonly data: IForgeFunction) {
-        this.data.params ??= []
+        data.params ??= []
     }
     
     public populate() {
@@ -27,32 +32,17 @@ export class ForgeFunction {
 
     public asNative() {
         const outer = this
-        const args = Array.isArray(this.data.params)
-            ? this.data.params.map((x, i) => {
-                if (typeof x === "string") {
-                    return {
-                        name: x,
-                        rest: false,
-                        condition: i === 0 && !!this.data.firstParamCondition,
-                        type: ArgType.String,
-                        required: true
-                    } as IArg<ArgType.String>
-                } else {
-                    return {
-                        name: x.name,
-                        rest: false,
-                        condition: i === 0 && !!this.data.firstParamCondition,
-                        type: ArgType.String,
-                        required: x.required ?? true
-                    } as IArg<ArgType.String>
-                }
-            }) : []
-
         return new NativeFunction({
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
-            args: args.length ? args : undefined,
+            args: this.data.params?.length ? this.data.params.map((x, i) => ({
+                name: typeof x === "string" ? x : x.name,
+                rest: false,
+                condition: i === 0 && !!this.data.firstParamCondition,
+                type: ArgType.String,
+                required: typeof x === "string" ? true : x.required ?? true
+            }) as IArg<ArgType.String>) : undefined,
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args: string[]) {
                 if (!this.fn.data.unwrap) {
@@ -80,25 +70,24 @@ export class ForgeFunction {
         this.compiled ??= Compiler.compile(this.data.code, this.data.path)
 
         const params = Array.isArray(this.data.params) ? this.data.params : []
-        const requiredParams = params.filter(param => typeof param === "string" || (param as { required?: boolean }).required !== false)
+        const required = params.filter(param => typeof param === "string" || param.required !== false)
 
-        if (requiredParams.length !== args.length) {
+        if (required.length !== args.length)
             return new Return(
                 ReturnType.Error,
                 new ForgeError(
                     null,
                     ErrorType.Custom,
                     `Calling custom function ${this.data.name} requires ${
-                        requiredParams.length
+                        required.length
                     } arguments, received ${args.length}`
                 )
             )
-        }
 
         for (let i = 0, len = params.length; i < len; i++) {
             const param = params[i]
-            const paramName = typeof param === "string" ? param : param.name
-            ctx.setEnvironmentKey(paramName, args[i])
+            const name = typeof param === "string" ? param : param.name
+            ctx.setEnvironmentKey(name, args[i])
         }
 
         const result = await Interpreter.run(ctx.clone({

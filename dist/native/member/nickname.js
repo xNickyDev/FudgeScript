@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [, member]) {
-        return this.success((member ?? ctx.member)?.displayName);
+        return this.success((member ?? ctx.member ?? ctx.interaction?.member)?.displayName);
     },
 });
 //# sourceMappingURL=nickname.js.map

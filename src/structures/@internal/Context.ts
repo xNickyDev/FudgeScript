@@ -12,12 +12,14 @@ import {
     Guild,
     GuildEmoji,
     GuildMember,
+    GuildOnboardingPromptData,
     Interaction,
     Message,
     MessageReaction,
     Role,
     Sticker,
     User,
+    WelcomeChannelData,
 } from "discord.js"
 import { CompiledFunction } from "./CompiledFunction"
 import { Container, Sendable } from "./Container"
@@ -57,6 +59,11 @@ export interface IAutomodRuleOptions {
     triggerMetadata?: AutoModerationTriggerMetadataOptions
     exemptRoles?: string[]
     exemptChannels?: string[]
+}
+
+export interface IOnboardingOptions {
+    defaultChannels?: string[]
+    prompts?: GuildOnboardingPromptData[]
 }
 
 export enum CalendarType {
@@ -110,6 +117,8 @@ export class Context {
     executionTimestamp!: number
     http: Partial<IHttpOptions> = {}
     automodRule: Partial<IAutomodRuleOptions> = {}
+    onboarding: Partial<IOnboardingOptions> = {}
+    welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
 

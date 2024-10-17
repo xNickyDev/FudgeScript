@@ -15,39 +15,24 @@ class ForgeFunction {
     compiled;
     constructor(data) {
         this.data = data;
-        this.data.params ??= [];
+        data.params ??= [];
     }
     populate() {
         managers_1.FunctionManager.add(this.asNative());
     }
     asNative() {
         const outer = this;
-        const args = Array.isArray(this.data.params)
-            ? this.data.params.map((x, i) => {
-                if (typeof x === "string") {
-                    return {
-                        name: x,
-                        rest: false,
-                        condition: i === 0 && !!this.data.firstParamCondition,
-                        type: __1.ArgType.String,
-                        required: true
-                    };
-                }
-                else {
-                    return {
-                        name: x.name,
-                        rest: false,
-                        condition: i === 0 && !!this.data.firstParamCondition,
-                        type: __1.ArgType.String,
-                        required: x.required ?? true
-                    };
-                }
-            }) : [];
         return new __1.NativeFunction({
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition),
-            args: args.length ? args : undefined,
+            args: this.data.params?.length ? this.data.params.map((x, i) => ({
+                name: typeof x === "string" ? x : x.name,
+                rest: false,
+                condition: i === 0 && !!this.data.firstParamCondition,
+                type: __1.ArgType.String,
+                required: typeof x === "string" ? true : x.required ?? true
+            })) : undefined,
             brackets: this.data.params?.length ? true : undefined,
             async execute(ctx, args) {
                 if (!this.fn.data.unwrap) {
@@ -74,14 +59,13 @@ class ForgeFunction {
     async call(ctx, args) {
         this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path);
         const params = Array.isArray(this.data.params) ? this.data.params : [];
-        const requiredParams = params.filter(param => typeof param === "string" || param.required !== false);
-        if (requiredParams.length !== args.length) {
-            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${requiredParams.length} arguments, received ${args.length}`));
-        }
+        const required = params.filter(param => typeof param === "string" || param.required !== false);
+        if (required.length !== args.length)
+            return new Return_1.Return(Return_1.ReturnType.Error, new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.Custom, `Calling custom function ${this.data.name} requires ${required.length} arguments, received ${args.length}`));
         for (let i = 0, len = params.length; i < len; i++) {
             const param = params[i];
-            const paramName = typeof param === "string" ? param : param.name;
-            ctx.setEnvironmentKey(paramName, args[i]);
+            const name = typeof param === "string" ? param : param.name;
+            ctx.setEnvironmentKey(name, args[i]);
         }
         const result = await core_1.Interpreter.run(ctx.clone({
             doNotSend: true,
