@@ -72,15 +72,13 @@ export class ForgeFunction {
         const params = Array.isArray(this.data.params) ? this.data.params : []
         const required = params.filter(param => typeof param === "string" || param.required !== false)
 
-        if (required.length !== args.length)
+        if (args.length < required.length)
             return new Return(
                 ReturnType.Error,
                 new ForgeError(
                     null,
                     ErrorType.Custom,
-                    `Calling custom function ${this.data.name} requires ${
-                        required.length
-                    } arguments, received ${args.length}`
+                    `Calling custom function ${this.data.name} requires ${required.length} arguments, received ${args.length}`
                 )
             )
 

@@ -5,19 +5,21 @@ export default new NativeFunction({
     name: "$typeOf",
     version: "1.5.0",
     description: "Returns the type of the provided argument",
-    unwrap: true,
+    unwrap: false,
     args: [
         {
             name: "argument",
             rest: false,
             description: "The argument to get its type",
-            type: ArgType.Unknown,
+            type: ArgType.String,
             required: true,
         },
     ],
     brackets: true,
     output: ArgType,
-    execute(ctx, [arg]) {
+    execute(ctx) {
+        const arg = this.displayField(0) as any
+
         return this.success(
             arg instanceof Guild
                 ? "Guild"

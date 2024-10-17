@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editGuildWelcomeScreen",
+    version: "1.5.0",
     description: "Edits the welcome screen of a guild, returns bool",
     unwrap: true,
     aliases: [

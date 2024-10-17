@@ -6,19 +6,20 @@ exports.default = new structures_1.NativeFunction({
     name: "$typeOf",
     version: "1.5.0",
     description: "Returns the type of the provided argument",
-    unwrap: true,
+    unwrap: false,
     args: [
         {
             name: "argument",
             rest: false,
             description: "The argument to get its type",
-            type: structures_1.ArgType.Unknown,
+            type: structures_1.ArgType.String,
             required: true,
         },
     ],
     brackets: true,
     output: structures_1.ArgType,
-    execute(ctx, [arg]) {
+    execute(ctx) {
+        const arg = this.displayField(0);
         return this.success(arg instanceof discord_js_1.Guild
             ? "Guild"
             : arg instanceof discord_js_1.GuildMember

@@ -3,8 +3,8 @@ declare const _default: NativeFunction<[{
     name: string;
     rest: false;
     description: string;
-    type: ArgType.Unknown;
+    type: ArgType.String;
     required: true;
-}], true>;
+}], false>;
 export default _default;
 //# sourceMappingURL=typeOf.d.ts.map
