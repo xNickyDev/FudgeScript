@@ -15,7 +15,8 @@ class ForgeFunction {
     compiled;
     constructor(data) {
         this.data = data;
-        data.params ??= [];
+        if (!Array.isArray(data.params))
+            data.params = [];
     }
     populate() {
         managers_1.FunctionManager.add(this.asNative());
@@ -26,7 +27,7 @@ class ForgeFunction {
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition),
-            args: this.data.params?.length ? this.data.params?.map((x, i) => ({
+            args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
                 rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,

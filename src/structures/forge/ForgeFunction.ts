@@ -24,7 +24,8 @@ export class ForgeFunction {
     public compiled?: IExtendedCompilationResult
 
     public constructor(public readonly data: IForgeFunction) {
-        data.params ??= []
+        if (!Array.isArray(data.params))
+            data.params = []
     }
     
     public populate() {
@@ -37,7 +38,7 @@ export class ForgeFunction {
             name: `$${this.data.name}`,
             description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
-            args: this.data.params?.length ? this.data.params?.map((x, i) => ({
+            args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
                 rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,
