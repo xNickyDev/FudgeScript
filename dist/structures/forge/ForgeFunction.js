@@ -16,7 +16,6 @@ class ForgeFunction {
     constructor(data) {
         this.data = data;
         data.params ??= [];
-        data.brackets ??= true;
     }
     populate() {
         managers_1.FunctionManager.add(this.asNative());
@@ -34,7 +33,7 @@ class ForgeFunction {
                 type: __1.ArgType.String,
                 required: typeof x === "string" ? true : x.required ?? true
             })) : undefined,
-            brackets: this.data.brackets ? this.data.brackets : this.data.params?.length ? true : undefined,
+            brackets: this.data.brackets ?? (this.data.params?.length ? true : undefined),
             async execute(ctx, args) {
                 if (!this.fn.data.unwrap) {
                     if (!this.data.fields || this.data.fields.length === 0) {

@@ -25,7 +25,6 @@ export class ForgeFunction {
 
     public constructor(public readonly data: IForgeFunction) {
         data.params ??= []
-        data.brackets ??= true
     }
     
     public populate() {
@@ -45,7 +44,7 @@ export class ForgeFunction {
                 type: ArgType.String,
                 required: typeof x === "string" ? true : x.required ?? true
             }) as IArg<ArgType.String>) : undefined,
-            brackets: this.data.brackets ? this.data.brackets : this.data.params?.length ? true : undefined,
+            brackets: this.data.brackets ?? (this.data.params?.length ? true : undefined),
             async execute(ctx, args: string[]) {
                 if (!this.fn.data.unwrap) {
                     if (!this.data.fields || this.data.fields.length === 0) {
