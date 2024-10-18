@@ -76,9 +76,6 @@ export declare class Arg {
     static optionalReaction(name?: string, desc?: string): IArg<ArgType.Reaction, boolean, false, EnumLike>;
     static requiredReaction(name?: string, desc?: string): IArg<ArgType.Reaction, true, false, EnumLike>;
     static restReaction(name?: string, desc?: string): IArg<ArgType.Reaction, true, true, EnumLike>;
-    static optionalReactionEmoji(name?: string, desc?: string): IArg<ArgType.ReactionEmoji, boolean, false, EnumLike>;
-    static requiredReactionEmoji(name?: string, desc?: string): IArg<ArgType.ReactionEmoji, true, false, EnumLike>;
-    static restReactionEmoji(name?: string, desc?: string): IArg<ArgType.ReactionEmoji, true, true, EnumLike>;
     static restTime(name?: string, desc?: string): IArg<ArgType.Time, true, true, EnumLike>;
     static optionalTime(name?: string, desc?: string): IArg<ArgType.Time, boolean, false, EnumLike>;
     static requiredTime(name?: string, desc?: string): IArg<ArgType.Time, true, false, EnumLike>;

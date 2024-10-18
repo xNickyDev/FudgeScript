@@ -749,38 +749,6 @@ export class Arg {
         })
     }
 
-    public static optionalReactionEmoji(name: string = "reaction emoji", desc: string = "The reaction emoji to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: false,
-            type: ArgType.ReactionEmoji,
-            pointer: 1
-        })
-    }
-
-    public static requiredReactionEmoji(name: string = "reaction emoji", desc: string = "The reaction emoji to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: false,
-            required: true,
-            type: ArgType.ReactionEmoji,
-            pointer: 1
-        })
-    }
-
-    public static restReactionEmoji(name: string = "reaction emojis", desc: string = "The reaction emojis to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: true,
-            required: true,
-            type: ArgType.ReactionEmoji,
-            pointer: 1
-        })
-    }
-
     public static restTime(name: string = "duration/time", desc: string = "The duration/time to use") {
         return Arg.create({
             name,
