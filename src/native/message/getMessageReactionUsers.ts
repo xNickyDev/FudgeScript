@@ -31,7 +31,8 @@ export default new NativeFunction({
             description: "The emoji to get its users",
             required: true,
             rest: false,
-            type: ArgType.String,
+            pointer: 1,
+            type: ArgType.Reaction,
         },
         {
             name: "separator",
@@ -40,10 +41,8 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    async execute(ctx, [, message, emote, sep]) {
-        const emoji = parseEmoji(emote)
+    async execute(ctx, [, message, reaction, sep]) {
         const users = new Array<string>()
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name)!
 
         let afterID: undefined | string = undefined
 
