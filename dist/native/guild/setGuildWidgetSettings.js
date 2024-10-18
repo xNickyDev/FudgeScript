@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const lodash_1 = require("lodash");
 exports.default = new structures_1.NativeFunction({
     name: "$setGuildWidgetSettings",
     version: "1.5.0",
@@ -37,7 +38,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [guild, channel, enabled]) {
         return this.success((await guild.setWidgetSettings({
             channel: channel || guild.widgetChannel,
-            enabled: enabled || guild.widgetEnabled || false
+            enabled: (0, lodash_1.isBoolean)(enabled) ? enabled : guild.widgetEnabled || false
         }).catch(() => false)) !== false);
     },
 });

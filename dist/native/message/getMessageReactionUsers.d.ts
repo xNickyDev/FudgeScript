@@ -18,9 +18,8 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     required: true;
-    pointer: number;
     rest: false;
-    type: ArgType.Emoji;
+    type: ArgType.String;
 }, {
     name: string;
     description: string;

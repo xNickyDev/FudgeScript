@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const lodash_1 = require("lodash");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editGuildWelcomeScreen",
@@ -35,7 +36,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [guild, enabled, desc]) {
         return this.success((await guild.editWelcomeScreen({
             description: desc ?? undefined,
-            enabled: enabled || undefined,
+            enabled: (0, lodash_1.isBoolean)(enabled) ? enabled : undefined,
             welcomeChannels: ctx.welcomeScreenChannels || undefined
         }).catch(() => false)) !== false);
     },

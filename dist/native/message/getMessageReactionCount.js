@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$getMessageReactionCount",
@@ -29,13 +30,13 @@ exports.default = new structures_1.NativeFunction({
             name: "emoji",
             description: "The emoji to get its user count",
             required: true,
-            pointer: 1,
             rest: false,
-            type: structures_1.ArgType.Emoji,
+            type: structures_1.ArgType.String,
         },
     ],
-    execute(ctx, [, message, emoji]) {
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
+    execute(ctx, [, message, emote]) {
+        const emoji = (0, discord_js_1.parseEmoji)(emote);
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name);
         return this.success(reaction?.count);
     },
 });

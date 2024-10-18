@@ -1,4 +1,4 @@
-import { TextBasedChannel } from "discord.js"
+import { parseEmoji, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -29,13 +29,13 @@ export default new NativeFunction({
             name: "emoji",
             description: "The emoji to get its user count",
             required: true,
-            pointer: 1,
             rest: false,
-            type: ArgType.Emoji,
+            type: ArgType.String,
         },
     ],
-    execute(ctx, [, message, emoji]) {
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name)
+    execute(ctx, [, message, emote]) {
+        const emoji = parseEmoji(emote)
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name)
         return this.success(reaction?.count)
     },
 })

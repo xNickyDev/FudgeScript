@@ -1,3 +1,4 @@
+import { isBoolean } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -34,7 +35,7 @@ export default new NativeFunction({
     async execute(ctx, [guild, enabled, desc]) {
         return this.success((await guild.editWelcomeScreen({
             description: desc ?? undefined,
-            enabled: enabled || undefined,
+            enabled: isBoolean(enabled) ? enabled : undefined,
             welcomeChannels: ctx.welcomeScreenChannels || undefined
         }).catch(() => false)) !== false)
     },

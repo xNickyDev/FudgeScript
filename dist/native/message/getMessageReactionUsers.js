@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const array_1 = __importDefault(require("../../functions/array"));
 exports.default = new structures_1.NativeFunction({
@@ -33,9 +34,8 @@ exports.default = new structures_1.NativeFunction({
             name: "emoji",
             description: "The emoji to get its users",
             required: true,
-            pointer: 1,
             rest: false,
-            type: structures_1.ArgType.Emoji,
+            type: structures_1.ArgType.String,
         },
         {
             name: "separator",
@@ -44,9 +44,10 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    async execute(ctx, [, message, emoji, sep]) {
+    async execute(ctx, [, message, emote, sep]) {
+        const emoji = (0, discord_js_1.parseEmoji)(emote);
         const users = new Array();
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji.toString() || r.emoji.id === emoji.id || r.emoji.name === emoji.name);
+        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name);
         let afterID = undefined;
         if (reaction.users.cache.size <= reaction.count) {
             for (;;) {
