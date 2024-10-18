@@ -13,6 +13,7 @@ import {
     Message,
     MessageReaction,
     PermissionsString,
+    ReactionEmoji,
     Role,
     Sticker,
     TextBasedChannel,
@@ -62,6 +63,7 @@ export enum ArgType {
     Member,
     ApplicationEmoji,
     AutomodRule,
+    ReactionEmoji,
     DefaultReactionEmoji
 }
 
@@ -188,6 +190,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? Sticker
     : T extends ArgType.Reaction
     ? MessageReaction
+    : T extends ArgType.ReactionEmoji
+    ? ReactionEmoji
     : T extends ArgType.Webhook
     ? Webhook
     : T extends ArgType.Invite

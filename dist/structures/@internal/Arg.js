@@ -675,6 +675,35 @@ class Arg {
             pointer: 1
         });
     }
+    static optionalReactionEmoji(name = "reaction emoji", desc = "The reaction emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.ReactionEmoji,
+            pointer: 1
+        });
+    }
+    static requiredReactionEmoji(name = "reaction emoji", desc = "The reaction emoji to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.ReactionEmoji,
+            pointer: 1
+        });
+    }
+    static restReactionEmoji(name = "reaction emojis", desc = "The reaction emojis to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.ReactionEmoji,
+            pointer: 1
+        });
+    }
     static restTime(name = "duration/time", desc = "The duration/time to use") {
         return Arg.create({
             name,

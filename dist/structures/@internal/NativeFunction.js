@@ -34,7 +34,8 @@ var ArgType;
     ArgType[ArgType["Member"] = 28] = "Member";
     ArgType[ArgType["ApplicationEmoji"] = 29] = "ApplicationEmoji";
     ArgType[ArgType["AutomodRule"] = 30] = "AutomodRule";
-    ArgType[ArgType["DefaultReactionEmoji"] = 31] = "DefaultReactionEmoji";
+    ArgType[ArgType["ReactionEmoji"] = 31] = "ReactionEmoji";
+    ArgType[ArgType["DefaultReactionEmoji"] = 32] = "DefaultReactionEmoji";
 })(ArgType || (exports.ArgType = ArgType = {}));
 class NativeFunction {
     data;

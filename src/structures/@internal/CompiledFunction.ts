@@ -398,6 +398,14 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.resolvePointer(arg, ref, ctx.message)?.reactions.cache.get(identifier)
     }
 
+    private resolveReactionEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        const parsed = parseEmoji(str)
+        if (!parsed) return
+
+        const identifier = parsed.id ?? parsed.name
+        return this.resolvePointer(arg, ref, ctx.message)?.reactions.cache.get(identifier)
+    }
+
     private resolveURL(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.URLRegex.test(str)) {
             const em = parseEmoji(str)

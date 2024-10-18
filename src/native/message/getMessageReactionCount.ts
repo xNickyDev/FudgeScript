@@ -1,6 +1,11 @@
 import { parseEmoji, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
+export enum ReactionType {
+    Normal = "normal",
+    Super = "burst"
+}
+
 export default new NativeFunction({
     name: "$getMessageReactionCount",
     version: "1.0.0",
@@ -32,10 +37,17 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.String,
         },
+        {
+            name: "type",
+            description: "The type of the reaction to count users for",
+            rest: false,
+            type: ArgType.Enum,
+            enum: ReactionType
+        },
     ],
-    execute(ctx, [, message, emote]) {
+    execute(ctx, [, message, emote, type]) {
         const emoji = parseEmoji(emote)
         const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name)
-        return this.success(reaction?.count)
+        return this.success(type ? reaction?.countDetails?.[type] : reaction?.count)
     },
 })
