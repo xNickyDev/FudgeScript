@@ -41,6 +41,6 @@ export default new NativeFunction({
     ],
     async execute(ctx, [, message, prop, sep]) {
         const reactions = (await (message ?? ctx.message)?.fetch().catch(ctx.noop))?.reactions.cache
-        return this.success(prop ? reactions?.map(reaction => ReactionProperties[prop](reaction, sep)).join(sep ?? ", ") : reactions)
+        return this.successJSON(prop ? reactions?.map(reaction => ReactionProperties[prop](reaction, sep)).join(sep ?? ", ") : reactions)
     },
 })

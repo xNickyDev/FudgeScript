@@ -4,6 +4,7 @@ const reaction_1 = require("../../properties/reaction");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$getMessageReactions",
+    version: "1.5.0",
     description: "Retrieves all reactions of a message",
     unwrap: true,
     output: structures_1.ArgType.Unknown,
@@ -41,7 +42,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [, message, prop, sep]) {
         const reactions = (await (message ?? ctx.message)?.fetch().catch(ctx.noop))?.reactions.cache;
-        return this.success(prop ? reactions?.map(reaction => reaction_1.ReactionProperties[prop](reaction, sep)).join(sep ?? ", ") : reactions);
+        return this.successJSON(prop ? reactions?.map(reaction => reaction_1.ReactionProperties[prop](reaction, sep)).join(sep ?? ", ") : reactions);
     },
 });
 //# sourceMappingURL=getMessageReactions.js.map
