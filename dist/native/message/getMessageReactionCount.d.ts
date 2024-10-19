@@ -23,7 +23,8 @@ declare const _default: NativeFunction<[{
     description: string;
     required: true;
     rest: false;
-    type: ArgType.String;
+    pointer: number;
+    type: ArgType.Reaction;
 }, {
     name: string;
     description: string;

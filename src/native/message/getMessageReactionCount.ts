@@ -35,7 +35,8 @@ export default new NativeFunction({
             description: "The emoji to get its user count",
             required: true,
             rest: false,
-            type: ArgType.String,
+            pointer: 1,
+            type: ArgType.Reaction,
         },
         {
             name: "type",
@@ -45,9 +46,7 @@ export default new NativeFunction({
             enum: ReactionType
         },
     ],
-    execute(ctx, [, message, emote, type]) {
-        const emoji = parseEmoji(emote)
-        const reaction = message.reactions.cache.find(r => r.emoji.toString() === emoji?.toString() || r.emoji.id === emoji?.id || r.emoji.name === emoji?.name)
+    execute(ctx, [, message, reaction, type]) {
         return this.success(type ? reaction?.countDetails?.[type] : reaction?.count)
     },
 })
