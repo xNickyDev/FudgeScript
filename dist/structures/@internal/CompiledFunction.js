@@ -319,12 +319,12 @@ class CompiledFunction {
             return;
         return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop);
     }
-    resolveReaction(ctx, arg, str, ref) {
+    async resolveReaction(ctx, arg, str, ref) {
         const parsed = (0, discord_js_1.parseEmoji)(str);
         if (!parsed)
             return;
         const identifier = parsed.id ?? parsed.name;
-        return this.resolvePointer(arg, ref, ctx.message)?.reactions.cache.get(identifier);
+        return (await this.resolvePointer(arg, ref, ctx.message)?.fetch().catch(ctx.noop))?.reactions.cache.get(identifier);
     }
     resolveURL(ctx, arg, str, ref) {
         if (!CompiledFunction.URLRegex.test(str)) {
