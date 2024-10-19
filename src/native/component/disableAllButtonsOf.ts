@@ -37,14 +37,14 @@ export default new NativeFunction({
         if (index) {
             const row = components[index]
             const actionRow = new ActionRowBuilder()
-            row.components.forEach(component => {
+            row?.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {
                     actionRow.addComponents(component.setDisabled(true))
                 } else {
                     actionRow.addComponents(component)
                 }
             })
-            components.splice(index, 1, row)
+            if (row) components.splice(index, 1, row)
         } else {
             components.map(row => {
                 const actionRow = new ActionRowBuilder()
