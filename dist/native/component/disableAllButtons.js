@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
-const lodash_1 = require("lodash");
 exports.default = new structures_1.NativeFunction({
     name: "$disableAllButtons",
     version: "1.5.0",
@@ -20,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     async execute(ctx, [index]) {
         const data = ctx.container.components;
-        const components = (0, lodash_1.isNumber)(index) ? [data[index]] : data;
+        const components = isNaN(index) ? data : [data[index]];
         components.map(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row?.components.forEach(component => {

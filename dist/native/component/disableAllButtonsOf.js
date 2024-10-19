@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
-const lodash_1 = require("lodash");
 exports.default = new structures_1.NativeFunction({
     name: "$disableAllButtonsOf",
     version: "1.5.0",
@@ -34,11 +33,11 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, msg, index]) {
-        const data = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        const components = (0, lodash_1.isNumber)(index) ? [data[index]] : data;
-        components.map(row => {
+        const components = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
+        if (index) {
+            const row = components[index];
             const actionRow = new discord_js_1.ActionRowBuilder();
-            row?.components.forEach(component => {
+            row.components.forEach(component => {
                 if (component instanceof discord_js_1.ButtonBuilder) {
                     actionRow.addComponents(component.setDisabled(true));
                 }
@@ -46,8 +45,22 @@ exports.default = new structures_1.NativeFunction({
                     actionRow.addComponents(component);
                 }
             });
-            return actionRow;
-        });
+            components.splice(index, 1, row);
+        }
+        else {
+            components.map(row => {
+                const actionRow = new discord_js_1.ActionRowBuilder();
+                row.components.forEach(component => {
+                    if (component instanceof discord_js_1.ButtonBuilder) {
+                        actionRow.addComponents(component.setDisabled(true));
+                    }
+                    else {
+                        actionRow.addComponents(component);
+                    }
+                });
+                return actionRow;
+            });
+        }
         return this.success(!!(await msg.edit({ components: components }).catch(ctx.noop)));
     },
 });

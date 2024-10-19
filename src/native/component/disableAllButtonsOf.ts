@@ -1,6 +1,5 @@
-import { ButtonBuilder, ActionRowBuilder, AnyComponentBuilder } from "discord.js"
+import { ButtonBuilder, ActionRowBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { isNumber } from "lodash"
 
 export default new NativeFunction({
     name: "$disableAllButtonsOf",
@@ -33,20 +32,32 @@ export default new NativeFunction({
     brackets: true,
     output: ArgType.Boolean,
     async execute(ctx, [, msg, index]) {
-        const data = msg.components.map(x => ActionRowBuilder.from(x))
-        const components = isNumber(index) ? [data[index]] : data
-
-        components.map(row => {
+        const components = msg.components.map(x => ActionRowBuilder.from(x))
+        
+        if (index) {
+            const row = components[index]
             const actionRow = new ActionRowBuilder()
-            row?.components.forEach(component => {
+            row.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {
                     actionRow.addComponents(component.setDisabled(true))
                 } else {
                     actionRow.addComponents(component)
                 }
             })
-            return actionRow
-        })
+            components.splice(index, 1, row)
+        } else {
+            components.map(row => {
+                const actionRow = new ActionRowBuilder()
+                row.components.forEach(component => {
+                    if (component instanceof ButtonBuilder) {
+                        actionRow.addComponents(component.setDisabled(true))
+                    } else {
+                        actionRow.addComponents(component)
+                    }
+                })
+                return actionRow
+            })
+        }
 
         return this.success(!!(await msg.edit({ components: components as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop)))
     },
