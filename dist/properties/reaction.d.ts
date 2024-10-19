@@ -6,7 +6,8 @@ export declare enum ReactionProperty {
     normalCount = "normalCount",
     me = "me",
     meSuper = "meSuper",
-    superColors = "superColors"
+    superColors = "superColors",
+    users = "users"
 }
 export declare const ReactionProperties: import("../functions/defineProperties").Properties<typeof ReactionProperty, MessageReaction>;
 //# sourceMappingURL=reaction.d.ts.map

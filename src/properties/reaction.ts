@@ -9,6 +9,7 @@ export enum ReactionProperty {
     me = "me",
     meSuper = "meSuper",
     superColors = "superColors",
+    users = "users"
 }
 
 export const ReactionProperties = defineProperties<typeof ReactionProperty, MessageReaction>({
@@ -18,5 +19,6 @@ export const ReactionProperties = defineProperties<typeof ReactionProperty, Mess
     normalCount: (i) => i?.countDetails.normal,
     me: (i) => i?.me,
     meSuper: (i) => i?.meBurst,
-    superColors: (i, sep) => i?.burstColors?.join(sep ?? ", ")
+    superColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
+    users: (i, sep) => i?.users.cache.map(x => x.id).join(sep ?? ", ")
 })
