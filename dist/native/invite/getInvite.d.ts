@@ -5,11 +5,10 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.String;
+    type: ArgType.Invite;
 }, {
     name: string;
     rest: false;
-    required: true;
     type: ArgType.Enum;
     description: string;
     enum: typeof InviteProperty;

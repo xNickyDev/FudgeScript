@@ -15,20 +15,18 @@ exports.default = new structures_1.NativeFunction({
             description: "The invite code",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Invite,
         },
         {
             name: "property",
             rest: false,
-            required: true,
             type: structures_1.ArgType.Enum,
             description: "The property of the invite to return",
             enum: invite_1.InviteProperty
         },
     ],
-    async execute(ctx, [code, prop]) {
-        const invite = await ctx.client.fetchInvite(code).catch(ctx.noop);
-        return this.success(invite ? invite_1.InviteProperties[prop](invite) : null);
+    async execute(ctx, [invite, prop]) {
+        return this.successJSON(prop && invite ? invite_1.InviteProperties[prop](invite) : invite);
     },
 });
 //# sourceMappingURL=getInvite.js.map

@@ -1,6 +1,5 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { InviteProperties, InviteProperty } from "../../properties/invite"
-import array from "../../functions/array"
 
 export default new NativeFunction({
     name: "$getInvite",
@@ -15,19 +14,17 @@ export default new NativeFunction({
             description: "The invite code",
             rest: false,
             required: true,
-            type: ArgType.String,
+            type: ArgType.Invite,
         },
         {
             name: "property",
             rest: false,
-            required: true,
             type: ArgType.Enum,
             description: "The property of the invite to return",
             enum: InviteProperty
         },
     ],
-    async execute(ctx, [code, prop]) {
-        const invite = await ctx.client.fetchInvite(code).catch(ctx.noop)
-        return this.success(invite ? InviteProperties[prop](invite) : null)
+    async execute(ctx, [invite, prop]) {
+        return this.successJSON(prop && invite ? InviteProperties[prop](invite) : invite)
     },
 })
