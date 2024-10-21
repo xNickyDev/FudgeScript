@@ -15,8 +15,16 @@ var ForumTagProperty;
 })(ForumTagProperty || (exports.ForumTagProperty = ForumTagProperty = {}));
 exports.ForumTagProperties = (0, defineProperties_1.default)({
     emoji: (i) => {
-        const emoji = i?.emoji ? (0, discord_js_1.parseEmoji)(i?.emoji?.id ?? i?.emoji?.name) : null;
-        return (emoji?.id ? `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>` : emoji?.name);
+        if (i && "emoji" in i) {
+            if (i.emoji?.id) {
+                const emoji = (0, discord_js_1.parseEmoji)(i.emoji?.id);
+                return `<${emoji?.animated ? "a" : ""}:${emoji?.name}:${emoji?.id}>`;
+            }
+            else {
+                return i.emoji?.name;
+            }
+        }
+        return null;
     },
     id: (i) => i?.id,
     moderated: (i) => i?.moderated,

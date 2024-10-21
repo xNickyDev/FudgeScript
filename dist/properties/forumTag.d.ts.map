@@ -1,1 +1,1 @@
-{"version":3,"file":"forumTag.d.ts","sourceRoot":"","sources":["../../src/properties/forumTag.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAc,MAAM,YAAY,CAAA;AAGtD,oBAAY,gBAAgB;IACxB,KAAK,UAAU;IACf,EAAE,OAAO;IACT,SAAS,cAAc;IACvB,IAAI,SAAS;CAChB;AAED,eAAO,MAAM,kBAAkB,4FAQ7B,CAAA"}
+{"version":3,"file":"forumTag.d.ts","sourceRoot":"","sources":["../../src/properties/forumTag.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAc,MAAM,YAAY,CAAA;AAGtD,oBAAY,gBAAgB;IACxB,KAAK,UAAU;IACf,EAAE,OAAO;IACT,SAAS,cAAc;IACvB,IAAI,SAAS;CAChB;AAED,eAAO,MAAM,kBAAkB,4FAe7B,CAAA"}

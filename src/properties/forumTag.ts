@@ -10,8 +10,15 @@ export enum ForumTagProperty {
 
 export const ForumTagProperties = defineProperties<typeof ForumTagProperty, GuildForumTag>({
     emoji: (i) => {
-        const emoji = i?.emoji ? parseEmoji(i?.emoji?.id ?? i?.emoji?.name!) : null
-        return (emoji?.id ? `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>` : emoji?.name)
+        if (i && "emoji" in i) {
+            if (i.emoji?.id) {
+                const emoji = parseEmoji(i.emoji?.id)
+                return `<${emoji?.animated ? "a" : ""}:${emoji?.name}:${emoji?.id}>`
+            } else {
+                return i.emoji?.name
+            }
+        }
+        return null
     },
     id: (i) => i?.id,
     moderated: (i) => i?.moderated,
