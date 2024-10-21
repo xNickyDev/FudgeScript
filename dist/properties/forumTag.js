@@ -14,11 +14,10 @@ var ForumTagProperty;
     ForumTagProperty["name"] = "name";
 })(ForumTagProperty || (exports.ForumTagProperty = ForumTagProperty = {}));
 exports.ForumTagProperties = (0, defineProperties_1.default)({
-    emoji: (i) => i && "emoji" in i
-        ? i.emoji?.id
-            ? `<${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.animated ? "a" : ""}:${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.name}:${i.emoji?.id}>`
-            : i.emoji?.name
-        : null,
+    emoji: (i) => {
+        const emoji = i?.emoji ? (0, discord_js_1.parseEmoji)(i?.emoji?.id ?? i?.emoji?.name) : null;
+        return emoji?.id ? `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>` : emoji?.name;
+    },
     id: (i) => i?.id,
     moderated: (i) => i?.moderated,
     name: (i) => i?.name,
