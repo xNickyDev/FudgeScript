@@ -12,7 +12,7 @@ export const ForumTagProperties = defineProperties<typeof ForumTagProperty, Guil
     emoji: (i) =>
         i && "emoji" in i
             ? i.emoji?.id
-                ? `<${parseEmoji(i.emoji?.id)?.animated ? "a" : ""}:${i.emoji?.name}:${i.emoji?.id}>`
+                ? `<${parseEmoji(i.emoji?.id)?.animated ? "a" : ""}:${parseEmoji(i.emoji?.id)?.name}:${i.emoji?.id}>`
                 : i.emoji?.name
             : null,
     id: (i) => i?.id,

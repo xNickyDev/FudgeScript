@@ -14,7 +14,7 @@ export default new NativeFunction({
             description: "The invite code",
             rest: false,
             required: true,
-            type: ArgType.Invite,
+            type: ArgType.String,
         },
         {
             name: "property",
@@ -24,7 +24,8 @@ export default new NativeFunction({
             enum: InviteProperty
         },
     ],
-    async execute(ctx, [invite, prop]) {
+    async execute(ctx, [code, prop]) {
+        const invite = await ctx.client.fetchInvite(code).catch(ctx.noop)
         return this.successJSON(prop && invite ? InviteProperties[prop](invite) : invite)
     },
 })

@@ -16,7 +16,7 @@ var ForumTagProperty;
 exports.ForumTagProperties = (0, defineProperties_1.default)({
     emoji: (i) => i && "emoji" in i
         ? i.emoji?.id
-            ? `<${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.animated ? "a" : ""}:${i.emoji?.name}:${i.emoji?.id}>`
+            ? `<${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.animated ? "a" : ""}:${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.name}:${i.emoji?.id}>`
             : i.emoji?.name
         : null,
     id: (i) => i?.id,

@@ -5,7 +5,7 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.Invite;
+    type: ArgType.String;
 }, {
     name: string;
     rest: false;
