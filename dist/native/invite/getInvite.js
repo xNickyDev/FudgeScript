@@ -1,18 +1,14 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const invite_1 = require("../../properties/invite");
-const array_1 = __importDefault(require("../../functions/array"));
 exports.default = new structures_1.NativeFunction({
-    name: "$getInviteInfo",
+    name: "$getInvite",
     version: "1.5.0",
     brackets: true,
     description: "Returns information about an invite",
     unwrap: true,
-    output: (0, array_1.default)(),
+    output: structures_1.ArgType.Unknown,
     args: [
         {
             name: "code",
@@ -35,4 +31,4 @@ exports.default = new structures_1.NativeFunction({
         return this.success(invite ? invite_1.InviteProperties[prop](invite) : null);
     },
 });
-//# sourceMappingURL=getInviteInfo.js.map
+//# sourceMappingURL=getInvite.js.map

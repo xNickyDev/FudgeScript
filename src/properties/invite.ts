@@ -1,4 +1,4 @@
-import { Invite, InviteType } from "discord.js"
+import { Invite, InviteTargetType, InviteType } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum InviteProperty {
@@ -14,6 +14,11 @@ export enum InviteProperty {
     type = "type",
     expiresTimestamp = "expiresTimestamp",
     temporary = "temporary",
+    deletable = "deletable",
+    memberCount = "memberCount",
+    presenceCount = "presenceCount",
+    targetType = "targetType",
+    targetUser = "targetUser",
 }
 
 export const InviteProperties = defineProperties<typeof InviteProperty, Invite>({
@@ -29,4 +34,9 @@ export const InviteProperties = defineProperties<typeof InviteProperty, Invite>(
     type: (i) => InviteType[i?.type!],
     expiresTimestamp: (i) => i?.expiresTimestamp,
     temporary: (i) => i?.temporary,
+    deletable: (i) => i?.deletable,
+    memberCount: (i) => i?.memberCount,
+    presenceCount: (i) => i?.presenceCount,
+    targetType: (i) => InviteTargetType[i?.targetType!],
+    targetUser: (i) => i?.targetUser?.id
 })

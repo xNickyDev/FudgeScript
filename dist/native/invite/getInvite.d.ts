@@ -15,4 +15,4 @@ declare const _default: NativeFunction<[{
     enum: typeof InviteProperty;
 }], true>;
 export default _default;
-//# sourceMappingURL=getInviteInfo.d.ts.map
+//# sourceMappingURL=getInvite.d.ts.map

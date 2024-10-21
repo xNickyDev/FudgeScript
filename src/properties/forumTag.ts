@@ -1,4 +1,4 @@
-import { GuildForumTag } from "discord.js"
+import { GuildForumTag, parseEmoji } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum ForumTagProperty {
@@ -12,7 +12,7 @@ export const ForumTagProperties = defineProperties<typeof ForumTagProperty, Guil
     emoji: (i) =>
         i && "emoji" in i
             ? i.emoji?.id
-                ? `<:${i.emoji?.name}:${i.emoji?.id}>`
+                ? `<${parseEmoji(i.emoji?.id)?.animated ? "a" : ""}:${i.emoji?.name}:${i.emoji?.id}>`
                 : i.emoji?.name
             : null,
     id: (i) => i?.id,

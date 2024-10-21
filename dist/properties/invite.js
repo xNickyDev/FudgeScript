@@ -20,6 +20,11 @@ var InviteProperty;
     InviteProperty["type"] = "type";
     InviteProperty["expiresTimestamp"] = "expiresTimestamp";
     InviteProperty["temporary"] = "temporary";
+    InviteProperty["deletable"] = "deletable";
+    InviteProperty["memberCount"] = "memberCount";
+    InviteProperty["presenceCount"] = "presenceCount";
+    InviteProperty["targetType"] = "targetType";
+    InviteProperty["targetUser"] = "targetUser";
 })(InviteProperty || (exports.InviteProperty = InviteProperty = {}));
 exports.InviteProperties = (0, defineProperties_1.default)({
     authorID: (i) => i?.inviterId,
@@ -34,5 +39,10 @@ exports.InviteProperties = (0, defineProperties_1.default)({
     type: (i) => discord_js_1.InviteType[i?.type],
     expiresTimestamp: (i) => i?.expiresTimestamp,
     temporary: (i) => i?.temporary,
+    deletable: (i) => i?.deletable,
+    memberCount: (i) => i?.memberCount,
+    presenceCount: (i) => i?.presenceCount,
+    targetType: (i) => discord_js_1.InviteTargetType[i?.targetType],
+    targetUser: (i) => i?.targetUser?.id
 });
 //# sourceMappingURL=invite.js.map

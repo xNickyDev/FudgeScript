@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForumTagProperties = exports.ForumTagProperty = void 0;
+const discord_js_1 = require("discord.js");
 const defineProperties_1 = __importDefault(require("../functions/defineProperties"));
 var ForumTagProperty;
 (function (ForumTagProperty) {
@@ -15,7 +16,7 @@ var ForumTagProperty;
 exports.ForumTagProperties = (0, defineProperties_1.default)({
     emoji: (i) => i && "emoji" in i
         ? i.emoji?.id
-            ? `<:${i.emoji?.name}:${i.emoji?.id}>`
+            ? `<${(0, discord_js_1.parseEmoji)(i.emoji?.id)?.animated ? "a" : ""}:${i.emoji?.name}:${i.emoji?.id}>`
             : i.emoji?.name
         : null,
     id: (i) => i?.id,

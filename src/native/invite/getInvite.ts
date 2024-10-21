@@ -3,12 +3,12 @@ import { InviteProperties, InviteProperty } from "../../properties/invite"
 import array from "../../functions/array"
 
 export default new NativeFunction({
-    name: "$getInviteInfo",
+    name: "$getInvite",
     version: "1.5.0",
     brackets: true,
     description: "Returns information about an invite",
     unwrap: true,
-    output: array<ArgType.Invite>(),
+    output: ArgType.Unknown,
     args: [
         {
             name: "code",
