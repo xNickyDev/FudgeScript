@@ -43,15 +43,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [channel, amount, pinned, bots]) {
         let count = 0;
-        if (amount) {
-            await ctx.message?.delete().then(() => {
-                count++;
-                amount--;
-            })
-                .catch(ctx.noop);
-        }
         for (const n of (0, splitNumber_1.default)(amount, 100)) {
-            const messages = await channel.messages.fetch({ limit: n }).catch(ctx.noop);
+            const messages = await channel.messages.fetch({ limit: n, cache: true }).catch(ctx.noop);
             if (!messages)
                 break;
             const col = await channel
