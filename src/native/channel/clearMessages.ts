@@ -41,15 +41,16 @@ export default new NativeFunction({
     ],
     async execute(ctx, [channel, amount, pinned, bots]) {
         let count = 0
+        let trigger = ctx.message?.id
 
         for (const n of splitNumber(amount, 100)) {
             const messages = await (channel as TextChannel).messages.fetch({ limit: n }).catch(ctx.noop)
             if (!messages) break
-            console.log(messages.map(msg => msg.deletable))
 
             const col = await (channel as TextChannel)
                 .bulkDelete(
                     messages.filter(msg => {
+                        if (trigger && msg.id === trigger) return false
                         if (pinned === false && msg.pinned) return false
                         if (bots === false && msg.author.bot) return false
                         return true
