@@ -44,12 +44,11 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [channel, amount, pinned, bots]) {
         let count = 0;
         for (const n of (0, splitNumber_1.default)(amount, 100)) {
-            const messages = await channel.messages.fetch({ limit: n, cache: true }).catch(ctx.noop);
+            const messages = await channel.messages.fetch({ limit: n }).catch(ctx.noop);
             if (!messages)
                 break;
-            console.log(messages.map(msg => msg.id));
             const col = await channel
-                .bulkDelete(messages.filter(msg => {
+                .bulkDelete([...messages.values()].slice(1).filter(msg => {
                 if (pinned === false && msg.pinned)
                     return false;
                 if (bots === false && msg.author.bot)
