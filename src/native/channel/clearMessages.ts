@@ -45,10 +45,11 @@ export default new NativeFunction({
         for (const n of splitNumber(amount, 100)) {
             const messages = await (channel as TextChannel).messages.fetch({ limit: n }).catch(ctx.noop)
             if (!messages) break
+            console.log(messages.map(msg => msg.deletable))
 
             const col = await (channel as TextChannel)
                 .bulkDelete(
-                    [...messages.values()].filter(msg => {
+                    messages.filter(msg => {
                         if (pinned === false && msg.pinned) return false
                         if (bots === false && msg.author.bot) return false
                         return true
