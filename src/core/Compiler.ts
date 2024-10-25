@@ -83,6 +83,11 @@ export interface ICompiledFunction {
      */
     negated: boolean
 
+    /**
+     * Whether to suppress any console error
+     */
+    suppress: boolean
+
     fields: null | (ICompiledFunctionField | ICompiledFunctionConditionField)[]
 }
 
@@ -101,6 +106,7 @@ export interface IRawFunctionMatch {
     length: number
     negated: boolean
     silent: boolean
+    suppress: boolean
     count: string | null
     fn: IRawFunction
 }
@@ -116,7 +122,8 @@ export class Compiler {
         Count: "@",
         Negation: "!",
         Separator: ";",
-        Silent: "#"
+        Silent: "#",
+        Suppress: "!!",
     }
 
     private static SystemRegex = /(\\+)?\[SYSTEM_FUNCTION\(\d+\)\]/gm
@@ -140,11 +147,12 @@ export class Compiler {
         if (code) {
             this.matches = Array.from(code.matchAll(Compiler.Regex)).map((x) => ({
                 index: x.index!,
-                negated: !!x[1],
-                silent: !!x[2],
+                suppress: !!x[1],
+                negated: !!x[2],
+                silent: !!x[3],
                 length: x[0].length,
-                count: x[4] ?? null,
-                fn: this.getFunction(x[5]),
+                count: x[5] ?? null,
+                fn: this.getFunction(x[6]),
             }))
         } else this.matches = []
     }
@@ -392,6 +400,7 @@ export class Compiler {
             silent: match.silent,
             name: match.fn.name,
             negated: match.negated,
+            suppress: match.suppress,
         }
     }
 
@@ -485,7 +494,7 @@ export class Compiler {
         const mapped = Array.from(this.Functions.keys())
 
         this.Regex = new RegExp(
-            `\\$(\\!)?(\\#)?(@\\[(.*?)\\])?(${mapped
+            `\\$(\\!\\!)?(\\!)?(\\#)?(@\\[(.*?)\\])?(${mapped
                 .map((x) =>
                     (x.startsWith("$") ? x.slice(1).toLowerCase() : x.toLowerCase()).replace(
                         Compiler.EscapeRegex,

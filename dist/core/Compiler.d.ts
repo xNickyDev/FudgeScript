@@ -58,6 +58,10 @@ export interface ICompiledFunction {
      * Whether output is not desirable
      */
     negated: boolean;
+    /**
+     * Whether to suppress any console error
+     */
+    suppress: boolean;
     fields: null | (ICompiledFunctionField | ICompiledFunctionConditionField)[];
 }
 export interface ICompilationResult {
@@ -73,6 +77,7 @@ export interface IRawFunctionMatch {
     length: number;
     negated: boolean;
     silent: boolean;
+    suppress: boolean;
     count: string | null;
     fn: IRawFunction;
 }
@@ -90,6 +95,7 @@ export declare class Compiler {
         Negation: string;
         Separator: string;
         Silent: string;
+        Suppress: string;
     };
     private static SystemRegex;
     private static Regex;

@@ -37,7 +37,8 @@ class Compiler {
         Count: "@",
         Negation: "!",
         Separator: ";",
-        Silent: "#"
+        Silent: "#",
+        Suppress: "!!",
     };
     static SystemRegex = /(\\+)?\[SYSTEM_FUNCTION\(\d+\)\]/gm;
     static Regex;
@@ -56,11 +57,12 @@ class Compiler {
         if (code) {
             this.matches = Array.from(code.matchAll(Compiler.Regex)).map((x) => ({
                 index: x.index,
-                negated: !!x[1],
-                silent: !!x[2],
+                suppress: !!x[1],
+                negated: !!x[2],
+                silent: !!x[3],
                 length: x[0].length,
-                count: x[4] ?? null,
-                fn: this.getFunction(x[5]),
+                count: x[5] ?? null,
+                fn: this.getFunction(x[6]),
             }));
         }
         else
@@ -270,6 +272,7 @@ class Compiler {
             silent: match.silent,
             name: match.fn.name,
             negated: match.negated,
+            suppress: match.suppress,
         };
     }
     skip(n) {
@@ -343,7 +346,7 @@ class Compiler {
                 ?.map((alias) => this.Functions.set(alias.toLowerCase(), x));
         });
         const mapped = Array.from(this.Functions.keys());
-        this.Regex = new RegExp(`\\$(\\!)?(\\#)?(@\\[(.*?)\\])?(${mapped
+        this.Regex = new RegExp(`\\$(\\!\\!)?(\\!)?(\\#)?(@\\[(.*?)\\])?(${mapped
             .map((x) => (x.startsWith("$") ? x.slice(1).toLowerCase() : x.toLowerCase()).replace(Compiler.EscapeRegex, "\\$1"))
             .sort((x, y) => y.length - x.length)
             .join("|")})`, "gim");
