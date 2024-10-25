@@ -26,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Json,
     execute(ctx, [type]) {
         const owners = ctx.interaction && "authorizingIntegrationOwners" in ctx.interaction ? ctx.interaction.authorizingIntegrationOwners : undefined;
-        return this.successJSON(owners && type ? owners[type] : owners);
+        return this.successJSON(owners && this.hasFields ? owners[type] : owners);
     },
 });
 //# sourceMappingURL=authorizingIntegrationOwners.js.map
