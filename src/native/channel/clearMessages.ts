@@ -43,7 +43,7 @@ export default new NativeFunction({
         let count = 0
 
         for (const n of splitNumber(amount, 100)) {
-            const messages = await (channel as TextChannel).messages.fetch({ limit: n, cache: true }).catch(ctx.noop)
+            const messages = await (channel as TextChannel).messages.fetch({ limit: n }).catch(ctx.noop)
             if (!messages) break
 
             const col = await (channel as TextChannel)
