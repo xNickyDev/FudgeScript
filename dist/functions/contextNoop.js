@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../structures");
 function default_1(fn, ...args) {
-    if (this.hasDisabledConsoleErrors() || fn.hasDisabledConsoleErrors()) {
+    if (this.hasDisabledConsoleErrors(fn)) {
         return;
     }
     structures_1.Logger.error(...args);

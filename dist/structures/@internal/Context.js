@@ -267,8 +267,8 @@ class Context {
     get(key) {
         return this[key];
     }
-    hasDisabledConsoleErrors() {
-        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client));
+    hasDisabledConsoleErrors(fn) {
+        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client) || fn.data.suppress);
     }
     getInstance(key, type) {
         if (this.hasInstance(key, type))

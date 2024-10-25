@@ -541,10 +541,6 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
             : new Array<CompiledFunction>()
     }
 
-    public hasDisabledConsoleErrors(): boolean {
-        return this.data.suppress
-    }
-
     public return(value: ReturnValue<ReturnType.Return>) {
         return new Return(ReturnType.Return, value)
     }

@@ -95,7 +95,6 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
     static toResolveArgString(type: ArgType): "resolveGuild" | "resolveChannel" | "resolveUser" | "resolveRole" | "resolveInvite" | "resolveWebhook" | "resolveEmoji" | "resolveMessage" | "resolveSticker" | "resolveUnknown" | "resolveURL" | "resolveString" | "resolveBigInt" | "resolveTextChannel" | "resolveOverwritePermission" | "resolveNumber" | "resolveDate" | "resolveRoleOrUser" | "resolvePermission" | "resolveJson" | "resolveColor" | "resolveEnum" | "resolveForumTag" | "resolveGuildEmoji" | "resolveBoolean" | "resolveAttachment" | "resolveReaction" | "resolveTime" | "resolveMember" | "resolveApplicationEmoji" | "resolveAutomodRule" | "resolveDefaultReactionEmoji";
     getFunction(fieldIndex: number, ref: NativeFunction): CompiledFunction<IArg<ArgType, boolean, boolean, import("./NativeFunction").EnumLike<any>>[], boolean> | undefined;
     getFunctions(fieldIndex: number, ref: NativeFunction): CompiledFunction<IArg<ArgType, boolean, boolean, import("./NativeFunction").EnumLike<any>>[], boolean>[];
-    hasDisabledConsoleErrors(): boolean;
     return(value: ReturnValue<ReturnType.Return>): Return<ReturnType.Return>;
     stop(): Return<ReturnType.Stop>;
     break(): Return<ReturnType.Break>;

@@ -392,8 +392,8 @@ export class Context {
         return this[key] as T
     }
 
-    public hasDisabledConsoleErrors() {
-        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client))
+    public hasDisabledConsoleErrors(fn: CompiledFunction) {
+        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client) || fn.data.suppress)
     }
 
     public getInstance<K extends string, T extends ClassType>(key: K, type: T) {

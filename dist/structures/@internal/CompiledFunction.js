@@ -434,9 +434,6 @@ class CompiledFunction {
             ? this.data.fields[fieldIndex].functions.filter((x) => x.data.name === ref.name)
             : new Array();
     }
-    hasDisabledConsoleErrors() {
-        return this.data.suppress;
-    }
     return(value) {
         return new Return_1.Return(Return_1.ReturnType.Return, value);
     }

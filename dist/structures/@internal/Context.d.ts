@@ -134,7 +134,7 @@ export declare class Context {
         } as K]: ClassInstance<V>;
     };
     get<T>(key: PropertyKey): T;
-    hasDisabledConsoleErrors(): boolean | undefined;
+    hasDisabledConsoleErrors(fn: CompiledFunction): boolean;
     getInstance<K extends string, T extends ClassType>(key: K, type: T): (this & { [P in keyof {
         bro: boolean;
     } as K]: ClassInstance<T>; })[K] | null;
