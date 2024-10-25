@@ -150,6 +150,6 @@ export declare class Context {
      */
     clone(props?: Partial<IRunnable>, syncVars?: boolean): Context;
     private clearCache;
-    get noop(): (...args: any[]) => void;
+    get noop(): (fn: CompiledFunction<IArg<ArgType, boolean, boolean, import("./NativeFunction").EnumLike<any>>[], boolean>, ...args: any[]) => void;
 }
 //# sourceMappingURL=Context.d.ts.map

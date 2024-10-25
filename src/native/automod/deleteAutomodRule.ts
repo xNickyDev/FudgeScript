@@ -34,7 +34,7 @@ export default new NativeFunction({
         try {
             await rule.delete(reason || undefined)
         } catch (error) {
-            ctx.noop(error)
+            ctx.noop(error as any)
             return this.success(false)
         }
 
