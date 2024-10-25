@@ -145,6 +145,7 @@ export class Context {
 
     public set func(fn: CompiledFunction) {
         this.func = fn
+        this.clearCache()
     }
 
     public get cmd() {

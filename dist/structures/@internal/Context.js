@@ -66,6 +66,7 @@ class Context {
     }
     set func(fn) {
         this.func = fn;
+        this.clearCache();
     }
     get cmd() {
         return this.runtime.command;
