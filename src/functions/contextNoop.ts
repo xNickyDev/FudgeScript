@@ -1,7 +1,7 @@
-import { CompiledFunction, Context, Logger } from "../structures"
+import { Context, Logger } from "../structures"
 
-export default function(this: Context, fn: CompiledFunction, ...args: any[]) {
-    if (this.hasDisabledConsoleErrors(fn)) {
+export default function(this: Context, ...args: any[]) {
+    if (this.hasDisabledConsoleErrors()) {
         return
     } 
 

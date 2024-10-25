@@ -143,8 +143,16 @@ export class Context {
         this.clearCache()
     }
 
+    public set func(fn: CompiledFunction) {
+        this.func = fn
+    }
+
     public get cmd() {
         return this.runtime.command
+    }
+
+    public get func() {
+        return this.func
     }
 
     public get obj() {
@@ -392,8 +400,8 @@ export class Context {
         return this[key] as T
     }
 
-    public hasDisabledConsoleErrors(fn: CompiledFunction) {
-        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client) || fn.data.suppress)
+    public hasDisabledConsoleErrors() {
+        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client) || this.func.hasDisabledConsoleErrors(this.func))
     }
 
     public getInstance<K extends string, T extends ClassType>(key: K, type: T) {

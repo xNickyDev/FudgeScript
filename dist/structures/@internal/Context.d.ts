@@ -86,7 +86,9 @@ export declare class Context {
     constructor(runtime: IRunnable);
     get client(): import("../..").ForgeClient;
     set obj(o: Sendable);
+    set func(fn: CompiledFunction);
     get cmd(): import("..").BaseCommand<unknown> | null;
+    get func(): CompiledFunction;
     get obj(): Sendable;
     get args(): string[];
     get states(): import("../../core/Interpreter").States | undefined;
@@ -134,7 +136,7 @@ export declare class Context {
         } as K]: ClassInstance<V>;
     };
     get<T>(key: PropertyKey): T;
-    hasDisabledConsoleErrors(fn: CompiledFunction): boolean;
+    hasDisabledConsoleErrors(): boolean;
     getInstance<K extends string, T extends ClassType>(key: K, type: T): (this & { [P in keyof {
         bro: boolean;
     } as K]: ClassInstance<T>; })[K] | null;
@@ -150,6 +152,6 @@ export declare class Context {
      */
     clone(props?: Partial<IRunnable>, syncVars?: boolean): Context;
     private clearCache;
-    get noop(): (fn: CompiledFunction<IArg<ArgType, boolean, boolean, import("./NativeFunction").EnumLike<any>>[], boolean>, ...args: any[]) => void;
+    get noop(): (...args: any[]) => void;
 }
 //# sourceMappingURL=Context.d.ts.map
