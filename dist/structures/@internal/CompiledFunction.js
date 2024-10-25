@@ -435,7 +435,7 @@ class CompiledFunction {
             : new Array();
     }
     hasDisabledConsoleErrors() {
-        return this.data.suppress || false;
+        return this.data.suppress;
     }
     return(value) {
         return new Return_1.Return(Return_1.ReturnType.Return, value);
