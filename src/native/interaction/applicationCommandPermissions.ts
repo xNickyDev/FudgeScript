@@ -27,9 +27,13 @@ export default new NativeFunction({
     async execute(ctx, [g, id]) {
         if (this.hasFields) {
             const guild = g ?? ctx.guild
-            return this.success(await guild.commands.permissions.fetch({ command: id }).catch(ctx.noop))
+            return this.successJSON(await guild.commands.permissions.fetch({ command: id }).catch(ctx.noop))
         }
 
-        return this.successJSON(ctx.interaction && "command" in ctx.interaction ? ctx.interaction.command?.permissions : undefined)
+        return this.successJSON(
+            ctx.interaction && ctx.interaction.guild && "command" in ctx.interaction
+                ? await ctx.interaction.command?.permissions.fetch({ guild: ctx.interaction.guild }).catch(ctx.noop)
+                : undefined
+        )
     },
 })
