@@ -39,12 +39,10 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     execute(ctx, [guild, status]) {
         guild ??= ctx.guild;
-        if (!status) {
-            return this.success(guild?.memberCount);
-        }
-        else {
+        if (status) {
             return this.success(guild?.members.cache.filter(member => member.presence?.status === status).size);
         }
+        return this.success(guild?.memberCount);
     },
 });
 //# sourceMappingURL=guildMemberCount.js.map
