@@ -195,6 +195,10 @@ class ApplicationCommandManager {
                     ...value.options.data,
                     ...(config ? config : {}),
                 };
+                const permissions = value.options.default_member_permissions;
+                if (!("default_member_permissions" in commandData) && permissions) {
+                    commandData.default_member_permissions = new discord_js_1.PermissionsBitField(permissions).bitfield.toString();
+                }
                 arr.push(commandData);
             }
             else {
@@ -243,8 +247,12 @@ class ApplicationCommandManager {
                             continue;
                         const subFolderPath = (0, path_1.join)(folderPath, nextName);
                         const subConfig = readConfig(subFolderPath);
-                        // Add subcommand if available
                         const raw = values.toJSON();
+                        const permissions = values.options.default_member_permissions;
+                        if (!("default_member_permissions" in raw) && permissions) {
+                            raw.default_member_permissions = new discord_js_1.PermissionsBitField(permissions).bitfield.toString();
+                        }
+                        // Add subcommand if available
                         json.options.push({
                             ...raw,
                             ...subConfig,

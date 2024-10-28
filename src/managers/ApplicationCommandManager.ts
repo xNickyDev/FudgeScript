@@ -15,6 +15,8 @@ import {
     Events,
     Guild,
     Interaction,
+    PermissionsBitField,
+    PermissionsString,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
     RESTPostAPIContextMenuApplicationCommandsJSONBody,
     SlashCommandBuilder,
@@ -41,6 +43,7 @@ export interface IApplicationCommandData {
         | RESTPostAPIContextMenuApplicationCommandsJSONBody
     code: string
     type?: RegistrationType
+    default_member_permissions?: PermissionsString[]
     independent?: boolean
     path?: string | null
 }
@@ -248,6 +251,11 @@ export class ApplicationCommandManager {
                     ...(config ? config : {}),
                 }
 
+                const permissions = value.options.default_member_permissions
+                if (!("default_member_permissions" in commandData) && permissions) {
+                    commandData.default_member_permissions = new PermissionsBitField(permissions).bitfield.toString()
+                }
+
                 arr.push(commandData)
             } else {
                 const folderPath = join(this.path, commandName)
@@ -301,8 +309,13 @@ export class ApplicationCommandManager {
                         const subFolderPath = join(folderPath, nextName)
                         const subConfig = readConfig(subFolderPath)
 
-                        // Add subcommand if available
                         const raw = values.toJSON()
+                        const permissions = values.options.default_member_permissions
+                        if (!("default_member_permissions" in raw) && permissions) {
+                            raw.default_member_permissions = new PermissionsBitField(permissions).bitfield.toString()
+                        }
+
+                        // Add subcommand if available
                         json.options!.push({
                             ...raw,
                             ...subConfig, // Apply subcommand config data
