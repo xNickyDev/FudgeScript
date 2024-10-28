@@ -1,1 +1,1 @@
-{"version":3,"file":"applicationCommandPermissionsUpdate.d.ts","sourceRoot":"","sources":["../../../src/handlers/events/applicationCommandPermissionsUpdate.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,mBAAmB,EAAE,MAAM,+CAA+C,CAAA;;AAEnF,wBAgBE"}
+{"version":3,"file":"applicationCommandPermissionsUpdate.d.ts","sourceRoot":"","sources":["../../../src/handlers/events/applicationCommandPermissionsUpdate.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,mBAAmB,EAAE,MAAM,+CAA+C,CAAA;;AAEnF,wBAiBE"}

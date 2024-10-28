@@ -64,15 +64,8 @@ class Context {
         this.runtime.obj = o;
         this.clearCache();
     }
-    set func(fn) {
-        this.func = fn;
-        this.clearCache();
-    }
     get cmd() {
         return this.runtime.command;
-    }
-    get func() {
-        return this.func;
     }
     get obj() {
         return this.runtime.obj;
@@ -275,7 +268,7 @@ class Context {
         return this[key];
     }
     hasDisabledConsoleErrors() {
-        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client) || this.func.hasDisabledConsoleErrors(this.func));
+        return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client));
     }
     getInstance(key, type) {
         if (this.hasInstance(key, type))
