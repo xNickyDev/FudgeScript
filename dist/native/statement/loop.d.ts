@@ -1,7 +1,7 @@
 import { ArgType, NativeFunction } from "../../structures";
 export declare enum SortType {
-    asc = 0,
-    desc = 1
+    asc = 1,
+    desc = 0
 }
 declare const _default: NativeFunction<[{
     name: string;

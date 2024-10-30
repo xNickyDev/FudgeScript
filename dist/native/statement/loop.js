@@ -4,8 +4,8 @@ exports.SortType = void 0;
 const structures_1 = require("../../structures");
 var SortType;
 (function (SortType) {
-    SortType[SortType["asc"] = 0] = "asc";
-    SortType[SortType["desc"] = 1] = "desc";
+    SortType[SortType["asc"] = 1] = "asc";
+    SortType[SortType["desc"] = 0] = "desc";
 })(SortType || (exports.SortType = SortType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$loop",
@@ -49,7 +49,8 @@ exports.default = new structures_1.NativeFunction({
             return rt;
         const [times, varName, type] = args;
         const code = this.data.fields[1];
-        for (let i = type ? times : 1; times === -1 || (type ? i > 0 : i <= times); type && times !== -1 ? i-- : i++) {
+        let condition = type || times === -1;
+        for (let i = condition ? 1 : times; (type ? i <= times : i > 0) || times === -1; condition ? i++ : i--) {
             if (varName)
                 ctx.setEnvironmentKey(varName, i);
             const exec = await this["resolveCode"](ctx, code);

@@ -7,8 +7,8 @@ import {
 } from "../../structures"
 
 export enum SortType {
-    asc,
-    desc
+    asc = 1,
+    desc = 0
 }
 
 export default new NativeFunction({
@@ -57,7 +57,9 @@ export default new NativeFunction({
         const [ times, varName, type ] = args
         const code = this.data.fields![1] as IExtendedCompiledFunctionField
 
-        for (let i = type ? times : 1;times === -1 || (type ? i > 0 : i <= times);type && times !== -1 ? i-- : i++) {
+        let condition = type || times === -1
+
+        for (let i = condition ? 1 : times;(type ? i <= times : i > 0) || times === -1;condition ? i++ : i--) {
             if (varName)
                 ctx.setEnvironmentKey(varName, i)
             
