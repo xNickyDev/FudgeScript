@@ -7,8 +7,8 @@ import {
 } from "../../structures"
 
 export enum SortType {
-    asc = 1,
-    desc = 0
+    asc,
+    desc
 }
 
 export default new NativeFunction({

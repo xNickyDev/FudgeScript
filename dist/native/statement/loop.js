@@ -4,8 +4,8 @@ exports.SortType = void 0;
 const structures_1 = require("../../structures");
 var SortType;
 (function (SortType) {
-    SortType[SortType["asc"] = 1] = "asc";
-    SortType[SortType["desc"] = 0] = "desc";
+    SortType[SortType["asc"] = 0] = "asc";
+    SortType[SortType["desc"] = 1] = "desc";
 })(SortType || (exports.SortType = SortType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$loop",
