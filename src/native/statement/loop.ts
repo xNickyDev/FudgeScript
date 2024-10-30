@@ -6,6 +6,11 @@ import {
     Return,
 } from "../../structures"
 
+export enum SortType {
+    asc,
+    desc
+}
+
 export default new NativeFunction({
     name: "$loop",
     version: "1.4.0",
@@ -33,19 +38,26 @@ export default new NativeFunction({
             description: "The variable to load the current iteration count for $env",
             rest: false,
             type: ArgType.String
+        },
+        {
+            name: "direction",
+            description: "The direction of the iteration count to use",
+            rest: false,
+            type: ArgType.Enum,
+            enum: SortType
         }
     ],
     async execute(ctx) {
         const {
             args,
             return: rt
-        } = await this["resolveMultipleArgs"](ctx, 0, 2)
+        } = await this["resolveMultipleArgs"](ctx, 0, 2, 3)
         if (!this["isValidReturnType"](rt)) return rt
 
-        const [ times, varName ] = args
+        const [ times, varName, type ] = args
         const code = this.data.fields![1] as IExtendedCompiledFunctionField
 
-        for (let i = times === -1 ? Infinity : times;i > 0;i--) {
+        for (let i = type ? times : 1;times === -1 || (type ? i > 0 : i <= times);type && times !== -1 ? i-- : i++) {
             if (varName)
                 ctx.setEnvironmentKey(varName, i)
             
