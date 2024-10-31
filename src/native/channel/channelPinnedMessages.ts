@@ -1,5 +1,6 @@
 import { BaseChannel, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import array from "../../functions/array"
 
 export default new NativeFunction({
     name: "$channelPinnedMessages",
@@ -10,7 +11,7 @@ export default new NativeFunction({
         "$pinnedMessages"
     ],
     unwrap: true,
-    output: ArgType.Message,
+    output: array<ArgType.Message>(),
     args: [
         {
             name: "channel ID",

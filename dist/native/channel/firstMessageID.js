@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$firstMessageID",
+    version: "1.5.0",
     description: "Returns the first message sent in a channel",
     brackets: false,
     aliases: [
@@ -23,7 +24,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [channel]) {
         channel ??= ctx.channel;
         const message = await channel?.messages.fetch({ after: "0", limit: 1 }).catch(ctx.noop);
-        return this.success(message ? message.first() : null);
+        return this.success(message ? message.firstKey() : null);
     },
 });
 //# sourceMappingURL=firstMessageID.js.map

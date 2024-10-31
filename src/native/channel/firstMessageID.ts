@@ -24,6 +24,6 @@ export default new NativeFunction({
     async execute(ctx, [ channel ]) {
         channel ??= ctx.channel!
         const message = await (channel as TextBasedChannel)?.messages.fetch({ after: "0", limit: 1 }).catch(ctx.noop)
-        return this.success(message ? message.first() : null)
+        return this.success(message ? message.firstKey() : null)
     },
 })
