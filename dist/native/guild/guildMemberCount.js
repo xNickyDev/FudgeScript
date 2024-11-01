@@ -47,7 +47,7 @@ exports.default = new structures_1.NativeFunction({
         guild ??= ctx.guild;
         bots ??= true;
         if (status) {
-            return this.success(guild?.members.cache.filter(member => member.presence?.status === status && bots ? true : !member.user.bot).size);
+            return this.success(guild?.members.cache.filter(member => member.presence?.status === status && (bots ? true : !member.user.bot)).size);
         }
         return this.success(bots ? guild?.memberCount : guild?.members.cache.filter(member => !member.user.bot).size);
     },
