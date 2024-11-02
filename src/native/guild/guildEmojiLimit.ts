@@ -23,13 +23,13 @@ export default new NativeFunction({
         let tier = (guild ?? ctx.guild)?.premiumTier
         return this.success(
             tier === 0
-                ? 50
+                ? 100
                 : tier === 1
-                    ? 100
+                    ? 200
                     : tier === 2
-                        ? 150
+                        ? 300
                         : tier === 3
-                            ? 250
+                            ? 500
                             : undefined
         )
     },

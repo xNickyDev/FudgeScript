@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$arrayIndexOf",
-    version: "1.0.0",
-    description: "Gets the index of a first found element in the array",
+    name: "$arrayLastIndexOf",
+    description: "Gets the index of a last found element in the array",
     unwrap: true,
     output: structures_1.ArgType.Number,
     args: [
@@ -17,7 +16,7 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "value",
-            description: "The exact value to get its index",
+            description: "The exact value to get its last index",
             rest: false,
             required: true,
             type: structures_1.ArgType.String,
@@ -26,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     execute(ctx, [name, value]) {
         const arr = ctx.getEnvironmentKey(name);
-        return this.success(Array.isArray(arr) ? arr.indexOf(value) : -1);
+        return this.success(Array.isArray(arr) ? arr.lastIndexOf(value) : -1);
     },
 });
-//# sourceMappingURL=arrayIndexOf.js.map
+//# sourceMappingURL=arrayLastIndexOf.js.map
