@@ -14,7 +14,6 @@ var ReactionProperty;
     ReactionProperty["me"] = "me";
     ReactionProperty["meSuper"] = "meSuper";
     ReactionProperty["superColors"] = "superColors";
-    ReactionProperty["users"] = "users";
 })(ReactionProperty || (exports.ReactionProperty = ReactionProperty = {}));
 exports.ReactionProperties = (0, defineProperties_1.default)({
     emoji: (i) => i?.emoji.toString(),
@@ -24,6 +23,5 @@ exports.ReactionProperties = (0, defineProperties_1.default)({
     me: (i) => i?.me,
     meSuper: (i) => i?.meBurst,
     superColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
-    users: (i, sep) => i?.users.cache.map(x => x.id).join(sep ?? ", ")
 });
 //# sourceMappingURL=reaction.js.map

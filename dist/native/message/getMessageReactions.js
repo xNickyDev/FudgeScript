@@ -41,7 +41,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [, message, prop, sep]) {
-        const reactions = (await (message ?? ctx.message).fetch().catch(ctx.noop))?.reactions.cache;
+        const reactions = (await (message ?? ctx.message).fetch(true).catch(ctx.noop))?.reactions.cache;
         return this.success(reactions?.map(reaction => reaction_1.ReactionProperties[prop ? prop : reaction_1.ReactionProperty.emoji](reaction, sep)).join(sep ?? ", "));
     },
 });
