@@ -3,8 +3,9 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$arraySplice",
     version: "1.0.0",
-    description: "Removes x elements starting from y index",
+    description: "Removes x elements starting from y index, returns deleted elements",
     unwrap: true,
+    output: ArgType.Json,
     args: [
         {
             name: "variable",
@@ -38,10 +39,7 @@ export default new NativeFunction({
     brackets: true,
     execute(ctx, [name, index, count, elements]) {
         const arr = ctx.getEnvironmentKey(name)
-        if (Array.isArray(arr)) {
-            arr.splice(index, count, ...elements)
-        }
-
+        if (Array.isArray(arr)) return this.successJSON(arr.splice(index, count, ...elements))
         return this.success()
     },
 })
