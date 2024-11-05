@@ -4,7 +4,7 @@ export default new NativeFunction({
     name: "$unescapeCode",
     version: "1.5.0",
     description: "Code inside this function will be executed",
-    unwrap: false,
+    unwrap: true,
     brackets: true,
     aliases: [
         "$unescape",
@@ -20,9 +20,8 @@ export default new NativeFunction({
         }
     ],
     output: ArgType.String,
-    execute(ctx) {
-        const text = this.displayField(0).toString()
-            .replace(/\[/g, "[")
+    execute(ctx, [code]) {
+        const text = code.replace(/\[/g, "[")
             .replace(/]/g, "]")
             .replace(/;/g, ";")
             .replace(/:/g, ":")
