@@ -5,6 +5,6 @@ declare const _default: NativeFunction<[{
     description: string;
     required: true;
     rest: false;
-}], true>;
+}], false>;
 export default _default;
 //# sourceMappingURL=unescapeCode.d.ts.map

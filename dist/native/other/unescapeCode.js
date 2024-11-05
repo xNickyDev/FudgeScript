@@ -5,7 +5,7 @@ exports.default = new structures_1.NativeFunction({
     name: "$unescapeCode",
     version: "1.5.0",
     description: "Code inside this function will be executed",
-    unwrap: true,
+    unwrap: false,
     brackets: true,
     aliases: [
         "$unescape",
@@ -21,8 +21,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     output: structures_1.ArgType.String,
-    execute(ctx, [code]) {
-        const text = code.replace(/\[/g, "[")
+    execute(ctx) {
+        const text = this.displayField(0).toString()
+            .replace(/\[/g, "[")
             .replace(/]/g, "]")
             .replace(/;/g, ";")
             .replace(/:/g, ":")
