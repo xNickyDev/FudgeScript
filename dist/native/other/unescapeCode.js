@@ -22,20 +22,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.String,
     execute(ctx, [code]) {
-        const text = code.replace(/\[/g, "[")
-            .replace(/]/g, "]")
-            .replace(/;/g, ";")
-            .replace(/:/g, ":")
-            .replace(/\$/g, "$")
-            .replace(/>/g, ">")
-            .replace(/</g, "<")
-            .replace(/=/g, "=")
-            .replace(/{/g, "{")
-            .replace(/}/g, "}")
-            .replace(/,/g, ",")
-            .replace(/\(/g, "(")
-            .replace(/\)/g, ")");
-        return this.success(text);
+        return this.return(code);
     },
 });
 //# sourceMappingURL=unescapeCode.js.map

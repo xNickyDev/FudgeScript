@@ -21,20 +21,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [code]) {
-        const text = code.replace(/\[/g, "[")
-            .replace(/]/g, "]")
-            .replace(/;/g, ";")
-            .replace(/:/g, ":")
-            .replace(/\$/g, "$")
-            .replace(/>/g, ">")
-            .replace(/</g, "<")
-            .replace(/=/g, "=")
-            .replace(/{/g, "{")
-            .replace(/}/g, "}")
-            .replace(/,/g, ",")
-            .replace(/\(/g, "(")
-            .replace(/\)/g, ")")
-
-        return this.success(text)
+        return this.return(code)
     },
 })
