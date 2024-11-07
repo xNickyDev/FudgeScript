@@ -4,12 +4,13 @@ exports.generateAdvancedBar = exports.generateBar = void 0;
 function generateBar(current, max, len = 10, fill = "█", empty = "▒", round = true, fillStart = "", fillEnd = "", emptyStart = "", emptyEnd = "") {
     let fillN = Math[round ? "round" : "trunc"](Math.min(current, max) / max * len);
     let emptyN = len - fillN;
-    const start = fillN > 0 ? fillStart || "" : emptyStart || "";
-    const end = emptyN > 0 ? emptyEnd || "" : fillEnd || "";
-    if (fillN > 0)
-        fillN = fillN - (fillStart ? 1 : 0) - (fillEnd ? 1 : 0);
-    if (emptyN > 0)
-        emptyN = emptyN - (emptyStart ? 1 : 0) - (emptyEnd ? 1 : 0);
+    const hasFilled = fillN > 0;
+    const start = hasFilled ? fillStart || "" : emptyStart || "";
+    const end = hasFilled ? fillEnd || "" : emptyEnd || "";
+    if (hasFilled)
+        fillN = Math.max(fillN - (start.length + end.length > 0 ? 1 : 0), 0);
+    else
+        emptyN = Math.max(emptyN - (start.length + end.length > 0 ? 1 : 0), 0);
     return start + fill.repeat(fillN) + empty.repeat(emptyN) + end;
 }
 exports.generateBar = generateBar;
