@@ -7,9 +7,9 @@ function generateBar(current, max, len = 10, fill = "█", empty = "▒", round 
     const start = fillN > 0 ? fillStart || "" : emptyStart || "";
     const end = emptyN > 0 ? emptyEnd || "" : fillEnd || "";
     if (fillN > 0)
-        fillN = Math.max(fillN - (fillStart ? 1 : 0) - (fillEnd ? 1 : 0), 0);
+        fillN = fillN - (fillStart ? 1 : 0) - (fillEnd ? 1 : 0);
     if (emptyN > 0)
-        emptyN = Math.max(emptyN - (emptyStart ? 1 : 0) - (emptyEnd ? 1 : 0), 0);
+        emptyN = emptyN - (emptyStart ? 1 : 0) - (emptyEnd ? 1 : 0);
     return start + fill.repeat(fillN) + empty.repeat(emptyN) + end;
 }
 exports.generateBar = generateBar;
