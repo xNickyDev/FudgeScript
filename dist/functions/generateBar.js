@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateAdvancedBar = exports.generateBar = void 0;
-function generateBar(current, max, len = 10, fill = "█", empty = "▒", round = true, fillStart = "", fillEnd = "", emptyStart = "", emptyEnd = "") {
+function generateBar(current, max, len = 10, fill = "█", empty = "▒", round = true, fillStart = "", emptyStart = "", fillEnd = "", emptyEnd = "") {
     let fillN = Math[round ? "round" : "trunc"](Math.min(current, max) / max * len);
     let emptyN = len - fillN;
     let start = "", end = "";

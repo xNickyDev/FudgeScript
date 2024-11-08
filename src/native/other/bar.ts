@@ -55,14 +55,14 @@ export default new NativeFunction({
             type: ArgType.String
         },
         {
-            name: "fillEnd",
-            description: "The string to use as filled end of the bar",
+            name: "emptyStart",
+            description: "The string to use as empty start of the bar",
             rest: false,
             type: ArgType.String
         },
         {
-            name: "emptyStart",
-            description: "The string to use as empty start of the bar",
+            name: "fillEnd",
+            description: "The string to use as filled end of the bar",
             rest: false,
             type: ArgType.String
         },
@@ -74,7 +74,7 @@ export default new NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [ curr, max, len, fill, empty, trunc, fillStart, fillEnd, emptyStart, emptyEnd ]) {
+    execute(ctx, [ curr, max, len, fill, empty, trunc, fillStart, emptyStart, fillEnd, emptyEnd ]) {
         return this.success(
             generateBar(
                 curr,
@@ -84,8 +84,8 @@ export default new NativeFunction({
                 empty ?? undefined,
                 !trunc,
                 fillStart || undefined,
-                fillEnd || undefined,
                 emptyStart || undefined,
+                fillEnd || undefined,
                 emptyEnd || undefined
             )
         )
