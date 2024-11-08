@@ -56,14 +56,14 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String
         },
         {
-            name: "emptyStart",
-            description: "The string to use as empty start of the bar",
+            name: "fillEnd",
+            description: "The string to use as filled end of the bar",
             rest: false,
             type: structures_1.ArgType.String
         },
         {
-            name: "fillEnd",
-            description: "The string to use as filled end of the bar",
+            name: "emptyStart",
+            description: "The string to use as empty start of the bar",
             rest: false,
             type: structures_1.ArgType.String
         },
@@ -75,8 +75,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [curr, max, len, fill, empty, trunc, fillStart, emptyStart, fillEnd, emptyEnd]) {
-        return this.success((0, generateBar_1.generateBar)(curr, max, len ?? undefined, fill ?? undefined, empty ?? undefined, !trunc, fillStart || undefined, emptyStart || undefined, fillEnd || undefined, emptyEnd || undefined));
+    execute(ctx, [curr, max, len, fill, empty, trunc, fillStart, fillEnd, emptyStart, emptyEnd]) {
+        return this.success((0, generateBar_1.generateBar)(curr, max, len ?? undefined, fill ?? undefined, empty ?? undefined, !trunc, fillStart || undefined, fillEnd || undefined, emptyStart || undefined, emptyEnd || undefined));
     }
 });
 //# sourceMappingURL=bar.js.map

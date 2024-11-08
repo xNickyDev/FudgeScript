@@ -1,5 +1,5 @@
-export function generateBar(current: number, max: number, len: number = 10, fill: string = "█", empty: string = "▒", round = true, fillStart: string = "", emptyStart: string = "", fillEnd: string = "", emptyEnd: string = "") {
-    let fillN = Math[round ? "round" : "trunc"](Math.min(current, max) / max * len)
+export function generateBar(current: number, max: number, len: number = 10, fill: string = "█", empty: string = "▒", round = true, fillStart: string = "", fillEnd: string = "", emptyStart: string = "", emptyEnd: string = "") {
+    let fillN = Math[round ? "round" : "trunc"](Math.min(Math.max(current, 0), max) / max * len)
     let emptyN = len - fillN
     let start = "", end = ""
 
