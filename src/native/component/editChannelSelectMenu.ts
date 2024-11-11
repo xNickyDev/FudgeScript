@@ -64,7 +64,7 @@ export default new NativeFunction({
                 if (typeof disabled === "boolean") menu.setDisabled(disabled)
                 if (typeof min === "number") menu.setMinValues(min)
                 if (typeof max === "number") menu.setMaxValues(max)
-                if (this.displayField(6)) menu.setDefaultChannels(channels)
+                if (!!this.data.fields?.at(6)) menu.setDefaultChannels(channels)
 
                 break
             }

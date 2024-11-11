@@ -68,7 +68,7 @@ exports.default = new structures_1.NativeFunction({
                     menu.setMinValues(min);
                 if (typeof max === "number")
                     menu.setMaxValues(max);
-                if (this.displayField(6))
+                if (!!this.data.fields?.at(6))
                     menu.setDefaultChannels(channels);
                 break;
             }
