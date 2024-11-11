@@ -54,8 +54,8 @@ export default new NativeFunction({
             if (menu instanceof StringSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id)
                 
-                if (disabled !== null) menu.setDisabled(disabled)
                 if (placeholder) menu.setPlaceholder(placeholder)
+                if (disabled !== null) menu.setDisabled(disabled)
                 if (min !== null) menu.setMinValues(min)
                 if (max !== null) menu.setMaxValues(max)
 

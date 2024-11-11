@@ -54,10 +54,10 @@ exports.default = new structures_1.NativeFunction({
             const menu = comp.components[0];
             if (menu instanceof discord_js_1.StringSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id);
-                if (disabled !== null)
-                    menu.setDisabled(disabled);
                 if (placeholder)
                     menu.setPlaceholder(placeholder);
+                if (disabled !== null)
+                    menu.setDisabled(disabled);
                 if (min !== null)
                     menu.setMinValues(min);
                 if (max !== null)
