@@ -82,7 +82,7 @@ export default new NativeFunction({
                 if (disabled !== null) menu.setDisabled(disabled)
                 if (min !== null) menu.setMinValues(min)
                 if (max !== null) menu.setMaxValues(max)
-                if (this.displayField(-1)) menu.setDefaultChannels(channels)
+                if (this.displayField(8)) menu.setDefaultChannels(channels)
 
                 break
             }

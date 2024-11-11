@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editChannelSelectMenu",
+    version: "1.5.0",
     description: "Edits a channel select menu",
     unwrap: true,
     brackets: true,
@@ -61,13 +62,13 @@ exports.default = new structures_1.NativeFunction({
                 menu.setCustomId(id);
                 if (placeholder)
                     menu.setPlaceholder(placeholder);
-                if (disabled !== null)
+                if (typeof disabled === "boolean")
                     menu.setDisabled(disabled);
-                if (min !== null)
+                if (typeof min === "number")
                     menu.setMinValues(min);
-                if (max !== null)
+                if (typeof max === "number")
                     menu.setMaxValues(max);
-                if (this.displayField(-1))
+                if (this.displayField(6))
                     menu.setDefaultChannels(channels);
                 break;
             }
