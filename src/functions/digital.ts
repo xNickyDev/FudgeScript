@@ -12,11 +12,7 @@ export function parseDigital(ms: number): string {
 
 export function unparseDigital(digital: string): number {
     const [hours, minutes, seconds] = digital.split(":").map(Number)
-
-    try {
-        const ms = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000)
-        return ms
-    } catch {
-        return 0
-    }
+    const ms = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000)
+    if (isNaN(ms)) return 0
+    return ms
 }

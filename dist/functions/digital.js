@@ -13,13 +13,10 @@ function parseDigital(ms) {
 exports.parseDigital = parseDigital;
 function unparseDigital(digital) {
     const [hours, minutes, seconds] = digital.split(":").map(Number);
-    try {
-        const ms = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
-        return ms;
-    }
-    catch {
+    const ms = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
+    if (isNaN(ms))
         return 0;
-    }
+    return ms;
 }
 exports.unparseDigital = unparseDigital;
 //# sourceMappingURL=digital.js.map
