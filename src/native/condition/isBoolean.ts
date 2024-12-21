@@ -1,9 +1,10 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$isBool",
+    name: "$isBoolean",
     version: "1.0.6",
     description: "Checks whether given value is bool like",
+    aliases: ["$isBool"],
     brackets: true,
     unwrap: true,
     output: ArgType.Boolean,
