@@ -12,8 +12,12 @@ function parseDigital(ms) {
 }
 exports.parseDigital = parseDigital;
 function unparseDigital(digital) {
-    const [hours, minutes, seconds] = digital.split(":").map(Number);
-    const ms = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
+    const DigitalFormatRegex = /^(\d+):([0-5]?\d):([0-5]?\d)$/;
+    const match = digital.match(DigitalFormatRegex);
+    if (!match)
+        return 0;
+    const [, hours, minutes, seconds] = match;
+    const ms = (parseInt(hours, 10) * 60 * 60 * 1000) + (parseInt(minutes, 10) * 60 * 1000) + (parseInt(seconds, 10) * 1000);
     if (isNaN(ms))
         return 0;
     return ms;
