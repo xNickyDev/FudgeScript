@@ -20,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [tags]) {
-        return this.success(!!(await ctx.client.application.edit({ tags: tags }).catch(ctx.noop)))
+        return this.success(!!(await ctx.client.application.edit({ tags: tags.filter(tag => tag.trim() !== "") }).catch(ctx.noop)))
     },
 })
