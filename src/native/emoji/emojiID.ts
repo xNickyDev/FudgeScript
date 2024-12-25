@@ -16,8 +16,8 @@ export default new NativeFunction({
             required: true,
         },
     ],
-    execute(ctx, [emoji]) {
-        if (this.hasFields) return this.success(ctx.client.emojis.cache.find((x) => x.name === emoji)?.id)
+    async execute(ctx, [emoji]) {
+        if (this.hasFields) return this.success(ctx.client.emojis.cache.find((x) => x.name === emoji)?.id || ctx.client.application.emojis.cache.find((x) => x.name === emoji)?.id)
 
         return this.success(ctx.emoji?.id)
     },
