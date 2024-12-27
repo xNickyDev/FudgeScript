@@ -55,7 +55,7 @@ export default new NativeFunction({
                     }),
                     true
                 )
-                .catch(ctx.noop)
+                .catch(() => null)
 
             if (!col) break
 

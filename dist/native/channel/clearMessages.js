@@ -48,14 +48,13 @@ exports.default = new structures_1.NativeFunction({
             if (!messages)
                 break;
             const col = await channel
-                .bulkDelete(messages.filter(msg => {
+                .bulkDelete(messages.filter(async (msg) => {
                 if (pinned === false && msg.pinned)
                     return false;
                 if (bots === false && msg.author.bot)
                     return false;
                 return true;
-            }), true)
-                .catch(ctx.noop);
+            }), true);
             if (col)
                 count += col.size;
         }

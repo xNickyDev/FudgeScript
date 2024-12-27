@@ -48,14 +48,13 @@ export default new NativeFunction({
 
             const col = await (channel as TextChannel)
                 .bulkDelete(
-                    messages.filter(msg => {
+                    messages.filter(async msg => {
                         if (pinned === false && msg.pinned) return false
                         if (bots === false && msg.author.bot) return false
                         return true
                     }),
                     true
                 )
-                .catch(ctx.noop)
 
             if (col) count += col.size
         }

@@ -54,7 +54,7 @@ exports.default = new structures_1.NativeFunction({
                     return false;
                 return !!(msg.author.id === user.id);
             }), true)
-                .catch(ctx.noop);
+                .catch(() => null);
             if (!col)
                 break;
             count += col.size;
