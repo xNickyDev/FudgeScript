@@ -38,15 +38,16 @@ exports.default = new structures_1.NativeFunction({
                 await ch.messages.delete(messages[0]);
                 return this.success(1);
             }
-            catch {
+            catch (error) {
+                ctx.noop(error);
                 return this.success(0);
             }
         }
-        const col = (await channel
-            .bulkDelete(messages, true)
-            .then((x) => x.size)
-            .catch(ctx.noop)) ?? 0;
-        return this.success(col);
+        let count = 0;
+        const col = await ch.bulkDelete(messages, true).catch(ctx.noop);
+        if (col)
+            count += col.size;
+        return this.success(count);
     },
 });
 //# sourceMappingURL=deleteMessage.js.map
