@@ -43,11 +43,11 @@ exports.default = new structures_1.NativeFunction({
                 return this.success(0);
             }
         }
-        let count = 0;
-        const col = await ch.bulkDelete(messages, true).catch(ctx.noop);
-        if (col)
-            count += col.size;
-        return this.success(count);
+        const col = (await ch
+            .bulkDelete(messages, true)
+            .then((x) => x.size)
+            .catch(ctx.noop)) ?? 0;
+        return this.success(col);
     },
 });
 //# sourceMappingURL=deleteMessage.js.map
