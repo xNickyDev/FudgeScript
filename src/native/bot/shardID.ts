@@ -9,6 +9,7 @@ export default new NativeFunction({
     ],
     description: "Returns the shard id of the client",
     unwrap: true,
+    brackets: false,
     args: [
         {
             name: "separator",

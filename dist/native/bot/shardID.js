@@ -10,6 +10,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     description: "Returns the shard id of the client",
     unwrap: true,
+    brackets: false,
     args: [
         {
             name: "separator",
