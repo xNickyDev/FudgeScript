@@ -8,9 +8,17 @@ export default new NativeFunction({
         "$clientShardIDs"
     ],
     description: "Returns the shard id of the client",
-    unwrap: false,
+    unwrap: true,
+    args: [
+        {
+            name: "separator",
+            description: "The separator to use for every id",
+            rest: false,
+            type: ArgType.String,
+        },
+    ],
     output: ArgType.Number,
-    execute(ctx) {
-        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(", "))
+    execute(ctx, [sep]) {
+        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(sep ?? ", "))
     },
 })
