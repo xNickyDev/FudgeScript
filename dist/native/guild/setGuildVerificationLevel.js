@@ -26,10 +26,16 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.GuildVerificationLevel
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, level]) {
-        return this.success((await guild.setVerificationLevel(level || null).catch(() => false)) !== false);
+    async execute(ctx, [guild, level, reason]) {
+        return this.success((await guild.setVerificationLevel(level || null, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildVerificationLevel.js.map

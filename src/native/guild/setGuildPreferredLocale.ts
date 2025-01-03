@@ -25,9 +25,15 @@ export default new NativeFunction({
             type: ArgType.Enum,
             enum: Locale
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, locale]) {
-        return this.success((await guild.setPreferredLocale(locale || null).catch(() => false)) !== false)
+    async execute(ctx, [guild, locale, reason]) {
+        return this.success((await guild.setPreferredLocale(locale || null, reason || undefined).catch(() => false)) !== false)
     },
 })

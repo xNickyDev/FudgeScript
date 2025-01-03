@@ -26,10 +26,16 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Member,
             pointer: 0
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, member]) {
-        return this.success((await guild.setOwner(member).catch(() => false)) !== false);
+    async execute(ctx, [guild, member, reason]) {
+        return this.success((await guild.setOwner(member, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildOwner.js.map

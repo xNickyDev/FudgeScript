@@ -25,9 +25,15 @@ export default new NativeFunction({
             type: ArgType.Enum,
             enum: GuildExplicitContentFilter
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, filter]) {
-        return this.success((await guild.setExplicitContentFilter(filter || null).catch(() => false)) !== false)
+    async execute(ctx, [guild, filter, reason]) {
+        return this.success((await guild.setExplicitContentFilter(filter || null, reason || undefined).catch(() => false)) !== false)
     },
 })

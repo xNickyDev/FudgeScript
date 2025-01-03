@@ -27,10 +27,16 @@ exports.default = new structures_1.NativeFunction({
             check: (i) => i.type === discord_js_1.ChannelType.GuildText,
             pointer: 0
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, channel]) {
-        return this.success((await guild.setSafetyAlertsChannel(channel || null).catch(() => false)) !== false);
+    async execute(ctx, [guild, channel, reason]) {
+        return this.success((await guild.setSafetyAlertsChannel(channel || null, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildSafetyAlertsChannel.js.map

@@ -26,9 +26,15 @@ export default new NativeFunction({
             check: (i: BaseChannel) => i.type === ChannelType.GuildText,
             pointer: 0
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, channel]) {
-        return this.success((await guild.setSystemChannel(channel as TextChannel || null).catch(() => false)) !== false)
+    async execute(ctx, [guild, channel, reason]) {
+        return this.success((await guild.setSystemChannel(channel as TextChannel || null, reason || undefined).catch(() => false)) !== false)
     },
 })

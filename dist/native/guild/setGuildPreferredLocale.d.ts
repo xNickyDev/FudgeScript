@@ -12,6 +12,11 @@ declare const _default: NativeFunction<[{
     rest: false;
     type: ArgType.Enum;
     enum: typeof Locale;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.String;
 }], true>;
 export default _default;
 //# sourceMappingURL=setGuildPreferredLocale.d.ts.map

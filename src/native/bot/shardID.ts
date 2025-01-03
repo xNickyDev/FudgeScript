@@ -20,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Number,
     execute(ctx, [sep]) {
-        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(sep ?? ", "))
+        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(sep ?? ", ") ?? 0)
     },
 })

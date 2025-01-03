@@ -25,9 +25,15 @@ export default new NativeFunction({
             type: ArgType.Enum,
             enum: GuildDefaultMessageNotifications
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, setting]) {
-        return this.success((await guild.setDefaultMessageNotifications(setting || null).catch(() => false)) !== false)
+    async execute(ctx, [guild, setting, reason]) {
+        return this.success((await guild.setDefaultMessageNotifications(setting || null, reason || undefined).catch(() => false)) !== false)
     },
 })

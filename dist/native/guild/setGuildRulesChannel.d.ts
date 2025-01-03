@@ -13,6 +13,11 @@ declare const _default: NativeFunction<[{
     type: ArgType.Channel;
     check: (i: BaseChannel) => boolean;
     pointer: number;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.String;
 }], true>;
 export default _default;
 //# sourceMappingURL=setGuildRulesChannel.d.ts.map

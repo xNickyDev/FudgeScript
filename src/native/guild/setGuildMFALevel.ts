@@ -26,9 +26,15 @@ export default new NativeFunction({
             type: ArgType.Enum,
             enum: GuildMFALevel
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, level]) {
-        return this.success((await guild.setMFALevel(level).catch(() => false)) !== false)
+    async execute(ctx, [guild, level, reason]) {
+        return this.success((await guild.setMFALevel(level, reason || undefined).catch(() => false)) !== false)
     },
 })

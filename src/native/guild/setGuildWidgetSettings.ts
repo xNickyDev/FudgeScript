@@ -1,6 +1,5 @@
 import { BaseChannel, CategoryChannel, ForumChannel, GuildChannel, MediaChannel, NewsChannel, StageChannel, TextChannel, VoiceBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { isBoolean } from "lodash"
 
 export default new NativeFunction({
     name: "$setGuildWidgetSettings",
@@ -32,12 +31,21 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, channel, enabled]) {
-        return this.success((await guild.setWidgetSettings({
-            channel: channel as NewsChannel | TextChannel | ForumChannel | MediaChannel | VoiceBasedChannel || guild.widgetChannel,
-            enabled: isBoolean(enabled) ? enabled : guild.widgetEnabled || false
-        }).catch(() => false)) !== false)
+    async execute(ctx, [guild, chan, enabled, reason]) {
+        return this.success((await guild.setWidgetSettings(
+            {
+                channel: chan as NewsChannel | TextChannel | ForumChannel | MediaChannel | VoiceBasedChannel || null,
+                enabled: enabled ?? guild.widgetEnabled ?? false
+            },
+            reason || undefined
+        ).catch(() => false)) !== false)
     },
 })

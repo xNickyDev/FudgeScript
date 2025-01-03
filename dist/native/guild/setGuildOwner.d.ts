@@ -12,6 +12,11 @@ declare const _default: NativeFunction<[{
     required: true;
     type: ArgType.Member;
     pointer: number;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.String;
 }], true>;
 export default _default;
 //# sourceMappingURL=setGuildOwner.d.ts.map

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
-const lodash_1 = require("lodash");
 exports.default = new structures_1.NativeFunction({
     name: "$setGuildWidgetSettings",
     version: "1.5.0",
@@ -33,13 +32,19 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Boolean,
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, channel, enabled]) {
+    async execute(ctx, [guild, chan, enabled, reason]) {
         return this.success((await guild.setWidgetSettings({
-            channel: channel || guild.widgetChannel,
-            enabled: (0, lodash_1.isBoolean)(enabled) ? enabled : guild.widgetEnabled || false
-        }).catch(() => false)) !== false);
+            channel: chan || null,
+            enabled: enabled ?? guild.widgetEnabled ?? false
+        }, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildWidgetSettings.js.map

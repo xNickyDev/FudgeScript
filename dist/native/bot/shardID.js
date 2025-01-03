@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Number,
     execute(ctx, [sep]) {
-        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(sep ?? ", "));
+        return this.success(ctx.runtime.extras ?? ctx.client.shard?.ids.join(sep ?? ", ") ?? 0);
     },
 });
 //# sourceMappingURL=shardID.js.map

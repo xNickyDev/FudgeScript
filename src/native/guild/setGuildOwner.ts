@@ -25,9 +25,15 @@ export default new NativeFunction({
             type: ArgType.Member,
             pointer: 0
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, member]) {
-        return this.success((await guild.setOwner(member).catch(() => false)) !== false)
+    async execute(ctx, [guild, member, reason]) {
+        return this.success((await guild.setOwner(member, reason || undefined).catch(() => false)) !== false)
     },
 })

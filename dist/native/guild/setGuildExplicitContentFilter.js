@@ -26,10 +26,16 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.GuildExplicitContentFilter
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, filter]) {
-        return this.success((await guild.setExplicitContentFilter(filter || null).catch(() => false)) !== false);
+    async execute(ctx, [guild, filter, reason]) {
+        return this.success((await guild.setExplicitContentFilter(filter || null, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildExplicitContentFilter.js.map

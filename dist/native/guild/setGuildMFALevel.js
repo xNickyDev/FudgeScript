@@ -27,10 +27,16 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Enum,
             enum: discord_js_1.GuildMFALevel
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, level]) {
-        return this.success((await guild.setMFALevel(level).catch(() => false)) !== false);
+    async execute(ctx, [guild, level, reason]) {
+        return this.success((await guild.setMFALevel(level, reason || undefined).catch(() => false)) !== false);
     },
 });
 //# sourceMappingURL=setGuildMFALevel.js.map

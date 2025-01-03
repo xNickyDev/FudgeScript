@@ -25,9 +25,15 @@ export default new NativeFunction({
             type: ArgType.Enum,
             enum: GuildVerificationLevel
         },
+        {
+            name: "reason",
+            description: "The reason for this action",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     brackets: true,
-    async execute(ctx, [guild, level]) {
-        return this.success((await guild.setVerificationLevel(level || null).catch(() => false)) !== false)
+    async execute(ctx, [guild, level, reason]) {
+        return this.success((await guild.setVerificationLevel(level || null, reason || undefined).catch(() => false)) !== false)
     },
 })
