@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setGuildExplicitContentFilter",
-    version: "1.5.0",
+    version: "2.1.0",
     description: "Sets the explicit content filter for a guild, returns bool",
     unwrap: true,
     aliases: [

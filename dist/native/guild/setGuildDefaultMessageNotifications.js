@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setGuildDefaultMessageNotifications",
-    version: "1.5.0",
     description: "Sets the default message notifications setting for a guild, returns bool",
     unwrap: true,
     aliases: [

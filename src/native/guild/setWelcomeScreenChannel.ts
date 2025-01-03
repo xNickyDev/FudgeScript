@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setWelcomeScreenChannel",
-    version: "1.5.0",
+    version: "2.1.0",
     description: "Sets a new channel for the current welcome screen",
     unwrap: true,
     brackets: true,

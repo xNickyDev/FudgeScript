@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setGuildVerificationLevel",
-    version: "1.5.0",
     description: "Sets the verification level of a guild, returns bool",
     unwrap: true,
     aliases: [

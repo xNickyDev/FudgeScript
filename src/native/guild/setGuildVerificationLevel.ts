@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setGuildVerificationLevel",
-    version: "1.5.0",
+    version: "2.1.0",
     description: "Sets the verification level of a guild, returns bool",
     unwrap: true,
     aliases: [

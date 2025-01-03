@@ -2,24 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$setGuildDiscoverySplash",
-    description: "Sets the discovery splash for a guild, returns bool",
+    name: "$setGuildDescription",
+    description: "Sets a guild description, returns boolean",
     unwrap: true,
     aliases: [
-        "$setServerDiscoverySplash"
+        "$setServerDescription"
     ],
     output: structures_1.ArgType.Boolean,
     args: [
         {
             name: "guild ID",
-            description: "The guild to set discovery splash for",
             rest: false,
             type: structures_1.ArgType.Guild,
             required: true,
+            description: "The guild to set description for",
         },
         {
-            name: "url",
-            description: "The new discovery splash",
+            name: "description",
+            description: "The new description",
             rest: false,
             type: structures_1.ArgType.String,
         },
@@ -31,8 +31,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     brackets: true,
-    async execute(ctx, [guild, icon, reason]) {
-        return this.success((await guild.setDiscoverySplash(icon || null, reason || undefined).catch(() => false)) !== false);
+    async execute(ctx, [guild, desc, reason]) {
+        return this.success((await guild.edit({
+            description: desc,
+            reason: reason || undefined
+        }).catch(() => false)) !== false);
     },
 });
-//# sourceMappingURL=setGuildDiscoverySplash.js.map
+//# sourceMappingURL=setGuildDescription.js.map

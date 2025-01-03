@@ -1,28 +1,27 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$setGuildAFKTimeout",
+    name: "$setGuildDescription",
     version: "2.1.0",
-    description: "Sets the AFK timeout for a guild, returns bool",
+    description: "Sets a guild description, returns boolean",
     unwrap: true,
     aliases: [
-        "$setServerAFKTimeout"
+        "$setServerDescription"
     ],
     output: ArgType.Boolean,
     args: [
         {
             name: "guild ID",
-            description: "The guild to set AFK timeout for",
             rest: false,
             type: ArgType.Guild,
             required: true,
+            description: "The guild to set description for",
         },
         {
-            name: "seconds",
-            description: "The new AFK timeout in seconds (60, 300, 900, 1800, 3600)",
+            name: "description",
+            description: "The new description",
             rest: false,
-            required: true,
-            type: ArgType.Number,
+            type: ArgType.String,
         },
         {
             name: "reason",
@@ -32,7 +31,10 @@ export default new NativeFunction({
         },
     ],
     brackets: true,
-    async execute(ctx, [guild, seconds, reason]) {
-        return this.success((await guild.setAFKTimeout(seconds, reason || undefined).catch(() => false)) !== false)
+    async execute(ctx, [guild, desc, reason]) {
+        return this.success((await guild.edit({
+            description: desc,
+            reason: reason || undefined
+        }).catch(() => false)) !== false)
     },
 })

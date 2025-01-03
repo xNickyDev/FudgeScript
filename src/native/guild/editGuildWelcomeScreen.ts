@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$editGuildWelcomeScreen",
-    version: "1.5.0",
+    version: "2.1.0",
     description: "Edits the welcome screen of a guild, returns bool",
     unwrap: true,
     aliases: [
