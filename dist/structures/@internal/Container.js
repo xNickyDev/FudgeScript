@@ -39,6 +39,7 @@ class Container {
         if (!this.isValidMessage(options)) {
             return null;
         }
+        console.log(obj);
         if (this.channel && this.channel.isTextBased()) {
             res = this.channel.send(options);
         }
@@ -52,9 +53,11 @@ class Container {
             res = this.edit ? obj.edit(options) : obj.channel.send(options);
         }
         else if (obj instanceof discord_js_1.InteractionCallbackResponse) {
+            console.log("InteractionCallbackResponse");
             res = Promise.resolve(obj.resource?.message ?? obj);
         }
         else if (obj instanceof discord_js_1.BaseInteraction) {
+            console.log("BaseInteraction");
             if (obj.isRepliable()) {
                 if (this.modal && !obj.replied && "showModal" in obj) {
                     res = obj.showModal(this.modal);
@@ -81,6 +84,7 @@ class Container {
             res = obj.send(options);
         }
         else {
+            console.log("Other");
             res = Promise.resolve(null);
         }
         const result = (await res.catch(noop_1.default));
