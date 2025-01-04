@@ -51,6 +51,9 @@ class Container {
         else if (obj instanceof discord_js_1.Message) {
             res = this.edit ? obj.edit(options) : obj.channel.send(options);
         }
+        else if (obj instanceof discord_js_1.InteractionCallbackResponse) {
+            res = Promise.resolve(obj.resource?.message ?? obj);
+        }
         else if (obj instanceof discord_js_1.BaseInteraction) {
             if (obj.isRepliable()) {
                 if (this.modal && !obj.replied && "showModal" in obj) {

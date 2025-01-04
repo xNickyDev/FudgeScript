@@ -15,6 +15,7 @@ import {
     GuildMember,
     GuildScheduledEvent,
     Interaction,
+    InteractionCallbackResponse,
     InteractionEditReplyOptions,
     InteractionReplyOptions,
     Invite,
@@ -101,6 +102,8 @@ export class Container {
             res = obj.send(options)
         } else if (obj instanceof Message) {
             res = this.edit ? obj.edit(options) : (obj.channel as TextChannel).send(options)
+        } else if (obj instanceof InteractionCallbackResponse) {
+            res = Promise.resolve(obj.resource?.message ?? obj)
         } else if (obj instanceof BaseInteraction) {
             if (obj.isRepliable()) {
                 if (this.modal && !obj.replied && "showModal" in obj) {
