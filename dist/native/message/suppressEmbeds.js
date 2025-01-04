@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, message]) {
-        return this.success(!!(await (message ?? ctx.message).suppressEmbeds(true).catch(ctx.noop)));
+        return this.success(!!(await (message ?? ctx.message)?.suppressEmbeds(true).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=suppressEmbeds.js.map

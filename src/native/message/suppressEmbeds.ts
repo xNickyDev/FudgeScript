@@ -27,6 +27,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, message]) {
-        return this.success(!!(await (message ?? ctx.message).suppressEmbeds(true).catch(ctx.noop)))
+        return this.success(!!(await (message ?? ctx.message)?.suppressEmbeds(true).catch(ctx.noop)))
     },
 })
