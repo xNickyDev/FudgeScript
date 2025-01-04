@@ -52,12 +52,7 @@ class Container {
         else if (obj instanceof discord_js_1.Message) {
             res = this.edit ? obj.edit(options) : obj.channel.send(options);
         }
-        else if (obj instanceof discord_js_1.InteractionCallbackResponse) {
-            console.log("InteractionCallbackResponse");
-            res = Promise.resolve(obj.resource?.message ?? obj);
-        }
         else if (obj instanceof discord_js_1.BaseInteraction) {
-            console.log("BaseInteraction");
             if (obj.isRepliable()) {
                 if (this.modal && !obj.replied && "showModal" in obj) {
                     res = obj.showModal(this.modal);
@@ -84,10 +79,10 @@ class Container {
             res = obj.send(options);
         }
         else {
-            console.log("Other");
             res = Promise.resolve(null);
         }
-        const result = (await res.catch(noop_1.default));
+        const response = (await res.catch(noop_1.default));
+        const result = (response instanceof discord_js_1.InteractionCallbackResponse ? response.resource?.message : response);
         if (this.deleteIn && result instanceof discord_js_1.Message) {
             setTimeout(() => {
                 result.delete().catch(noop_1.default);

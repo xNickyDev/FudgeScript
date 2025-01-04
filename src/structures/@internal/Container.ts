@@ -104,11 +104,7 @@ export class Container {
             res = obj.send(options)
         } else if (obj instanceof Message) {
             res = this.edit ? obj.edit(options) : (obj.channel as TextChannel).send(options)
-        } else if (obj instanceof InteractionCallbackResponse) {
-            console.log("InteractionCallbackResponse")
-            res = Promise.resolve(obj.resource?.message ?? obj)
         } else if (obj instanceof BaseInteraction) {
-            console.log("BaseInteraction")
             if (obj.isRepliable()) {
                 if (this.modal && !obj.replied && "showModal" in obj) {
                     res = obj.showModal(this.modal)
@@ -132,11 +128,11 @@ export class Container {
         } else if (obj instanceof GuildMember || obj instanceof User) {
             res = obj.send(options)
         } else {
-            console.log("Other")
             res = Promise.resolve(null)
         }
 
-        const result = (await res.catch(noop)) as T
+        const response = (await res.catch(noop))
+        const result = (response instanceof InteractionCallbackResponse ? response.resource?.message : response) as T
 
         if (this.deleteIn && result instanceof Message) {
             setTimeout(() => {
