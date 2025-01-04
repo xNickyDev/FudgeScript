@@ -39,7 +39,6 @@ class Container {
         if (!this.isValidMessage(options)) {
             return null;
         }
-        console.log(obj);
         if (this.channel && this.channel.isTextBased()) {
             res = this.channel.send(options);
         }

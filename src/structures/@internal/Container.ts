@@ -94,8 +94,6 @@ export class Container {
             return null
         }
 
-        console.log(obj)
-
         if (this.channel && this.channel.isTextBased()) {
             res = (this.channel as TextChannel).send(options)
         } else if (obj instanceof AutoModerationActionExecution && obj.channel && "send" in obj.channel) {
