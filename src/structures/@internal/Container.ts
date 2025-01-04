@@ -73,7 +73,7 @@ export class Container {
     public files = new Array<AttachmentBuilder>()
     public channel?: Channel
     public stickers = new Array<StickerResolvable>()
-    public fetchReply = false
+    public withResponse = false
     public modal?: ModalBuilder
     public choices = new Array<ApplicationCommandOptionChoiceData<string | number>>()
     public allowedMentions: MessageMentionOptions = {}
@@ -176,7 +176,7 @@ export class Container {
         this.reply = false
         this.update = false
         this.ephemeral = false
-        this.fetchReply = false
+        this.withResponse = false
         this.edit = false
         this.tts = false
 
@@ -201,7 +201,7 @@ export class Container {
                       avatarURL: this.avatarURL,
                       allowedMentions:
                           Object.keys(this.allowedMentions).length === 0 ? undefined : this.allowedMentions,
-                      fetchReply: this.fetchReply,
+                      withResponse: this.withResponse,
                       reply: this.reference
                           ? {
                                 messageReference: this.reference,

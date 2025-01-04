@@ -22,7 +22,7 @@ class Container {
     files = new Array();
     channel;
     stickers = new Array();
-    fetchReply = false;
+    withResponse = false;
     modal;
     choices = new Array();
     allowedMentions = {};
@@ -120,7 +120,7 @@ class Container {
         this.reply = false;
         this.update = false;
         this.ephemeral = false;
-        this.fetchReply = false;
+        this.withResponse = false;
         this.edit = false;
         this.tts = false;
         this.stickers.length = 0;
@@ -140,7 +140,7 @@ class Container {
                 username: this.username,
                 avatarURL: this.avatarURL,
                 allowedMentions: Object.keys(this.allowedMentions).length === 0 ? undefined : this.allowedMentions,
-                fetchReply: this.fetchReply,
+                withResponse: this.withResponse,
                 reply: this.reference
                     ? {
                         messageReference: this.reference,
