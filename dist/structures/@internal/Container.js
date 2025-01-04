@@ -7,6 +7,7 @@ exports.Container = void 0;
 /* eslint-disable indent */
 const discord_js_1 = require("discord.js");
 const noop_1 = __importDefault(require("../../functions/noop"));
+const discord_js_2 = require("discord.js");
 class Container {
     content;
     embeds = new Array();
@@ -146,7 +147,7 @@ class Container {
                         failIfNotExists: false,
                     }
                     : undefined,
-                ephemeral: this.ephemeral,
+                flags: this.ephemeral ? discord_js_2.MessageFlags.Ephemeral : undefined,
                 attachments: [],
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,

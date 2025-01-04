@@ -38,6 +38,7 @@ import {
 import noop from "../../functions/noop"
 import { ForgeClient } from "../../core"
 import { RawMessageData } from "discord.js/typings/rawDataTypes"
+import { MessageFlags } from "discord.js"
 
 export type Sendable =
     | {}
@@ -207,7 +208,7 @@ export class Container {
                                 failIfNotExists: false,
                             }
                           : undefined,
-                      ephemeral: this.ephemeral,
+                      flags: this.ephemeral ? MessageFlags.Ephemeral : undefined,
                       attachments: [],
                       files: this.files.length === 0 ? null : this.files,
                       stickers: this.stickers.length === 0 ? null : this.stickers,
