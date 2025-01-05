@@ -4,7 +4,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editField",
     version: "1.4.0",
-    description: "Edits an embed field, returns true if the field was successfully edited",
+    description: "Edits an embed field",
     unwrap: true,
     args: [
         {
@@ -43,14 +43,14 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [fieldIndex, name, value, inline, index]) {
         const field = ctx.container.embed(index ?? 0).data.fields?.[fieldIndex];
         if (!field)
-            return this.success(false);
+            return this.success();
         if (name)
             field.name = name;
         if (value)
             field.value = value;
         if (inline !== null)
             field.inline = inline;
-        return this.success(true);
+        return this.success();
     },
 });
 //# sourceMappingURL=editField.js.map

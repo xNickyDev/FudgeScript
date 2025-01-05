@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 export default new NativeFunction({
     name: "$editField",
     version: "1.4.0",
-    description: "Edits an embed field, returns true if the field was successfully edited",
+    description: "Edits an embed field",
     unwrap: true,
     args: [
         {
@@ -42,7 +42,7 @@ export default new NativeFunction({
     execute(ctx, [fieldIndex, name, value, inline, index]) {
         const field = ctx.container.embed(index ?? 0).data.fields?.[fieldIndex]
         if (!field)
-            return this.success(false)
+            return this.success()
         
         if (name)
             field.name = name
@@ -51,6 +51,6 @@ export default new NativeFunction({
         if (inline !== null)
             field.inline = inline
 
-        return this.success(true)
+        return this.success()
     },
 })
