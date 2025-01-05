@@ -1,4 +1,3 @@
-import { EmbedField } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -43,7 +42,7 @@ export default new NativeFunction({
     execute(ctx, [fieldIndex, name, value, inline, index]) {
         const field = ctx.container.embed(index ?? 0).data.fields?.[fieldIndex]
         if (!field)
-            return this.success()
+            return this.success(false)
         
         if (name)
             field.name = name
@@ -52,6 +51,6 @@ export default new NativeFunction({
         if (inline !== null)
             field.inline = inline
 
-        return this.success()
+        return this.success(true)
     },
 })

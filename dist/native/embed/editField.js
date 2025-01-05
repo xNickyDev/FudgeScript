@@ -43,14 +43,14 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [fieldIndex, name, value, inline, index]) {
         const field = ctx.container.embed(index ?? 0).data.fields?.[fieldIndex];
         if (!field)
-            return this.success();
+            return this.success(false);
         if (name)
             field.name = name;
         if (value)
             field.value = value;
         if (inline !== null)
             field.inline = inline;
-        return this.success();
+        return this.success(true);
     },
 });
 //# sourceMappingURL=editField.js.map
