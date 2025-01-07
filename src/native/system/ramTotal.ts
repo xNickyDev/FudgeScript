@@ -4,7 +4,7 @@ import os from "node:os"
 export default new NativeFunction({
     name: "$ramTotal",
     version: "2.1.0",
-    description: "Returns the maximum total ram capacity of the system",
+    description: "Returns the maximum total ram capacity of the system in GB",
     aliases: [
         "$memoryTotal",
         "$maxRam",
@@ -12,6 +12,6 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Number,
     execute(ctx) {
-        return this.success(os.totalmem() / 1024 ** 2)
+        return this.success(os.totalmem() / 1024 ** 3)
     },
 })

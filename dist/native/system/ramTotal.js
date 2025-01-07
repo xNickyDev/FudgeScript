@@ -7,7 +7,8 @@ const structures_1 = require("../../structures");
 const node_os_1 = __importDefault(require("node:os"));
 exports.default = new structures_1.NativeFunction({
     name: "$ramTotal",
-    description: "Returns the maximum total ram capacity of the system",
+    version: "2.1.0",
+    description: "Returns the maximum total ram capacity of the system in GB",
     aliases: [
         "$memoryTotal",
         "$maxRam",
@@ -15,7 +16,7 @@ exports.default = new structures_1.NativeFunction({
     unwrap: false,
     output: structures_1.ArgType.Number,
     execute(ctx) {
-        return this.success(node_os_1.default.totalmem() / 1024 ** 2);
+        return this.success(node_os_1.default.totalmem() / 1024 ** 3);
     },
 });
 //# sourceMappingURL=ramTotal.js.map
