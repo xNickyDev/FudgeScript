@@ -18,7 +18,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [id]) {
-        const web = await ctx.client.fetchWebhook(id).catch(ctx.noop);
+        const web = await ctx.client.fetchWebhook(id).catch();
         return this.success(!!web);
     },
 });

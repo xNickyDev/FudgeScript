@@ -18,6 +18,6 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [id]) {
-        return this.success(CompiledFunction.IdRegex.test(id) && !!(await ctx.client.users.fetch(id).catch(ctx.noop)))
+        return this.success(CompiledFunction.IdRegex.test(id) && !!(await ctx.client.users.fetch(id).catch()))
     },
 })

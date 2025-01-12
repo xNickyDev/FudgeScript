@@ -3,7 +3,7 @@ import os from "node:os"
 
 export default new NativeFunction({
     name: "$ramTotal",
-    version: "2.1.0",
+    version: "2.2.0",
     description: "Returns the maximum total ram capacity of the system in GB",
     aliases: [
         "$memoryTotal",

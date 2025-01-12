@@ -7,7 +7,6 @@ const structures_1 = require("../../structures");
 const node_os_1 = __importDefault(require("node:os"));
 exports.default = new structures_1.NativeFunction({
     name: "$ramTotal",
-    version: "2.1.0",
     description: "Returns the maximum total ram capacity of the system in GB",
     aliases: [
         "$memoryTotal",

@@ -3,7 +3,7 @@ import { DiscordEventHandler } from "../../structures/extended/DiscordEventHandl
 
 export default new DiscordEventHandler({
     name: "voiceChannelEffectSend",
-    version: "2.1.0",
+    version: "2.2.0",
     description: "This event is fired when a user sends an effect in a voice channel",
     listener: async function (effect) {
         const commands = this.commands.get("voiceChannelEffectSend")
