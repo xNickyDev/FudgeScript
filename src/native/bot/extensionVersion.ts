@@ -5,7 +5,7 @@ export default new NativeFunction({
     version: "1.4.0",
     brackets: true,
     unwrap: true,
-    description: "Returns the version a extension is running on",
+    description: "Returns the version an extension is running on",
     output: ArgType.String,
     args: [
         {
