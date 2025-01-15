@@ -67,10 +67,7 @@ export default new NativeFunction({
             const exec = (await this["resolveCode"](ctx, code)) as Return
             if (exec.success || exec.continue) continue
             else if (exec.break) break
-            else if (exec.return) {
-                output += exec.value
-                if (exec.break) break
-            }
+            else if (exec.return) output += exec.value
             else return exec
         }
 

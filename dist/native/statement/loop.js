@@ -59,11 +59,8 @@ exports.default = new structures_1.NativeFunction({
                 continue;
             else if (exec.break)
                 break;
-            else if (exec.return) {
+            else if (exec.return)
                 output += exec.value;
-                if (exec.break)
-                    break;
-            }
             else
                 return exec;
         }
