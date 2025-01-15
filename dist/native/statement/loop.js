@@ -54,7 +54,9 @@ exports.default = new structures_1.NativeFunction({
             if (varName)
                 ctx.setEnvironmentKey(varName, i);
             const exec = await this["resolveCode"](ctx, code);
-            if (exec.success || exec.continue)
+            if (exec.return)
+                return exec;
+            else if (exec.success || exec.continue)
                 continue;
             else if (exec.break)
                 break;
