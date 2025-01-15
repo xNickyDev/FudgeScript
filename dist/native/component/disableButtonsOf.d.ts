@@ -19,4 +19,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.Number;
 }], true>;
 export default _default;
-//# sourceMappingURL=disableAllButtonsOf.d.ts.map
+//# sourceMappingURL=disableButtonsOf.d.ts.map

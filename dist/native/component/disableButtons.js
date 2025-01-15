@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$disableAllButtons",
-    version: "1.5.0",
+    name: "$disableButtons",
     description: "Disables all buttons on the current message",
+    aliases: ["$disableAllButtons"],
     unwrap: true,
     args: [
         {
@@ -17,7 +17,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     brackets: false,
-    async execute(ctx, [index]) {
+    execute(ctx, [index]) {
         const data = ctx.container.components;
         const components = isNaN(index) ? data : [data[index]];
         components.map(row => {
@@ -35,4 +35,4 @@ exports.default = new structures_1.NativeFunction({
         return this.success();
     },
 });
-//# sourceMappingURL=disableAllButtons.js.map
+//# sourceMappingURL=disableButtons.js.map

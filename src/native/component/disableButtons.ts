@@ -2,9 +2,10 @@ import { ButtonBuilder, ActionRowBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$disableAllButtons",
-    version: "1.5.0",
+    name: "$disableButtons",
+    version: "2.2.0",
     description: "Disables all buttons on the current message",
+    aliases: ["$disableAllButtons"],
     unwrap: true,
     args: [
         {
@@ -16,7 +17,7 @@ export default new NativeFunction({
         },
     ],
     brackets: false,
-    async execute(ctx, [index]) {
+    execute(ctx, [index]) {
         const data = ctx.container.components
         const components = isNaN(index) ? data : [data[index]]
 

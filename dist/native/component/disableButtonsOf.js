@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$disableAllButtonsOf",
-    version: "1.5.0",
+    name: "$disableButtonsOf",
     description: "Disables all buttons of a message, returns bool",
+    aliases: ["$disableAllButtonsOf"],
     unwrap: true,
     args: [
         {
@@ -34,35 +34,23 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, msg, index]) {
         const components = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        if (index) {
-            const row = components[index];
+        for (let i = 0, len = components.length; i < len; i++) {
+            if (typeof index === "number" && i !== index)
+                continue;
+            const components = ctx.container.components[i].components;
             const actionRow = new discord_js_1.ActionRowBuilder();
-            row?.components.forEach(component => {
-                if (component instanceof discord_js_1.ButtonBuilder) {
-                    actionRow.addComponents(component.setDisabled(true));
+            components.forEach(comp => {
+                if (comp instanceof discord_js_1.ButtonBuilder) {
+                    actionRow.addComponents(comp.setDisabled(true));
                 }
                 else {
-                    actionRow.addComponents(component);
+                    actionRow.addComponents(comp);
                 }
             });
-            if (row)
-                components.splice(index, 1, row);
-        }
-        else {
-            components.map(row => {
-                const actionRow = new discord_js_1.ActionRowBuilder();
-                row.components.forEach(component => {
-                    if (component instanceof discord_js_1.ButtonBuilder) {
-                        actionRow.addComponents(component.setDisabled(true));
-                    }
-                    else {
-                        actionRow.addComponents(component);
-                    }
-                });
-                return actionRow;
-            });
+            if (i === index)
+                break;
         }
         return this.success(!!(await msg.edit({ components: components }).catch(ctx.noop)));
     },
 });
-//# sourceMappingURL=disableAllButtonsOf.js.map
+//# sourceMappingURL=disableButtonsOf.js.map
