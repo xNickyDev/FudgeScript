@@ -5,7 +5,7 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.Channel;
-    check: (i: BaseChannel) => i is BaseChannel & Record<"permissionOverwrites", unknown>;
+    check: (i: BaseChannel) => boolean;
     description: string;
 }, {
     name: string;

@@ -54,13 +54,14 @@ exports.default = new structures_1.NativeFunction({
         for (let i = condition ? 1 : times; (type ? i <= times : i > 0) || times === -1; condition ? i++ : i--) {
             if (varName)
                 ctx.setEnvironmentKey(varName, i);
-            const exec = await this["resolveCode"](ctx, code);
+            const exec = (await this["resolveCode"](ctx, code));
             if (exec.success || exec.continue)
                 continue;
             else if (exec.break)
                 break;
-            else if (exec.return)
+            else if (exec.return) {
                 output += exec.value;
+            }
             else
                 return exec;
         }

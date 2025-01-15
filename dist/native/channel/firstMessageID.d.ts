@@ -6,7 +6,7 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.Channel;
-    check: (i: BaseChannel) => i is BaseChannel & Record<"messages", unknown>;
+    check: (i: BaseChannel) => boolean;
 }], true>;
 export default _default;
 //# sourceMappingURL=firstMessageID.d.ts.map

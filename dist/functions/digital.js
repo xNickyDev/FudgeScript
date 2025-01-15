@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseDigital = parseDigital;
-exports.unparseDigital = unparseDigital;
+exports.unparseDigital = exports.parseDigital = void 0;
 function parseDigital(ms) {
     const hours = Math.floor(ms / (1000 * 60 * 60));
     const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
@@ -11,6 +10,7 @@ function parseDigital(ms) {
     const SS = String(seconds).padStart(2, "0");
     return `${HH}:${MM}:${SS}`;
 }
+exports.parseDigital = parseDigital;
 function unparseDigital(digital) {
     const DigitalFormatRegex = /^(\d+):([0-5]?\d):([0-5]?\d)$/;
     const match = digital.match(DigitalFormatRegex);
@@ -22,4 +22,5 @@ function unparseDigital(digital) {
         return 0;
     return ms;
 }
+exports.unparseDigital = unparseDigital;
 //# sourceMappingURL=digital.js.map

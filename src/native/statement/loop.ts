@@ -64,10 +64,12 @@ export default new NativeFunction({
             if (varName)
                 ctx.setEnvironmentKey(varName, i)
             
-            const exec = await this["resolveCode"](ctx, code)
+            const exec = (await this["resolveCode"](ctx, code)) as Return
             if (exec.success || exec.continue) continue
             else if (exec.break) break
-            else if (exec.return) output += exec.value
+            else if (exec.return) {
+                output += exec.value 
+            }
             else return exec
         }
 

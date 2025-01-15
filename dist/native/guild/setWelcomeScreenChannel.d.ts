@@ -1,4 +1,4 @@
-import { BaseChannel, ForumChannel, MediaChannel, NewsChannel, TextChannel } from "discord.js";
+import { BaseChannel } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
 declare const _default: NativeFunction<[{
     name: string;
@@ -6,7 +6,7 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.Channel;
-    check: (i: BaseChannel) => i is NewsChannel | TextChannel | ForumChannel | MediaChannel;
+    check: (i: BaseChannel) => boolean;
     pointerProperty: string;
 }, {
     name: string;
