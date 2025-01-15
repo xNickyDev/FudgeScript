@@ -57,6 +57,7 @@ export default new NativeFunction({
         const [ times, varName, type ] = args
         const code = this.data.fields![1] as IExtendedCompiledFunctionField
 
+        let output = ""
         let condition = type || times === -1
 
         for (let i = condition ? 1 : times;(type ? i <= times : i > 0) || times === -1;condition ? i++ : i--) {
@@ -64,12 +65,12 @@ export default new NativeFunction({
                 ctx.setEnvironmentKey(varName, i)
             
             const exec = await this["resolveCode"](ctx, code)
-            if (exec.return) return exec
+            if (exec.return) output += exec.value
             else if (exec.success || exec.continue) continue
             else if (exec.break) break
             else return exec
         }
 
-        return this.success()
+        return this.success(output || null)
     },
 })

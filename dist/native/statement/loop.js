@@ -49,13 +49,14 @@ exports.default = new structures_1.NativeFunction({
             return rt;
         const [times, varName, type] = args;
         const code = this.data.fields[1];
+        let output = "";
         let condition = type || times === -1;
         for (let i = condition ? 1 : times; (type ? i <= times : i > 0) || times === -1; condition ? i++ : i--) {
             if (varName)
                 ctx.setEnvironmentKey(varName, i);
             const exec = await this["resolveCode"](ctx, code);
             if (exec.return)
-                return exec;
+                output += exec.value;
             else if (exec.success || exec.continue)
                 continue;
             else if (exec.break)
@@ -63,7 +64,7 @@ exports.default = new structures_1.NativeFunction({
             else
                 return exec;
         }
-        return this.success();
+        return this.success(output || null);
     },
 });
 //# sourceMappingURL=loop.js.map
