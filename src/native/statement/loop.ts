@@ -68,7 +68,8 @@ export default new NativeFunction({
             if (exec.success || exec.continue) continue
             else if (exec.break) break
             else if (exec.return) {
-                output += exec.value 
+                output += exec.value
+                continue
             }
             else return exec
         }
