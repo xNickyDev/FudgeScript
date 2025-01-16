@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$disableComponentsOf",
+    version: "2.2.0",
     description: "Disables all components of a message, returns bool",
     aliases: ["$disableAllComponentsOf"],
     unwrap: true,
@@ -28,10 +29,10 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, msg]) {
         const components = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        for (let i = 0, len = components.length; i < len; i++) {
+        components.forEach(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
-            components[i]?.components.forEach(comp => actionRow.addComponents(comp.setDisabled(true)));
-        }
+            row?.components.forEach(comp => actionRow.addComponents(comp.setDisabled(true)));
+        });
         return this.success(!!(await msg.edit({ components: components }).catch(ctx.noop)));
     },
 });

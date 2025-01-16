@@ -29,10 +29,10 @@ export default new NativeFunction({
     async execute(ctx, [, msg]) {
         const components = msg.components.map(x => ActionRowBuilder.from<MessageActionRowComponentBuilder>(x))
 
-        for (let i = 0, len = components.length; i < len; i++) {
+        components.forEach(row => {
             const actionRow = new ActionRowBuilder()
-            components[i]?.components.forEach(comp => actionRow.addComponents(comp.setDisabled(true)))
-        }
+            row?.components.forEach(comp => actionRow.addComponents(comp.setDisabled(true)))
+        })
 
         return this.success(
             !!(await msg.edit({ components: components as ActionRowBuilder<MessageActionRowComponentBuilder>[] }).catch(ctx.noop))
