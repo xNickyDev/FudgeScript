@@ -36,7 +36,7 @@ export default new NativeFunction({
         const components = msg.components.map(x => ActionRowBuilder.from(x))
 
         for (let i = 0, len = components.length; i < len; i++) {
-            if (typeof index === "number" && i !== index) continue
+            if (Number.isFinite(index) && i !== index) continue
             const actionRow = new ActionRowBuilder()
 
             components[i]?.components.forEach(comp => {

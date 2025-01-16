@@ -36,7 +36,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [, msg, index]) {
         const components = msg.components.map(x => discord_js_1.ActionRowBuilder.from(x));
         for (let i = 0, len = components.length; i < len; i++) {
-            if (typeof index === "number" && i !== index)
+            if (Number.isFinite(index) && i !== index)
                 continue;
             const actionRow = new discord_js_1.ActionRowBuilder();
             components[i]?.components.forEach(comp => {
