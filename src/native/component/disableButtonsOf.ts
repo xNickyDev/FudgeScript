@@ -1,6 +1,5 @@
 import { ButtonBuilder, ActionRowBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { isNaN } from "lodash"
 
 export default new NativeFunction({
     name: "$disableButtonsOf",
@@ -41,12 +40,13 @@ export default new NativeFunction({
             const row = ctx.container.components[i]
             const actionRow = new ActionRowBuilder()
 
-            row?.components.forEach(comp => {
+            row?.components.map(comp => {
                 if (comp instanceof ButtonBuilder) {
                     actionRow.addComponents(comp.setDisabled(true))
                 } else {
                     actionRow.addComponents(comp)
                 }
+                return actionRow
             })
             if (i === index) break
         }

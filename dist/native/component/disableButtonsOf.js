@@ -40,13 +40,14 @@ exports.default = new structures_1.NativeFunction({
                 continue;
             const row = ctx.container.components[i];
             const actionRow = new discord_js_1.ActionRowBuilder();
-            row?.components.forEach(comp => {
+            row?.components.map(comp => {
                 if (comp instanceof discord_js_1.ButtonBuilder) {
                     actionRow.addComponents(comp.setDisabled(true));
                 }
                 else {
                     actionRow.addComponents(comp);
                 }
+                return actionRow;
             });
             if (i === index)
                 break;
