@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$disableButtonsOf",
+    version: "2.2.0",
     description: "Disables all buttons of a message, returns bool",
     aliases: ["$disableAllButtonsOf"],
     unwrap: true,
@@ -37,9 +38,9 @@ exports.default = new structures_1.NativeFunction({
         for (let i = 0, len = components.length; i < len; i++) {
             if (typeof index === "number" && i !== index)
                 continue;
-            const components = ctx.container.components[i].components;
+            const row = ctx.container.components[i];
             const actionRow = new discord_js_1.ActionRowBuilder();
-            components.forEach(comp => {
+            row?.components.forEach(comp => {
                 if (comp instanceof discord_js_1.ButtonBuilder) {
                     actionRow.addComponents(comp.setDisabled(true));
                 }
