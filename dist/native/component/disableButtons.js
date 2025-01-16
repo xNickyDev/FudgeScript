@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [index]) {
         const data = ctx.container.components;
         const components = isNaN(index) ? data : [data[index]];
-        components.map(row => {
+        components.forEach(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row?.components.forEach(component => {
                 if (component instanceof discord_js_1.ButtonBuilder) {
@@ -31,7 +31,6 @@ exports.default = new structures_1.NativeFunction({
                     actionRow.addComponents(component);
                 }
             });
-            return actionRow;
         });
         return this.success();
     },

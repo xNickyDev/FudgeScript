@@ -21,7 +21,7 @@ export default new NativeFunction({
         const data = ctx.container.components
         const components = isNaN(index) ? data : [data[index]]
 
-        components.map(row => {
+        components.forEach(row => {
             const actionRow = new ActionRowBuilder()
             row?.components.forEach(component => {
                 if (component instanceof ButtonBuilder) {
@@ -30,7 +30,6 @@ export default new NativeFunction({
                     actionRow.addComponents(component)
                 }
             })
-            return actionRow
         })
 
         return this.success()
