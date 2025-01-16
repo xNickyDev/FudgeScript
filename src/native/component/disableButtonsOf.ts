@@ -37,9 +37,10 @@ export default new NativeFunction({
 
         for (let i = 0, len = components.length; i < len; i++) {
             if (typeof index === "number" && i !== index) continue
+            const row = components.at(i)
             const actionRow = new ActionRowBuilder()
 
-            components[i]?.components.forEach(comp => {
+            row?.components.forEach(comp => {
                 if (comp instanceof ButtonBuilder) {
                     actionRow.addComponents(comp.setDisabled(true))
                 } else {

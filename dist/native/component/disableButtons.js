@@ -20,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     execute(ctx, [index]) {
         const data = ctx.container.components;
-        const components = isNaN(index) ? data : [data[index]];
+        const components = isNaN(index) ? data : [data.at(index)];
         components.forEach(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row?.components.forEach(component => {
