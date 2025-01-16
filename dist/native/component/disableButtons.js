@@ -20,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: false,
     execute(ctx, [index]) {
         const data = ctx.container.components;
-        const components = this.displayField(0) ? [data[index]] : data;
+        const components = typeof index === "number" ? [data[index]] : data;
         components.forEach(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row?.components.forEach(component => {
