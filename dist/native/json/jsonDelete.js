@@ -4,7 +4,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$jsonDelete",
     version: "1.4.0",
-    description: "Delete a key from a traversed json",
+    description: "Deletes a key from a traversed json",
     unwrap: true,
     brackets: true,
     output: structures_1.ArgType.Boolean,
@@ -18,7 +18,7 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [keys]) {
-        return this.success(ctx.traverseDeleteEnvironmentKey(...keys));
+        return this.success(!!ctx.traverseDeleteEnvironmentKey(...keys));
     },
 });
 //# sourceMappingURL=jsonDelete.js.map

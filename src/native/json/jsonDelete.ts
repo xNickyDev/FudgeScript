@@ -3,7 +3,7 @@ import { ArgType, NativeFunction } from "../../structures"
 export default new NativeFunction({
     name: "$jsonDelete",
     version: "1.4.0",
-    description: "Delete a key from a traversed json",
+    description: "Deletes a key from a traversed json",
     unwrap: true,
     brackets: true,
     output: ArgType.Boolean,
@@ -17,6 +17,6 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ keys ]) {
-        return this.success(ctx.traverseDeleteEnvironmentKey(...keys))
+        return this.success(!!ctx.traverseDeleteEnvironmentKey(...keys))
     },
 })
