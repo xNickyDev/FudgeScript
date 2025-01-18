@@ -5,6 +5,12 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
+    type: ArgType.Guild;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    required: true;
     type: ArgType.String;
 }, {
     name: string;
@@ -14,4 +20,4 @@ declare const _default: NativeFunction<[{
     enum: typeof InviteProperty;
 }], true>;
 export default _default;
-//# sourceMappingURL=getInvite.d.ts.map
+//# sourceMappingURL=getGuildInvite.d.ts.map

@@ -3,12 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const invite_1 = require("../../properties/invite");
 exports.default = new structures_1.NativeFunction({
-    name: "$getInvite",
-    description: "Returns information about an invite",
+    name: "$getGuildInvite",
+    description: "Returns information about a guild invite",
     brackets: true,
     unwrap: true,
     output: structures_1.ArgType.Unknown,
     args: [
+        {
+            name: "guild ID",
+            description: "The guild to fetch invite from",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Guild,
+        },
         {
             name: "code",
             description: "The invite code",
@@ -24,11 +31,11 @@ exports.default = new structures_1.NativeFunction({
             enum: invite_1.InviteProperty
         },
     ],
-    async execute(ctx, [code, prop]) {
-        const invite = await ctx.client.fetchInvite(code).catch(ctx.noop);
+    async execute(ctx, [guild, code, prop]) {
+        const invite = await guild.invites.fetch(code).catch(ctx.noop);
         if (prop && invite)
             return this.success(invite_1.InviteProperties[prop](invite));
         return this.successJSON(invite);
     },
 });
-//# sourceMappingURL=getInvite.js.map
+//# sourceMappingURL=getGuildInvite.js.map
