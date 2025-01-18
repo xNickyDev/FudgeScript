@@ -9,19 +9,19 @@ var ReactionProperty;
 (function (ReactionProperty) {
     ReactionProperty["emoji"] = "emoji";
     ReactionProperty["count"] = "count";
-    ReactionProperty["superCount"] = "superCount";
+    ReactionProperty["burstCount"] = "burstCount";
     ReactionProperty["normalCount"] = "normalCount";
     ReactionProperty["me"] = "me";
-    ReactionProperty["meSuper"] = "meSuper";
-    ReactionProperty["superColors"] = "superColors";
+    ReactionProperty["meBurst"] = "meBurst";
+    ReactionProperty["burstColors"] = "burstColors";
 })(ReactionProperty || (exports.ReactionProperty = ReactionProperty = {}));
 exports.ReactionProperties = (0, defineProperties_1.default)({
     emoji: (i) => i?.emoji.toString(),
     count: (i) => i?.count,
-    superCount: (i) => i?.countDetails.burst,
+    burstCount: (i) => i?.countDetails.burst,
     normalCount: (i) => i?.countDetails.normal,
     me: (i) => i?.me,
-    meSuper: (i) => i?.meBurst,
-    superColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
+    meBurst: (i) => i?.meBurst,
+    burstColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
 });
 //# sourceMappingURL=reaction.js.map

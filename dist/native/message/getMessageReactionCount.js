@@ -4,8 +4,8 @@ exports.ReactionType = void 0;
 const structures_1 = require("../../structures");
 var ReactionType;
 (function (ReactionType) {
-    ReactionType["Normal"] = "normal";
-    ReactionType["Super"] = "burst";
+    ReactionType["normal"] = "normal";
+    ReactionType["burst"] = "burst";
 })(ReactionType || (exports.ReactionType = ReactionType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$getMessageReactionCount",

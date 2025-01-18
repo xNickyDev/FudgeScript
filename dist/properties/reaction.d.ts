@@ -2,11 +2,11 @@ import { MessageReaction } from "discord.js";
 export declare enum ReactionProperty {
     emoji = "emoji",
     count = "count",
-    superCount = "superCount",
+    burstCount = "burstCount",
     normalCount = "normalCount",
     me = "me",
-    meSuper = "meSuper",
-    superColors = "superColors"
+    meBurst = "meBurst",
+    burstColors = "burstColors"
 }
 export declare const ReactionProperties: import("../functions/defineProperties").Properties<typeof ReactionProperty, MessageReaction>;
 //# sourceMappingURL=reaction.d.ts.map

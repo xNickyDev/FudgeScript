@@ -4,19 +4,19 @@ import defineProperties from "../functions/defineProperties"
 export enum ReactionProperty {
     emoji = "emoji",
     count = "count",
-    superCount = "superCount",
+    burstCount = "burstCount",
     normalCount = "normalCount",
     me = "me",
-    meSuper = "meSuper",
-    superColors = "superColors",
+    meBurst = "meBurst",
+    burstColors = "burstColors",
 }
 
 export const ReactionProperties = defineProperties<typeof ReactionProperty, MessageReaction>({
     emoji: (i) => i?.emoji.toString(),
     count: (i) => i?.count,
-    superCount: (i) => i?.countDetails.burst,
+    burstCount: (i) => i?.countDetails.burst,
     normalCount: (i) => i?.countDetails.normal,
     me: (i) => i?.me,
-    meSuper: (i) => i?.meBurst,
-    superColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
+    meBurst: (i) => i?.meBurst,
+    burstColors: (i, sep) => i?.burstColors?.join(sep ?? ", "),
 })

@@ -2,8 +2,8 @@ import { parseEmoji, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export enum ReactionType {
-    Normal = "normal",
-    Super = "burst"
+    normal = "normal",
+    burst = "burst"
 }
 
 export default new NativeFunction({

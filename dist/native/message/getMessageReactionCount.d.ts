@@ -1,8 +1,8 @@
 import { TextBasedChannel } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
 export declare enum ReactionType {
-    Normal = "normal",
-    Super = "burst"
+    normal = "normal",
+    burst = "burst"
 }
 declare const _default: NativeFunction<[{
     name: string;
