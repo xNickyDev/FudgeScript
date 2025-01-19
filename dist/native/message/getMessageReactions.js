@@ -4,7 +4,6 @@ const reaction_1 = require("../../properties/reaction");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$getMessageReactions",
-    version: "1.5.0",
     description: "Retrieves all reactions of a message",
     unwrap: true,
     output: structures_1.ArgType.Unknown,

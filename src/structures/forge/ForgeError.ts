@@ -24,7 +24,8 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         super(ForgeError.make(fn, type, ...args))
 
         // Emits the functionError event whenever an error is thrown
-        new EventEmitter().emit("functionError", { fn, type, args })
+        new EventEmitter().emit("functionError", { fn, type, ...args })
+        console.log("functionError", type)
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

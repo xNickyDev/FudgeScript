@@ -1,7 +1,7 @@
 import { ClientEvents, Interaction } from "discord.js";
 import { Context } from "..";
 import { IExtendedCompilationResult, ForgeClient } from "../../core";
-export type CommandType = keyof ClientEvents;
+export type CommandType = keyof ClientEvents | "functionError";
 export type RawExecutableCode = (ctx: Context) => Promise<unknown[] | null>;
 export type CommandInteractionTypes = "button" | "modal" | "slashCommand" | "autocomplete" | "contextMenu" | "selectMenu";
 export interface IBaseCommand<T> {

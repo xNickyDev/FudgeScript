@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$getMessageReactions",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Retrieves all reactions of a message",
     unwrap: true,
     output: ArgType.Unknown,
