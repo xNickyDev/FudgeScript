@@ -68,7 +68,9 @@ exports.default = new structures_1.NativeFunction({
                     menu.setMinValues(min);
                 if (typeof max === "number")
                     menu.setMaxValues(max);
-                menu.setDefaultChannels(channels || menu.data.default_values);
+                if (this.displayField(6))
+                    menu.setDefaultChannels(channels);
+                console.log(placeholder, disabled, min, max, channels);
                 break;
             }
         }
