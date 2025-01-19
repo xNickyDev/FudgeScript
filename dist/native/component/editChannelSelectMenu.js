@@ -62,13 +62,13 @@ exports.default = new structures_1.NativeFunction({
                 menu.setCustomId(id);
                 if (placeholder)
                     menu.setPlaceholder(placeholder);
-                if (typeof disabled === "boolean")
+                if (disabled !== null)
                     menu.setDisabled(disabled);
-                if (typeof min === "number")
+                if (min !== null)
                     menu.setMinValues(min);
-                if (typeof max === "number")
+                if (max !== null)
                     menu.setMaxValues(max);
-                if (this.displayField(6))
+                if (channels.length)
                     menu.setDefaultChannels(channels);
                 console.log(placeholder, disabled, min, max, channels);
                 break;
