@@ -61,12 +61,10 @@ export default new NativeFunction({
                 menu.setCustomId(id)
                 
                 if (placeholder) menu.setPlaceholder(placeholder)
-                if (disabled !== null) menu.setDisabled(disabled)
-                if (min !== null) menu.setMinValues(min)
-                if (max !== null) menu.setMaxValues(max)
-                if (channels.length) menu.setDefaultChannels(channels)
-
-                console.log(placeholder, disabled, min, max, channels)
+                if (typeof disabled === "boolean") menu.setDisabled(disabled)
+                if (typeof min === "number") menu.setMinValues(min)
+                if (typeof max === "number") menu.setMaxValues(max)
+                if (channels.length) menu.setDefaultChannels(channels.filter(x => x))
 
                 break
             }

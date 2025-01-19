@@ -62,15 +62,14 @@ exports.default = new structures_1.NativeFunction({
                 menu.setCustomId(id);
                 if (placeholder)
                     menu.setPlaceholder(placeholder);
-                if (disabled !== null)
+                if (typeof disabled === "boolean")
                     menu.setDisabled(disabled);
-                if (min !== null)
+                if (typeof min === "number")
                     menu.setMinValues(min);
-                if (max !== null)
+                if (typeof max === "number")
                     menu.setMaxValues(max);
                 if (channels.length)
-                    menu.setDefaultChannels(channels);
-                console.log(placeholder, disabled, min, max, channels);
+                    menu.setDefaultChannels(channels.filter(x => x));
                 break;
             }
         }
