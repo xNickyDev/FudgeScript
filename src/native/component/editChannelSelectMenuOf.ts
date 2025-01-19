@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$editChannelSelectMenuOf",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Edits a channel select menu of a message, returns bool",
     unwrap: true,
     brackets: true,
@@ -79,10 +79,10 @@ export default new NativeFunction({
                 menu.setCustomId(id)
                 
                 if (placeholder) menu.setPlaceholder(placeholder)
-                if (disabled !== null) menu.setDisabled(disabled)
-                if (min !== null) menu.setMinValues(min)
-                if (max !== null) menu.setMaxValues(max)
-                if (this.displayField(8)) menu.setDefaultChannels(channels)
+                if (typeof disabled === "boolean") menu.setDisabled(disabled)
+                if (typeof min === "number") menu.setMinValues(min)
+                if (typeof max === "number") menu.setMaxValues(max)
+                if (channels.length) menu.setDefaultChannels(channels.filter(x => x))
 
                 break
             }

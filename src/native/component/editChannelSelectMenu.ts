@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$editChannelSelectMenu",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Edits a channel select menu",
     unwrap: true,
     brackets: true,

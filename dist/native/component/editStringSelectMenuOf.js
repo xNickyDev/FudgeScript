@@ -73,11 +73,11 @@ exports.default = new structures_1.NativeFunction({
                 menu.setCustomId(id);
                 if (placeholder)
                     menu.setPlaceholder(placeholder);
-                if (disabled !== null)
+                if (typeof disabled === "boolean")
                     menu.setDisabled(disabled);
-                if (min !== null)
+                if (typeof min === "number")
                     menu.setMinValues(min);
-                if (max !== null)
+                if (typeof max === "number")
                     menu.setMaxValues(max);
                 break;
             }
