@@ -18,7 +18,6 @@ exports.default = new CustomEventHandler_1.CustomEventHandler({
                     extras: err,
                 });
             }
-            console.log(err);
         }
     },
 });

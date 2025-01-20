@@ -17,7 +17,6 @@ export default new CustomEventHandler({
                     extras: err,
                 })
             }
-            console.log(err)
         }
     },
 })

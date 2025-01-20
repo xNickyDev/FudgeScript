@@ -9,7 +9,7 @@ export interface IEvent<Events, T extends keyof Events> {
     intents?: GatewayIntentsString[];
 }
 export type CustomEvents = {
-    functionError: string;
+    functionError: unknown;
 };
 export type ExtendedEvents = ClientEvents & CustomEvents;
 export declare class BaseEventHandler<Events = Record<string, unknown[]>, T extends keyof Events = keyof Events> {

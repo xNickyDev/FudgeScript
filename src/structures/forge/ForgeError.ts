@@ -21,11 +21,10 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
 
     public constructor(fn: CompiledFunction | null, type: T, ...args: GetErrorArgs<T>) {
-        const err = ForgeError.make(fn, type, ...args)
-        super(err)
+        super(ForgeError.make(fn, type, ...args))
 
         // Emits the functionError event whenever an error is thrown
-        console.log(CustomEventEmitter.emit("functionError", err))
+        CustomEventEmitter.emit("functionError", { fn, type, ...args })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

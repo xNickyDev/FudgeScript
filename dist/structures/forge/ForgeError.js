@@ -19,10 +19,9 @@ var ErrorType;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
-        const err = ForgeError.make(fn, type, ...args);
-        super(err);
+        super(ForgeError.make(fn, type, ...args));
         // Emits the functionError event whenever an error is thrown
-        console.log(CustomEventHandler_1.CustomEventEmitter.emit("functionError", err));
+        CustomEventHandler_1.CustomEventEmitter.emit("functionError", { fn, type, ...args });
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);
