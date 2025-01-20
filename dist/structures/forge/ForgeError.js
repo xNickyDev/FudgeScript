@@ -21,7 +21,7 @@ class ForgeError extends Error {
     constructor(fn, type, ...args) {
         super(ForgeError.make(fn, type, ...args));
         // Emits the functionError event whenever an error is thrown
-        CustomEventHandler_1.CustomEventEmitter.emit("functionError", { fn, type, ...args });
+        CustomEventHandler_1.CustomEventEmitter.emit("functionError", { func: fn, type: type, args: args });
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

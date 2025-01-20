@@ -22,9 +22,9 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
 
     public constructor(fn: CompiledFunction | null, type: T, ...args: GetErrorArgs<T>) {
         super(ForgeError.make(fn, type, ...args))
-
+        
         // Emits the functionError event whenever an error is thrown
-        CustomEventEmitter.emit("functionError", { fn, type, ...args })
+        CustomEventEmitter.emit("functionError", { func: fn!, type: type, args: args })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {
