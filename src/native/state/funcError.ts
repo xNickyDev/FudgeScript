@@ -23,6 +23,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [prop, sep]) {
-        return this.success(ctx.runtime.extras)
+        return this.successJSON(ctx.runtime.extras)
     },
 })
