@@ -1,10 +1,10 @@
 import { ClientEvents, Interaction } from "discord.js"
-import { Context } from ".."
+import { Context, ExtendedEvents } from ".."
 import { IExtendedCompilationResult, Compiler, ForgeClient } from "../../core"
 import { ForgeError, ErrorType } from "../forge/ForgeError"
 
 
-export type CommandType = keyof ClientEvents | "functionError"
+export type CommandType = keyof ExtendedEvents
 export type RawExecutableCode = (ctx: Context) => Promise<unknown[] | null>
 
 export type CommandInteractionTypes = 

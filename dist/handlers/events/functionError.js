@@ -4,6 +4,7 @@ const core_1 = require("../../core");
 const CustomEventHandler_1 = require("../../structures/extended/CustomEventHandler");
 exports.default = new CustomEventHandler_1.CustomEventHandler({
     name: "functionError",
+    version: "2.2.0",
     description: "This event is fired when a function throws an error",
     listener: function (err) {
         const commands = this.commands.get("functionError");

@@ -55,7 +55,7 @@ export interface IRawForgeClientOptions extends ClientOptions {
     commands?: string
 
     /**
-     * The discord.js events our bot will use
+     * The events our bot will use
      */
     events?: CommandType[]
 
