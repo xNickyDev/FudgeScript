@@ -1,4 +1,4 @@
-import { GatewayIntentsString } from "discord.js";
+import { ClientEvents, GatewayIntentsString } from "discord.js";
 import { type ForgeClient } from "../../core/ForgeClient";
 export type AssertArgs<T> = T extends unknown[] ? T : never;
 export interface IEvent<Events, T extends keyof Events> {
@@ -8,6 +8,10 @@ export interface IEvent<Events, T extends keyof Events> {
     version?: string;
     intents?: GatewayIntentsString[];
 }
+export type CustomEvents = {
+    functionError: string;
+};
+export type ExtendedEvents = ClientEvents & CustomEvents;
 export declare class BaseEventHandler<Events = Record<string, unknown[]>, T extends keyof Events = keyof Events> {
     readonly data: IEvent<Events, T>;
     constructor(data: IEvent<Events, T>);

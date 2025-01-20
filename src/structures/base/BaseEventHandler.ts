@@ -11,6 +11,12 @@ export interface IEvent<Events, T extends keyof Events> {
     intents?: GatewayIntentsString[]
 }
 
+export type CustomEvents = {
+    functionError: string
+}
+
+export type ExtendedEvents = ClientEvents & CustomEvents
+
 export class BaseEventHandler<Events = Record<string, unknown[]>, T extends keyof Events = keyof Events> {
     public constructor(public readonly data: IEvent<Events, T>) {}
 

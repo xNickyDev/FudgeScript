@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForgeError = exports.ErrorType = void 0;
-const events_1 = require("events");
+const CustomEventHandler_1 = require("../extended/CustomEventHandler");
 var ErrorType;
 (function (ErrorType) {
     ErrorType["InvalidArgType"] = "Given value $1 for argument $2 is not of type $3";
@@ -19,10 +19,10 @@ var ErrorType;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
-        super(ForgeError.make(fn, type, ...args));
+        const err = ForgeError.make(fn, type, ...args);
+        super(err);
         // Emits the functionError event whenever an error is thrown
-        new events_1.EventEmitter().emit("functionError", { fn, type, ...args });
-        console.log("functionError", type);
+        console.log(CustomEventHandler_1.CustomEventEmitter.emit("functionError", err));
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

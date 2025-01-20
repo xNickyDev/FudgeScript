@@ -22,8 +22,11 @@ class EventManager {
         for (const eventType of events.flat()) {
             EventManager.Loaded[name] ??= {};
             const event = EventManager.Loaded[name][eventType];
-            if (!event)
-                throw new Error(`Event ${name} => ${eventType} is not supported.`);
+            if (!event) {
+                if (!(eventType in {})) {
+                    throw new Error(`Event ${name} => ${eventType} is not supported.`);
+                }
+            }
             if (this.events.get(name)?.has(eventType))
                 continue;
             EventManager.Loaded[name][eventType] = event;

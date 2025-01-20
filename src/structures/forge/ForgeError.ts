@@ -1,5 +1,5 @@
 import { CompiledFunction } from "../@internal/CompiledFunction"
-import { EventEmitter } from "events"
+import { CustomEventEmitter } from "../extended/CustomEventHandler"
 
 export type GetErrorArgs<T extends string> = T extends `${infer L}$${infer R}` ? [unknown, ...GetErrorArgs<R>] : []
 
@@ -21,11 +21,11 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
 
     public constructor(fn: CompiledFunction | null, type: T, ...args: GetErrorArgs<T>) {
-        super(ForgeError.make(fn, type, ...args))
+        const err = ForgeError.make(fn, type, ...args)
+        super(err)
 
         // Emits the functionError event whenever an error is thrown
-        new EventEmitter().emit("functionError", { fn, type, ...args })
-        console.log("functionError", type)
+        console.log(CustomEventEmitter.emit("functionError", err))
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

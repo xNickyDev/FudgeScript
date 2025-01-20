@@ -3,7 +3,7 @@ import { type ForgeClient } from "../core/ForgeClient"
 import { CommandType } from "../structures/base/BaseCommand"
 import { readdirSync } from "fs"
 import recursiveReaddirSync from "../functions/recursiveReaddirSync"
-import { BaseEventHandler } from "../structures"
+import { BaseEventHandler, CustomEvents } from "../structures"
 
 export const NativeEventName = "native"
 
@@ -23,7 +23,11 @@ export class EventManager {
         for (const eventType of events.flat()) {
             EventManager.Loaded[name] ??= {}
             const event = EventManager.Loaded[name]![eventType]
-            if (!event) throw new Error(`Event ${name} => ${eventType} is not supported.`)
+            if (!event) {
+                if (!(eventType in ({} as CustomEvents))) {
+                    throw new Error(`Event ${name} => ${eventType} is not supported.`)
+                }
+            }
             if (this.events.get(name)?.has(eventType)) continue
             EventManager.Loaded[name]![eventType] = event
             this.events.ensure(name, () => new Collection()).set(eventType, event)
