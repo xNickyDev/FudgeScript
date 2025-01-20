@@ -2,11 +2,11 @@ import { Interpreter } from "../../core"
 import { CustomEventHandler } from "../../structures/extended/CustomEventHandler"
 
 export default new CustomEventHandler({
-    name: "functionError",
+    name: "forgeError",
     version: "2.2.0",
-    description: "This event is fired when a function throws an error",
+    description: "This event is fired when a custom forge error is thrown",
     listener: function (err) {
-        const commands = this.commands.get("functionError")
+        const commands = this.commands.get("forgeError")
         if (commands.length) {
             for (const command of commands) {
                 Interpreter.run({

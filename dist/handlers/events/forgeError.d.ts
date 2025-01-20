@@ -1,4 +1,4 @@
 import { CustomEventHandler } from "../../structures/extended/CustomEventHandler";
-declare const _default: CustomEventHandler<"functionError">;
+declare const _default: CustomEventHandler<"forgeError">;
 export default _default;
-//# sourceMappingURL=functionError.d.ts.map
+//# sourceMappingURL=forgeError.d.ts.map

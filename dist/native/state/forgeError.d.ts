@@ -12,4 +12,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.String;
 }], true>;
 export default _default;
-//# sourceMappingURL=funcError.d.ts.map
+//# sourceMappingURL=forgeError.d.ts.map

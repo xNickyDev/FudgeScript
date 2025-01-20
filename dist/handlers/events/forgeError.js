@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("../../core");
 const CustomEventHandler_1 = require("../../structures/extended/CustomEventHandler");
 exports.default = new CustomEventHandler_1.CustomEventHandler({
-    name: "functionError",
+    name: "forgeError",
     version: "2.2.0",
-    description: "This event is fired when a function throws an error",
+    description: "This event is fired when a custom forge error is thrown",
     listener: function (err) {
-        const commands = this.commands.get("functionError");
+        const commands = this.commands.get("forgeError");
         if (commands.length) {
             for (const command of commands) {
                 core_1.Interpreter.run({
@@ -21,4 +21,4 @@ exports.default = new CustomEventHandler_1.CustomEventHandler({
         }
     },
 });
-//# sourceMappingURL=functionError.js.map
+//# sourceMappingURL=forgeError.js.map

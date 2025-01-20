@@ -12,7 +12,7 @@ export interface IEvent<Events, T extends keyof Events> {
 }
 
 export type CustomEvents = {
-    functionError: unknown
+    forgeError: unknown
 }
 
 export type ExtendedEvents = ClientEvents & CustomEvents

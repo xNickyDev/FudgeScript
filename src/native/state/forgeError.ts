@@ -1,9 +1,9 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$funcError",
+    name: "$forgeError",
     version: "2.2.0",
-    description: "Retrieves data from an event whose context was a function error event",
+    description: "Retrieves data from an event whose context was a forge error event",
     brackets: true,
     unwrap: true,
     output: ArgType.Unknown,

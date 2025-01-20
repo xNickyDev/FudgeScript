@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$funcError",
+    name: "$forgeError",
     version: "2.2.0",
-    description: "Retrieves data from an event whose context was a function error event",
+    description: "Retrieves data from an event whose context was a forge error event",
     brackets: true,
     unwrap: true,
     output: structures_1.ArgType.Unknown,
@@ -27,4 +27,4 @@ exports.default = new structures_1.NativeFunction({
         return this.successJSON(ctx.runtime.extras);
     },
 });
-//# sourceMappingURL=funcError.js.map
+//# sourceMappingURL=forgeError.js.map
