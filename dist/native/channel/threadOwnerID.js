@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$threadOwnerID",
+    version: "2.2.0",
     description: "Returns the owner of the thread",
     brackets: false,
     unwrap: true,
@@ -19,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx, [channel]) {
         const thread = (channel ?? ctx.channel);
-        return this.success(thread.ownerId);
+        return this.success(thread?.ownerId);
     },
 });
 //# sourceMappingURL=threadOwnerID.js.map
