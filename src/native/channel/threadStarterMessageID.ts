@@ -1,4 +1,4 @@
-import { BaseChannel, ThreadChannel } from "discord.js"
+import { BaseChannel, Message, ThreadChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -19,9 +19,10 @@ export default new NativeFunction({
     ],
     output: ArgType.Message,
     async execute(ctx, [channel]) {
-        const thread = (channel ?? ctx.channel) as ThreadChannel | undefined
-        const message = await thread?.fetchStarterMessage().catch(ctx.noop)
-        
-        return this.success(message?.id)
+        const thread = (channel ?? ctx.channel) as ThreadChannel
+        if (!thread.isThread()) return this.success()
+
+        const message = await thread.fetchStarterMessage().catch(ctx.noop)
+        return this.success(message instanceof Message ? message.id : null)
     },
 })
