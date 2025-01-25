@@ -25,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [g, sub]) {
-        const commands = await ctx.client.application.commands.fetch(g?.id).catch(ctx.noop);
+        const commands = await ctx.client.application.commands.fetch({ guildId: g?.id }).catch(ctx.noop);
         if (!commands)
             return this.success(0);
         if (sub) {
