@@ -31,7 +31,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [json]) {
         const components = Array.isArray(json)
-            ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row.map((x) => loadComponent(x))))
+            ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(Array.isArray(row) ? row.map((x) => loadComponent(x)) : [loadComponent(row)]))
             : [new discord_js_1.ActionRowBuilder().addComponents(loadComponent(json))];
         ctx.container.components.push(...components);
         return this.success();

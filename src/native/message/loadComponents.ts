@@ -43,7 +43,7 @@ export default new NativeFunction({
     ],
     execute(ctx, [json]) {
         const components = Array.isArray(json)
-            ? json.map((row) => new ActionRowBuilder().addComponents(row.map((x: any) => loadComponent(x))))
+            ? json.map((row) => new ActionRowBuilder().addComponents(Array.isArray(row) ? row.map((x: any) => loadComponent(x)) : [loadComponent(row)]))
             : [new ActionRowBuilder().addComponents(loadComponent(json))]
             
         ctx.container.components.push(...components)
