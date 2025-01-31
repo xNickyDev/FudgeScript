@@ -8,7 +8,6 @@ import {
     RoleSelectMenuBuilder,
     StringSelectMenuBuilder,
     UserSelectMenuBuilder,
-    APIMessageComponent,
 } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
@@ -43,7 +42,9 @@ export default new NativeFunction({
     ],
     execute(ctx, [json]) {
         const components = Array.isArray(json)
-            ? json.map((row) => new ActionRowBuilder().addComponents(Array.isArray(row) ? row.map((x: any) => loadComponent(x)) : [loadComponent(row)]))
+            ? json.length
+                ? json.map((row) => new ActionRowBuilder().addComponents(row.map((x: any) => loadComponent(x))))
+                : [new ActionRowBuilder().addComponents(json.map((x) => loadComponent(x)))]
             : [new ActionRowBuilder().addComponents(loadComponent(json))]
             
         ctx.container.components.push(...components)
