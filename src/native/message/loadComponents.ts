@@ -7,7 +7,7 @@ import {
     ButtonBuilder,
     ComponentType,
     EmbedBuilder,
-    SelectMenuBuilder,
+    StringSelectMenuBuilder,
 } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
@@ -33,7 +33,7 @@ export default new NativeFunction({
                 ...json.map((x) =>
                     new ActionRowBuilder().addComponents(
                         (x as any).map((x: any) =>
-                            x.type === ComponentType.Button ? ButtonBuilder.from(x) : SelectMenuBuilder.from(x)
+                            x.type === ComponentType.Button ? ButtonBuilder.from(x) : StringSelectMenuBuilder.from(x)
                         )
                     )
                 )
@@ -43,7 +43,7 @@ export default new NativeFunction({
                 new ActionRowBuilder().addComponents(
                     json.type === ComponentType.Button
                         ? ButtonBuilder.from(json as unknown as APIButtonComponent)
-                        : SelectMenuBuilder.from(json as any)
+                        : StringSelectMenuBuilder.from(json as any)
                 )
             )
         }

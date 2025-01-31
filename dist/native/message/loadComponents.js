@@ -20,12 +20,12 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [json]) {
         if (Array.isArray(json)) {
-            ctx.container.components.push(...json.map((x) => new discord_js_1.ActionRowBuilder().addComponents(x.map((x) => x.type === discord_js_1.ComponentType.Button ? discord_js_1.ButtonBuilder.from(x) : discord_js_1.SelectMenuBuilder.from(x)))));
+            ctx.container.components.push(...json.map((x) => new discord_js_1.ActionRowBuilder().addComponents(x.map((x) => x.type === discord_js_1.ComponentType.Button ? discord_js_1.ButtonBuilder.from(x) : discord_js_1.StringSelectMenuBuilder.from(x)))));
         }
         else {
             ctx.container.components.push(new discord_js_1.ActionRowBuilder().addComponents(json.type === discord_js_1.ComponentType.Button
                 ? discord_js_1.ButtonBuilder.from(json)
-                : discord_js_1.SelectMenuBuilder.from(json)));
+                : discord_js_1.StringSelectMenuBuilder.from(json)));
         }
         return this.success();
     },
