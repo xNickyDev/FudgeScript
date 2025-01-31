@@ -21,7 +21,7 @@ const ComponentBuilders = {
 }
 
 function loadComponent(x: any) {
-    return ComponentBuilders[x.type as ComponentType].from(x)
+    return ComponentBuilders[x.type as ComponentType]?.from(x)
 }
 
 export default new NativeFunction({

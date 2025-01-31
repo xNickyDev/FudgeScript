@@ -11,7 +11,7 @@ const ComponentBuilders = {
     [discord_js_1.ComponentType.MentionableSelect]: discord_js_1.MentionableSelectMenuBuilder,
 };
 function loadComponent(x) {
-    return ComponentBuilders[x.type].from(x);
+    return ComponentBuilders[x.type]?.from(x);
 }
 exports.default = new structures_1.NativeFunction({
     name: "$loadComponents",
