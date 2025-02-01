@@ -6,9 +6,19 @@ exports.default = new structures_1.NativeFunction({
     version: "1.5.0",
     description: "Returns whether this entitlement is active",
     output: structures_1.ArgType.Boolean,
-    unwrap: false,
-    execute(ctx) {
-        return this.success(ctx.entitlement?.isActive());
+    unwrap: true,
+    brackets: false,
+    args: [
+        {
+            name: "entitlement ID",
+            description: "The id of the entitlement",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.Entitlement
+        }
+    ],
+    execute(ctx, [ent]) {
+        return this.success((ent ?? ctx.entitlement)?.isActive());
     },
 });
 //# sourceMappingURL=entitlementIsActive.js.map

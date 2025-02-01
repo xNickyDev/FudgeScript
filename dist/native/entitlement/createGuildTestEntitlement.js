@@ -23,7 +23,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String
         }
     ],
-    output: structures_1.ArgType.String,
+    output: structures_1.ArgType.Entitlement,
     async execute(ctx, [guild, sku]) {
         const entitlement = await ctx.client.application.entitlements.createTest({
             guild: guild,

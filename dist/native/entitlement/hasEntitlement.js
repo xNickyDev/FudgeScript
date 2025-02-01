@@ -12,16 +12,16 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     args: [
         {
-            name: "entitlement name",
-            description: "The name of the entitlement to validate",
+            name: "entitlement id",
+            description: "The id of the entitlement to validate",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Entitlement
         }
     ],
     output: structures_1.ArgType.Boolean,
-    execute(ctx, [name]) {
-        return this.success(ctx.interaction?.entitlements.has(name));
+    execute(ctx, [ent]) {
+        return this.success(ctx.interaction?.entitlements.has(ent.id));
     },
 });
 //# sourceMappingURL=hasEntitlement.js.map

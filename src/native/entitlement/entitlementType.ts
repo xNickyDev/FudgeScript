@@ -6,8 +6,18 @@ export default new NativeFunction({
     version: "1.5.0",
     description: "Returns this entitlement's type",
     output: EntitlementType,
-    unwrap: false,
-    execute(ctx) {
-        return this.success(EntitlementType[ctx.entitlement?.type!])
+    unwrap: true,
+    brackets: false,
+    args: [
+        {
+            name: "entitlement ID",
+            description: "The id of the entitlement",
+            rest: false,
+            required: true,
+            type: ArgType.Entitlement
+        }
+    ],
+    execute(ctx, [ent]) {
+        return this.success(EntitlementType[(ent ?? ctx.entitlement)?.type!])
     },
 })

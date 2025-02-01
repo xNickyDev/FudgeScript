@@ -13,7 +13,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The entitlement to delete",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Entitlement
         }
     ],
     output: structures_1.ArgType.Boolean,

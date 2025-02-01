@@ -11,15 +11,15 @@ export default new NativeFunction({
     brackets: true,
     args: [
         {
-            name: "entitlement name",
-            description: "The name of the entitlement to validate",
+            name: "entitlement id",
+            description: "The id of the entitlement to validate",
             rest: false,
             required: true,
-            type: ArgType.String
+            type: ArgType.Entitlement
         }
     ],
     output: ArgType.Boolean,
-    execute(ctx, [ name ]) {
-        return this.success(ctx.interaction?.entitlements.has(name))
+    execute(ctx, [ ent ]) {
+        return this.success(ctx.interaction?.entitlements.has(ent.id))
     },
 })

@@ -490,6 +490,32 @@ class Arg {
             type: NativeFunction_1.ArgType.DefaultReactionEmoji,
         });
     }
+    static optionalEntitlement(name = "entitlement ID", desc = "The entitlement to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.Entitlement
+        });
+    }
+    static restEntitlement(name = "entitlement IDs", desc = "The entitlements to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.Entitlement
+        });
+    }
+    static requiredEntitlement(name = "entitlement ID", desc = "The entitlement to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.Entitlement
+        });
+    }
     static restAttachment(name = "attachments", desc = "The attachments to use") {
         return Arg.create({
             name,

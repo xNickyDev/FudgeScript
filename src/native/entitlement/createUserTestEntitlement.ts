@@ -23,7 +23,7 @@ export default new NativeFunction({
             type: ArgType.String
         }
     ],
-    output: ArgType.String,
+    output: ArgType.Entitlement,
     async execute(ctx, [ user, sku ]) {
         const entitlement = await ctx.client.application.entitlements.createTest({
             user: user,

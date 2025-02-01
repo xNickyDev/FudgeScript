@@ -5,6 +5,7 @@ import {
     BaseChannel,
     DefaultReactionEmoji,
     Emoji,
+    Entitlement,
     Guild,
     GuildEmoji,
     GuildForumTag,
@@ -62,7 +63,8 @@ export enum ArgType {
     Member,
     ApplicationEmoji,
     AutomodRule,
-    DefaultReactionEmoji
+    DefaultReactionEmoji,
+    Entitlement
 }
 
 export interface IArg<
@@ -206,6 +208,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? DefaultReactionEmoji
     : T extends ArgType.AutomodRule
     ? AutoModerationRule
+    : T extends ArgType.Entitlement
+    ? Entitlement
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true

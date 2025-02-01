@@ -13,7 +13,7 @@ export default new NativeFunction({
             description: "The entitlement to delete",
             rest: false,
             required: true,
-            type: ArgType.String
+            type: ArgType.Entitlement
         }
     ],
     output: ArgType.Boolean,

@@ -12,8 +12,8 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     args: [
         {
-            name: "entitlement name",
-            description: "The name of the entitlements to validate",
+            name: "entitlement names",
+            description: "The names of the entitlements to validate",
             rest: true,
             required: true,
             type: structures_1.ArgType.String

@@ -294,6 +294,10 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return ctx.client.guilds.cache.get(str)
     }
 
+    private resolveEntitlement(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        return ctx.client.application.entitlements.cache.get(str)
+    }
+
     private resolveJson(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         return parseJSON(str)
     }

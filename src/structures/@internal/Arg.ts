@@ -543,6 +543,35 @@ export class Arg {
         })
     }
 
+    public static optionalEntitlement(name: string = "entitlement ID", desc: string = "The entitlement to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: ArgType.Entitlement
+        })
+    }
+
+    public static restEntitlement(name: string = "entitlement IDs", desc: string = "The entitlements to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: ArgType.Entitlement
+        })
+    }
+
+    public static requiredEntitlement(name: string = "entitlement ID", desc: string = "The entitlement to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: ArgType.Entitlement
+        })
+    }
+
     public static restAttachment(name: string = "attachments", desc: string = "The attachments to use") {
         return Arg.create({
             name,

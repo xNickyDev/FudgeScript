@@ -7,17 +7,17 @@ export default new NativeFunction({
     unwrap: true,
     args: [
         {
-            name: "entitlement name",
-            description: "The name of the entitlement to consume",
+            name: "entitlement ID",
+            description: "The id of the entitlement to consume",
             rest: false,
             required: true,
-            type: ArgType.String
+            type: ArgType.Entitlement
         }
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [ name ]) {
+    async execute(ctx, [ ent ]) {
         return this.success(
-            ctx.interaction?.entitlements.get(name)?.consume().then(() => true).catch(ctx.noop) ?? false
+            ctx.interaction?.entitlements.get(ent.id)?.consume().then(() => true).catch(ctx.noop) ?? false
         )
     },
 })

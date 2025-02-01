@@ -231,6 +231,9 @@ class CompiledFunction {
     resolveGuild(ctx, arg, str, ref) {
         return ctx.client.guilds.cache.get(str);
     }
+    resolveEntitlement(ctx, arg, str, ref) {
+        return ctx.client.application.entitlements.cache.get(str);
+    }
     resolveJson(ctx, arg, str, ref) {
         return (0, parseJSON_1.default)(str);
     }
