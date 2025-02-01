@@ -12,7 +12,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     args: [
         {
-            name: "entitlement id",
+            name: "entitlement ID",
             description: "The id of the entitlement to validate",
             rest: false,
             required: true,
