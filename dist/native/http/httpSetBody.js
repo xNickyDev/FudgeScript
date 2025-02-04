@@ -11,13 +11,13 @@ exports.default = new NativeFunction_1.NativeFunction({
             description: "the JSON body",
             rest: false,
             required: true,
-            type: NativeFunction_1.ArgType.Json,
+            type: NativeFunction_1.ArgType.String,
         },
     ],
     unwrap: true,
     brackets: true,
     execute(ctx, [json]) {
-        ctx.http.body = JSON.stringify(json);
+        ctx.http.body = json;
         return this.success();
     },
 });

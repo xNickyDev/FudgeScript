@@ -11,13 +11,13 @@ export default new NativeFunction({
             description: "the JSON body",
             rest: false,
             required: true,
-            type: ArgType.Json,
+            type: ArgType.String,
         },
     ],
     unwrap: true,
     brackets: true,
     execute(ctx, [json]) {
-        ctx.http.body = JSON.stringify(json)
+        ctx.http.body = json
         return this.success()
     },
 })
