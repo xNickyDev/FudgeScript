@@ -23,7 +23,9 @@ export default new NativeFunction({
         }
     ],
     output: ArgType.Boolean,
-    execute(ctx, [ env, key ]) {
-        return this.success(Object.hasOwn(ctx.getEnvironmentKey(env) as object, key))
+    execute(ctx, [ name, key ]) {
+        const json = ctx.getEnvironmentKey(name)
+        if (!json) return this.success()
+        return this.success(Object.hasOwn(json, key))
     }
 })
