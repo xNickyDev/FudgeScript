@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$jsonHas",
+    version: "2.2.0",
     description: "Returns whether a key exists in a JSON object",
     brackets: true,
     unwrap: true,
