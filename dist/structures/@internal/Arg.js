@@ -464,32 +464,6 @@ class Arg {
             pointer: 0
         });
     }
-    static restDefaultReactionEmoji(name = "emojis", desc = "The emojis to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: true,
-            required: true,
-            type: NativeFunction_1.ArgType.DefaultReactionEmoji,
-        });
-    }
-    static optionalDefaultReactionEmoji(name = "emoji", desc = "The emoji to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: false,
-            type: NativeFunction_1.ArgType.DefaultReactionEmoji,
-        });
-    }
-    static requiredDefaultReactionEmoji(name = "emoji", desc = "The emoji to use") {
-        return Arg.create({
-            name,
-            description: desc,
-            rest: false,
-            required: true,
-            type: NativeFunction_1.ArgType.DefaultReactionEmoji,
-        });
-    }
     static optionalEntitlement(name = "entitlement ID", desc = "The entitlement to use") {
         return Arg.create({
             name,

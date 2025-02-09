@@ -3,7 +3,6 @@ import {
     AttachmentBuilder,
     AutoModerationRule,
     BaseChannel,
-    DefaultReactionEmoji,
     Emoji,
     Entitlement,
     Guild,
@@ -63,7 +62,6 @@ export enum ArgType {
     Member,
     ApplicationEmoji,
     AutomodRule,
-    DefaultReactionEmoji,
     Entitlement
 }
 
@@ -204,8 +202,6 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? ApplicationEmoji
     : T extends ArgType.Emoji
     ? Emoji
-    : T extends ArgType.DefaultReactionEmoji
-    ? DefaultReactionEmoji
     : T extends ArgType.AutomodRule
     ? AutoModerationRule
     : T extends ArgType.Entitlement

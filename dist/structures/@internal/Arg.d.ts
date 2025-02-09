@@ -52,9 +52,6 @@ export declare class Arg {
     static restEmoji(name?: string, desc?: string): IArg<ArgType.Emoji, true, true, EnumLike>;
     static optionalEmoji(name?: string, desc?: string): IArg<ArgType.Emoji, boolean, false, EnumLike>;
     static requiredEmoji(name?: string, desc?: string): IArg<ArgType.Emoji, true, false, EnumLike>;
-    static restDefaultReactionEmoji(name?: string, desc?: string): IArg<ArgType.DefaultReactionEmoji, true, true, EnumLike>;
-    static optionalDefaultReactionEmoji(name?: string, desc?: string): IArg<ArgType.DefaultReactionEmoji, boolean, false, EnumLike>;
-    static requiredDefaultReactionEmoji(name?: string, desc?: string): IArg<ArgType.DefaultReactionEmoji, true, false, EnumLike>;
     static optionalEntitlement(name?: string, desc?: string): IArg<ArgType.Entitlement, boolean, false, EnumLike>;
     static restEntitlement(name?: string, desc?: string): IArg<ArgType.Entitlement, true, true, EnumLike>;
     static requiredEntitlement(name?: string, desc?: string): IArg<ArgType.Entitlement, true, false, EnumLike>;

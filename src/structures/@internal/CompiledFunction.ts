@@ -341,16 +341,6 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.resolveGuildEmoji(ctx, arg, id, ref) ?? await this.resolveApplicationEmoji(ctx, arg, id, ref)
     }
 
-    private async resolveDefaultReactionEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        const parsed = parseEmoji(str)
-        if (!parsed) return
-        if (parsed.id) return str.toString()
-
-        const id = parsed?.id ?? str
-        if (!CompiledFunction.IdRegex.test(id)) return
-        return ctx.client.emojis.cache.get(id)
-    }
-
     private resolveForumTag(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         return (this.resolvePointer(arg, ref, ctx.channel) as ForumChannel)?.availableTags.find(
             (x) => x.id === str || x.name === str
