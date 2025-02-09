@@ -41,6 +41,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, emoji, reason]) {
         const parsed = parseDefaultReactionEmoji(ctx, emoji);
+        console.log(parsed);
         return this.success(!!(chan.setDefaultReactionEmoji(parsed, reason || undefined)));
     },
 });
