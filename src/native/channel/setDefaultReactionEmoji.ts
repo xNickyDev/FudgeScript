@@ -10,7 +10,7 @@ function parseDefaultReactionEmoji(ctx: Context, emoji: string | null) {
     const parsed = parseEmoji(emoji)
     if (parsed?.id) return ctx.guild?.emojis.cache.get(parsed.id)
     
-    return { id: "", name: parsed?.name ? parsed.name : "" }
+    return parsed?.name ? { id: null, name: parsed.name } : null
 }
 
 export default new NativeFunction({

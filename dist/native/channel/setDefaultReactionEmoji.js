@@ -11,7 +11,7 @@ function parseDefaultReactionEmoji(ctx, emoji) {
     const parsed = (0, discord_js_1.parseEmoji)(emoji);
     if (parsed?.id)
         return ctx.guild?.emojis.cache.get(parsed.id);
-    return { id: "", name: parsed?.name ? parsed.name : "" };
+    return parsed?.name ? { id: null, name: parsed.name } : null;
 }
 exports.default = new structures_1.NativeFunction({
     name: "$setDefaultReactionEmoji",
