@@ -42,7 +42,9 @@ export default new NativeFunction({
         }
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [ chan, emoji, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji) || null, reason || undefined)))
+    async execute(ctx, [ channel, emoji, reason ]) {
+        const chan = channel as ThreadOnlyChannel
+        if (emoji) chan.setDefaultReactionEmoji(null)
+        return this.success(!!(chan.setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji) || null, reason || undefined)))
     },
 })
