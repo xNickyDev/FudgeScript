@@ -2,6 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+function parseDefaultReactionEmoji(ctx, emoji) {
+    if (!emoji)
+        return null;
+    const fromUrl = structures_1.CompiledFunction.CDNIdRegex.exec(emoji);
+    if (fromUrl !== null)
+        return ctx.guild?.emojis.cache.get(fromUrl[2]);
+    const parsed = (0, discord_js_1.parseEmoji)(emoji);
+    if (parsed?.id)
+        return ctx.guild?.emojis.cache.get(parsed.id);
+    return { id: "", name: parsed?.name ? parsed.name : "" };
+}
 exports.default = new structures_1.NativeFunction({
     name: "$setDefaultReactionEmoji",
     version: "2.2.0",
@@ -32,8 +43,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, emoji, reason]) {
-        const parsed = emoji ? (0, discord_js_1.parseEmoji)(emoji) : null;
-        return this.success(!!(chan.setDefaultReactionEmoji(parsed ? { id: `${parsed.id}`, name: parsed.name } : null, reason || undefined)));
+        return this.success(!!(chan.setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji) || null, reason || undefined)));
     },
 });
 //# sourceMappingURL=setDefaultReactionEmoji.js.map

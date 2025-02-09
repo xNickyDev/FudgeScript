@@ -1,5 +1,17 @@
 import { BaseChannel, parseEmoji, ThreadOnlyChannel } from "discord.js"
-import { ArgType, NativeFunction } from "../../structures"
+import { ArgType, CompiledFunction, Context, NativeFunction } from "../../structures"
+
+function parseDefaultReactionEmoji(ctx: Context, emoji: string | null) {
+    if (!emoji) return null
+
+    const fromUrl = CompiledFunction.CDNIdRegex.exec(emoji)
+    if (fromUrl !== null) return ctx.guild?.emojis.cache.get(fromUrl[2])
+    
+    const parsed = parseEmoji(emoji)
+    if (parsed?.id) return ctx.guild?.emojis.cache.get(parsed.id)
+    
+    return { id: "", name: parsed?.name ? parsed.name : "" }
+}
 
 export default new NativeFunction({
     name: "$setDefaultReactionEmoji",
@@ -31,7 +43,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, emoji, reason ]) {
-        const parsed = emoji ? parseEmoji(emoji) : null
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parsed ? { id: `${parsed.id}`, name: parsed.name } : null, reason || undefined)))
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji) || null, reason || undefined)))
     },
 })
