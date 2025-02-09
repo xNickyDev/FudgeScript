@@ -39,11 +39,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [channel, emoji, reason]) {
-        const chan = channel;
-        if (emoji)
-            chan.setDefaultReactionEmoji(null);
-        return this.success(!!(chan.setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji), reason || undefined)));
+    async execute(ctx, [chan, emoji, reason]) {
+        const parsed = parseDefaultReactionEmoji(ctx, emoji);
+        return this.success(!!(chan.setDefaultReactionEmoji(parsed, reason || undefined)));
     },
 });
 //# sourceMappingURL=setDefaultReactionEmoji.js.map
