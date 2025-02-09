@@ -6,8 +6,8 @@ function parseDefaultReactionEmoji(ctx, str) {
     if (!str)
         return null;
     const parsed = (0, discord_js_1.parseEmoji)(str);
-    const id = parsed?.id ?? structures_1.CompiledFunction.CDNIdRegex.exec(str)?.[2];
-    const emoji = id ? ctx.guild?.emojis.cache.get(id) : parsed;
+    const id = structures_1.CompiledFunction.CDNIdRegex.exec(str)?.[2] ?? parsed?.id;
+    const emoji = ctx.client.emojis.cache.get(id ?? str) ?? parsed;
     return emoji ? { id: emoji.id ?? null, name: emoji.name } : null;
 }
 exports.default = new structures_1.NativeFunction({
@@ -42,7 +42,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [chan, emoji, reason]) {
         const parsed = parseDefaultReactionEmoji(ctx, emoji);
         console.log(parsed);
-        return this.success(!!(chan.setDefaultReactionEmoji(parsed, reason || undefined)));
+        return this.success(!!(chan.setDefaultReactionEmoji(parsed, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setDefaultReactionEmoji.js.map

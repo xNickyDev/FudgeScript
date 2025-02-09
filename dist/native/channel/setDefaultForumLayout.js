@@ -34,7 +34,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, layout, reason]) {
-        return this.success(!!(chan.setDefaultForumLayout(layout, reason || undefined)));
+        return this.success(!!(chan.setDefaultForumLayout(layout, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setDefaultForumLayout.js.map

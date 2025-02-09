@@ -33,6 +33,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, sortOrder, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultSortOrder(sortOrder || null, reason || undefined)))
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultSortOrder(sortOrder || null, reason || undefined).catch(ctx.noop)))
     },
 })

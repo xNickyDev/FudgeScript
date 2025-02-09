@@ -5,9 +5,9 @@ function parseDefaultReactionEmoji(ctx: Context, str: string | null) {
     if (!str) return null
 
     const parsed = parseEmoji(str)
-    const id = parsed?.id ?? CompiledFunction.CDNIdRegex.exec(str)?.[2]
+    const id = CompiledFunction.CDNIdRegex.exec(str)?.[2] ?? parsed?.id
 
-    const emoji = id ? ctx.guild?.emojis.cache.get(id) : parsed
+    const emoji = ctx.client.emojis.cache.get(id ?? str) ?? parsed
     return emoji ? { id: emoji.id ?? null, name: emoji.name } : null
 }
 
@@ -43,6 +43,6 @@ export default new NativeFunction({
     async execute(ctx, [ chan, emoji, reason ]) {
         const parsed = parseDefaultReactionEmoji(ctx, emoji)
         console.log(parsed)
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parsed as DefaultReactionEmoji, reason || undefined)))
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parsed as DefaultReactionEmoji, reason || undefined).catch(ctx.noop)))
     },
 })

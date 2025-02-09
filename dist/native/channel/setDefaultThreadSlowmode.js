@@ -32,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, seconds, reason]) {
-        return this.success(!!(chan.setDefaultThreadRateLimitPerUser(seconds, reason || undefined)));
+        return this.success(!!(chan.setDefaultThreadRateLimitPerUser(seconds, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setDefaultThreadSlowmode.js.map

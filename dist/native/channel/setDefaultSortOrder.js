@@ -34,7 +34,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [chan, sortOrder, reason]) {
-        return this.success(!!(chan.setDefaultSortOrder(sortOrder || null, reason || undefined)));
+        return this.success(!!(chan.setDefaultSortOrder(sortOrder || null, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setDefaultSortOrder.js.map

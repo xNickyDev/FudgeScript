@@ -32,6 +32,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, seconds, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultThreadRateLimitPerUser(seconds, reason || undefined)))
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultThreadRateLimitPerUser(seconds, reason || undefined).catch(ctx.noop)))
     },
 })
