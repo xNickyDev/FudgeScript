@@ -3,7 +3,7 @@ import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$setDefaultThreadSlowmode",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Sets a forum's default slowmode for posts",
     unwrap: true,
     brackets: true,

@@ -3,7 +3,7 @@ import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$setDefaultForumLayout",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Sets a forum's default layout of posts",
     unwrap: true,
     brackets: true,

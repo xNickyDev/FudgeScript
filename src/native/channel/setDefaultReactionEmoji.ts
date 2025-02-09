@@ -1,9 +1,9 @@
-import { BaseChannel, ThreadOnlyChannel } from "discord.js"
+import { BaseChannel, parseEmoji, ThreadOnlyChannel } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$setDefaultReactionEmoji",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Sets a forum's default recation emoji for posts",
     unwrap: true,
     brackets: true,
@@ -20,8 +20,7 @@ export default new NativeFunction({
             name: "emoji",
             description: "The new default recation emoji",
             rest: false,
-            required: true,
-            type: ArgType.DefaultReactionEmoji,
+            type: ArgType.String,
         },
         {
             name: "reason",
@@ -32,6 +31,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, emoji, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(emoji, reason || undefined)))
+        const parsed = emoji ? parseEmoji(emoji) : null
+        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parsed ? { id: `${parsed.id}`, name: parsed.name } : null, reason || undefined)))
     },
 })

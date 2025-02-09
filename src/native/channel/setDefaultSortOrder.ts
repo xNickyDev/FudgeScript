@@ -3,7 +3,7 @@ import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$setDefaultSortOrder",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Sets a forum's default sort order of posts",
     unwrap: true,
     brackets: true,

@@ -3,14 +3,14 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$forumDefaultLayout",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Returns the default layout of a forum",
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "channel ID",
-            description: "The channel to get default layout of",
+            description: "The channel to get default layout from",
             rest: false,
             type: ArgType.Channel,
             check: (i: BaseChannel) => i.type === ChannelType.GuildForum,

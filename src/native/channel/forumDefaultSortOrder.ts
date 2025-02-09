@@ -3,14 +3,14 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$forumDefaultSortOrder",
-    version: "1.5.0",
+    version: "2.2.0",
     description: "Returns the default sort order of a forum",
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "channel ID",
-            description: "The channel to get default sort order of",
+            description: "The channel to get default sort order from",
             rest: false,
             type: ArgType.Channel,
             check: (i: BaseChannel) => i.isThreadOnly(),
