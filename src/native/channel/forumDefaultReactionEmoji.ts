@@ -1,4 +1,4 @@
-import { BaseChannel, parseEmoji, ThreadOnlyChannel } from "discord.js"
+import { BaseChannel, ThreadOnlyChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -20,7 +20,6 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx, [chan]) {
         const emoji = (chan as ThreadOnlyChannel)?.defaultReactionEmoji
-        const parsed = emoji ? ctx.client.emojis.cache.get(emoji.id!) : null
-        return this.success(parsed ? parsed.toString() : emoji?.name)
+        return this.success(emoji?.id ? ctx.client.emojis.cache.get(emoji.id)?.toString() : emoji?.name)
     },
 })
