@@ -8,7 +8,7 @@ function parseDefaultReactionEmoji(ctx, str) {
     const parsed = (0, discord_js_1.parseEmoji)(str);
     const id = structures_1.CompiledFunction.CDNIdRegex.exec(str)?.[2] ?? parsed?.id;
     const emoji = ctx.client.emojis.cache.get(id ?? str) ?? parsed;
-    return emoji ? { id: emoji.id ?? null, name: emoji.name } : null;
+    return emoji ? { id: emoji.id ?? null, name: emoji.id ? null : emoji.name } : null;
 }
 exports.default = new structures_1.NativeFunction({
     name: "$setDefaultReactionEmoji",
