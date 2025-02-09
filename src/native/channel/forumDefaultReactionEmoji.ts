@@ -20,7 +20,7 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx, [chan]) {
         const emoji = (chan as ThreadOnlyChannel)?.defaultReactionEmoji
-        const parsed = parseEmoji(emoji?.id! ?? emoji?.name)
-        return this.success(parsed ? (parsed.id ? `<${parsed.animated ? "a" : ""}:${parsed.name}:${parsed.id}>` : parsed.name) : null)
+        const parsed = emoji ? ctx.client.emojis.cache.get(emoji.id!) : null
+        return this.success(parsed ? parsed.toString() : emoji?.name)
     },
 })
