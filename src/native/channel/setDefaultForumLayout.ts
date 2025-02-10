@@ -33,6 +33,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, layout, reason ]) {
-        return this.success(!!((chan as ForumChannel).setDefaultForumLayout(layout, reason || undefined).catch(ctx.noop)))
+        return this.success(!!(await (chan as ForumChannel).setDefaultForumLayout(layout, reason || undefined).catch(ctx.noop)))
     },
 })

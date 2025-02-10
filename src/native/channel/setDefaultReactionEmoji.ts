@@ -1,7 +1,7 @@
 import { BaseChannel, DefaultReactionEmoji, parseEmoji, ThreadOnlyChannel } from "discord.js"
 import { ArgType, CompiledFunction, Context, NativeFunction } from "../../structures"
 
-function parseDefaultReactionEmoji(ctx: Context, str: string | null) {
+function parseDefaultReactionEmoji(ctx: Context, str: string | null): DefaultReactionEmoji | null {
     if (!str) return null
 
     const parsed = parseEmoji(str)
@@ -41,6 +41,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [ chan, emoji, reason ]) {
-        return this.success(!!((chan as ThreadOnlyChannel).setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji) as DefaultReactionEmoji, reason || undefined).catch(ctx.noop)))
+        return this.success(!!(await (chan as ThreadOnlyChannel).setDefaultReactionEmoji(parseDefaultReactionEmoji(ctx, emoji), reason || undefined).catch(ctx.noop)))
     },
 })

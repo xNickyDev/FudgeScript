@@ -36,6 +36,6 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [ ch, dur, reason ]) {
-        return this.success(!!((ch as ThreadChannel).setAutoArchiveDuration(dur, reason ?? undefined)))
+        return this.success(!!(await (ch as ThreadChannel).setAutoArchiveDuration(dur, reason || undefined).catch(ctx.noop)))
     },
 })

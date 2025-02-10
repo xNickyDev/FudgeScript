@@ -37,7 +37,7 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     async execute(ctx, [ch, dur, reason]) {
-        return this.success(!!(ch.setDefaultAutoArchiveDuration(dur, reason || undefined).catch(ctx.noop)));
+        return this.success(!!(await ch.setDefaultAutoArchiveDuration(dur, reason || undefined).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=setDefaultThreadArchiveDuration.js.map

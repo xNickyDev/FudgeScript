@@ -36,6 +36,6 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [ ch, dur, reason ]) {
-        return this.success(!!((ch as ForumChannel).setDefaultAutoArchiveDuration(dur, reason || undefined).catch(ctx.noop)))
+        return this.success(!!(await (ch as ForumChannel).setDefaultAutoArchiveDuration(dur, reason || undefined).catch(ctx.noop)))
     },
 })
