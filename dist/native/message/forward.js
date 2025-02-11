@@ -12,11 +12,10 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "channel ID",
-            description: "The channel to forward message to",
+            description: "The channel to pull message from",
             rest: false,
             required: true,
             type: structures_1.ArgType.Channel,
-            check: (i) => i.isTextBased() && i.type !== discord_js_1.ChannelType.GroupDM,
         },
         {
             name: "message ID",
@@ -24,11 +23,19 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             required: true,
             type: structures_1.ArgType.Message,
+            pointer: 0
+        },
+        {
+            name: "channel ID",
+            description: "The channel to forward message to",
+            rest: false,
+            type: structures_1.ArgType.Channel,
+            check: (i) => i.isTextBased() && i.type !== discord_js_1.ChannelType.GroupDM,
         },
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [channel, message]) {
-        return this.success(!!(await message.forward(channel).catch(ctx.noop)));
+    async execute(ctx, [, message, channel]) {
+        return this.success(!!(await message.forward((channel ?? ctx.channel)).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=forward.js.map

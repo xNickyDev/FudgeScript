@@ -11,11 +11,10 @@ export default new NativeFunction({
     args: [
         {
             name: "channel ID",
-            description: "The channel to forward message to",
+            description: "The channel to pull message from",
             rest: false,
             required: true,
             type: ArgType.Channel,
-            check: (i: BaseChannel) => i.isTextBased() && i.type !== ChannelType.GroupDM,
         },
         {
             name: "message ID",
@@ -23,10 +22,18 @@ export default new NativeFunction({
             rest: false,
             required: true,
             type: ArgType.Message,
+            pointer: 0
+        },
+        {
+            name: "channel ID",
+            description: "The channel to forward message to",
+            rest: false,
+            type: ArgType.Channel,
+            check: (i: BaseChannel) => i.isTextBased() && i.type !== ChannelType.GroupDM,
         },
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [channel, message]) {
-        return this.success(!!(await message.forward(channel as Exclude<TextBasedChannel, PartialGroupDMChannel>).catch(ctx.noop)))
+    async execute(ctx, [, message, channel]) {
+        return this.success(!!(await message.forward((channel ?? ctx.channel) as Exclude<TextBasedChannel, PartialGroupDMChannel>).catch(ctx.noop)))
     },
 })
