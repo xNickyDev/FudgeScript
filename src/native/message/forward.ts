@@ -5,6 +5,7 @@ export default new NativeFunction({
     name: "$forward",
     version: "2.2.0",
     description: "Forwards a message to another channel, returns bool",
+    aliases: ["$forwardMessage"],
     unwrap: true,
     brackets: true,
     args: [
