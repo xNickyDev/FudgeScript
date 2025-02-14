@@ -1,10 +1,10 @@
-import { BaseChannel, ChannelType, NewsChannel, TextChannelResolvable } from "discord.js"
+import { BaseChannel, ChannelType, Guild, NewsChannel, TextChannel } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$followChannel",
-    version: "1.5.0",
-    description: "Follows given announcement channel, returns bool",
+    version: "2.2.0",
+    description: "Follows given announcement channel, returns webhook id",
     brackets: true,
     unwrap: true,
     args: [
@@ -31,8 +31,8 @@ export default new NativeFunction({
             rest: false,
         }
     ],
-    output: ArgType.Boolean,
+    output: ArgType.String,
     async execute(ctx, [news, chan, reason]) {
-        return this.success(!!(await (news as NewsChannel).addFollower(chan as TextChannelResolvable, reason || undefined)))
+        return this.success("guild" in news ? (await (news.guild as Guild)?.channels.addFollower(news as NewsChannel, chan as TextChannel, reason || undefined).catch(ctx.noop)) : undefined)
     },
 })
