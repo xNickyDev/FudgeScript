@@ -16,7 +16,7 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Channel,
             required: true,
-            check: (i: BaseChannel) => i instanceof BaseGuildTextChannel,
+            check: (i: BaseChannel) => i.isTextBased(),
         },
         {
             name: "property",

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$webhookIsChannelFollower",
+    version: "2.2.0",
     description: "Checks whether given webhook is a channel follower",
     brackets: true,
     unwrap: true,

@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const array_1 = __importDefault(require("../../functions/array"));
 const webhook_1 = require("../../properties/webhook");
@@ -20,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Channel,
             required: true,
-            check: (i) => i instanceof discord_js_1.BaseGuildTextChannel,
+            check: (i) => i.isTextBased(),
         },
         {
             name: "property",
