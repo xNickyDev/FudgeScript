@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$followChannel",
+    version: "2.2.0",
     description: "Follows given announcement channel, returns webhook id",
     brackets: true,
     unwrap: true,
@@ -31,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
         }
     ],
-    output: structures_1.ArgType.String,
+    output: structures_1.ArgType.Webhook,
     async execute(ctx, [news, chan, reason]) {
         return this.success("guild" in news ? (await news.guild?.channels.addFollower(news, chan, reason || undefined).catch(ctx.noop)) : undefined);
     },

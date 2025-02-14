@@ -31,7 +31,7 @@ export default new NativeFunction({
             rest: false,
         }
     ],
-    output: ArgType.String,
+    output: ArgType.Webhook,
     async execute(ctx, [news, chan, reason]) {
         return this.success("guild" in news ? (await (news.guild as Guild)?.channels.addFollower(news as NewsChannel, chan as TextChannel, reason || undefined).catch(ctx.noop)) : undefined)
     },

@@ -8,7 +8,7 @@ export declare enum WebhookProperty {
     channelID = "channelID",
     guildID = "guildID",
     sourceChannelID = "sourceChannelID",
-    sourceGuildID = "sourceChannelID",
+    sourceGuildID = "sourceGuildID",
     timestamp = "timestamp",
     token = "token",
     url = "url"

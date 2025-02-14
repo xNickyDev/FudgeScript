@@ -16,7 +16,7 @@ var WebhookProperty;
     WebhookProperty["channelID"] = "channelID";
     WebhookProperty["guildID"] = "guildID";
     WebhookProperty["sourceChannelID"] = "sourceChannelID";
-    WebhookProperty["sourceGuildID"] = "sourceChannelID";
+    WebhookProperty["sourceGuildID"] = "sourceGuildID";
     WebhookProperty["timestamp"] = "timestamp";
     WebhookProperty["token"] = "token";
     WebhookProperty["url"] = "url";
