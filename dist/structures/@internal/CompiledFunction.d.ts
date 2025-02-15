@@ -33,6 +33,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
     readonly fn: NativeFunction<T, Unwrap>;
     constructor(raw: ICompiledFunction);
     displayField(i: number): string;
+    displayFields(): string[] | undefined;
     get display(): string;
     /**
      * Resolves fields of a function.

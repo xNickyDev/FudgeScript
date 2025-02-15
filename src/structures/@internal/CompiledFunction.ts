@@ -94,6 +94,19 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return field.resolve(field.functions.map((x) => x.display))
     }
 
+    public displayFields() {
+        return this.data.fields?.map(field => {
+            if ("op" in field) {
+                if (field.rhs) {
+                    return `${field.lhs.resolve(field.lhs.functions.map((x) => x.display))}${field.op}${field.rhs.resolve(
+                        field.rhs.functions.map((x) => x.display)
+                    )}`
+                } else return field.lhs.resolve(field.lhs.functions.map((x) => x.display))
+            }
+            return field.resolve(field.functions.map((x) => x.display))
+        })
+    }
+
     public get display(): string {
         if (this.data.fields === null) return this.data.name
         else {
