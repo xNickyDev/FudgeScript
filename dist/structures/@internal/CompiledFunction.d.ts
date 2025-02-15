@@ -50,7 +50,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
      */
     private resolveUnhandledArg;
     private resolveCondition;
-    private resolveCode;
+    resolveCode(ctx: Context, { resolve: resolver, functions }?: Partial<Omit<IExtendedCompiledFunctionField, "value">>): Promise<Return>;
     private argTypeRejection;
     private resolveNumber;
     private resolveBigInt;

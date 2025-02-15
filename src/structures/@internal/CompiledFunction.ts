@@ -219,7 +219,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.unsafeSuccess(field.resolve(lhs.value, rhs.value))
     }
 
-    private async resolveCode(
+    public async resolveCode(
         ctx: Context,
         { resolve: resolver, functions }: Partial<Omit<IExtendedCompiledFunctionField, "value">> = {}
     ): Promise<Return> {
