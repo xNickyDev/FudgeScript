@@ -1,4 +1,4 @@
-import { ArgType, NativeFunction } from "../../structures"
+import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$unescapeCode",
@@ -21,6 +21,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.success(this.displayFields()?.join(";"))
+        return this.resolveArgs(ctx)
     },
 })

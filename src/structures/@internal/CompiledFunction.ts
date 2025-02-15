@@ -125,7 +125,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
      * @param ctx
      * @returns
      */
-    private async resolveArgs(ctx: Context): Promise<Return> {
+    public async resolveArgs(ctx: Context): Promise<Return> {
         const args = new Array(this.fn.data.args?.length ?? 0) as UnwrapArgs<T>
 
         if (!this.fn.data.args?.length || (this.fn.data.brackets === false && !this.hasFields))
@@ -140,7 +140,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.unsafeSuccess(args)
     }
 
-    private async resolveMultipleArgs<X extends [...number[]]>(
+    public async resolveMultipleArgs<X extends [...number[]]>(
         ctx: Context,
         ...indexes: [...X]
     ): Promise<IMultipleArgResolve<T, X>> {
