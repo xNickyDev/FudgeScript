@@ -41,7 +41,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
      * @returns
      */
     resolveArgs(ctx: Context): Promise<Return>;
-    resolveMultipleArgs<X extends [...number[]]>(ctx: Context, ...indexes: [...X]): Promise<IMultipleArgResolve<T, X>>;
+    private resolveMultipleArgs;
     /**
      * Does not account for condition fields.
      * @param ctx
@@ -50,7 +50,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
      */
     private resolveUnhandledArg;
     private resolveCondition;
-    resolveCode(ctx: Context, { resolve: resolver, functions }?: Partial<Omit<IExtendedCompiledFunctionField, "value">>): Promise<Return>;
+    private resolveCode;
     private argTypeRejection;
     private resolveNumber;
     private resolveBigInt;

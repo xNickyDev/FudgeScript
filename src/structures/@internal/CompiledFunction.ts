@@ -140,7 +140,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.unsafeSuccess(args)
     }
 
-    public async resolveMultipleArgs<X extends [...number[]]>(
+    private async resolveMultipleArgs<X extends [...number[]]>(
         ctx: Context,
         ...indexes: [...X]
     ): Promise<IMultipleArgResolve<T, X>> {
@@ -219,7 +219,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.unsafeSuccess(field.resolve(lhs.value, rhs.value))
     }
 
-    public async resolveCode(
+    private async resolveCode(
         ctx: Context,
         { resolve: resolver, functions }: Partial<Omit<IExtendedCompiledFunctionField, "value">> = {}
     ): Promise<Return> {
