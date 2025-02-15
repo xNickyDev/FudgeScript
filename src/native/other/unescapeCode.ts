@@ -21,6 +21,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.resolveArgs(ctx)
+        return this.execute(ctx)
     },
 })

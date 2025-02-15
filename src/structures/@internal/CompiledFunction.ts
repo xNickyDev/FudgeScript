@@ -125,7 +125,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
      * @param ctx
      * @returns
      */
-    public async resolveArgs(ctx: Context): Promise<Return> {
+    private async resolveArgs(ctx: Context): Promise<Return> {
         const args = new Array(this.fn.data.args?.length ?? 0) as UnwrapArgs<T>
 
         if (!this.fn.data.args?.length || (this.fn.data.brackets === false && !this.hasFields))

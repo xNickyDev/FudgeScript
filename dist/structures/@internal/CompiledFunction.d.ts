@@ -40,7 +40,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
      * @param ctx
      * @returns
      */
-    resolveArgs(ctx: Context): Promise<Return>;
+    private resolveArgs;
     private resolveMultipleArgs;
     /**
      * Does not account for condition fields.
