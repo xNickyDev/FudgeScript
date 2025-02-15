@@ -4,7 +4,7 @@ export default new NativeFunction({
     name: "$unescapeCode",
     version: "1.5.0",
     description: "Code inside this function will be executed",
-    unwrap: true,
+    unwrap: false,
     brackets: true,
     aliases: [
         "$unescape",
@@ -20,7 +20,7 @@ export default new NativeFunction({
         }
     ],
     output: ArgType.String,
-    execute(ctx, [code]) {
-        return this.successFormatted(code)
+    execute(ctx) {
+        return this.unsafeSuccess(this.displayField(0))
     },
 })
