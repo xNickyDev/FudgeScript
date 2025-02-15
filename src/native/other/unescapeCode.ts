@@ -16,11 +16,11 @@ export default new NativeFunction({
             type: ArgType.String,
             description: "The code to execute",
             required: true,
-            rest: false
+            rest: true
         }
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.unsafeSuccess(this.displayField(0))
+        return this.unsafeSuccess(this.display)
     },
 })

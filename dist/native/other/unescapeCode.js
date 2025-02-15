@@ -17,12 +17,12 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
             description: "The code to execute",
             required: true,
-            rest: false
+            rest: true
         }
     ],
     output: structures_1.ArgType.String,
     execute(ctx) {
-        return this.unsafeSuccess(this.displayField(0));
+        return this.unsafeSuccess(this.display);
     },
 });
 //# sourceMappingURL=unescapeCode.js.map
