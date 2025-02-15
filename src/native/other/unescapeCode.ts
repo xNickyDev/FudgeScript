@@ -21,6 +21,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.unsafeSuccess(this.displayFields()?.join(";"))
+        return this.return(this.displayFields()?.join(";") || "")
     },
 })
