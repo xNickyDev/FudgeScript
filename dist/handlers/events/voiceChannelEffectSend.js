@@ -10,7 +10,7 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
         const commands = this.commands.get("voiceChannelEffectSend");
         for (const command of commands) {
             core_1.Interpreter.run({
-                obj: effect.channelId,
+                obj: effect.channel,
                 command,
                 client: this,
                 states: {

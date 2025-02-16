@@ -10,7 +10,7 @@ export default new DiscordEventHandler({
 
         for (const command of commands) {
             Interpreter.run({
-                obj: effect.channelId,
+                obj: effect.channel!,
                 command,
                 client: this,
                 states: {
