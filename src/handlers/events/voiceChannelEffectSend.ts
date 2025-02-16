@@ -10,9 +10,14 @@ export default new DiscordEventHandler({
 
         for (const command of commands) {
             Interpreter.run({
-                obj: effect,
+                obj: effect.channelId,
                 command,
                 client: this,
+                states: {
+                    voiceEffect: {
+                        new: effect
+                    }
+                },
                 data: command.compiled.code,
                 args: [],
             })
