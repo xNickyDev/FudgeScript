@@ -13,6 +13,7 @@ import {
     GuildEmoji,
     GuildMember,
     GuildOnboardingPromptData,
+    GuildScheduledEventEntityMetadataOptions,
     Interaction,
     Message,
     MessageReaction,
@@ -64,6 +65,10 @@ export interface IAutomodRuleOptions {
 export interface IOnboardingOptions {
     defaultChannels?: string[]
     prompts?: GuildOnboardingPromptData[]
+}
+
+export interface IScheduledEventOptions {
+    entityMetadata?: GuildScheduledEventEntityMetadataOptions
 }
 
 export enum CalendarType {
@@ -118,6 +123,7 @@ export class Context {
     http: Partial<IHttpOptions> = {}
     automodRule: Partial<IAutomodRuleOptions> = {}
     onboarding: Partial<IOnboardingOptions> = {}
+    scheduledEvent: Partial<IScheduledEventOptions> = {}
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType

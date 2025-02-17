@@ -40,6 +40,9 @@ export declare class Arg {
     static optionalAutomodRule(name?: string, desc?: string): IArg<ArgType.AutomodRule, boolean, false, EnumLike>;
     static restAutomodRule(name?: string, desc?: string): IArg<ArgType.AutomodRule, true, true, EnumLike>;
     static requiredAutomodRule(name?: string, desc?: string): IArg<ArgType.AutomodRule, true, false, EnumLike>;
+    static optionalScheduledEvent(name?: string, desc?: string): IArg<ArgType.ScheduledEvent, boolean, false, EnumLike>;
+    static restScheduledEvent(name?: string, desc?: string): IArg<ArgType.ScheduledEvent, true, true, EnumLike>;
+    static requiredScheduledEvent(name?: string, desc?: string): IArg<ArgType.ScheduledEvent, true, false, EnumLike>;
     static restTextChannel(name?: string, desc?: string): IArg<ArgType.TextChannel, true, true, EnumLike>;
     static optionalTextChannel(name?: string, desc?: string): IArg<ArgType.TextChannel, boolean, false, EnumLike>;
     static requiredTextChannel(name?: string, desc?: string): IArg<ArgType.TextChannel, true, false, EnumLike>;

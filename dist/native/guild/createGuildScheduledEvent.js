@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createGuildScheduledEvent",
-    version: "2.2.0",
     description: "Creates a new scheduled event on a guild, returns event id",
     aliases: [
         "$createScheduledEvent",
@@ -61,17 +60,25 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.String,
         },
+        {
+            name: "reason",
+            description: "The reason for creating the event",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
-    output: structures_1.ArgType.String,
-    async execute(ctx, [guild, name, desc, type, start, end, image]) {
+    output: structures_1.ArgType.ScheduledEvent,
+    async execute(ctx, [guild, name, desc, type, start, end, image, reason]) {
         const event = await guild.scheduledEvents.create({
             name: name,
             description: desc || undefined,
             privacyLevel: discord_js_1.GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: type,
+            entityMetadata: ctx.scheduledEvent.entityMetadata,
             scheduledStartTime: start,
             scheduledEndTime: end || undefined,
-            image: image || undefined
+            image: image || undefined,
+            reason: reason || undefined
         }).catch(ctx.noop);
         return this.success(event ? event.id : null);
     },

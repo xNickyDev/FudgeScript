@@ -334,7 +334,7 @@ class Arg {
             pointer: 0
         });
     }
-    static restAutomodRule(name = "rule IDs", desc = "The guild automod rule to use") {
+    static restAutomodRule(name = "rule IDs", desc = "The guild automod rules to use") {
         return Arg.create({
             name,
             description: desc,
@@ -351,6 +351,35 @@ class Arg {
             rest: false,
             required: true,
             type: NativeFunction_1.ArgType.AutomodRule,
+            pointer: 0
+        });
+    }
+    static optionalScheduledEvent(name = "event ID", desc = "The guild scheduled event to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.ScheduledEvent,
+            pointer: 0
+        });
+    }
+    static restScheduledEvent(name = "event IDs", desc = "The guild scheduled events to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: NativeFunction_1.ArgType.ScheduledEvent,
+            pointer: 0
+        });
+    }
+    static requiredScheduledEvent(name = "event ID", desc = "The guild scheduled event to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.ScheduledEvent,
             pointer: 0
         });
     }

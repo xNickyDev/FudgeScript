@@ -42,6 +42,7 @@ class Context {
     http = {};
     automodRule = {};
     onboarding = {};
+    scheduledEvent = {};
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;

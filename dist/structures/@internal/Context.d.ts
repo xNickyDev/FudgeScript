@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, Interaction, Message, MessageReaction, Role, Sticker, User, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, WelcomeChannelData } from "discord.js";
 import { CompiledFunction } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
@@ -31,6 +31,9 @@ export interface IAutomodRuleOptions {
 export interface IOnboardingOptions {
     defaultChannels?: string[];
     prompts?: GuildOnboardingPromptData[];
+}
+export interface IScheduledEventOptions {
+    entityMetadata?: GuildScheduledEventEntityMetadataOptions;
 }
 export declare enum CalendarType {
     Buddhist = "buddhist",
@@ -79,6 +82,7 @@ export declare class Context {
     http: Partial<IHttpOptions>;
     automodRule: Partial<IAutomodRuleOptions>;
     onboarding: Partial<IOnboardingOptions>;
+    scheduledEvent: Partial<IScheduledEventOptions>;
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;

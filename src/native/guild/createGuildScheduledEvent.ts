@@ -60,17 +60,25 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.String,
         },
+        {
+            name: "reason",
+            description: "The reason for creating the event",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
-    output: ArgType.String,
-    async execute(ctx, [guild, name, desc, type, start, end, image]) {
+    output: ArgType.ScheduledEvent,
+    async execute(ctx, [guild, name, desc, type, start, end, image, reason]) {
         const event = await guild.scheduledEvents.create({
             name: name,
             description: desc || undefined,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: type,
+            entityMetadata: ctx.scheduledEvent.entityMetadata,
             scheduledStartTime: start,
             scheduledEndTime: end || undefined,
-            image: image || undefined
+            image: image || undefined,
+            reason: reason || undefined
         }).catch(ctx.noop)
 
         return this.success(event ? event.id : null)

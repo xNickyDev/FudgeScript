@@ -370,7 +370,7 @@ export class Arg {
         })
     }
 
-    public static restAutomodRule(name: string = "rule IDs", desc: string = "The guild automod rule to use") {
+    public static restAutomodRule(name: string = "rule IDs", desc: string = "The guild automod rules to use") {
         return Arg.create({
             name,
             description: desc,
@@ -388,6 +388,38 @@ export class Arg {
             rest: false,
             required: true,
             type: ArgType.AutomodRule,
+            pointer: 0
+        })
+    }
+
+    public static optionalScheduledEvent(name: string = "event ID", desc: string = "The guild scheduled event to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: ArgType.ScheduledEvent,
+            pointer: 0
+        })
+    }
+
+    public static restScheduledEvent(name: string = "event IDs", desc: string = "The guild scheduled events to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required: true,
+            type: ArgType.ScheduledEvent,
+            pointer: 0
+        })
+    }
+
+    public static requiredScheduledEvent(name: string = "event ID", desc: string = "The guild scheduled event to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: ArgType.ScheduledEvent,
             pointer: 0
         })
     }
