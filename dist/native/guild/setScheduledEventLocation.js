@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setScheduledEventLocation",
+    version: "2.2.0",
     description: "Sets the location for the current scheduled event",
     unwrap: true,
     brackets: true,

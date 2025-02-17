@@ -46,13 +46,13 @@ export default new NativeFunction({
             description: "The start time of the event",
             rest: false,
             required: true,
-            type: ArgType.String,
+            type: ArgType.Date,
         },
         {
             name: "end time",
             description: "The end time of the event",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.Date,
         },
         {
             name: "image",
@@ -75,6 +75,7 @@ export default new NativeFunction({
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: type,
             entityMetadata: ctx.scheduledEvent.entityMetadata,
+            channel: ctx.scheduledEvent.channel,
             scheduledStartTime: start,
             scheduledEndTime: end || undefined,
             image: image || undefined,

@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createGuildScheduledEvent",
+    version: "2.2.0",
     description: "Creates a new scheduled event on a guild, returns event id",
     aliases: [
         "$createScheduledEvent",
@@ -46,13 +47,13 @@ exports.default = new structures_1.NativeFunction({
             description: "The start time of the event",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Date,
         },
         {
             name: "end time",
             description: "The end time of the event",
             rest: false,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Date,
         },
         {
             name: "image",
@@ -75,6 +76,7 @@ exports.default = new structures_1.NativeFunction({
             privacyLevel: discord_js_1.GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: type,
             entityMetadata: ctx.scheduledEvent.entityMetadata,
+            channel: ctx.scheduledEvent.channel,
             scheduledStartTime: start,
             scheduledEndTime: end || undefined,
             image: image || undefined,

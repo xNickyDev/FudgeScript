@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
@@ -33,6 +33,7 @@ export interface IOnboardingOptions {
     prompts?: GuildOnboardingPromptData[];
 }
 export interface IScheduledEventOptions {
+    channel?: VoiceBasedChannel;
     entityMetadata?: GuildScheduledEventEntityMetadataOptions;
 }
 export declare enum CalendarType {

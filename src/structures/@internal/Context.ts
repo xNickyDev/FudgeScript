@@ -20,6 +20,7 @@ import {
     Role,
     Sticker,
     User,
+    VoiceBasedChannel,
     WelcomeChannelData,
 } from "discord.js"
 import { CompiledFunction } from "./CompiledFunction"
@@ -68,6 +69,7 @@ export interface IOnboardingOptions {
 }
 
 export interface IScheduledEventOptions {
+    channel?: VoiceBasedChannel
     entityMetadata?: GuildScheduledEventEntityMetadataOptions
 }
 

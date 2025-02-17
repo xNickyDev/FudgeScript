@@ -30,12 +30,12 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.String;
+    type: ArgType.Date;
 }, {
     name: string;
     description: string;
     rest: false;
-    type: ArgType.String;
+    type: ArgType.Date;
 }, {
     name: string;
     description: string;
