@@ -120,7 +120,7 @@ class CompiledFunction {
     /**
      * Does not account for condition fields.
      * @param ctx
-     * @param index
+     * @param i
      * @returns
      */
     async resolveUnhandledArg(ctx, i, ref = []) {

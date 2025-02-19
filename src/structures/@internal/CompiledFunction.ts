@@ -166,7 +166,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     /**
      * Does not account for condition fields.
      * @param ctx
-     * @param index
+     * @param i
      * @returns
      */
     private async resolveUnhandledArg(ctx: Context, i: number, ref: any[] = []): Promise<Return> {

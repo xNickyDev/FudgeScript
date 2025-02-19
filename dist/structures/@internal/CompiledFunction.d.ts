@@ -45,7 +45,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
     /**
      * Does not account for condition fields.
      * @param ctx
-     * @param index
+     * @param i
      * @returns
      */
     private resolveUnhandledArg;
