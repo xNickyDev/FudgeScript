@@ -44,7 +44,7 @@ export default new NativeFunction({
             generateAdvancedBar(
                 curr,
                 max,
-                len ?? 10,
+                len || undefined,
                 values
             )
         )
