@@ -35,7 +35,7 @@ export default new NativeFunction({
     async execute(ctx, [temp, name, icon]) {
         const guild = await temp.createGuild(
             name || temp.guild?.name || "",
-            icon || temp.guild?.icon || undefined
+            icon || temp.guild?.iconURL() || undefined
         ).catch(ctx.noop)
         return this.success(guild?.id)
     },
