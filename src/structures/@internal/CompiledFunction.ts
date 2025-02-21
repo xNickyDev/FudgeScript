@@ -460,6 +460,10 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return new Date(str)
     }
 
+    private async resolveTemplate(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        return await ctx.client.fetchGuildTemplate(str).catch(ctx.noop)
+    }
+
     private resolvePointer<T>(arg: IArg, ref: Array<unknown>, fallback?: T) {
         const ptr = (ref[arg.pointer!] as T) ?? fallback
         return arg.pointerProperty ? (ptr?.[arg.pointerProperty as keyof T] as T) : ptr

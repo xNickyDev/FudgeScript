@@ -22,12 +22,12 @@ export class Arg {
         })
     }
 
-    public static restString(name: string = "strings", desc: string = "The strings to use") {
+    public static restString(name: string = "strings", desc: string = "The strings to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.String
         })
     }
@@ -42,11 +42,12 @@ export class Arg {
         })
     }
 
-    public static restMessage(name: string = "message IDs", desc: string = "The messages to use") {
+    public static restMessage(name: string = "message IDs", desc: string = "The messages to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
+            required,
             type: ArgType.Message,
             pointer: 0
         })
@@ -72,12 +73,12 @@ export class Arg {
         })
     }
 
-    public static restChannel(name: string = "channel IDs", desc: string = "The channels to use") {
+    public static restChannel(name: string = "channel IDs", desc: string = "The channels to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Channel
         })
     }
@@ -112,11 +113,12 @@ export class Arg {
         })
     }
 
-    public static restEnum<T extends EnumLike>(en: T, name: string = "enum values", desc: string = "The enum values to use") {
+    public static restEnum<T extends EnumLike>(en: T, name: string = "enum values", desc: string = "The enum values to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
+            required,
             type: ArgType.Enum,
             enum: en
         })
@@ -141,12 +143,12 @@ export class Arg {
         })
     }
 
-    public static restColor(name: string = "color hex/int(s)", desc: string = "The colors to use") {
+    public static restColor(name: string = "color hex/int(s)", desc: string = "The colors to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Color
         })
     }
@@ -160,12 +162,12 @@ export class Arg {
         })
     }
 
-    public static restGuild(name: string = "guild IDs", desc: string = "The guilds to use") {
+    public static restGuild(name: string = "guild IDs", desc: string = "The guilds to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Guild
         })
     }
@@ -201,12 +203,12 @@ export class Arg {
         })
     }
 
-    public static restRole(name: string = "role IDs", desc: string = "The roles to use") {
+    public static restRole(name: string = "role IDs", desc: string = "The roles to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Role,
             pointer: 0
         })
@@ -231,12 +233,12 @@ export class Arg {
         })
     }
 
-    public static restSticker(name: string = "sticker IDs", desc: string = "The stickers to use") {
+    public static restSticker(name: string = "sticker IDs", desc: string = "The stickers to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Sticker,
         })
     }
@@ -250,12 +252,12 @@ export class Arg {
         })
     }
 
-    public static restJson(name: string = "json datas", desc: string = "The JSON valid values to use") {
+    public static restJson(name: string = "json datas", desc: string = "The JSON valid values to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Json
         })
     }
@@ -289,22 +291,22 @@ export class Arg {
         })
     }
 
-    public static restNumber(name: string = "numbers", desc: string = "The numbers to use") {
+    public static restNumber(name: string = "numbers", desc: string = "The numbers to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Number
         })
     }
 
-    public static restUser(name: string = "user IDs", desc: string = "The users to use") {
+    public static restUser(name: string = "user IDs", desc: string = "The users to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.User
         })
     }
@@ -338,12 +340,12 @@ export class Arg {
         })
     }
 
-    public static restMember(name: string = "member IDs", desc: string = "The guild members to use") {
+    public static restMember(name: string = "member IDs", desc: string = "The guild members to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Member,
             pointer: 0
         })
@@ -370,12 +372,12 @@ export class Arg {
         })
     }
 
-    public static restAutomodRule(name: string = "rule IDs", desc: string = "The guild automod rules to use") {
+    public static restAutomodRule(name: string = "rule IDs", desc: string = "The guild automod rules to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.AutomodRule,
             pointer: 0
         })
@@ -402,12 +404,12 @@ export class Arg {
         })
     }
 
-    public static restScheduledEvent(name: string = "event IDs", desc: string = "The guild scheduled events to use") {
+    public static restScheduledEvent(name: string = "event IDs", desc: string = "The guild scheduled events to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.ScheduledEvent,
             pointer: 0
         })
@@ -424,12 +426,12 @@ export class Arg {
         })
     }
 
-    public static restTextChannel(name: string = "text channel IDs", desc: string = "The text channels to use") {
+    public static restTextChannel(name: string = "text channel IDs", desc: string = "The text channels to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.TextChannel
         })
     }
@@ -453,12 +455,12 @@ export class Arg {
         })
     }
 
-    public static restGuildEmoji(name: string = "emoji IDs", desc: string = "The guild emojis to use") {
+    public static restGuildEmoji(name: string = "emoji IDs", desc: string = "The guild emojis to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.GuildEmoji,
             pointer: 0
         })
@@ -485,12 +487,12 @@ export class Arg {
         })
     }
 
-    public static restApplicationEmoji(name: string = "emoji IDs", desc: string = "The application emojis to use") {
+    public static restApplicationEmoji(name: string = "emoji IDs", desc: string = "The application emojis to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.ApplicationEmoji,
         })
     }
@@ -514,12 +516,12 @@ export class Arg {
         })
     }
 
-    public static restEmoji(name: string = "emoji IDs", desc: string = "The emojis to use") {
+    public static restEmoji(name: string = "emoji IDs", desc: string = "The emojis to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Emoji,
             pointer: 0
         })
@@ -555,12 +557,12 @@ export class Arg {
         })
     }
 
-    public static restEntitlement(name: string = "entitlement IDs", desc: string = "The entitlements to use") {
+    public static restEntitlement(name: string = "entitlement IDs", desc: string = "The entitlements to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Entitlement
         })
     }
@@ -575,12 +577,12 @@ export class Arg {
         })
     }
 
-    public static restAttachment(name: string = "attachments", desc: string = "The attachments to use") {
+    public static restAttachment(name: string = "attachments", desc: string = "The attachments to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Attachment
         })
     }
@@ -623,12 +625,12 @@ export class Arg {
         })
     }
 
-    public static restBigInt(name: string = "bigints", desc: string = "The bigints to use") {
+    public static restBigInt(name: string = "bigints", desc: string = "The bigints to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.BigInt
         })
     }
@@ -652,12 +654,12 @@ export class Arg {
         })
     }
 
-    public static restURL(name: string = "urls", desc: string = "The urls to use") {
+    public static restURL(name: string = "urls", desc: string = "The urls to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.URL
         })
     }
@@ -671,12 +673,12 @@ export class Arg {
         })
     }
 
-    public static restBoolean(name: string = "bools", desc: string = "The booleans to use") {
+    public static restBoolean(name: string = "bools", desc: string = "The booleans to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Boolean
         })
     }
@@ -710,22 +712,22 @@ export class Arg {
         })
     }
 
-    public static restInvite(name: string = "invite codes", desc: string = "The invite codes to use") {
+    public static restInvite(name: string = "invite codes", desc: string = "The invite codes to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Invite
         })
     }
 
-    public static restWebhook(name: string = "webhook IDs", desc: string = "The webhooks to use") {
+    public static restWebhook(name: string = "webhook IDs", desc: string = "The webhooks to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Webhook
         })
     }
@@ -770,23 +772,23 @@ export class Arg {
         })
     }
 
-    public static restReaction(name: string = "reaction emojis", desc: string = "The reaction emojis to use") {
+    public static restReaction(name: string = "reaction emojis", desc: string = "The reaction emojis to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Reaction,
             pointer: 1
         })
     }
 
-    public static restTime(name: string = "duration/time", desc: string = "The duration/time to use") {
+    public static restTime(name: string = "duration/time", desc: string = "The duration/time to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Time,
         })
     }
@@ -829,22 +831,22 @@ export class Arg {
         })
     }
 
-    public static restDate(name: string = "timestamp/date", desc: string = "The timestamp/date to use") {
+    public static restDate(name: string = "timestamp/date", desc: string = "The timestamp/date to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Date
         })
     }
 
-    public static restPermission(name: string = "permissions", desc: string = "The permissions to use") {
+    public static restPermission(name: string = "permissions", desc: string = "The permissions to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.Permission
         })
     }
@@ -878,12 +880,12 @@ export class Arg {
         })
     }
 
-    public static restOverwritePermission(name: string = "overwrite permissions", desc: string = "The overwrite permissions to use, preceded by (/,-,+)") {
+    public static restOverwritePermission(name: string = "overwrite permissions", desc: string = "The overwrite permissions to use, preceded by (/,-,+)", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             rest: true,
-            required: true,
+            required,
             type: ArgType.OverwritePermission
         })
     }
@@ -908,14 +910,14 @@ export class Arg {
         })
     }
 
-    public static restRoleOrUser(name: string = "role/user(s)", desc: string = "The role/user(s) to use") {
+    public static restRoleOrUser(name: string = "role/user(s)", desc: string = "The role/user(s) to use", required: boolean = false) {
         return Arg.create({
             name,
             description: desc,
             pointer: 0,
             pointerProperty: "guild",
             rest: true,
-            required: true,
+            required,
             type: ArgType.RoleOrUser
         })
     }

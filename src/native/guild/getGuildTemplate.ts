@@ -10,7 +10,8 @@ export enum TemplateProperty {
     timestamp = "createdTimestamp",
     updatedTimestamp = "updatedTimestamp",
     url = "url",
-    usageCount = "usageCount"
+    usageCount = "usageCount",
+    unSynced = "unSynced"
 }
 
 export default new NativeFunction({
@@ -28,7 +29,7 @@ export default new NativeFunction({
             description: "The code of the template to get",
             rest: false,
             required: true,
-            type: ArgType.String,
+            type: ArgType.Template,
         },
         {
             name: "property",
@@ -39,8 +40,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Unknown,
-    async execute(ctx, [ code, prop ]) {
-        const template = await ctx.client.fetchGuildTemplate(code)
+    async execute(ctx, [ template, prop ]) {
         return this.successJSON(prop ? template[prop] : template)
     },
 })

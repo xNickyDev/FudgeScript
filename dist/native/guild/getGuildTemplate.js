@@ -13,6 +13,7 @@ var TemplateProperty;
     TemplateProperty["updatedTimestamp"] = "updatedTimestamp";
     TemplateProperty["url"] = "url";
     TemplateProperty["usageCount"] = "usageCount";
+    TemplateProperty["unSynced"] = "unSynced";
 })(TemplateProperty || (exports.TemplateProperty = TemplateProperty = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$getGuildTemplate",
@@ -29,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The code of the template to get",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Template,
         },
         {
             name: "property",
@@ -40,8 +41,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Unknown,
-    async execute(ctx, [code, prop]) {
-        const template = await ctx.client.fetchGuildTemplate(code);
+    async execute(ctx, [template, prop]) {
         return this.successJSON(prop ? template[prop] : template);
     },
 });

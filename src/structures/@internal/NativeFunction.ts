@@ -10,6 +10,7 @@ import {
     GuildForumTag,
     GuildMember,
     GuildScheduledEvent,
+    GuildTemplate,
     Invite,
     Message,
     MessageReaction,
@@ -64,7 +65,8 @@ export enum ArgType {
     ApplicationEmoji,
     AutomodRule,
     Entitlement,
-    ScheduledEvent
+    ScheduledEvent,
+    Template
 }
 
 export interface IArg<
@@ -210,6 +212,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? Entitlement
     : T extends ArgType.ScheduledEvent
     ? GuildScheduledEvent
+    : T extends ArgType.Template
+    ? GuildTemplate
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true

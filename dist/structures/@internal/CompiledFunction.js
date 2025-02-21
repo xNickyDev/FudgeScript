@@ -374,6 +374,9 @@ class CompiledFunction {
     resolveDate(ctx, arg, str, ref) {
         return new Date(str);
     }
+    async resolveTemplate(ctx, arg, str, ref) {
+        return await ctx.client.fetchGuildTemplate(str).catch(ctx.noop);
+    }
     resolvePointer(arg, ref, fallback) {
         const ptr = ref[arg.pointer] ?? fallback;
         return arg.pointerProperty ? ptr?.[arg.pointerProperty] : ptr;
