@@ -1,4 +1,4 @@
-import { BaseChannel, GuildTextBasedChannel, PermissionFlagsBits, TextChannel } from "discord.js"
+import { BaseChannel, GuildChannel, PermissionFlagsBits } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 import overwritePermissionsArrayToObject from "../../functions/overwritePermissionsArrayToObject"
 import noop from "../../functions/noop"
@@ -7,6 +7,7 @@ export default new NativeFunction({
     name: "$modifyChannelPerms",
     version: "1.4.0",
     description: "Modifies given channel perms for a role or user",
+    aliases: ["$editChannelPerms"],
     unwrap: true,
     brackets: true,
     output: ArgType.Boolean,
@@ -38,7 +39,7 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [ channel, roleOrUser, raw ]) {
-        const ch = channel as TextChannel
+        const ch = channel as GuildChannel
         const mapped = overwritePermissionsArrayToObject(raw)
 
         if (ch.permissionOverwrites.cache.has(roleOrUser.id)) {

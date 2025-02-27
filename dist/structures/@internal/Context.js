@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Context = exports.HTTPContentType = void 0;
+exports.Context = exports.CalendarType = exports.HTTPContentType = void 0;
 const discord_js_1 = require("discord.js");
 const Container_1 = require("./Container");
 const Return_1 = require("./Return");
@@ -14,11 +14,35 @@ var HTTPContentType;
     HTTPContentType[HTTPContentType["Json"] = 0] = "Json";
     HTTPContentType[HTTPContentType["Text"] = 1] = "Text";
 })(HTTPContentType || (exports.HTTPContentType = HTTPContentType = {}));
+var CalendarType;
+(function (CalendarType) {
+    CalendarType["Buddhist"] = "buddhist";
+    CalendarType["Chinese"] = "chinese";
+    CalendarType["Coptic"] = "coptic";
+    CalendarType["Dangi"] = "dangi";
+    CalendarType["Ethioaa"] = "ethioaa";
+    CalendarType["Ethiopic"] = "ethiopic";
+    CalendarType["Gregory"] = "gregory";
+    CalendarType["Hebrew"] = "hebrew";
+    CalendarType["Indian"] = "indian";
+    CalendarType["Islamic"] = "islamic";
+    CalendarType["IslamicUmalqura"] = "islamic-umalqura";
+    CalendarType["IslamicTbla"] = "islamic-tbla";
+    CalendarType["IslamicCivil"] = "islamic-civil";
+    CalendarType["IslamicRgsa"] = "islamic-rgsa";
+    CalendarType["Iso8601"] = "iso8601";
+    CalendarType["Japanese"] = "japanese";
+    CalendarType["Persian"] = "persian";
+    CalendarType["Roc"] = "roc";
+})(CalendarType || (exports.CalendarType = CalendarType = {}));
 class Context {
     runtime;
     #cache = {};
     executionTimestamp;
     http = {};
+    automodRule = {};
+    timezone = "UTC";
+    calendar;
     #keywords = {};
     #environment = {};
     container;
@@ -52,6 +76,9 @@ class Context {
     }
     get automod() {
         return this.#cache.automod ??= this.obj instanceof discord_js_1.AutoModerationActionExecution ? this.obj : null;
+    }
+    get entitlement() {
+        return this.#cache.entitlement ??= this.obj instanceof discord_js_1.Entitlement ? this.obj : null;
     }
     get member() {
         return (this.#cache.member ??=
@@ -135,8 +162,10 @@ class Context {
         this.container.reset();
         return this.container.send(this.obj, content);
     }
-    handleNotSuccess(rt) {
-        if (rt.return && this.runtime.allowTopLevelReturn) {
+    handleNotSuccess(fn, rt) {
+        if (fn.data.silent)
+            return false;
+        else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return_1.Return(Return_1.ReturnType.Return, rt.value);
         }
         else if (rt.return || rt.break || rt.continue) {
@@ -151,6 +180,9 @@ class Context {
     }
     clearHttpOptions() {
         this.http = {};
+    }
+    clearAutomodRuleOptions() {
+        this.automodRule = {};
     }
     setEnvironmentKey(name, value) {
         return (this.#environment[name] = value);

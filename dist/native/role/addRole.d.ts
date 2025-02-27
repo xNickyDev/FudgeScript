@@ -85,8 +85,12 @@ declare const _default: NativeFunction<[{
         readonly ModerateMembers: bigint;
         readonly ViewCreatorMonetizationAnalytics: bigint;
         readonly UseSoundboard: bigint;
+        readonly CreateGuildExpressions: bigint;
+        readonly CreateEvents: bigint;
         readonly UseExternalSounds: bigint;
         readonly SendVoiceMessages: bigint;
+        readonly SendPolls: bigint;
+        readonly UseExternalApps: bigint;
     };
     required: true;
     type: ArgType.String;

@@ -5,6 +5,7 @@ export default new NativeFunction({
     name: "$editRolePerms",
     version: "1.0.7",
     description: "Edits a role's perms, returns boolean",
+    aliases: ["$modifyRolePerms"],
     unwrap: true,
     output: ArgType.Boolean,
     args: [

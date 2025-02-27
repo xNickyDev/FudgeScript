@@ -1,5 +1,7 @@
 import {
+    ApplicationEmoji,
     AttachmentBuilder,
+    AutoModerationRule,
     BaseChannel,
     Emoji,
     Guild,
@@ -45,6 +47,7 @@ export enum ArgType {
     Color,
     Enum,
     ForumTag,
+    Emoji,
     GuildEmoji,
     Boolean,
     Attachment,
@@ -56,6 +59,8 @@ export enum ArgType {
     Sticker,
     Time,
     Member,
+    ApplicationEmoji,
+    AutomodRule
 }
 
 export interface IArg<
@@ -99,6 +104,7 @@ export interface INativeFunction<T extends [...IArg[]], Unwrap extends boolean =
     description: string
     examples?: string[]
     experimental?: boolean
+    deprecated?: boolean
 
     /**
      * Resolves all arguments and are passed through execute params.
@@ -174,6 +180,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? GuildMember
     : T extends ArgType.GuildEmoji
     ? GuildEmoji
+    : T extends ArgType.ApplicationEmoji
+    ? ApplicationEmoji
     : T extends ArgType.OverwritePermission 
     ? OverwritePermission
     : T extends ArgType.Sticker
@@ -190,6 +198,10 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? number
     : T extends ArgType.Permission
     ? PermissionsString
+    : T extends ArgType.Emoji
+    ? Emoji
+    : T extends ArgType.AutomodRule
+    ? AutoModerationRule
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true

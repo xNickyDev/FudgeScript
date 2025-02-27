@@ -1,10 +1,14 @@
 import {
     AnySelectMenuInteraction,
     AutoModerationActionExecution,
+    AutoModerationActionOptions,
+    AutoModerationTriggerMetadataOptions,
     BaseChannel,
     BaseInteraction,
     ChatInputCommandInteraction,
     ContextMenuCommandInteraction,
+    Emoji,
+    Entitlement,
     Guild,
     GuildEmoji,
     GuildMember,
@@ -17,13 +21,13 @@ import {
 } from "discord.js"
 import { CompiledFunction } from "./CompiledFunction"
 import { Container, Sendable } from "./Container"
-import { IArg, UnwrapArgs } from "./NativeFunction"
+import { IArg, NativeFunction, UnwrapArgs } from "./NativeFunction"
 import { Return, ReturnType } from "./Return"
 import { IRunnable } from "../../core/Interpreter"
 import noop from "../../functions/noop"
 import { ForgeError } from "../forge/ForgeError"
 import { Logger } from "./Logger"
-import { FormData } from "undici"
+import { FormData, Headers } from "undici"
 import contextNoop from "../../functions/contextNoop"
 
 export type ExpectCallback<T extends [...IArg[]], Unwrap extends boolean> = (
@@ -41,6 +45,38 @@ export interface IHttpOptions {
     contentType?: HTTPContentType
     headers: Record<string, string>
     method: string
+    response?: {
+        headers?: Headers
+        ping?: number
+    }
+}
+
+export interface IAutomodRuleOptions {
+    actions: AutoModerationActionOptions[]
+    triggerMetadata?: AutoModerationTriggerMetadataOptions
+    exemptRoles?: string[]
+    exemptChannels?: string[]
+}
+
+export enum CalendarType {
+    Buddhist = "buddhist",
+    Chinese = "chinese",
+    Coptic = "coptic",
+    Dangi = "dangi",
+    Ethioaa = "ethioaa",
+    Ethiopic = "ethiopic",
+    Gregory = "gregory",
+    Hebrew = "hebrew",
+    Indian = "indian",
+    Islamic = "islamic",
+    IslamicUmalqura = "islamic-umalqura",
+    IslamicTbla = "islamic-tbla",
+    IslamicCivil = "islamic-civil",
+    IslamicRgsa = "islamic-rgsa",
+    Iso8601 = "iso8601",
+    Japanese = "japanese",
+    Persian = "persian",
+    Roc = "roc"
 }
 
 export type ClassType = new (...args: any[]) => any
@@ -57,8 +93,9 @@ export interface IContextCache {
     message: Message | null
     interaction: Interaction | null
     role: Role | null
+    entitlement: Entitlement | null
     reaction: MessageReaction | null
-    emoji: GuildEmoji | null
+    emoji: Emoji | null
     automod: AutoModerationActionExecution | null
     sticker: Sticker | null
 }
@@ -71,11 +108,14 @@ export class Context {
 
     executionTimestamp!: number
     http: Partial<IHttpOptions> = {}
+    automodRule: Partial<IAutomodRuleOptions> = {}
+    timezone: string = "UTC"
+    calendar?: CalendarType
 
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}
 
-    public readonly container: Container
+    public container: Container
 
     // eslint-disable-next-line no-unused-vars
     public constructor(public readonly runtime: IRunnable) {
@@ -111,6 +151,10 @@ export class Context {
 
     public get automod() {
         return this.#cache.automod ??= this.obj instanceof AutoModerationActionExecution ? this.obj : null
+    }
+
+    public get entitlement() {
+        return this.#cache.entitlement ??= this.obj instanceof Entitlement ? this.obj : null
     }
 
     public get member() {
@@ -213,8 +257,10 @@ export class Context {
         return this.container.send(this.obj, content)
     }
 
-    public handleNotSuccess(rt: Return) {
-        if (rt.return && this.runtime.allowTopLevelReturn) {
+    public handleNotSuccess(fn: CompiledFunction, rt: Return) {
+        if (fn.data.silent)
+            return false
+        else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)
         } else if (rt.return || rt.break || rt.continue) {
             const log = ":x: " + ReturnType[rt.type] + " statements are not allowed in outer scopes."
@@ -229,6 +275,10 @@ export class Context {
 
     public clearHttpOptions() {
         this.http = {}
+    }
+
+    public clearAutomodRuleOptions() {
+        this.automodRule = {}
     }
 
     public setEnvironmentKey(name: string, value: unknown) {

@@ -26,12 +26,16 @@ ForgeScript is a comprehensive package that empowers you to effortlessly interac
 
 </summary>
 
-Make sure you have <strong>node.js</strong> installed, and greater than version **v16.11.0**. Once done, run the next command in a folder (from any IDE or terminal):
-```bash
-npm i https://github.com/tryforge/ForgeScript.git
-```
+Make sure you have <strong>node.js</strong> installed, and greater than version **v16.11.0**. Once done, run one of the following commands in a console (from any IDE or terminal):
 
-> If installing this repository instead of npm, you must have TypeScript as dependency (`npm i typescript --save-dev`)
+**Main**
+```bash
+npm i https://github.com/tryforge/ForgeScript/tree/main
+```
+**Dev**
+```bash
+npm i https://github.com/tryforge/ForgeScript/tree/dev
+```
 
 </details>
 
@@ -48,7 +52,7 @@ This section will guide you through initializing a client and loading commands f
 ### Client Initialization
 We will write the following for a basic bot initialization, in a `index.js` file:
 ```js
-const { ForgeClient } = require("forgescript")
+const { ForgeClient } = require("@tryforge/forgescript")
 
 const client = new ForgeClient({
     intents: [

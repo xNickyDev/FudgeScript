@@ -7,6 +7,7 @@ exports.Container = void 0;
 /* eslint-disable indent */
 const discord_js_1 = require("discord.js");
 const noop_1 = __importDefault(require("../../functions/noop"));
+const discord_js_2 = require("discord.js");
 class Container {
     content;
     embeds = new Array();
@@ -16,14 +17,22 @@ class Container {
     followUp = false;
     edit = false;
     ephemeral = false;
+    tts = false;
     update = false;
     files = new Array();
     channel;
     stickers = new Array();
-    fetchReply = false;
+    withResponse = false;
     modal;
     choices = new Array();
     allowedMentions = {};
+    avatarURL;
+    username;
+    poll;
+    threadId;
+    threadName;
+    appliedTags;
+    deleteIn;
     async send(obj, content) {
         let res;
         const options = this.getOptions(content);
@@ -71,7 +80,13 @@ class Container {
         else {
             res = Promise.resolve(null);
         }
-        const result = (await res.catch(noop_1.default));
+        const response = await res.catch(noop_1.default);
+        const result = (response instanceof discord_js_1.InteractionCallbackResponse ? response.resource?.message : response);
+        if (this.deleteIn && result instanceof discord_js_1.Message) {
+            setTimeout(() => {
+                result.delete().catch(noop_1.default);
+            }, this.deleteIn);
+        }
         this.reset();
         return result;
     }
@@ -84,7 +99,8 @@ class Container {
             !!options.components?.length ||
             !!options.attachments?.length ||
             !!this.modal ||
-            !!this.choices.length);
+            !!this.choices.length ||
+            !!this.poll);
     }
     embed(index) {
         return (this.embeds[index] ??= new discord_js_1.EmbedBuilder());
@@ -94,12 +110,20 @@ class Container {
         delete this.content;
         delete this.modal;
         delete this.reference;
+        delete this.poll;
+        delete this.avatarURL;
+        delete this.username;
+        delete this.threadId;
+        delete this.threadName;
+        delete this.appliedTags;
+        delete this.deleteIn;
         this.followUp = false;
         this.reply = false;
         this.update = false;
         this.ephemeral = false;
-        this.fetchReply = false;
+        this.withResponse = false;
         this.edit = false;
+        this.tts = false;
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
@@ -113,20 +137,28 @@ class Container {
                 content,
             }
             : {
+                poll: this.poll,
+                username: this.username,
+                avatarURL: this.avatarURL,
                 allowedMentions: Object.keys(this.allowedMentions).length === 0 ? undefined : this.allowedMentions,
-                fetchReply: this.fetchReply,
+                withResponse: this.withResponse,
                 reply: this.reference
                     ? {
                         messageReference: this.reference,
                         failIfNotExists: false,
                     }
                     : undefined,
-                ephemeral: this.ephemeral,
+                flags: this.ephemeral ? discord_js_2.MessageFlags.Ephemeral : undefined,
+                attachments: [],
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,
                 content: this.content?.trim() || null,
                 components: this.components,
                 embeds: this.embeds,
+                tts: this.tts,
+                threadId: this.threadId,
+                threadName: this.threadName,
+                appliedTags: this.appliedTags,
             });
     }
 }

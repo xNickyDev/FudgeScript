@@ -1,10 +1,10 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Guild, GuildEmoji, GuildMember, Interaction, Message, MessageReaction, Role, Sticker, User } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, Interaction, Message, MessageReaction, Role, Sticker, User } from "discord.js";
 import { CompiledFunction } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
 import { Return } from "./Return";
 import { IRunnable } from "../../core/Interpreter";
-import { FormData } from "undici";
+import { FormData, Headers } from "undici";
 export type ExpectCallback<T extends [...IArg[]], Unwrap extends boolean> = (args: UnwrapArgs<T>) => Promise<Return> | Return;
 export declare enum HTTPContentType {
     Json = 0,
@@ -16,6 +16,36 @@ export interface IHttpOptions {
     contentType?: HTTPContentType;
     headers: Record<string, string>;
     method: string;
+    response?: {
+        headers?: Headers;
+        ping?: number;
+    };
+}
+export interface IAutomodRuleOptions {
+    actions: AutoModerationActionOptions[];
+    triggerMetadata?: AutoModerationTriggerMetadataOptions;
+    exemptRoles?: string[];
+    exemptChannels?: string[];
+}
+export declare enum CalendarType {
+    Buddhist = "buddhist",
+    Chinese = "chinese",
+    Coptic = "coptic",
+    Dangi = "dangi",
+    Ethioaa = "ethioaa",
+    Ethiopic = "ethiopic",
+    Gregory = "gregory",
+    Hebrew = "hebrew",
+    Indian = "indian",
+    Islamic = "islamic",
+    IslamicUmalqura = "islamic-umalqura",
+    IslamicTbla = "islamic-tbla",
+    IslamicCivil = "islamic-civil",
+    IslamicRgsa = "islamic-rgsa",
+    Iso8601 = "iso8601",
+    Japanese = "japanese",
+    Persian = "persian",
+    Roc = "roc"
 }
 export type ClassType = new (...args: any[]) => any;
 export type ClassInstance<T> = T extends new (...args: any[]) => infer T ? T : never;
@@ -30,8 +60,9 @@ export interface IContextCache {
     message: Message | null;
     interaction: Interaction | null;
     role: Role | null;
+    entitlement: Entitlement | null;
     reaction: MessageReaction | null;
-    emoji: GuildEmoji | null;
+    emoji: Emoji | null;
     automod: AutoModerationActionExecution | null;
     sticker: Sticker | null;
 }
@@ -41,7 +72,10 @@ export declare class Context {
     [props: PropertyKey]: unknown;
     executionTimestamp: number;
     http: Partial<IHttpOptions>;
-    readonly container: Container;
+    automodRule: Partial<IAutomodRuleOptions>;
+    timezone: string;
+    calendar?: CalendarType;
+    container: Container;
     constructor(runtime: IRunnable);
     get client(): import("../..").ForgeClient;
     set obj(o: Sendable);
@@ -50,8 +84,9 @@ export declare class Context {
     get args(): string[];
     get states(): import("../../core/Interpreter").States | undefined;
     get automod(): AutoModerationActionExecution | null;
+    get entitlement(): Entitlement | null;
     get member(): GuildMember | null;
-    get emoji(): GuildEmoji | null;
+    get emoji(): Emoji | null;
     get sticker(): Sticker | null;
     get role(): Role | null;
     get reaction(): MessageReaction | null;
@@ -59,11 +94,12 @@ export declare class Context {
     get interaction(): Interaction | null;
     get user(): User | null;
     get guild(): Guild | null;
-    get channel(): BaseChannel | import("discord.js").CategoryChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | import("discord.js").TextChannel | import("discord.js").PrivateThreadChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").VoiceChannel | import("discord.js").ForumChannel | import("discord.js").MediaChannel | null;
+    get channel(): BaseChannel | import("discord.js").CategoryChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | import("discord.js").TextChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").PrivateThreadChannel | import("discord.js").VoiceChannel | import("discord.js").ForumChannel | import("discord.js").MediaChannel | null;
     handle<Args extends [...IArg[]], Unwrap extends boolean>(fn: CompiledFunction<Args, Unwrap>, cb: ExpectCallback<Args, Unwrap>): Promise<Return>;
     alert(content: string): Promise<unknown>;
-    handleNotSuccess(rt: Return): boolean;
+    handleNotSuccess(fn: CompiledFunction, rt: Return): boolean;
     clearHttpOptions(): void;
+    clearAutomodRuleOptions(): void;
     setEnvironmentKey(name: string, value: unknown): unknown;
     traverseDeleteEnvironmentKey(...keys: string[]): boolean | any[];
     traverseAddEnvironmentKey(value: unknown, ...keys: string[]): boolean;

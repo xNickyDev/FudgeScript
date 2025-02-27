@@ -6,6 +6,7 @@ import {
     Partials,
     DefaultWebSocketManagerOptions,
     Message,
+    Collection,
 } from "discord.js"
 import { IExtendedCompilationResult, Compiler } from "."
 import {
@@ -33,6 +34,7 @@ import {
 } from "../structures"
 import { VoiceTracker } from "../structures/trackers/VoiceTracker"
 import { Interpreter } from "./Interpreter"
+import { WebSocket } from "ws"
 
 disableValidators()
 
@@ -61,6 +63,11 @@ export interface IRawForgeClientOptions extends ClientOptions {
      * The prefixes our bot will act upon for command messages
      */
     prefixes?: string[]
+
+    /**
+     *  Whether prefixes should be case-insensitive, this only affects letters
+     */
+    prefixCaseInsensitive?: boolean
 
     /**
      * Specifies the logs to be received
@@ -114,7 +121,9 @@ export class ForgeClient extends Client<true> {
     public readonly events = new EventManager(this)
     public readonly cooldowns = new CooldownManager(this)
     public readonly functions = new ForgeFunctionManager(this)
-    public readonly threading = new ThreadManager(this);
+    public readonly threading = new ThreadManager(this)
+    public readonly websockets = new Map<number, WebSocket>()
+    public readonly globalVariables: Record<string, string> = {};
 
     // eslint-disable-next-line no-undef
     [x: PropertyKey]: unknown
@@ -223,7 +232,7 @@ export class ForgeClient extends Client<true> {
                 doNotSend: true,
             })
 
-            if (resolved !== null && msg.content.startsWith(resolved.toLowerCase())) {
+            if (resolved !== null && (this.options.prefixCaseInsensitive ? msg.content.toLowerCase().startsWith(resolved.toLowerCase()) : msg.content.startsWith(resolved))) {
                 return resolved
             }
         }

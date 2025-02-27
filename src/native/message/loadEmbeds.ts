@@ -4,9 +4,7 @@ import { ArgType, NativeFunction } from "../../structures"
 export default new NativeFunction({
     name: "$loadEmbeds",
     version: "1.4.0",
-    aliases: [
-        "$loadEmbed"
-    ],
+    aliases: ["$loadEmbed"],
     description: "Loads embed json (or array) to the response",
     unwrap: true,
     brackets: true,

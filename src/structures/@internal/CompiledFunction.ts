@@ -276,15 +276,16 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         if (!CompiledFunction.IdRegex.test(str)) return
 
         const ch = this.resolvePointer(arg, ref, ctx.channel) as TextChannel | undefined
-        return str === ctx.message?.id ? ctx.message : ch?.messages?.fetch(str).catch(ctx.noop)
+        return ch?.messages?.fetch(str).catch(ctx.noop)
     }
 
     private resolveChannel(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        return ctx.client.channels.cache.get(str)
+        if (!CompiledFunction.IdRegex.test(str)) return
+        return ctx.client.channels.fetch(str)
     }
 
-    private resolveTextChannel(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        const ch = ctx.client.channels.cache.get(str)
+    private async resolveTextChannel(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        const ch = await this.resolveChannel(ctx, arg, str, ref)
         if (!ch || !("messages" in ch)) return
         return ch
     }
@@ -314,6 +315,26 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         const parsed = parseEmoji(str)
         const id = parsed?.id ?? str
         return ctx.client.emojis.cache.get(id)
+    }
+
+    private async resolveApplicationEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        const fromUrl = CompiledFunction.CDNIdRegex.exec(str)
+        if (fromUrl !== null) return await ctx.client.application.emojis.fetch(fromUrl[2]).catch(ctx.noop)
+
+        const parsed = parseEmoji(str)
+        const id = parsed?.id ?? str
+        if (!CompiledFunction.IdRegex.test(id)) return
+        return await ctx.client.application.emojis.fetch(id).catch(ctx.noop)
+    }
+
+    private async resolveEmoji(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        const fromUrl = CompiledFunction.CDNIdRegex.exec(str)
+        if (fromUrl !== null) return this.resolveGuildEmoji(ctx, arg, fromUrl[2], ref) ?? await this.resolveApplicationEmoji(ctx, arg, fromUrl[2], ref)
+
+        const parsed = parseEmoji(str)
+        const id = parsed?.id ?? str
+        if (!CompiledFunction.IdRegex.test(id)) return
+        return this.resolveGuildEmoji(ctx, arg, id, ref) ?? await this.resolveApplicationEmoji(ctx, arg, id, ref)
     }
 
     private resolveForumTag(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
@@ -354,14 +375,17 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.resolvePointer(arg, ref, ctx.guild)?.members.fetch(str).catch(ctx.noop)
     }
 
-    private resolveReaction(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        const reactions = this.resolvePointer(arg, ref, ctx.message)?.reactions
+    private resolveAutomodRule(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        if (!CompiledFunction.IdRegex.test(str)) return
+        return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop)
+    }
+
+    private async resolveReaction(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         const parsed = parseEmoji(str)
         if (!parsed) return
 
         const identifier = parsed.id ?? parsed.name
-
-        return reactions?.cache.get(identifier)
+        return (await this.resolvePointer(arg, ref, ctx.message)?.fetch().catch(ctx.noop))?.reactions.cache.get(identifier)
     }
 
     private resolveURL(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
@@ -432,8 +456,8 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         }
 
         if (field !== undefined) {
-            field.resolveArg ??= this[CompiledFunction.toResolveArgString(arg.type)].bind(this)
-            value = field.resolveArg(ctx, arg, strValue, ref)
+            field.resolveArg ??= (this[CompiledFunction.toResolveArgString(arg.type) as keyof this] as Function).bind(this)
+            value = field.resolveArg?.(ctx, arg, strValue, ref)
             if (value instanceof Promise) value = await value
         }
 
@@ -524,11 +548,11 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     public successJSON(value: ReturnValue<ReturnType.Success>) {
-        return this.unsafeSuccess(typeof value !== "string" ? JSON.stringify(value, undefined, 4) : value)
+        return this.success(typeof value !== "string" ? JSON.stringify(value, (key, val) => (typeof val === "bigint" ? val.toString() : val), 4) : value)
     }
 
     public successFormatted(value: ReturnValue<ReturnType.Success>) {
-        return this.unsafeSuccess(typeof value !== "string" ? inspect(value, { depth: Infinity }) : value)
+        return this.success(typeof value !== "string" ? inspect(value, { depth: Infinity }) : value)
     }
 
     public unsafeSuccess(value: ReturnValue<ReturnType.Success> = null) {
@@ -536,6 +560,6 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     public success(value: ReturnValue<ReturnType.Success> = null) {
-        return new Return(ReturnType.Success, this.data.negated ? null : value)
+        return new Return(ReturnType.Success, this.data.negated ? null : this.data.count !== null && typeof(value) === "string" ? value.split(this.data.count).length : value)
     }
 }

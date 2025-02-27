@@ -4,7 +4,7 @@ import { ArgType, IExtendedCompiledFunctionConditionField, IExtendedCompiledFunc
 export default new NativeFunction({
     name: "$arrayFindIndex",
     version: "1.0.0",
-    description: "Finds the index of an element in the array",
+    description: "Finds the index of a first found element in the array",
     unwrap: false,
     output: ArgType.Number,
     args: [

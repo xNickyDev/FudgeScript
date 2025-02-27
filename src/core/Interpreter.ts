@@ -1,4 +1,4 @@
-import { Message, VoiceState, Presence, Role, GuildMember, GuildEmoji, User, GuildAuditLogsEntry, Channel, Guild, StageInstance, Invite, PartialMessage, Sticker, GuildBan, GuildScheduledEvent } from "discord.js"
+import { Message, VoiceState, Presence, Role, GuildMember, GuildEmoji, User, GuildAuditLogsEntry, Channel, Guild, StageInstance, Invite, PartialMessage, Sticker, GuildBan, GuildScheduledEvent, Entitlement, PollAnswer, AutoModerationRule } from "discord.js"
 import { IExtendedCompilationResult } from "."
 import { Sendable, BaseCommand, Context, Logger, Container, Return, ReturnType } from "../structures"
 import { ForgeClient } from "./ForgeClient"
@@ -15,12 +15,15 @@ export interface IStates {
     audit: GuildAuditLogsEntry
     channel: Channel
     guild: Guild
+    poll: PollAnswer
+    entitlement: Entitlement
     ban: GuildBan
     scheduledEvent: GuildScheduledEvent
     bulk: Array<Message | PartialMessage>
     stage: StageInstance
     invite: Invite
     sticker: Sticker
+    automodRule: AutoModerationRule
 }
 
 export type States = {
@@ -132,7 +135,7 @@ export class Interpreter {
                 for (let i = 0, len = runtime.data.functions.length; i < len; i++) {
                     const fn = runtime.data.functions[i]
                     const rt = await fn.execute(ctx)
-                    args[i] = (!rt.success && !ctx.handleNotSuccess(rt)) ? ctx["error"]() : rt.value
+                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value
                 }
             } catch (err: unknown) {
                 if (err instanceof Error)

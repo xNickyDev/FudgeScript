@@ -18,6 +18,16 @@ declare const _default: NativeFunction<[{
     rest: false;
     pointer: number;
     type: ArgType.Message;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.Boolean;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.String;
 }], true>;
 export default _default;
 //# sourceMappingURL=createThread.d.ts.map

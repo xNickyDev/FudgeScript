@@ -215,13 +215,15 @@ class CompiledFunction {
         if (!CompiledFunction.IdRegex.test(str))
             return;
         const ch = this.resolvePointer(arg, ref, ctx.channel);
-        return str === ctx.message?.id ? ctx.message : ch?.messages?.fetch(str).catch(ctx.noop);
+        return ch?.messages?.fetch(str).catch(ctx.noop);
     }
     resolveChannel(ctx, arg, str, ref) {
-        return ctx.client.channels.cache.get(str);
+        if (!CompiledFunction.IdRegex.test(str))
+            return;
+        return ctx.client.channels.fetch(str);
     }
-    resolveTextChannel(ctx, arg, str, ref) {
-        const ch = ctx.client.channels.cache.get(str);
+    async resolveTextChannel(ctx, arg, str, ref) {
+        const ch = await this.resolveChannel(ctx, arg, str, ref);
         if (!ch || !("messages" in ch))
             return;
         return ch;
@@ -249,6 +251,26 @@ class CompiledFunction {
         const parsed = (0, discord_js_1.parseEmoji)(str);
         const id = parsed?.id ?? str;
         return ctx.client.emojis.cache.get(id);
+    }
+    async resolveApplicationEmoji(ctx, arg, str, ref) {
+        const fromUrl = CompiledFunction.CDNIdRegex.exec(str);
+        if (fromUrl !== null)
+            return await ctx.client.application.emojis.fetch(fromUrl[2]).catch(ctx.noop);
+        const parsed = (0, discord_js_1.parseEmoji)(str);
+        const id = parsed?.id ?? str;
+        if (!CompiledFunction.IdRegex.test(id))
+            return;
+        return await ctx.client.application.emojis.fetch(id).catch(ctx.noop);
+    }
+    async resolveEmoji(ctx, arg, str, ref) {
+        const fromUrl = CompiledFunction.CDNIdRegex.exec(str);
+        if (fromUrl !== null)
+            return this.resolveGuildEmoji(ctx, arg, fromUrl[2], ref) ?? await this.resolveApplicationEmoji(ctx, arg, fromUrl[2], ref);
+        const parsed = (0, discord_js_1.parseEmoji)(str);
+        const id = parsed?.id ?? str;
+        if (!CompiledFunction.IdRegex.test(id))
+            return;
+        return this.resolveGuildEmoji(ctx, arg, id, ref) ?? await this.resolveApplicationEmoji(ctx, arg, id, ref);
     }
     resolveForumTag(ctx, arg, str, ref) {
         return this.resolvePointer(arg, ref, ctx.channel)?.availableTags.find((x) => x.id === str || x.name === str);
@@ -281,13 +303,17 @@ class CompiledFunction {
             return;
         return this.resolvePointer(arg, ref, ctx.guild)?.members.fetch(str).catch(ctx.noop);
     }
-    resolveReaction(ctx, arg, str, ref) {
-        const reactions = this.resolvePointer(arg, ref, ctx.message)?.reactions;
+    resolveAutomodRule(ctx, arg, str, ref) {
+        if (!CompiledFunction.IdRegex.test(str))
+            return;
+        return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop);
+    }
+    async resolveReaction(ctx, arg, str, ref) {
         const parsed = (0, discord_js_1.parseEmoji)(str);
         if (!parsed)
             return;
         const identifier = parsed.id ?? parsed.name;
-        return reactions?.cache.get(identifier);
+        return (await this.resolvePointer(arg, ref, ctx.message)?.fetch().catch(ctx.noop))?.reactions.cache.get(identifier);
     }
     resolveURL(ctx, arg, str, ref) {
         if (!CompiledFunction.URLRegex.test(str)) {
@@ -337,7 +363,7 @@ class CompiledFunction {
         }
         if (field !== undefined) {
             field.resolveArg ??= this[CompiledFunction.toResolveArgString(arg.type)].bind(this);
-            value = field.resolveArg(ctx, arg, strValue, ref);
+            value = field.resolveArg?.(ctx, arg, strValue, ref);
             if (value instanceof Promise)
                 value = await value;
         }
@@ -410,16 +436,16 @@ class CompiledFunction {
         return new Return_1.Return(Return_1.ReturnType.Continue, null);
     }
     successJSON(value) {
-        return this.unsafeSuccess(typeof value !== "string" ? JSON.stringify(value, undefined, 4) : value);
+        return this.success(typeof value !== "string" ? JSON.stringify(value, (key, val) => (typeof val === "bigint" ? val.toString() : val), 4) : value);
     }
     successFormatted(value) {
-        return this.unsafeSuccess(typeof value !== "string" ? (0, util_1.inspect)(value, { depth: Infinity }) : value);
+        return this.success(typeof value !== "string" ? (0, util_1.inspect)(value, { depth: Infinity }) : value);
     }
     unsafeSuccess(value = null) {
         return new Return_1.Return(Return_1.ReturnType.Success, value);
     }
     success(value = null) {
-        return new Return_1.Return(Return_1.ReturnType.Success, this.data.negated ? null : value);
+        return new Return_1.Return(Return_1.ReturnType.Success, this.data.negated ? null : this.data.count !== null && typeof (value) === "string" ? value.split(this.data.count).length : value);
     }
 }
 exports.CompiledFunction = CompiledFunction;

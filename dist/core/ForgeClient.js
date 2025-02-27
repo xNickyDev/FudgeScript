@@ -15,6 +15,8 @@ class ForgeClient extends discord_js_1.Client {
     cooldowns = new managers_1.CooldownManager(this);
     functions = new managers_1.ForgeFunctionManager(this);
     threading = new managers_1.ThreadManager(this);
+    websockets = new Map();
+    globalVariables = {};
     constructor(options) {
         super({
             partials: [
@@ -90,7 +92,7 @@ class ForgeClient extends discord_js_1.Client {
                 redirectErrorsToConsole: true,
                 doNotSend: true,
             });
-            if (resolved !== null && msg.content.startsWith(resolved.toLowerCase())) {
+            if (resolved !== null && (this.options.prefixCaseInsensitive ? msg.content.toLowerCase().startsWith(resolved.toLowerCase()) : msg.content.startsWith(resolved))) {
                 return resolved;
             }
         }

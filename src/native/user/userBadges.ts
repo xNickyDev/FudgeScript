@@ -7,6 +7,7 @@ export default new NativeFunction({
     name: "$userBadges",
     version: "1.0.0",
     description: "Returns the public badges of a user",
+    aliases: ["$userFlags"],
     unwrap: true,
     output: array(UserFlags),
     args: [
@@ -26,7 +27,6 @@ export default new NativeFunction({
     ],
     brackets: false,
     async execute(ctx, [user, sep]) {
-        const flags = await (user ?? ctx.user).fetchFlags().catch(ctx.noop)
-        return this.success(flags ? flags.toArray().join(sep || ", ") : undefined)
+        return this.success((user ?? ctx.user)?.flags?.toArray().join(sep ?? ", "))
     },
 })
