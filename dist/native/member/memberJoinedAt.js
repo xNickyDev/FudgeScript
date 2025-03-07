@@ -25,9 +25,9 @@ exports.default = new structures_1.NativeFunction({
             required: true,
         },
     ],
-    execute(ctx, [, member]) {
-        member ??= ctx.member;
-        return this.success((member?.joinedTimestamp ?? "joined_at" in (ctx.interaction?.member ?? {})) ? new Date((ctx.interaction?.member).joined_at).getTime() : null);
+    execute(ctx, [, user]) {
+        const member = user ?? ctx.member ?? ctx.interaction?.member;
+        return this.success(member?.joinedTimestamp ?? ("joined_at" in (ctx.interaction?.member ?? {}) ? new Date((ctx.interaction?.member).joined_at).getTime() : null));
     },
 });
 //# sourceMappingURL=memberJoinedAt.js.map

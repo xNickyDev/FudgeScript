@@ -41,12 +41,12 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
         const hash = member.avatar ?? member.user.avatar;
-        return this.success(member && hash
+        return this.success(member.user && hash
             ? new discord_js_1.CDN().avatar(member.user.id, hash, {
                 extension: ext || undefined,
                 size: size || 2048,
             })
-            : member?.user.defaultAvatarURL);
+            : member?.user?.defaultAvatarURL);
     },
 });
 //# sourceMappingURL=memberAvatar.js.map

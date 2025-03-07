@@ -42,12 +42,12 @@ export default new NativeFunction({
         const hash = member.avatar ?? member.user.avatar
 
         return this.success(
-            member && hash
+            member.user && hash
                 ? new CDN().avatar(member.user.id, hash, {
                     extension: (ext as ImageExtension) || undefined,
                     size: (size as ImageSize) || 2048,
                 })
-                : (member as GuildMember)?.user.defaultAvatarURL
+                : (member as GuildMember)?.user?.defaultAvatarURL
         )
     },
 })
