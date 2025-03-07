@@ -29,7 +29,7 @@ export enum MemberProperty {
 export const MemberProperties = defineProperties<typeof MemberProperty, GuildMember | APIInteractionGuildMember>({
     timestamp: (i) => i instanceof GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => (i as GuildMember)?.displayHexColor,
-    mention: (i) => userMention(i instanceof GuildMember ? i.id : i?.user?.id!),
+    mention: (i) => i?.user ? userMention(i.user.id) : null,
     displayName: (i) => (i as GuildMember)?.displayName,
     // Assuming m is old state
     addedRoles: (m, sep) => {
@@ -57,7 +57,7 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
     bannable: (i) => (i as GuildMember)?.bannable ?? false,
     kickable: (i) => (i as GuildMember)?.kickable ?? false,
     manageable: (i) => (i as GuildMember)?.manageable ?? false,
-    id: (i) => i instanceof GuildMember ? i.id : i?.user?.id,
+    id: (i) => i?.user?.id,
     guildID: (i) => (i as GuildMember)?.guild?.id,
     timedOutUntil: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : (i?.communication_disabled_until ? new Date(i.communication_disabled_until).getTime() : 0),
     timeout: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,

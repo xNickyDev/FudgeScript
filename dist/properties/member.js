@@ -34,7 +34,7 @@ var MemberProperty;
 exports.MemberProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => i?.displayHexColor,
-    mention: (i) => (0, discord_js_1.userMention)(i instanceof discord_js_1.GuildMember ? i.id : i?.user?.id),
+    mention: (i) => i?.user ? (0, discord_js_1.userMention)(i.user.id) : null,
     displayName: (i) => i?.displayName,
     // Assuming m is old state
     addedRoles: (m, sep) => {
@@ -64,7 +64,7 @@ exports.MemberProperties = (0, defineProperties_1.default)({
     bannable: (i) => i?.bannable ?? false,
     kickable: (i) => i?.kickable ?? false,
     manageable: (i) => i?.manageable ?? false,
-    id: (i) => i instanceof discord_js_1.GuildMember ? i.id : i?.user?.id,
+    id: (i) => i?.user?.id,
     guildID: (i) => i?.guild?.id,
     timedOutUntil: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : (i?.communication_disabled_until ? new Date(i.communication_disabled_until).getTime() : 0),
     timeout: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
