@@ -27,6 +27,10 @@ export default new NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        return this.success((member as GuildMember)?.joinedTimestamp ?? ("joined_at" in (ctx.interaction?.member ?? {}) ? new Date((ctx.interaction?.member as APIInteractionGuildMember).joined_at).getTime() : null))
+        return this.success(
+            member instanceof GuildMember
+                ? member?.joinedTimestamp
+                : ("joined_at" in (ctx.interaction?.member ?? {}) ? new Date((ctx.interaction?.member as APIInteractionGuildMember).joined_at).getTime() : null)
+        )
     },
 })

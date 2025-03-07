@@ -12,14 +12,14 @@ export default new NativeFunction({
     args: [
         {
             name: "guild ID",
-            description: "The guild id to return the member from",
+            description: "The guild to return the member from",
             rest: false,
             type: ArgType.Guild,
             required: true,
         },
         {
             name: "user ID",
-            description: "The member id return its nickname",
+            description: "The member to return its nickname",
             rest: false,
             type: ArgType.Member,
             pointer: 0,
@@ -28,6 +28,6 @@ export default new NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        return this.success((member as GuildMember)?.nickname ?? (ctx.interaction?.member as APIInteractionGuildMember).nick)
+        return this.success(member instanceof GuildMember ? member?.nickname : (ctx.interaction?.member as APIInteractionGuildMember).nick)
     },
 })

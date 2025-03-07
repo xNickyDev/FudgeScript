@@ -30,6 +30,10 @@ export default new NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        return this.success(member instanceof GuildMember ? member?.isCommunicationDisabled() ?? false : !!(ctx.interaction?.member as APIInteractionGuildMember).communication_disabled_until)
+        return this.success(
+            member instanceof GuildMember
+                ? member?.isCommunicationDisabled() ?? false
+                : !!(ctx.interaction?.member as APIInteractionGuildMember).communication_disabled_until
+        )
     },
 })

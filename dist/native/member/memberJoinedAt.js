@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$memberJoinedAt",
@@ -27,7 +28,9 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
-        return this.success(member?.joinedTimestamp ?? ("joined_at" in (ctx.interaction?.member ?? {}) ? new Date((ctx.interaction?.member).joined_at).getTime() : null));
+        return this.success(member instanceof discord_js_1.GuildMember
+            ? member?.joinedTimestamp
+            : ("joined_at" in (ctx.interaction?.member ?? {}) ? new Date((ctx.interaction?.member).joined_at).getTime() : null));
     },
 });
 //# sourceMappingURL=memberJoinedAt.js.map

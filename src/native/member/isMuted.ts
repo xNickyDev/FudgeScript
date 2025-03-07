@@ -1,4 +1,4 @@
-import { APIInteractionGuildMember } from "discord.js"
+import { APIInteractionGuildMember, GuildMember } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -28,8 +28,12 @@ export default new NativeFunction({
             required: true,
         },
     ],
-    execute(ctx, [, member]) {
-        member ??= ctx.member!
-        return this.success(member?.voice.mute ?? ("mute" in (ctx.interaction?.member ?? {}) ? (ctx.interaction?.member as APIInteractionGuildMember).mute : false) ?? false)
+    execute(ctx, [, user]) {
+        const member = user ?? ctx.member ?? ctx.interaction
+        return this.success(
+            member instanceof GuildMember
+                ? member?.voice.mute ?? false
+                : ("mute" in (ctx.interaction?.member ?? {}) ? (ctx.interaction?.member as APIInteractionGuildMember).mute : false)
+        )
     },
 })
