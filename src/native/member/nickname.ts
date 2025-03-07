@@ -19,7 +19,7 @@ export default new NativeFunction({
         },
         {
             name: "user ID",
-            description: "The member id return its nick",
+            description: "The member id return its nickname",
             rest: false,
             type: ArgType.Member,
             pointer: 0,
