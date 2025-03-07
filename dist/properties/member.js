@@ -70,7 +70,7 @@ exports.MemberProperties = (0, defineProperties_1.default)({
     timeout: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
     status: (i) => i?.presence?.status,
     platform: (i, sep) => Object.keys(i?.presence?.clientStatus ?? {}).join(sep || ", "),
-    boosting: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) !== null,
+    boosting: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) != null,
     boostingSince: (i) => i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp ?? 0 : (i?.premium_since ? new Date(i.premium_since).getTime() : 0),
 });
 //# sourceMappingURL=member.js.map

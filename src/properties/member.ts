@@ -63,6 +63,6 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
     timeout: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
     status: (i) => (i as GuildMember)?.presence?.status,
     platform: (i, sep) => Object.keys((i as GuildMember)?.presence?.clientStatus ?? {}).join(sep || ", "),
-    boosting: (i) => (i instanceof GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) !== null,
+    boosting: (i) => (i instanceof GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) != null,
     boostingSince: (i) => i instanceof GuildMember ? i?.premiumSinceTimestamp ?? 0 : (i?.premium_since ? new Date(i.premium_since).getTime() : 0),
 })
