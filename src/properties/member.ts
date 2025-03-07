@@ -50,8 +50,8 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
             .join(sep ?? ", ")
     },
     roleCount: (i) => (i instanceof GuildMember ? i?.roles.cache.size : i?.roles.length) ?? 0,
-    avatar: (i) => i instanceof GuildMember ? i.displayAvatarURL() : (i?.avatar && i?.user ? new CDN().avatar(i.user.id, i.avatar) : null),
-    banner: (i) => i instanceof GuildMember ? i.displayBannerURL() : (i?.banner && i?.user ? new CDN().banner(i.user.id, i.banner) : null),
+    avatar: (i) => i instanceof GuildMember ? i.displayAvatarURL() : (i?.user && (i?.avatar ?? i.user.avatar) ? new CDN().avatar(i.user.id, i.avatar ?? i.user.avatar!) : null),
+    banner: (i) => i instanceof GuildMember ? i.displayBannerURL() : (i?.user && (i?.banner ?? i.user.banner) ? new CDN().banner(i.user.id, i.banner ?? i.user.banner!) : null),
     nickname: (i) => i instanceof GuildMember ? i?.nickname : i?.nick,
     roles: (i, sep) => (i instanceof GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
     bannable: (i) => (i as GuildMember)?.bannable ?? false,
