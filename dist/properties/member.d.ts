@@ -1,4 +1,4 @@
-import { GuildMember } from "discord.js";
+import { APIInteractionGuildMember, GuildMember } from "discord.js";
 export declare enum MemberProperty {
     nickname = "nickname",
     displayName = "displayName",
@@ -6,6 +6,7 @@ export declare enum MemberProperty {
     roles = "roles",
     mention = "mention",
     avatar = "avatar",
+    banner = "banner",
     bannable = "bannable",
     kickable = "kickable",
     guildID = "guildID",
@@ -22,5 +23,5 @@ export declare enum MemberProperty {
     boosting = "boosting",
     boostingSince = "boostingSince"
 }
-export declare const MemberProperties: import("../functions/defineProperties").Properties<typeof MemberProperty, GuildMember>;
+export declare const MemberProperties: import("../functions/defineProperties").Properties<typeof MemberProperty, GuildMember | APIInteractionGuildMember>;
 //# sourceMappingURL=member.d.ts.map

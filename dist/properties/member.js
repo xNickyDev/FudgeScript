@@ -14,6 +14,7 @@ var MemberProperty;
     MemberProperty["roles"] = "roles";
     MemberProperty["mention"] = "mention";
     MemberProperty["avatar"] = "avatar";
+    MemberProperty["banner"] = "banner";
     MemberProperty["bannable"] = "bannable";
     MemberProperty["kickable"] = "kickable";
     MemberProperty["guildID"] = "guildID";
@@ -31,38 +32,45 @@ var MemberProperty;
     MemberProperty["boostingSince"] = "boostingSince";
 })(MemberProperty || (exports.MemberProperty = MemberProperty = {}));
 exports.MemberProperties = (0, defineProperties_1.default)({
-    timestamp: (i) => i?.joinedTimestamp,
+    timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : new Date(i?.joined_at).getTime(),
     displayColor: (i) => i?.displayHexColor,
-    mention: (i) => (0, discord_js_1.userMention)(i?.id),
+    mention: (i) => (0, discord_js_1.userMention)(i instanceof discord_js_1.GuildMember ? i.id : i?.user.id),
     displayName: (i) => i?.displayName,
     // Assuming m is old state
-    addedRoles: (m, sep) => m?.guild.members.cache
-        .get(m.id)
-        ?.roles.cache.filter((r) => !m.roles.cache.has(r.id))
-        .map((x) => x.id)
-        .join(sep ?? ", "),
+    addedRoles: (m, sep) => {
+        if (!(m && "guild" in m))
+            return null;
+        return m?.guild.members.cache
+            .get(m.id)
+            ?.roles.cache.filter((r) => !m.roles.cache.has(r.id))
+            .map((x) => x.id)
+            .join(sep ?? ", ");
+    },
     // Assuming m is old state
     removedRoles: (m, sep) => {
+        if (!(m && "guild" in m))
+            return null;
         const updated = m?.guild.members.cache.get(m.id);
         return m?.roles.cache
             .filter((r) => !updated?.roles.cache.has(r.id))
             .map((x) => x.id)
             .join(sep ?? ", ");
     },
-    roleCount: (m) => m?.roles.cache.size ?? 0,
-    avatar: (i) => i?.displayAvatarURL(),
-    nickname: (i) => i?.nickname,
-    roles: (i, sep) => i?.roles.cache.map((x) => x.id).join(sep || ", "),
+    roleCount: (i) => (i instanceof discord_js_1.GuildMember ? i?.roles.cache.size : i?.roles.length) ?? 0,
+    avatar: (i) => i instanceof discord_js_1.GuildMember ? i.displayAvatarURL() : i?.avatar ? new discord_js_1.CDN().avatar(i?.user.id, i?.avatar) : null,
+    banner: (i) => i instanceof discord_js_1.GuildMember ? i.displayBannerURL() : i?.banner ? new discord_js_1.CDN().banner(i?.user.id, i?.banner) : null,
+    nickname: (i) => i instanceof discord_js_1.GuildMember ? i?.nickname : i?.nick,
+    roles: (i, sep) => (i instanceof discord_js_1.GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
     bannable: (i) => i?.bannable ?? false,
     kickable: (i) => i?.kickable ?? false,
     manageable: (i) => i?.manageable ?? false,
-    id: (i) => i?.id,
+    id: (i) => i instanceof discord_js_1.GuildMember ? i.id : i?.user.id,
     guildID: (i) => i?.guild.id,
-    timedOutUntil: (i) => (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0),
-    timeout: (i) => i?.isCommunicationDisabled() ?? false,
+    timedOutUntil: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : new Date(i?.communication_disabled_until).getTime(),
+    timeout: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
     status: (i) => i?.presence?.status,
     platform: (i, sep) => Object.keys(i?.presence?.clientStatus ?? {}).join(sep || ", "),
-    boosting: (i) => i?.premiumSinceTimestamp !== null,
-    boostingSince: (i) => i?.premiumSinceTimestamp ?? 0,
+    boosting: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) !== null,
+    boostingSince: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : new Date(i?.premium_since).getTime()) ?? 0,
 });
 //# sourceMappingURL=member.js.map
