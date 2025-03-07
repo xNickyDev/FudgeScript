@@ -27,9 +27,9 @@ export enum MemberProperty {
 }
 
 export const MemberProperties = defineProperties<typeof MemberProperty, GuildMember | APIInteractionGuildMember>({
-    timestamp: (i) => i instanceof GuildMember ? i?.joinedTimestamp : new Date(i?.joined_at!).getTime(),
+    timestamp: (i) => i instanceof GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => (i as GuildMember)?.displayHexColor,
-    mention: (i) => userMention(i instanceof GuildMember ? i.id : i?.user.id!),
+    mention: (i) => userMention(i instanceof GuildMember ? i.id : i?.user?.id!),
     displayName: (i) => (i as GuildMember)?.displayName,
     // Assuming m is old state
     addedRoles: (m, sep) => {
@@ -50,8 +50,8 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
             .join(sep ?? ", ")
     },
     roleCount: (i) => (i instanceof GuildMember ? i?.roles.cache.size : i?.roles.length) ?? 0,
-    avatar: (i) => i instanceof GuildMember ? i.displayAvatarURL() : i?.avatar ? new CDN().avatar(i?.user.id!, i?.avatar) : null,
-    banner: (i) => i instanceof GuildMember ? i.displayBannerURL() : i?.banner ? new CDN().banner(i?.user.id!, i?.banner) : null,
+    avatar: (i) => i instanceof GuildMember ? i.displayAvatarURL() : (i?.avatar && i?.user ? new CDN().avatar(i.user.id, i.avatar) : null),
+    banner: (i) => i instanceof GuildMember ? i.displayBannerURL() : (i?.banner && i?.user ? new CDN().banner(i.user.id, i.banner) : null),
     nickname: (i) => i instanceof GuildMember ? i?.nickname : i?.nick,
     roles: (i, sep) => (i instanceof GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
     bannable: (i) => (i as GuildMember)?.bannable ?? false,
@@ -59,10 +59,10 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
     manageable: (i) => (i as GuildMember)?.manageable ?? false,
     id: (i) => i instanceof GuildMember ? i.id : i?.user.id,
     guildID: (i) => (i as GuildMember)?.guild.id,
-    timedOutUntil: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : new Date(i?.communication_disabled_until!).getTime(),
+    timedOutUntil: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : (i?.communication_disabled_until ? new Date(i.communication_disabled_until).getTime() : 0),
     timeout: (i) => i instanceof GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
     status: (i) => (i as GuildMember)?.presence?.status,
     platform: (i, sep) => Object.keys((i as GuildMember)?.presence?.clientStatus ?? {}).join(sep || ", "),
     boosting: (i) => (i instanceof GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) !== null,
-    boostingSince: (i) => (i instanceof GuildMember ? i?.premiumSinceTimestamp : new Date(i?.premium_since!).getTime()) ?? 0,
+    boostingSince: (i) => i instanceof GuildMember ? i?.premiumSinceTimestamp ?? 0 : (i?.premium_since ? new Date(i.premium_since).getTime() : 0),
 })

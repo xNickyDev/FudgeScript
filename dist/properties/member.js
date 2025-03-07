@@ -32,9 +32,9 @@ var MemberProperty;
     MemberProperty["boostingSince"] = "boostingSince";
 })(MemberProperty || (exports.MemberProperty = MemberProperty = {}));
 exports.MemberProperties = (0, defineProperties_1.default)({
-    timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : new Date(i?.joined_at).getTime(),
+    timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => i?.displayHexColor,
-    mention: (i) => (0, discord_js_1.userMention)(i instanceof discord_js_1.GuildMember ? i.id : i?.user.id),
+    mention: (i) => (0, discord_js_1.userMention)(i instanceof discord_js_1.GuildMember ? i.id : i?.user?.id),
     displayName: (i) => i?.displayName,
     // Assuming m is old state
     addedRoles: (m, sep) => {
@@ -57,8 +57,8 @@ exports.MemberProperties = (0, defineProperties_1.default)({
             .join(sep ?? ", ");
     },
     roleCount: (i) => (i instanceof discord_js_1.GuildMember ? i?.roles.cache.size : i?.roles.length) ?? 0,
-    avatar: (i) => i instanceof discord_js_1.GuildMember ? i.displayAvatarURL() : i?.avatar ? new discord_js_1.CDN().avatar(i?.user.id, i?.avatar) : null,
-    banner: (i) => i instanceof discord_js_1.GuildMember ? i.displayBannerURL() : i?.banner ? new discord_js_1.CDN().banner(i?.user.id, i?.banner) : null,
+    avatar: (i) => i instanceof discord_js_1.GuildMember ? i.displayAvatarURL() : (i?.avatar && i?.user ? new discord_js_1.CDN().avatar(i.user.id, i.avatar) : null),
+    banner: (i) => i instanceof discord_js_1.GuildMember ? i.displayBannerURL() : (i?.banner && i?.user ? new discord_js_1.CDN().banner(i.user.id, i.banner) : null),
     nickname: (i) => i instanceof discord_js_1.GuildMember ? i?.nickname : i?.nick,
     roles: (i, sep) => (i instanceof discord_js_1.GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
     bannable: (i) => i?.bannable ?? false,
@@ -66,11 +66,11 @@ exports.MemberProperties = (0, defineProperties_1.default)({
     manageable: (i) => i?.manageable ?? false,
     id: (i) => i instanceof discord_js_1.GuildMember ? i.id : i?.user.id,
     guildID: (i) => i?.guild.id,
-    timedOutUntil: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : new Date(i?.communication_disabled_until).getTime(),
+    timedOutUntil: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ? i.communicationDisabledUntil.getTime() : 0) : (i?.communication_disabled_until ? new Date(i.communication_disabled_until).getTime() : 0),
     timeout: (i) => i instanceof discord_js_1.GuildMember ? (i?.isCommunicationDisabled() ?? false) : !!i?.communication_disabled_until,
     status: (i) => i?.presence?.status,
     platform: (i, sep) => Object.keys(i?.presence?.clientStatus ?? {}).join(sep || ", "),
     boosting: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : i?.premium_since) !== null,
-    boostingSince: (i) => (i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp : new Date(i?.premium_since).getTime()) ?? 0,
+    boostingSince: (i) => i instanceof discord_js_1.GuildMember ? i?.premiumSinceTimestamp ?? 0 : (i?.premium_since ? new Date(i.premium_since).getTime() : 0),
 });
 //# sourceMappingURL=member.js.map
