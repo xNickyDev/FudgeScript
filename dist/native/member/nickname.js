@@ -26,8 +26,9 @@ exports.default = new structures_1.NativeFunction({
             required: true,
         },
     ],
-    execute(ctx, [, member]) {
-        return this.success((member ?? ctx.member ?? ctx.interaction?.member)?.displayName);
+    execute(ctx, [, user]) {
+        const member = user ?? ctx.member ?? ctx.interaction?.member;
+        return this.success(member?.nickname ?? (ctx.interaction?.member).nick);
     },
 });
 //# sourceMappingURL=nickname.js.map

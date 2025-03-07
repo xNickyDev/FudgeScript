@@ -39,10 +39,10 @@ export default new NativeFunction({
     unwrap: true,
     execute(ctx, [, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        const hash = member.avatar ?? member.user.avatar
+        const hash = member?.avatar ?? member?.user?.avatar
 
         return this.success(
-            member.user && hash
+            member?.user && hash
                 ? new CDN().avatar(member.user.id, hash, {
                     extension: (ext as ImageExtension) || undefined,
                     size: (size as ImageSize) || 2048,
