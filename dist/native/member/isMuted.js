@@ -30,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, member]) {
         member ??= ctx.member;
-        return this.success(member?.voice.mute ?? false);
+        return this.success(member?.voice.mute ?? ("mute" in (ctx.interaction?.member ?? {}) ? (ctx.interaction?.member).mute : false) ?? false);
     },
 });
 //# sourceMappingURL=isMuted.js.map
