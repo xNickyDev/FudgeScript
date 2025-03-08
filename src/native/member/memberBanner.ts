@@ -40,7 +40,7 @@ export default new NativeFunction({
     execute(ctx, [, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
         const hash = member?.banner ?? member?.user?.banner
-
+        
         return this.success(
             member?.user && hash
                 ? new CDN().banner(member.user.id, hash, {

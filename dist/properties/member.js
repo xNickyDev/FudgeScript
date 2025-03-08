@@ -12,6 +12,7 @@ var MemberProperty;
     MemberProperty["displayName"] = "displayName";
     MemberProperty["displayColor"] = "displayColor";
     MemberProperty["roles"] = "roles";
+    MemberProperty["flags"] = "flags";
     MemberProperty["mention"] = "mention";
     MemberProperty["avatar"] = "avatar";
     MemberProperty["banner"] = "banner";
@@ -30,6 +31,7 @@ var MemberProperty;
     MemberProperty["timestamp"] = "timestamp";
     MemberProperty["boosting"] = "boosting";
     MemberProperty["boostingSince"] = "boostingSince";
+    MemberProperty["permissions"] = "permissions";
 })(MemberProperty || (exports.MemberProperty = MemberProperty = {}));
 exports.MemberProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
@@ -61,6 +63,8 @@ exports.MemberProperties = (0, defineProperties_1.default)({
     banner: (i) => i instanceof discord_js_1.GuildMember ? i.displayBannerURL() : (i?.user && (i?.banner ?? i.user.banner) ? new discord_js_1.CDN().banner(i.user.id, i.banner ?? i.user.banner) : null),
     nickname: (i) => i instanceof discord_js_1.GuildMember ? i?.nickname : i?.nick,
     roles: (i, sep) => (i instanceof discord_js_1.GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
+    flags: (i, sep) => new discord_js_1.GuildMemberFlagsBitField(i?.flags).toArray().join(sep || ", "),
+    permissions: (i, sep) => new discord_js_1.PermissionsBitField(i?.permissions).toArray().join(sep || ", "),
     bannable: (i) => i?.bannable ?? false,
     kickable: (i) => i?.kickable ?? false,
     manageable: (i) => i?.manageable ?? false,

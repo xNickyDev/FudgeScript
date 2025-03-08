@@ -1,4 +1,4 @@
-import { APIInteractionGuildMember, CDN, GuildMember, userMention } from "discord.js"
+import { APIInteractionGuildMember, CDN, GuildMember, GuildMemberFlagsBitField, PermissionsBitField, userMention } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum MemberProperty {
@@ -6,6 +6,7 @@ export enum MemberProperty {
     displayName = "displayName",
     displayColor = "displayColor",
     roles = "roles",
+    flags = "flags",
     mention = "mention",
     avatar = "avatar",
     banner = "banner",
@@ -24,6 +25,7 @@ export enum MemberProperty {
     timestamp = "timestamp",
     boosting = "boosting",
     boostingSince = "boostingSince",
+    permissions = "permissions",
 }
 
 export const MemberProperties = defineProperties<typeof MemberProperty, GuildMember | APIInteractionGuildMember>({
@@ -54,6 +56,8 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
     banner: (i) => i instanceof GuildMember ? i.displayBannerURL() : (i?.user && (i?.banner ?? i.user.banner) ? new CDN().banner(i.user.id, i.banner ?? i.user.banner!) : null),
     nickname: (i) => i instanceof GuildMember ? i?.nickname : i?.nick,
     roles: (i, sep) => (i instanceof GuildMember ? i?.roles.cache.map((x) => x.id) : i?.roles)?.join(sep || ", "),
+    flags: (i, sep) => new GuildMemberFlagsBitField(i?.flags).toArray().join(sep || ", "),
+    permissions: (i, sep) => new PermissionsBitField(i?.permissions as PermissionsBitField).toArray().join(sep || ", "),
     bannable: (i) => (i as GuildMember)?.bannable ?? false,
     kickable: (i) => (i as GuildMember)?.kickable ?? false,
     manageable: (i) => (i as GuildMember)?.manageable ?? false,
