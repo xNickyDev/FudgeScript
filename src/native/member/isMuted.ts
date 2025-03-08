@@ -29,11 +29,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [, user]) {
-        const member = user ?? ctx.member ?? ctx.interaction
-        return this.success(
-            member instanceof GuildMember
-                ? member?.voice.mute ?? false
-                : ("mute" in (ctx.interaction?.member ?? {}) ? (ctx.interaction?.member as APIInteractionGuildMember).mute : false)
-        )
+        const member = user ?? ctx.member ?? ctx.interaction?.member
+        return this.success((member instanceof GuildMember ? member?.voice.mute : (ctx.interaction?.member as APIInteractionGuildMember)?.mute) ?? false)
     },
 })

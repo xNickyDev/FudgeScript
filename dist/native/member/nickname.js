@@ -29,7 +29,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
-        return this.success(member instanceof discord_js_1.GuildMember ? member?.nickname : (ctx.interaction?.member).nick);
+        return this.success(member instanceof discord_js_1.GuildMember ? member?.nickname : ctx.interaction?.member?.nick);
     },
 });
 //# sourceMappingURL=nickname.js.map

@@ -38,7 +38,7 @@ export default new NativeFunction({
             (member instanceof GuildMember
                 ? member?.roles.cache.filter((x) => x.id !== x.guild.id).map((x) => x.id)
                 : (ctx.interaction?.member as APIInteractionGuildMember)?.roles
-            ).join(sep || ", ")
+            )?.join(sep || ", ")
         )
     },
 })

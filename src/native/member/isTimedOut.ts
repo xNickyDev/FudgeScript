@@ -33,7 +33,7 @@ export default new NativeFunction({
         return this.success(
             member instanceof GuildMember
                 ? member?.isCommunicationDisabled() ?? false
-                : !!(ctx.interaction?.member as APIInteractionGuildMember).communication_disabled_until
+                : !!(ctx.interaction?.member as APIInteractionGuildMember)?.communication_disabled_until
         )
     },
 })

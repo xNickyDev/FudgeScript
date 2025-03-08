@@ -30,10 +30,8 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [, user]) {
-        const member = user ?? ctx.member ?? ctx.interaction;
-        return this.success(member instanceof discord_js_1.GuildMember
-            ? member?.voice.mute ?? false
-            : ("mute" in (ctx.interaction?.member ?? {}) ? (ctx.interaction?.member).mute : false));
+        const member = user ?? ctx.member ?? ctx.interaction?.member;
+        return this.success((member instanceof discord_js_1.GuildMember ? member?.voice.mute : ctx.interaction?.member?.mute) ?? false);
     },
 });
 //# sourceMappingURL=isMuted.js.map

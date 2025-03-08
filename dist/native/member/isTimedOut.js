@@ -33,7 +33,7 @@ exports.default = new structures_1.NativeFunction({
         const member = user ?? ctx.member ?? ctx.interaction?.member;
         return this.success(member instanceof discord_js_1.GuildMember
             ? member?.isCommunicationDisabled() ?? false
-            : !!(ctx.interaction?.member).communication_disabled_until);
+            : !!ctx.interaction?.member?.communication_disabled_until);
     },
 });
 //# sourceMappingURL=isTimedOut.js.map

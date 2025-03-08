@@ -28,6 +28,6 @@ export default new NativeFunction({
     ],
     execute(ctx, [, user]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        return this.success(member instanceof GuildMember ? member?.nickname : (ctx.interaction?.member as APIInteractionGuildMember).nick)
+        return this.success(member instanceof GuildMember ? member?.nickname : (ctx.interaction?.member as APIInteractionGuildMember)?.nick)
     },
 })
