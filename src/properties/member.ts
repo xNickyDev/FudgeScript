@@ -30,7 +30,7 @@ export const MemberProperties = defineProperties<typeof MemberProperty, GuildMem
     timestamp: (i) => i instanceof GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => (i as GuildMember)?.displayHexColor,
     mention: (i) => i?.user ? userMention(i.user.id) : null,
-    displayName: (i) => (i as GuildMember)?.displayName,
+    displayName: (i) => i instanceof GuildMember ? i?.displayName : i?.nick,
     // Assuming m is old state
     addedRoles: (m, sep) => {
         if (!(m && "guild" in m)) return null

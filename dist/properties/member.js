@@ -35,7 +35,7 @@ exports.MemberProperties = (0, defineProperties_1.default)({
     timestamp: (i) => i instanceof discord_js_1.GuildMember ? i?.joinedTimestamp : (i?.joined_at ? new Date(i.joined_at).getTime() : null),
     displayColor: (i) => i?.displayHexColor,
     mention: (i) => i?.user ? (0, discord_js_1.userMention)(i.user.id) : null,
-    displayName: (i) => i?.displayName,
+    displayName: (i) => i instanceof discord_js_1.GuildMember ? i?.displayName : i?.nick,
     // Assuming m is old state
     addedRoles: (m, sep) => {
         if (!(m && "guild" in m))
