@@ -43,7 +43,7 @@ export class ForgeFunction {
                 name: typeof x === "string" ? x : x.name,
                 rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,
-                type: typeof x === "string" ? ArgType.String : ArgType[x.type!] ?? ArgType.String,
+                type: typeof x === "string" ? ArgType.String : ArgType[x.type as keyof typeof ArgType] ?? ArgType.String,
                 required: typeof x === "string" ? true : x.required ?? true
             }) as IArg<ArgType.String>) : undefined,
             brackets: this.data.brackets ?? (this.data.params?.length ? true : undefined),
