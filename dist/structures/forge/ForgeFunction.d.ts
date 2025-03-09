@@ -3,6 +3,7 @@ import { IExtendedCompilationResult } from "../../core";
 import { Return, ReturnType } from "../@internal/Return";
 export interface IForgeFunctionParam {
     name: string;
+    type?: ArgType | keyof typeof ArgType;
     required?: boolean;
 }
 export interface IForgeFunction {

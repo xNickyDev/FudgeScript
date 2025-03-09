@@ -8,6 +8,7 @@ import { ForgeError, ErrorType } from "./ForgeError"
 
 export interface IForgeFunctionParam {
     name: string
+    type?: ArgType | keyof typeof ArgType
     required?: boolean
 }
 
@@ -42,7 +43,7 @@ export class ForgeFunction {
                 name: typeof x === "string" ? x : x.name,
                 rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,
-                type: ArgType.String,
+                type: typeof x === "string" ? ArgType.String : (x.type ? ArgType[x.type] : ArgType.String),
                 required: typeof x === "string" ? true : x.required ?? true
             }) as IArg<ArgType.String>) : undefined,
             brackets: this.data.brackets ?? (this.data.params?.length ? true : undefined),
