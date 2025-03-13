@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$localFunction",
+    version: "2.3.0",
     description: "Declares a new local function",
     aliases: ["$fn"],
     unwrap: false,
@@ -29,9 +30,18 @@ exports.default = new NativeFunction_1.NativeFunction({
             type: NativeFunction_1.ArgType.String,
         },
     ],
-    execute(ctx) {
-        const [name, code, args] = this.data.fields;
-        ctx.localFunctions.set(name, { code, args });
+    async execute(ctx) {
+        const code = this.data.fields[0];
+        const name = await this["resolveUnhandledArg"](ctx, 0);
+        if (!this["isValidReturnType"](name))
+            return name;
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 2);
+        if (!this["isValidReturnType"](rt))
+            return rt;
+        ctx.localFunctions.set(name.value, {
+            code,
+            args: args[0]
+        });
         return this.success();
     },
 });

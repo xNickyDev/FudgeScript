@@ -30,14 +30,20 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    execute(ctx) {
-        const [name, code, args] = this.data.fields as [
-            string,
-            IExtendedCompiledFunctionField,
-            string[]
-        ]
+    async execute(ctx) {
+        const code = this.data.fields![0] as IExtendedCompiledFunctionField
 
-        ctx.localFunctions.set(name, { code, args })
+        const name = await this["resolveUnhandledArg"](ctx, 0)
+        if (!this["isValidReturnType"](name)) return name
+
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 2)
+        if (!this["isValidReturnType"](rt)) return rt
+
+        ctx.localFunctions.set(name.value as string, { 
+            code,
+            args: args[0]
+        })
+
         return this.success()
     },
 })

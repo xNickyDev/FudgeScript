@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$callLocalFunction",
+    version: "2.3.0",
     description: "Calls a local function",
     aliases: ["$callFn"],
     unwrap: true,
