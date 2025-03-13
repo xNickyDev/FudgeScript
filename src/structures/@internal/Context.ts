@@ -23,7 +23,7 @@ import {
     VoiceBasedChannel,
     WelcomeChannelData,
 } from "discord.js"
-import { CompiledFunction } from "./CompiledFunction"
+import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction"
 import { Container, Sendable } from "./Container"
 import { ArgType, IArg, NativeFunction, UnwrapArgs } from "./NativeFunction"
 import { Return, ReturnType } from "./Return"
@@ -71,6 +71,11 @@ export interface IOnboardingOptions {
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel
     entityMetadata?: GuildScheduledEventEntityMetadataOptions
+}
+
+export interface ILocalFunctionData {
+    code: IExtendedCompiledFunctionField
+    args: string[]
 }
 
 export enum CalendarType {
@@ -129,6 +134,8 @@ export class Context {
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
+
+    localFunctions: Map<string, ILocalFunctionData> = new Map()
 
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}

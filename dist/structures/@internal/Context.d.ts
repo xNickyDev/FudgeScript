@@ -1,5 +1,5 @@
 import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
-import { CompiledFunction } from "./CompiledFunction";
+import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
 import { Return } from "./Return";
@@ -35,6 +35,10 @@ export interface IOnboardingOptions {
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel;
     entityMetadata?: GuildScheduledEventEntityMetadataOptions;
+}
+export interface ILocalFunctionData {
+    code: IExtendedCompiledFunctionField;
+    args: string[];
 }
 export declare enum CalendarType {
     Buddhist = "buddhist",
@@ -87,6 +91,7 @@ export declare class Context {
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;
+    localFunctions: Map<string, ILocalFunctionData>;
     container: Container;
     constructor(runtime: IRunnable);
     get client(): import("../..").ForgeClient;

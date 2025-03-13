@@ -24,7 +24,7 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         super(ForgeError.make(fn, type, ...args))
         
         // Emits the forgeError event whenever an error is thrown
-        CustomEventEmitter.emit("forgeError", { func: fn!, type: type, args: args })
+        CustomEventEmitter.emit("forgeError", { func: fn, type: type, args: args })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

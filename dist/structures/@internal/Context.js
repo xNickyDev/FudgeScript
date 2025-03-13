@@ -46,6 +46,7 @@ class Context {
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;
+    localFunctions = new Map();
     #keywords = {};
     #environment = {};
     container;
