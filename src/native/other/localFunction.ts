@@ -31,7 +31,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx) {
-        const code = this.data.fields![0] as IExtendedCompiledFunctionField
+        const code = this.data.fields![1] as IExtendedCompiledFunctionField
 
         const name = await this["resolveUnhandledArg"](ctx, 0)
         if (!this["isValidReturnType"](name)) return name

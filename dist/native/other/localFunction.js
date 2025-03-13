@@ -31,7 +31,7 @@ exports.default = new NativeFunction_1.NativeFunction({
         },
     ],
     async execute(ctx) {
-        const code = this.data.fields[0];
+        const code = this.data.fields[1];
         const name = await this["resolveUnhandledArg"](ctx, 0);
         if (!this["isValidReturnType"](name))
             return name;
