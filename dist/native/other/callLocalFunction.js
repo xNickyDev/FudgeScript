@@ -34,12 +34,13 @@ exports.default = new NativeFunction_1.NativeFunction({
         for (let i = 0, len = func.args.length; i < len; i++) {
             ctx.setEnvironmentKey(func.args[i], args[i]);
         }
-        const resolved = await this["resolveCode"](ctx, func.code);
-        if (!this["isValidReturnType"](resolved))
-            return resolved;
-        ctx.container.content = resolved.value;
-        await ctx.container.send(ctx.obj);
-        return this.success();
+        const exec = await this["resolveCode"](ctx, func.code);
+        if (!this["isValidReturnType"](exec))
+            return exec;
+        else if (exec.return)
+            return this.success(exec.value);
+        else
+            return exec;
     },
 });
 //# sourceMappingURL=callLocalFunction.js.map
