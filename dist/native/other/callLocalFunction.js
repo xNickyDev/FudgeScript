@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const structures_1 = require("../../structures");
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$callLocalFunction",
@@ -26,13 +27,18 @@ exports.default = new NativeFunction_1.NativeFunction({
     output: NativeFunction_1.ArgType.Unknown,
     async execute(ctx, [name, args]) {
         const func = ctx.localFunctions.get(name);
-        if (func) {
-            const resolved = await this["resolveCode"](ctx, func.code);
-            if (!this["isValidReturnType"](resolved))
-                return resolved;
-            ctx.container.content = resolved.value;
-            await ctx.container.send(ctx.obj);
+        if (!func)
+            return this.error(structures_1.ErrorType.UnknownXName, "local function", name);
+        if (args.length < func.args.length)
+            return this.error(structures_1.ErrorType.Custom, `Calling local function ${name} requires ${func.args.length} arguments, received ${args.length}`);
+        for (let i = 0, len = func.args.length; i < len; i++) {
+            ctx.setEnvironmentKey(func.args[i], args[i]);
         }
+        const resolved = await this["resolveCode"](ctx, func.code);
+        if (!this["isValidReturnType"](resolved))
+            return resolved;
+        ctx.container.content = resolved.value;
+        await ctx.container.send(ctx.obj);
         return this.success();
     },
 });

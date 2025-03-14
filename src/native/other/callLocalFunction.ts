@@ -1,3 +1,4 @@
+import { ErrorType } from "../../structures"
 import { ArgType, NativeFunction } from "../../structures/@internal/NativeFunction"
 
 export default new NativeFunction({
@@ -25,13 +26,22 @@ export default new NativeFunction({
     output: ArgType.Unknown,
     async execute(ctx, [name, args]) {
         const func = ctx.localFunctions.get(name)
+        if (!func) return this.error(ErrorType.UnknownXName, "local function", name)
         
-        if (func) {
-            const resolved = await this["resolveCode"](ctx, func.code)
-            if (!this["isValidReturnType"](resolved)) return resolved
-            ctx.container.content = resolved.value as string
-            await ctx.container.send(ctx.obj)
+        if (args.length < func.args.length)
+            return this.error(
+                ErrorType.Custom,
+                `Calling local function ${name} requires ${func.args.length} arguments, received ${args.length}`
+            )
+
+        for (let i = 0, len = func.args.length; i < len; i++) {
+            ctx.setEnvironmentKey(func.args[i], args[i])
         }
+
+        const resolved = await this["resolveCode"](ctx, func.code)
+        if (!this["isValidReturnType"](resolved)) return resolved
+        ctx.container.content = resolved.value as string
+        await ctx.container.send(ctx.obj)
 
         return this.success()
     },
