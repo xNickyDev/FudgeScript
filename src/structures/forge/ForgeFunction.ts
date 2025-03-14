@@ -81,7 +81,7 @@ export class ForgeFunction {
                 new ForgeError(
                     null,
                     ErrorType.Custom,
-                    `Calling custom function ${this.data.name} requires ${required.length} arguments, received ${args.length}`
+                    `Calling custom function ${this.data.name} requires ${required.length} argument${required.length > 1 ? "s" : ""}, received ${args.length}`
                 )
             )
 

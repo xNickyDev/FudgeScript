@@ -30,12 +30,12 @@ exports.default = new NativeFunction_1.NativeFunction({
         if (!func)
             return this.error(structures_1.ErrorType.UnknownXName, "local function", name);
         if (args.length < func.args.length)
-            return this.error(structures_1.ErrorType.Custom, `Calling local function ${name} requires ${func.args.length} arguments, received ${args.length}`);
+            return this.error(structures_1.ErrorType.Custom, `Calling local function ${name} requires ${func.args.length} argument${func.args.length > 1 ? "s" : ""}, received ${args.length}`);
         for (let i = 0, len = func.args.length; i < len; i++) {
             ctx.setEnvironmentKey(func.args[i], args[i]);
         }
-        const exec = await this["resolveCode"](ctx, func.code);
-        return this.success(exec.value);
+        const rt = await this["resolveCode"](ctx, func.code);
+        return this.success(rt.value);
     },
 });
 //# sourceMappingURL=callLocalFunction.js.map
