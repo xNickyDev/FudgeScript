@@ -35,12 +35,7 @@ exports.default = new NativeFunction_1.NativeFunction({
             ctx.setEnvironmentKey(func.args[i], args[i]);
         }
         const exec = await this["resolveCode"](ctx, func.code);
-        if (!this["isValidReturnType"](exec))
-            return exec;
-        else if (exec.return)
-            return this.success(exec.value);
-        else
-            return exec;
+        return this.success(exec.value);
     },
 });
 //# sourceMappingURL=callLocalFunction.js.map

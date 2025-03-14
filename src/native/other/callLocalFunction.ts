@@ -39,8 +39,6 @@ export default new NativeFunction({
         }
 
         const exec = await this["resolveCode"](ctx, func.code)
-        if (!this["isValidReturnType"](exec)) return exec
-        else if (exec.return) return this.success(exec.value)
-        else return exec
+        return this.success(exec.value)
     },
 })
