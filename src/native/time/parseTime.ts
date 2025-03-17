@@ -18,17 +18,17 @@ export default new NativeFunction({
     unwrap: true,
     execute(ctx, [ str ]) {
         const time = str
-        .replaceAll("and", "")
-        .replaceAll(",", "")
-        .replaceAll(" ", "")
-        .replaceAll("s", "")
-        .replaceAll("econd", "s")
-        .replaceAll("year", "y")
-        .replaceAll("month", "M")
-        .replaceAll("week", "w")
-        .replaceAll("day", "d")
-        .replaceAll("hour", "h")
-        .replaceAll("minute", "m")
+            .replaceAll("and", "")
+            .replaceAll(",", "")
+            .replaceAll(" ", "")
+            .replaceAll("s", "")
+            .replaceAll("econd", "s")
+            .replaceAll("year", "y")
+            .replaceAll("month", "M")
+            .replaceAll("week", "w")
+            .replaceAll("day", "d")
+            .replaceAll("hour", "h")
+            .replaceAll("minute", "m")
 
         return this.success(isNaN(Number(time)) ? time : `${time}s`)
     },
