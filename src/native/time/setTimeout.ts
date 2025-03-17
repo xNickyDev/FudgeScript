@@ -38,6 +38,7 @@ export default new NativeFunction({
 
         const data = setTimeout(async () => {
             await this["resolveCode"](ctx, code)
+            if (name.value) ctx.client.timeouts.delete(name.value as string)
         }, time.value as number)
 
         if (name.value) ctx.client.timeouts.set(name.value as string, data)

@@ -1,9 +1,9 @@
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { Arg, ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$clearInterval",
     version: "2.3.0",
-    description: "Clears an active interval",
+    description: "Clears an active interval, returns bool",
     aliases: ["$stopInterval"],
     unwrap: true,
     brackets: true,
@@ -16,9 +16,11 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
+    output: ArgType.Boolean,
     execute(ctx, [name]) {
-        clearInterval(ctx.client.intervals.get(name))
+        const interval = ctx.client.intervals.get(name)
+        clearInterval(interval)
         ctx.client.intervals.delete(name)
-        return this.success()
+        return this.success(!!interval)
     },
 })

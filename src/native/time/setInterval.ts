@@ -38,6 +38,7 @@ export default new NativeFunction({
 
         const data = setInterval(async () => {
             await this["resolveCode"](ctx, code)
+            if (name.value) ctx.client.intervals.delete(name.value as string)
         }, time.value as number)
 
         if (name.value) ctx.client.intervals.set(name.value as string, data)

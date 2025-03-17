@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$clearTimeout",
-    description: "Clears an active timeout",
+    version: "2.3.0",
+    description: "Clears an active timeout, returns bool",
     aliases: ["$stopTimeout"],
     unwrap: true,
     brackets: true,
@@ -16,10 +17,12 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
+    output: structures_1.ArgType.Boolean,
     execute(ctx, [name]) {
-        clearTimeout(ctx.client.timeouts.get(name));
+        const timeout = ctx.client.timeouts.get(name);
+        clearTimeout(timeout);
         ctx.client.timeouts.delete(name);
-        return this.success();
+        return this.success(!!timeout);
     },
 });
 //# sourceMappingURL=clearTimeout.js.map

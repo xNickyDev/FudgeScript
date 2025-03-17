@@ -38,6 +38,8 @@ exports.default = new structures_1.NativeFunction({
             return name;
         const data = setTimeout(async () => {
             await this["resolveCode"](ctx, code);
+            if (name.value)
+                ctx.client.timeouts.delete(name.value);
         }, time.value);
         if (name.value)
             ctx.client.timeouts.set(name.value, data);

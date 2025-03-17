@@ -38,6 +38,8 @@ exports.default = new structures_1.NativeFunction({
             return name;
         const data = setInterval(async () => {
             await this["resolveCode"](ctx, code);
+            if (name.value)
+                ctx.client.intervals.delete(name.value);
         }, time.value);
         if (name.value)
             ctx.client.intervals.set(name.value, data);
