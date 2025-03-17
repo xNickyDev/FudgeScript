@@ -4,6 +4,7 @@ const structures_1 = require("../../structures");
 const month_1 = require("./month");
 exports.default = new structures_1.NativeFunction({
     name: "$dayOfWeek",
+    version: "2.3.0",
     description: "Returns current day of week",
     unwrap: true,
     brackets: false,
