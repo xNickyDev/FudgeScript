@@ -1,11 +1,13 @@
-import { Channel, Guild, GuildChannel, GuildMember, Invite, Role, User, Webhook } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+
+export const BigIntFormatRegex = /^\d+n$/
 
 export default new NativeFunction({
     name: "$typeOf",
-    version: "1.5.0",
+    version: "2.3.0",
     description: "Returns the type of the provided argument",
     unwrap: false,
+    brackets: true,
     args: [
         {
             name: "argument",
@@ -15,35 +17,23 @@ export default new NativeFunction({
             required: true,
         },
     ],
-    brackets: true,
-    output: ArgType,
+    output: ArgType.String,
     execute(ctx) {
-        const arg = this.displayField(0) as any
+        const arg = this.displayField(0)
 
-        return this.success(
-            arg instanceof Guild
-                ? "Guild"
-                : arg instanceof GuildMember
-                    ? "Member"
-                    : arg instanceof User
-                        ? "User"
-                        : arg instanceof Role
-                            ? "Role"
-                            : arg instanceof GuildChannel
-                                ? "Channel"
-                                : arg instanceof Invite
-                                    ? "Invite"
-                                    : arg instanceof Webhook
-                                        ? "Webhook"
-                                        : typeof arg === "number"
-                                            ? "Number"
-                                            : typeof arg === "boolean"
-                                                ? "Boolean"
-                                                : typeof arg === "object"
-                                                    ? "Json"
-                                                    : typeof arg === "string"
-                                                        ? "String"
-                                                        : "Unknown"
-        )
+        try {
+            void JSON.parse(arg)
+            return this.success("object")
+        } catch (error) {
+            return this.success(
+                !!arg && !isNaN(Number(arg))
+                    ? "number"
+                    : (arg === "true" || arg === "false")
+                        ? "boolean"
+                        : BigIntFormatRegex.test(arg)
+                            ? "bigint"
+                            : "string"
+            )
+        }
     },
 })

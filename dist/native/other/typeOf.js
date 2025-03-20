@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
+exports.BigIntFormatRegex = void 0;
 const structures_1 = require("../../structures");
+exports.BigIntFormatRegex = /^\d+n$/;
 exports.default = new structures_1.NativeFunction({
     name: "$typeOf",
-    version: "1.5.0",
     description: "Returns the type of the provided argument",
     unwrap: false,
+    brackets: true,
     args: [
         {
             name: "argument",
@@ -16,33 +17,22 @@ exports.default = new structures_1.NativeFunction({
             required: true,
         },
     ],
-    brackets: true,
-    output: structures_1.ArgType,
+    output: structures_1.ArgType.String,
     execute(ctx) {
         const arg = this.displayField(0);
-        return this.success(arg instanceof discord_js_1.Guild
-            ? "Guild"
-            : arg instanceof discord_js_1.GuildMember
-                ? "Member"
-                : arg instanceof discord_js_1.User
-                    ? "User"
-                    : arg instanceof discord_js_1.Role
-                        ? "Role"
-                        : arg instanceof discord_js_1.GuildChannel
-                            ? "Channel"
-                            : arg instanceof discord_js_1.Invite
-                                ? "Invite"
-                                : arg instanceof discord_js_1.Webhook
-                                    ? "Webhook"
-                                    : typeof arg === "number"
-                                        ? "Number"
-                                        : typeof arg === "boolean"
-                                            ? "Boolean"
-                                            : typeof arg === "object"
-                                                ? "Json"
-                                                : typeof arg === "string"
-                                                    ? "String"
-                                                    : "Unknown");
+        try {
+            void JSON.parse(arg);
+            return this.success("object");
+        }
+        catch (error) {
+            return this.success(!!arg && !isNaN(Number(arg))
+                ? "number"
+                : (arg === "true" || arg === "false")
+                    ? "boolean"
+                    : exports.BigIntFormatRegex.test(arg)
+                        ? "bigint"
+                        : "string");
+        }
     },
 });
 //# sourceMappingURL=typeOf.js.map
