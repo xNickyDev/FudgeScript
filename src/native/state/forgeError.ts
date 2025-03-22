@@ -1,5 +1,12 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
 
+export enum ForgeErrorData {
+    type = "type",
+    function = "func",
+    message = "msg",
+    args = "args"
+}
+
 export default new NativeFunction({
     name: "$forgeError",
     version: "2.2.0",
@@ -12,7 +19,8 @@ export default new NativeFunction({
             name: "property",
             description: "The property to pull",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.Enum,
+            enum: ForgeErrorData,
             required: true,
         },
         {
@@ -23,6 +31,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [prop, sep]) {
-        return this.successJSON(ctx.runtime.extras)
+        return this.successJSON((ctx.runtime.extras as any)[prop])
     },
 })

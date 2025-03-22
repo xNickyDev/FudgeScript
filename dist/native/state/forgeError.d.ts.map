@@ -1,1 +1,1 @@
-{"version":3,"file":"forgeError.d.ts","sourceRoot":"","sources":["../../../src/native/state/forgeError.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;AAElE,wBAyBE"}
+{"version":3,"file":"forgeError.d.ts","sourceRoot":"","sources":["../../../src/native/state/forgeError.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;AAElE,oBAAY,cAAc;IACtB,IAAI,SAAS;IACb,QAAQ,SAAS;IACjB,OAAO,QAAQ;IACf,IAAI,SAAS;CAChB;;;;;;;;;;;;;;AAED,wBA0BE"}

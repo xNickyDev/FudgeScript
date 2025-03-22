@@ -19,9 +19,10 @@ var ErrorType;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
-        super(ForgeError.make(fn, type, ...args));
+        const message = ForgeError.make(fn, type, ...args);
+        super(message);
         // Emits the forgeError event whenever an error is thrown
-        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", { func: fn, type: type, args: args });
+        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", { func: fn?.display, type: type, msg: message, args: args });
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);
