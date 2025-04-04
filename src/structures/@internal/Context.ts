@@ -136,6 +136,7 @@ export class Context {
     calendar?: CalendarType
 
     localFunctions: Map<string, ILocalFunctionData> = new Map()
+    suppressErrors: boolean = false
 
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}
@@ -283,7 +284,7 @@ export class Context {
     }
 
     public handleNotSuccess(fn: CompiledFunction, rt: Return) {
-        if (fn.data.silent)
+        if (fn.data.silent || this.suppressErrors)
             return false
         else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)

@@ -92,6 +92,7 @@ export declare class Context {
     timezone: string;
     calendar?: CalendarType;
     localFunctions: Map<string, ILocalFunctionData>;
+    suppressErrors: boolean;
     container: Container;
     constructor(runtime: IRunnable);
     get client(): import("../..").ForgeClient;
