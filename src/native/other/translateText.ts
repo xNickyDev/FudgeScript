@@ -32,7 +32,7 @@ export default new NativeFunction({
     ],
     unwrap: true,
     async execute(ctx, [text, toLang, fromLang]) {
-        const res = await translate(text, { to: toLang, from: fromLang || undefined }).catch(ctx.noop)
+        const res = await translate(text, { to: toLang, from: fromLang || "auto" }).catch(ctx.noop)
         return this.success(res?.text)
     }
 })
