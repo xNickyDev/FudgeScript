@@ -8,7 +8,7 @@ const chalk_1 = __importDefault(require("chalk"));
 function applyStyles(text, styles) {
     let styled = chalk_1.default;
     for (const style of styles) {
-        const fn = styled[style.toLowerCase()];
+        const fn = styled[style];
         if (typeof fn !== "function")
             continue;
         styled = fn;

@@ -4,7 +4,7 @@ import chalk from "chalk"
 function applyStyles(text: string, styles: string[]): string {
     let styled = chalk
     for (const style of styles) {
-        const fn = (styled as any)[style.toLowerCase()]
+        const fn = (styled as any)[style]
         if (typeof fn !== "function") continue
         styled = fn
     }
