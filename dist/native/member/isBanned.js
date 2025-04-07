@@ -10,7 +10,7 @@ exports.default = new structures_1.NativeFunction({
         "$memberIsBanned"
     ],
     output: structures_1.ArgType.Boolean,
-    description: "Whether this user is banned",
+    description: "Returns whether this user is banned",
     args: [
         {
             name: "guild ID",

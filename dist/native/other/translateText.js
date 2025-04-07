@@ -32,11 +32,19 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
             required: false,
             rest: false
+        },
+        {
+            name: "return json",
+            description: "Whether to return the response as json",
+            type: structures_1.ArgType.Boolean,
+            rest: false
         }
     ],
     unwrap: true,
-    async execute(ctx, [text, toLang, fromLang]) {
-        const res = await (0, google_translate_1.default)(text, { to: toLang, from: fromLang || "auto" }).catch(ctx.noop);
+    async execute(ctx, [text, toLang, fromLang, raw]) {
+        const res = await (0, google_translate_1.default)(text, { to: toLang, from: fromLang || "auto", raw: raw || false }).catch(ctx.noop);
+        if (raw)
+            return this.successJSON(res);
         return this.success(res?.text);
     }
 });

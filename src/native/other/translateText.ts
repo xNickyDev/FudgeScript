@@ -28,11 +28,18 @@ export default new NativeFunction({
             type: ArgType.String,
             required: false,
             rest: false
+        },
+        {
+            name: "return json",
+            description: "Whether to return the response as json",
+            type: ArgType.Boolean,
+            rest: false
         }
     ],
     unwrap: true,
-    async execute(ctx, [text, toLang, fromLang]) {
-        const res = await translate(text, { to: toLang, from: fromLang || "auto" }).catch(ctx.noop)
+    async execute(ctx, [text, toLang, fromLang, raw]) {
+        const res = await translate(text, { to: toLang, from: fromLang || "auto", raw: raw || false }).catch(ctx.noop)
+        if (raw) return this.successJSON(res)
         return this.success(res?.text)
     }
 })

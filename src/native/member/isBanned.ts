@@ -10,7 +10,7 @@ export default new NativeFunction({
         "$memberIsBanned"
     ],
     output: ArgType.Boolean,
-    description: "Whether this user is banned",
+    description: "Returns whether this user is banned",
     args: [
         {
             name: "guild ID",
