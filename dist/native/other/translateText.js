@@ -41,9 +41,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     unwrap: true,
-    async execute(ctx, [text, toLang, fromLang, raw]) {
-        const res = await (0, google_translate_1.default)(text, { to: toLang, from: fromLang || "auto", raw: raw || false }).catch(ctx.noop);
-        if (raw)
+    async execute(ctx, [text, toLang, fromLang, json]) {
+        const res = await (0, google_translate_1.default)(text, { to: toLang, from: fromLang || "auto" }).catch(ctx.noop);
+        if (json)
             return this.successJSON(res);
         return this.success(res?.text);
     }

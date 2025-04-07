@@ -37,9 +37,9 @@ export default new NativeFunction({
         }
     ],
     unwrap: true,
-    async execute(ctx, [text, toLang, fromLang, raw]) {
-        const res = await translate(text, { to: toLang, from: fromLang || "auto", raw: raw || false }).catch(ctx.noop)
-        if (raw) return this.successJSON(res)
+    async execute(ctx, [text, toLang, fromLang, json]) {
+        const res = await translate(text, { to: toLang, from: fromLang || "auto" }).catch(ctx.noop)
+        if (json) return this.successJSON(res)
         return this.success(res?.text)
     }
 })
