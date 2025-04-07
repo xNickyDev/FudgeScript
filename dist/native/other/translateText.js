@@ -7,6 +7,7 @@ const structures_1 = require("../../structures");
 const google_translate_1 = __importDefault(require("@iamtraction/google-translate"));
 exports.default = new structures_1.NativeFunction({
     name: "$translateText",
+    version: "2.3.0",
     description: "Translates text into another language",
     aliases: ["$translate"],
     brackets: true,
