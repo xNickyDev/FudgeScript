@@ -1,31 +1,40 @@
 import { ArgType, NativeFunction } from "../../structures"
 import chalk from "chalk"
 
+function applyStyles(text: string, styles: string[]): string {
+    let styled = chalk
+    for (const style of styles) {
+        const fn = (styled as any)[style.toLowerCase()]
+        if (typeof fn !== "function") continue
+        styled = fn
+    }
+    return styled(text)
+}
+
 export default new NativeFunction({
     name: "$chalkLog",
     version: "2.3.0",
-    description: "Logs colored text to the console using Chalk",
+    description: "Logs styled text to the console using Chalk",
     unwrap: true,
     brackets: true,
     args: [
-        {
-            name: "color",
-            description: "The log color (e.g., red, green, blue)",
-            type: ArgType.String,
-            required: true,
-            rest: false
-        },
         {
             name: "text",
             description: "The text to log",
             type: ArgType.String,
             required: true,
             rest: false
+        },
+        {
+            name: "styles",
+            description: "The styles to apply to the text",
+            type: ArgType.String,
+            required: true,
+            rest: true
         }
     ],
-    execute(ctx, [color, value]) {
-        const fn = (chalk as any)[color]
-        console.log(fn(value))
+    execute(ctx, [text, styles]) {
+        console.log(applyStyles(text, styles))
         return this.success()
     }
 })

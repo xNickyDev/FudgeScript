@@ -5,30 +5,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const chalk_1 = __importDefault(require("chalk"));
+function applyStyles(text, styles) {
+    let styled = chalk_1.default;
+    for (const style of styles) {
+        const fn = styled[style.toLowerCase()];
+        if (typeof fn !== "function")
+            continue;
+        styled = fn;
+    }
+    return styled(text);
+}
 exports.default = new structures_1.NativeFunction({
     name: "$chalkLog",
-    description: "Logs colored text to the console using Chalk",
+    version: "2.3.0",
+    description: "Logs styled text to the console using Chalk",
     unwrap: true,
     brackets: true,
     args: [
-        {
-            name: "color",
-            description: "The log color (e.g., red, green, blue)",
-            type: structures_1.ArgType.String,
-            required: true,
-            rest: false
-        },
         {
             name: "text",
             description: "The text to log",
             type: structures_1.ArgType.String,
             required: true,
             rest: false
+        },
+        {
+            name: "styles",
+            description: "The styles to apply to the text",
+            type: structures_1.ArgType.String,
+            required: true,
+            rest: true
         }
     ],
-    execute(ctx, [color, value]) {
-        const fn = chalk_1.default[color];
-        console.log(fn(value));
+    execute(ctx, [text, styles]) {
+        console.log(applyStyles(text, styles));
         return this.success();
     }
 });
