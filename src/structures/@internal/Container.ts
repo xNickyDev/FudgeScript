@@ -99,7 +99,7 @@ export class Container {
         } else if (obj instanceof AutoModerationActionExecution && obj.channel && "send" in obj.channel) {
             res = obj.channel.send(options)
         } else if (obj instanceof WebhookClient) {
-            res = obj.send(options)
+            res = this.edit ? obj.edit(options) : obj.send(options)
         } else if (obj instanceof Message) {
             res = this.edit ? obj.edit(options) : (obj.channel as TextChannel).send(options)
         } else if (obj instanceof BaseInteraction) {

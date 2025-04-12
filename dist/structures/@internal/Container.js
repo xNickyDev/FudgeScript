@@ -46,7 +46,7 @@ class Container {
             res = obj.channel.send(options);
         }
         else if (obj instanceof discord_js_1.WebhookClient) {
-            res = obj.send(options);
+            res = this.edit ? obj.edit(options) : obj.send(options);
         }
         else if (obj instanceof discord_js_1.Message) {
             res = this.edit ? obj.edit(options) : obj.channel.send(options);
