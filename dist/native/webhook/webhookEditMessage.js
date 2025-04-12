@@ -35,7 +35,7 @@ exports.default = new structures_1.NativeFunction({
         const web = new discord_js_1.WebhookClient({ url });
         ctx.container.content = content || undefined;
         ctx.container.edit = true;
-        return this.success(!!(await ctx.container.send(web)));
+        return this.success(!!(await ctx.container.send(web, undefined, msg)));
     },
 });
 //# sourceMappingURL=webhookEditMessage.js.map

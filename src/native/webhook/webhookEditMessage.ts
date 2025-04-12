@@ -36,6 +36,6 @@ export default new NativeFunction({
         ctx.container.content = content || undefined
         ctx.container.edit = true
 
-        return this.success(!!(await ctx.container.send<Message<true>>(web)))
+        return this.success(!!(await ctx.container.send<Message>(web, undefined, msg)))
     },
 })
