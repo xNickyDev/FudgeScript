@@ -39,6 +39,7 @@ export class ForgeFunctionManager {
         const loader = new Array<IForgeFunction | ForgeFunction>()
         for (const file of recursiveReaddirSync(path).filter((x) => x.endsWith(".js"))) {
             const path = join(cwd(), file)
+            
             const data = require(path)
             if (Object.keys(data).length === 0)
                 continue
