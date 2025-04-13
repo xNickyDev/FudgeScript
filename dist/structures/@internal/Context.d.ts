@@ -1,7 +1,7 @@
 import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
-import { ArgType, IArg, UnwrapArgs } from "./NativeFunction";
+import { IArg, UnwrapArgs } from "./NativeFunction";
 import { Return } from "./Return";
 import { IRunnable } from "../../core/Interpreter";
 import { FormData, Headers } from "undici";
@@ -16,10 +16,13 @@ export interface IHttpOptions {
     contentType?: HTTPContentType;
     headers: Record<string, string>;
     method: string;
-    timeout?: ArgType.Time;
     response?: {
         headers?: Headers;
         ping?: number;
+    };
+    timeout?: {
+        time: number;
+        code?: IExtendedCompiledFunctionField;
     };
 }
 export interface IAutomodRuleOptions {

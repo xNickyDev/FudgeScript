@@ -49,10 +49,13 @@ export interface IHttpOptions {
     contentType?: HTTPContentType
     headers: Record<string, string>
     method: string
-    timeout?: ArgType.Time
     response?: {
         headers?: Headers
         ping?: number
+    }
+    timeout?: {
+        time: number
+        code?: IExtendedCompiledFunctionField
     }
 }
 

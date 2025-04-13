@@ -1,12 +1,12 @@
 import { IExtendedCompiledFunctionField } from "../../structures"
 import { ArgType, NativeFunction } from "../../structures/@internal/NativeFunction"
-import { Return } from "../../structures/@internal/Return"
 
 export default new NativeFunction({
     name: "$httpTimeout",
-    version: "1.5.0",
+    version: "2.3.0",
     description: "Sets an HTTP request timeout, stops execution if request took longer than specified time",
     unwrap: false,
+    brackets: true,
     args: [
         {
             name: "time",
@@ -22,8 +22,17 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    brackets: true,
     async execute(ctx) {
-        return this.stop()
+        const code = this.data.fields![1] as IExtendedCompiledFunctionField
+
+        const time = await this["resolveUnhandledArg"](ctx, 0)
+        if (!this["isValidReturnType"](time)) return time
+
+        ctx.http.timeout = {
+            time: time.value as number,
+            code: code || undefined
+        }
+
+        return this.success()
     },
 })

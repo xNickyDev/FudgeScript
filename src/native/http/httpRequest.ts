@@ -37,37 +37,65 @@ export default new NativeFunction({
         name ??= "result"
         let timeout = ctx.http.timeout
 
+        const controller = new AbortController()
+        let timedOut = false
+
         if (ctx.http.response) delete ctx.http.response
         if (ctx.http.timeout) delete ctx.http.timeout
 
-        let ms = performance.now()
-        const req = await fetch(url, {
-            ...ctx.http,
-            method,
-            body: ctx.http.body ?? ctx.http.form
-        })
-        ms = performance.now() - ms
-
-        if (timeout && ms > timeout) return this.stop()
-
-        const contentType = req.headers.get("content-type")?.split(";")[0]
-        const overrideType = ctx.http.contentType
-
-        ctx.clearHttpOptions()
-        ctx.http.response = { headers: req.headers, ping: ms }
-        
-        if (overrideType !== undefined) {
-            ctx.setEnvironmentKey(name, await req[HTTPContentType[overrideType].toLowerCase() as Lowercase<keyof typeof HTTPContentType>]())
-        } else {
-            if (contentType === "application/json") {
-                ctx.setEnvironmentKey(name, await req.json())
-            } else if (contentType?.includes("image")) {
-                ctx.setEnvironmentKey(name, await req.arrayBuffer().then(x => Buffer.from(x).toString("base64")))
-            } else {
-                ctx.setEnvironmentKey(name, await req.text())
+        const promise = new Promise((_, reject) => {
+            if (timeout) {
+                setTimeout(() => {
+                    controller.abort()
+                    timedOut = true
+                    reject(new Error())
+                }, timeout.time)
             }
-        }
+        })
 
-        return this.success(req.status)
+        try {
+            let ms = performance.now()
+            const req = await Promise.race([
+                fetch(url, {
+                    ...ctx.http,
+                    method,
+                    body: ctx.http.body ?? ctx.http.form,
+                    signal: controller.signal
+                }),
+                promise
+            ]) as Response
+            ms = performance.now() - ms
+
+            const contentType = req.headers.get("content-type")?.split(";")[0]
+            const overrideType = ctx.http.contentType
+
+            ctx.clearHttpOptions()
+            ctx.http.response = { headers: req.headers, ping: ms }
+            
+            if (overrideType !== undefined) {
+                ctx.setEnvironmentKey(name, await req[HTTPContentType[overrideType].toLowerCase() as Lowercase<keyof typeof HTTPContentType>]())
+            } else {
+                if (contentType === "application/json") {
+                    ctx.setEnvironmentKey(name, await req.json())
+                } else if (contentType?.includes("image")) {
+                    ctx.setEnvironmentKey(name, await req.arrayBuffer().then(x => Buffer.from(x).toString("base64")))
+                } else {
+                    ctx.setEnvironmentKey(name, await req.text())
+                }
+            }
+            
+            return this.success(req.status)
+        } catch (error) {
+            if (timedOut) {
+                if (timeout?.code) {
+                    const resolved = await this["resolveCode"](ctx, timeout.code)
+                    if (!this["isValidReturnType"](resolved)) return resolved
+                    ctx.container.content = resolved.value as string
+                    await ctx.container.send(ctx.obj)
+                }
+                return this.stop()
+            }
+            return this.success()
+        }
     },
 })

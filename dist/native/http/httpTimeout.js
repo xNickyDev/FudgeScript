@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$httpTimeout",
-    version: "1.5.0",
     description: "Sets an HTTP request timeout, stops execution if request took longer than specified time",
     unwrap: false,
+    brackets: true,
     args: [
         {
             name: "time",
@@ -21,9 +21,16 @@ exports.default = new NativeFunction_1.NativeFunction({
             type: NativeFunction_1.ArgType.String,
         },
     ],
-    brackets: true,
     async execute(ctx) {
-        return this.stop();
+        const code = this.data.fields[1];
+        const time = await this["resolveUnhandledArg"](ctx, 0);
+        if (!this["isValidReturnType"](time))
+            return time;
+        ctx.http.timeout = {
+            time: time.value,
+            code: code || undefined
+        };
+        return this.success();
     },
 });
 //# sourceMappingURL=httpTimeout.js.map
