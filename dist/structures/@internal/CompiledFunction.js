@@ -325,19 +325,20 @@ class CompiledFunction {
             return;
         return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop);
     }
-    resolveScheduledEvent(ctx, arg, str, ref) {
+    async resolveScheduledEvent(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
             return;
-        return this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop);
+        return await this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop);
     }
-    resolveStageInstance(ctx, arg, str, ref) {
+    async resolveStageInstance(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
             return;
-        const instances = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances;
-        const data = instances?.cache.get(str) ?? instances?.fetch(str).catch(ctx.noop);
-        if (!data)
+        const chan = ctx.client.channels.cache.get(str);
+        const data = chan instanceof discord_js_1.StageChannel ? chan.stageInstance : this.resolvePointer(arg, ref, ctx.guild)?.stageInstances;
+        const instance = data instanceof discord_js_1.StageInstance ? data : await data?.fetch(str).catch(ctx.noop);
+        if (!instance)
             return;
-        return data;
+        return instance;
     }
     async resolveReaction(ctx, arg, str, ref) {
         const parsed = (0, discord_js_1.parseEmoji)(str);
