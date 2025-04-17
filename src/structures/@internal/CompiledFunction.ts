@@ -400,16 +400,16 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop)
     }
 
-    private async resolveScheduledEvent(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+    private resolveScheduledEvent(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.IdRegex.test(str)) return
-        return await this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop)
+        return this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop)
     }
 
-    private async resolveStageInstance(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+    private resolveStageInstance(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.IdRegex.test(str)) return
         const chan = ctx.client.channels.cache.get(str)
         const data = chan instanceof StageChannel ? chan.stageInstance : this.resolvePointer(arg, ref, ctx.guild)?.stageInstances
-        const instance = data instanceof StageInstance ? data : await data?.fetch(str).catch(ctx.noop)
+        const instance = data instanceof StageInstance ? data : data?.cache.get(str)
         if (!instance) return
         return instance
     }
