@@ -334,7 +334,7 @@ class CompiledFunction {
         if (!CompiledFunction.IdRegex.test(str))
             return;
         const instances = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances;
-        const data = instances?.resolve(str) ?? instances?.fetch(str).catch(ctx.noop);
+        const data = instances?.cache.get(str) ?? instances?.fetch(str).catch(ctx.noop);
         if (!data)
             return;
         return data;
