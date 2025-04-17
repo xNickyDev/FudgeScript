@@ -16,6 +16,7 @@ import {
     MessageReaction,
     PermissionsString,
     Role,
+    StageInstance,
     Sticker,
     TextBasedChannel,
     User,
@@ -66,6 +67,7 @@ export enum ArgType {
     AutomodRule,
     Entitlement,
     ScheduledEvent,
+    StageInstance,
     Template
 }
 
@@ -212,6 +214,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? Entitlement
     : T extends ArgType.ScheduledEvent
     ? GuildScheduledEvent
+    : T extends ArgType.StageInstance
+    ? StageInstance
     : T extends ArgType.Template
     ? GuildTemplate
     : null

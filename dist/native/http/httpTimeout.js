@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$httpTimeout",
+    version: "2.3.0",
     description: "Sets an HTTP request timeout, stops execution if request took longer than specified time",
     unwrap: false,
     brackets: true,

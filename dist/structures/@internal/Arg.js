@@ -385,6 +385,35 @@ class Arg {
             pointer: 0
         });
     }
+    static optionalStageInstance(name = "instance ID", desc = "The stage instance to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.StageInstance,
+            pointer: 0
+        });
+    }
+    static restStageInstance(name = "instance IDs", desc = "The stage instances to use", required = false) {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required,
+            type: NativeFunction_1.ArgType.StageInstance,
+            pointer: 0
+        });
+    }
+    static requiredStageInstance(name = "instance ID", desc = "The stage instance to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.StageInstance,
+            pointer: 0
+        });
+    }
     static restTextChannel(name = "text channel IDs", desc = "The text channels to use", required = false) {
         return Arg.create({
             name,

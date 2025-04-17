@@ -426,6 +426,38 @@ export class Arg {
         })
     }
 
+    public static optionalStageInstance(name: string = "instance ID", desc: string = "The stage instance to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: ArgType.StageInstance,
+            pointer: 0
+        })
+    }
+
+    public static restStageInstance(name: string = "instance IDs", desc: string = "The stage instances to use", required: boolean = false) {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required,
+            type: ArgType.StageInstance,
+            pointer: 0
+        })
+    }
+
+    public static requiredStageInstance(name: string = "instance ID", desc: string = "The stage instance to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: ArgType.StageInstance,
+            pointer: 0
+        })
+    }
+
     public static restTextChannel(name: string = "text channel IDs", desc: string = "The text channels to use", required: boolean = false) {
         return Arg.create({
             name,
