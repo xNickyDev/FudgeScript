@@ -9,7 +9,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     args: [
         {
-            name: "instance ID",
+            name: "stage ID",
             description: "The stage instance to delete",
             rest: false,
             required: true,

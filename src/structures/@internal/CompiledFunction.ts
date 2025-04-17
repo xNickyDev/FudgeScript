@@ -405,9 +405,10 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
 
     private resolveStageInstance(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.IdRegex.test(str)) return
-        const instance = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances.resolve(str)
-        if (!instance) return
-        return instance
+        const instances = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances
+        const data = instances?.resolve(str) ?? instances?.fetch(str).catch(ctx.noop)
+        if (!data) return
+        return data
     }
 
     private async resolveReaction(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {

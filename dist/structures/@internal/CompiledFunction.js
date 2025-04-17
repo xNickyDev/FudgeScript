@@ -333,10 +333,11 @@ class CompiledFunction {
     resolveStageInstance(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
             return;
-        const instance = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances.resolve(str);
-        if (!instance)
+        const instances = this.resolvePointer(arg, ref, ctx.guild)?.stageInstances;
+        const data = instances?.resolve(str) ?? instances?.fetch(str).catch(ctx.noop);
+        if (!data)
             return;
-        return instance;
+        return data;
     }
     async resolveReaction(ctx, arg, str, ref) {
         const parsed = (0, discord_js_1.parseEmoji)(str);

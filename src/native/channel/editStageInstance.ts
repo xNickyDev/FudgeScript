@@ -9,7 +9,7 @@ export default new NativeFunction({
     brackets: true,
     args: [
         {
-            name: "instance ID",
+            name: "stage ID",
             description: "The stage instance to edit",
             rest: false,
             required: true,
