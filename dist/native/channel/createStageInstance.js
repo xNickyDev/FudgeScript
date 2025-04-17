@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createStageInstance",
+    version: "2.3.0",
     description: "Creates a new stage instance, returns instance id",
     unwrap: true,
     brackets: true,
