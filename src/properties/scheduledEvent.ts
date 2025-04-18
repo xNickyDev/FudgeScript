@@ -1,4 +1,4 @@
-import { Channel, ChannelType, Collection, GuildMember } from "discord.js"
+import { Channel, ChannelType, Collection, GuildMember, GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, GuildScheduledEventStatus, Status } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 import { IStates, States } from "../core"
 
@@ -17,7 +17,9 @@ export enum ScheduledEventProperty {
     cover = "cover",
     entityID = "entityID",
     location = "location",
-    entityType = "entityType"
+    entityType = "entityType",
+    privacyLevel = "privacyLevel",
+    status = "status"
 }
 
 export const ScheduledEventProperties = defineProperties<typeof ScheduledEventProperty, IStates["scheduledEvent"]>({
@@ -35,5 +37,7 @@ export const ScheduledEventProperties = defineProperties<typeof ScheduledEventPr
     cover: i => i?.coverImageURL(),
     entityID: i => i?.entityId,
     location: i => i?.entityMetadata?.location,
-    entityType: i => i?.entityType
+    entityType: i => GuildScheduledEventEntityType[i?.entityType!],
+    privacyLevel: i => GuildScheduledEventPrivacyLevel[i?.privacyLevel!],
+    status: i => GuildScheduledEventStatus[i?.status!]
 })

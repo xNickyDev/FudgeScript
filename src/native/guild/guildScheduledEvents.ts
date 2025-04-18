@@ -37,7 +37,7 @@ export default new NativeFunction({
     async execute(ctx, [ guild, prop, sep ]) {
         const events = await (guild ?? ctx.guild)?.scheduledEvents?.fetch().catch(ctx.noop)
 
-        if (prop) return this.success(events?.map((x) => ScheduledEventProperties[prop](x, sep)).join(sep ?? ", "))
+        if (prop) return this.success(events?.map((x) => ScheduledEventProperties[prop](x)).join(sep ?? ", "))
         return this.successJSON(events)
     },
 })

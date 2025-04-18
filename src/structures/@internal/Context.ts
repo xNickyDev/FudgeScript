@@ -14,6 +14,7 @@ import {
     GuildMember,
     GuildOnboardingPromptData,
     GuildScheduledEventEntityMetadataOptions,
+    GuildScheduledEventRecurrenceRuleOptions,
     Interaction,
     Message,
     MessageReaction,
@@ -74,6 +75,7 @@ export interface IOnboardingOptions {
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel
     entityMetadata?: GuildScheduledEventEntityMetadataOptions
+    recurrenceRule?: GuildScheduledEventRecurrenceRuleOptions
 }
 
 export interface ILocalFunctionData {

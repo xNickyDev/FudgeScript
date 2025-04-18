@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
@@ -38,6 +38,7 @@ export interface IOnboardingOptions {
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel;
     entityMetadata?: GuildScheduledEventEntityMetadataOptions;
+    recurrenceRule?: GuildScheduledEventRecurrenceRuleOptions;
 }
 export interface ILocalFunctionData {
     code: IExtendedCompiledFunctionField;

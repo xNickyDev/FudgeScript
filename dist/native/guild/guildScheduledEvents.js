@@ -41,7 +41,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [guild, prop, sep]) {
         const events = await (guild ?? ctx.guild)?.scheduledEvents?.fetch().catch(ctx.noop);
         if (prop)
-            return this.success(events?.map((x) => scheduledEvent_1.ScheduledEventProperties[prop](x, sep)).join(sep ?? ", "));
+            return this.success(events?.map((x) => scheduledEvent_1.ScheduledEventProperties[prop](x)).join(sep ?? ", "));
         return this.successJSON(events);
     },
 });
