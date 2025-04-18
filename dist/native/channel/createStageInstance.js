@@ -42,6 +42,8 @@ exports.default = new structures_1.NativeFunction({
             description: "The scheduled event associated with the stage instance",
             rest: false,
             type: structures_1.ArgType.ScheduledEvent,
+            pointer: 0,
+            pointerProperty: "guild",
         },
     ],
     output: structures_1.ArgType.StageInstance,

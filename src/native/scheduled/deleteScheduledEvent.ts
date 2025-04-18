@@ -1,0 +1,37 @@
+import { ArgType, NativeFunction, Return } from "../../structures"
+
+export default new NativeFunction({
+    name: "$deleteScheduledEvent",
+    version: "2.3.0",
+    description: "Deletes a scheduled event from a guild, returns bool",
+    unwrap: true,
+    brackets: true,
+    args: [
+        {
+            name: "guild ID",
+            description: "The guild to delete scheduled event from",
+            rest: false,
+            required: true,
+            type: ArgType.Guild,
+        },
+        {
+            name: "event ID",
+            description: "The id of the scheduled event to delete",
+            rest: false,
+            required: true,
+            type: ArgType.ScheduledEvent,
+            pointer: 0,
+        },
+    ],
+    output: ArgType.Boolean,
+    async execute(ctx, [, event]) {
+        try {
+            await event.delete()
+        } catch (error) {
+            ctx.noop(error as any)
+            return this.success(false)
+        }
+
+        return this.success(true)
+    },
+})

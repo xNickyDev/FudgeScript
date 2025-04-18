@@ -23,6 +23,7 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             required: true,
             type: structures_1.ArgType.AutomodRule,
+            pointer: 0,
         },
         {
             name: "name",

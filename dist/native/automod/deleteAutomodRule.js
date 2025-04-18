@@ -20,7 +20,8 @@ exports.default = new structures_1.NativeFunction({
             description: "The id of the automod rule to delete",
             rest: false,
             required: true,
-            type: structures_1.ArgType.AutomodRule
+            type: structures_1.ArgType.AutomodRule,
+            pointer: 0,
         },
         {
             name: "reason",

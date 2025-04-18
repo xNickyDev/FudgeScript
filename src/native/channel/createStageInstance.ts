@@ -41,6 +41,8 @@ export default new NativeFunction({
             description: "The scheduled event associated with the stage instance",
             rest: false,
             type: ArgType.ScheduledEvent,
+            pointer: 0,
+            pointerProperty: "guild",
         },
     ],
     output: ArgType.StageInstance,

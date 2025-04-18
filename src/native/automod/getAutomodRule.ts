@@ -21,6 +21,7 @@ export default new NativeFunction({
             rest: false,
             required: true,
             type: ArgType.AutomodRule,
+            pointer: 0,
         },
         {
             name: "property",

@@ -20,7 +20,8 @@ export default new NativeFunction({
             description: "The id of the automod rule to delete",
             rest: false,
             required: true,
-            type: ArgType.AutomodRule
+            type: ArgType.AutomodRule,
+            pointer: 0,
         },
         {
             name: "reason",

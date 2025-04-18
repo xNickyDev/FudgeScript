@@ -400,9 +400,9 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.resolvePointer(arg, ref, ctx.guild)?.autoModerationRules.fetch(str).catch(ctx.noop)
     }
 
-    private resolveScheduledEvent(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+    private async resolveScheduledEvent(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.IdRegex.test(str)) return
-        return this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop)
+        return await this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop)
     }
 
     private resolveStageInstance(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
