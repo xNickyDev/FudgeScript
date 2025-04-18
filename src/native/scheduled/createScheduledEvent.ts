@@ -42,13 +42,13 @@ export default new NativeFunction({
             description: "The start time of the scheduled event",
             rest: false,
             required: true,
-            type: ArgType.String,
+            type: ArgType.Date,
         },
         {
             name: "end",
             description: "The end time of the scheduled event",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.Date,
         },
         {
             name: "cover",

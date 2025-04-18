@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createScheduledEvent",
+    version: "2.3.0",
     description: "Creates a new scheduled event on a guild, returns event id",
     unwrap: true,
     brackets: true,
@@ -42,13 +43,13 @@ exports.default = new structures_1.NativeFunction({
             description: "The start time of the scheduled event",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Date,
         },
         {
             name: "end",
             description: "The end time of the scheduled event",
             rest: false,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Date,
         },
         {
             name: "cover",
