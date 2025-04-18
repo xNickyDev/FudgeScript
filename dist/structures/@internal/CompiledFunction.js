@@ -382,7 +382,7 @@ class CompiledFunction {
         return this.resolvePointer(arg, ref, ctx.guild)?.roles.cache.get(str);
     }
     resolveDate(ctx, arg, str, ref) {
-        return new Date(str);
+        return new Date(isNaN(Number(str)) ? str : Number(str));
     }
     async resolveTemplate(ctx, arg, str, ref) {
         return await ctx.client.fetchGuildTemplate(str).catch(ctx.noop);

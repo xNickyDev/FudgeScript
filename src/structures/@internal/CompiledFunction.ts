@@ -468,7 +468,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     private resolveDate(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        return new Date(str)
+        return new Date(isNaN(Number(str)) ? str : Number(str))
     }
 
     private async resolveTemplate(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
