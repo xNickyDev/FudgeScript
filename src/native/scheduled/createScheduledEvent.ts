@@ -1,4 +1,4 @@
-import { GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel } from "discord.js"
+import { GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, GuildScheduledEventRecurrenceRuleOptions } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -76,7 +76,7 @@ export default new NativeFunction({
             image: cover || undefined,
             channel: ctx.scheduledEvent.channel,
             entityMetadata: ctx.scheduledEvent.entityMetadata,
-            recurrenceRule: ctx.scheduledEvent.recurrenceRule,
+            recurrenceRule: ctx.scheduledEvent.recurrenceRule as GuildScheduledEventRecurrenceRuleOptions,
             reason: reason || undefined
         }).catch(ctx.noop)
 

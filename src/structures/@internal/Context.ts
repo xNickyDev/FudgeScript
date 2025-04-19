@@ -75,7 +75,7 @@ export interface IOnboardingOptions {
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel
     entityMetadata?: GuildScheduledEventEntityMetadataOptions
-    recurrenceRule?: GuildScheduledEventRecurrenceRuleOptions
+    recurrenceRule?: Partial<GuildScheduledEventRecurrenceRuleOptions>
 }
 
 export interface ILocalFunctionData {
