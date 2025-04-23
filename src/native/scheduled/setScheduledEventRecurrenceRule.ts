@@ -26,7 +26,7 @@ export default new NativeFunction({
     execute(ctx, [frequency, interval]) {
         ctx.scheduledEvent.recurrenceRule = {
             frequency,
-            interval: interval || undefined
+            interval: interval || undefined,
         }
         return this.success()
     },

@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [frequency, interval]) {
         ctx.scheduledEvent.recurrenceRule = {
             frequency,
-            interval: interval || undefined
+            interval: interval || undefined,
         };
         return this.success();
     },

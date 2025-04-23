@@ -308,6 +308,14 @@ export class Context {
         this.http = {}
     }
 
+    public clearAutomodRuleOptions() {
+        this.automodRule = {}
+    }
+
+    public clearScheduledEventOptions() {
+        this.scheduledEvent = {}
+    }
+
     public setEnvironmentKey(name: string, value: unknown) {
         return (this.#environment[name] = value)
     }

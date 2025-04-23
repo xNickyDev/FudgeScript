@@ -70,8 +70,8 @@ exports.default = new structures_1.NativeFunction({
             name,
             entityType: type,
             privacyLevel: discord_js_1.GuildScheduledEventPrivacyLevel.GuildOnly,
-            scheduledStartTime: new Date(start),
-            scheduledEndTime: end ? new Date(end) : undefined,
+            scheduledStartTime: start,
+            scheduledEndTime: end || undefined,
             description: desc || undefined,
             image: cover || undefined,
             channel: ctx.scheduledEvent.channel,
@@ -79,6 +79,7 @@ exports.default = new structures_1.NativeFunction({
             recurrenceRule: ctx.scheduledEvent.recurrenceRule,
             reason: reason || undefined
         }).catch(ctx.noop);
+        ctx.clearScheduledEventOptions();
         return this.success(event?.id);
     },
 });

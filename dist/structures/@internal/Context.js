@@ -186,6 +186,12 @@ class Context {
     clearHttpOptions() {
         this.http = {};
     }
+    clearAutomodRuleOptions() {
+        this.automodRule = {};
+    }
+    clearScheduledEventOptions() {
+        this.scheduledEvent = {};
+    }
     setEnvironmentKey(name, value) {
         return (this.#environment[name] = value);
     }

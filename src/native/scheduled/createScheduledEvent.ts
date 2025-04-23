@@ -70,8 +70,8 @@ export default new NativeFunction({
             name,
             entityType: type,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
-            scheduledStartTime: new Date(start),
-            scheduledEndTime: end ? new Date(end) : undefined,
+            scheduledStartTime: start,
+            scheduledEndTime: end || undefined,
             description: desc || undefined,
             image: cover || undefined,
             channel: ctx.scheduledEvent.channel,
@@ -79,6 +79,8 @@ export default new NativeFunction({
             recurrenceRule: ctx.scheduledEvent.recurrenceRule as GuildScheduledEventRecurrenceRuleOptions,
             reason: reason || undefined
         }).catch(ctx.noop)
+
+        ctx.clearScheduledEventOptions()
 
         return this.success(event?.id)
     },

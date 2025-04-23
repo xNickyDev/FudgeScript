@@ -121,6 +121,8 @@ export declare class Context {
     alert(content: string): Promise<unknown>;
     handleNotSuccess(fn: CompiledFunction, rt: Return): boolean;
     clearHttpOptions(): void;
+    clearAutomodRuleOptions(): void;
+    clearScheduledEventOptions(): void;
     setEnvironmentKey(name: string, value: unknown): unknown;
     traverseDeleteEnvironmentKey(...keys: string[]): boolean | any[];
     traverseAddEnvironmentKey(value: unknown, ...keys: string[]): boolean;
