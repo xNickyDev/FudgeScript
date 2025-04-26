@@ -21,7 +21,6 @@ exports.default = new structures_1.NativeFunction({
             rest: true,
             required: true,
             type: structures_1.ArgType.String,
-            pointer: 0,
         },
     ],
     output: structures_1.ArgType.SoundboardSound,

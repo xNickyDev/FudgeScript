@@ -11,7 +11,6 @@ declare const _default: NativeFunction<[{
     rest: true;
     required: true;
     type: ArgType.String;
-    pointer: number;
 }], true>;
 export default _default;
 //# sourceMappingURL=soundID.d.ts.map

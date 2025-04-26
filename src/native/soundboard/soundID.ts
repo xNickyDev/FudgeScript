@@ -20,7 +20,6 @@ export default new NativeFunction({
             rest: true,
             required: true,
             type: ArgType.String,
-            pointer: 0,
         },
     ],
     output: ArgType.SoundboardSound,
