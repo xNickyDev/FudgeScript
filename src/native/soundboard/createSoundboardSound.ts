@@ -56,7 +56,7 @@ export default new NativeFunction({
             name,
             file,
             emojiId: parsed?.id,
-            emojiName: parsed?.id ? "" : parsed?.name,
+            emojiName: parsed?.id ? undefined : parsed?.name,
             volume: typeof(volume) === "number" ? volume : undefined,
             reason: reason || undefined
         }).catch(ctx.noop)
