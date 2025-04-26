@@ -19,7 +19,7 @@ export default new NativeFunction({
             description: "The sound name to return its id",
             rest: true,
             required: true,
-            type: ArgType.SoundboardSound,
+            type: ArgType.String,
             pointer: 0,
         },
     ],

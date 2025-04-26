@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editSoundboardSound",
+    version: "2.3.0",
     description: "Edits given soundboard sound, returns bool",
     brackets: true,
     unwrap: true,

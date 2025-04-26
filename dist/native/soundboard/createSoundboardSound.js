@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createSoundboardSound",
+    version: "2.3.0",
     description: "Creates a new soundboard sound, returns sound id",
     brackets: true,
     unwrap: true,
@@ -54,8 +55,8 @@ exports.default = new structures_1.NativeFunction({
         const sound = await guild.soundboardSounds.create({
             name,
             file,
-            emojiId: parsed?.id,
-            emojiName: parsed?.name,
+            emojiId: parsed?.id || "",
+            emojiName: parsed?.id ? parsed?.name || "" : "",
             volume: typeof (volume) === "number" ? volume : undefined,
             reason: reason || undefined
         }).catch(ctx.noop);

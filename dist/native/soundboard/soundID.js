@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$soundID",
+    version: "2.3.0",
     description: "Returns a sound id with given name",
     brackets: false,
     unwrap: true,
@@ -19,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The sound name to return its id",
             rest: true,
             required: true,
-            type: structures_1.ArgType.SoundboardSound,
+            type: structures_1.ArgType.String,
             pointer: 0,
         },
     ],

@@ -333,7 +333,7 @@ class CompiledFunction {
     resolveSoundboardSound(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
             return;
-        return this.resolvePointer(arg, ref, ctx.guild)?.soundboardSounds.cache.get(str);
+        return this.resolvePointer(arg, ref, ctx.guild)?.soundboardSounds.fetch().catch(ctx.noop);
     }
     resolveStageInstance(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))

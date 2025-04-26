@@ -10,7 +10,7 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: true;
     required: true;
-    type: ArgType.SoundboardSound;
+    type: ArgType.String;
     pointer: number;
 }], true>;
 export default _default;
