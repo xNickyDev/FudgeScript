@@ -50,13 +50,13 @@ export default new NativeFunction({
     ],
     output: ArgType.SoundboardSound,
     async execute(ctx, [guild, name, file, emoji, volume, reason]) {
-        const parsed = emoji ? parseEmoji(emoji) : undefined
+        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? parseEmoji(emoji) : undefined
 
         const sound = await guild.soundboardSounds.create({
             name,
             file,
-            emojiId: parsed?.id,
-            emojiName: parsed?.id ? undefined : parsed?.name,
+            emojiId: parsed?.id || undefined,
+            emojiName: parsed?.id ? undefined : parsed?.name || undefined,
             volume: typeof(volume) === "number" ? volume : undefined,
             reason: reason || undefined
         }).catch(ctx.noop)

@@ -1,5 +1,6 @@
 import { parseEmoji } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { EmbedProperties } from "../../properties/embed"
 
 export default new NativeFunction({
     name: "$editSoundboardSound",
@@ -44,7 +45,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, sound, name, emoji, volume]) {
-        const parsed = emoji ? parseEmoji(emoji) : undefined
+        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? parseEmoji(emoji) : undefined
         const value = emoji === "" ? null : undefined
 
         return this.success(!!(await sound.edit({
