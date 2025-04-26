@@ -45,12 +45,13 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, sound, name, emoji, volume]) {
-        const parsed = emoji ? (0, discord_js_1.parseEmoji)(emoji) : null;
+        const parsed = emoji ? (0, discord_js_1.parseEmoji)(emoji) : undefined;
+        const value = emoji === "" ? null : undefined;
         return this.success(!!(await sound.edit({
             volume,
             name: name || undefined,
-            emojiId: parsed?.id || null,
-            emojiName: parsed?.id ? null : parsed?.name || null,
+            emojiId: parsed?.id || value,
+            emojiName: parsed?.id ? null : parsed?.name || value,
         }).catch(ctx.noop)));
     },
 });

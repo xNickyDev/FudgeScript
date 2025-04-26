@@ -44,13 +44,14 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, sound, name, emoji, volume]) {
-        const parsed = emoji ? parseEmoji(emoji) : null
+        const parsed = emoji ? parseEmoji(emoji) : undefined
+        const value = emoji === "" ? null : undefined
 
         return this.success(!!(await sound.edit({
             volume,
             name: name || undefined,
-            emojiId: parsed?.id || null,
-            emojiName: parsed?.id ? null : parsed?.name || null,
+            emojiId: parsed?.id || value,
+            emojiName: parsed?.id ? null : parsed?.name || value,
         }).catch(ctx.noop)))
     },
 })
