@@ -50,7 +50,7 @@ exports.default = new structures_1.NativeFunction({
             volume,
             name: name || undefined,
             emojiId: parsed?.id,
-            emojiName: parsed?.name,
+            emojiName: parsed?.id ? "" : parsed?.name,
         }).catch(ctx.noop)));
     },
 });

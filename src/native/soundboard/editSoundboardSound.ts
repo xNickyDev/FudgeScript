@@ -50,7 +50,7 @@ export default new NativeFunction({
             volume,
             name: name || undefined,
             emojiId: parsed?.id,
-            emojiName: parsed?.name,
+            emojiName: parsed?.id ? "" : parsed?.name,
         }).catch(ctx.noop)))
     },
 })
