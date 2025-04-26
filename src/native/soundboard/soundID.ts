@@ -23,10 +23,11 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.SoundboardSound,
-    execute(ctx, [guild, args]) {
+    async execute(ctx, [guild, args]) {
         if (this.hasFields) {
             const name = args.join(";")
-            return this.success(guild.soundboardSounds.cache.find((x) => x.name === name)?.soundId)
+            const sounds = await guild.soundboardSounds.fetch().catch(ctx.noop)
+            return this.success(sounds?.find((x) => x.name === name)?.soundId)
         }
         return this.success(ctx.sound?.soundId)
     },

@@ -24,11 +24,11 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Number,
-    async execute(ctx, [guild, sounds]) {
+    async execute(ctx, [, sounds]) {
         let count = 0
         for (let i = 0, len = sounds.length; i < len; i++) {
             const sound = sounds[i]
-            const success = await guild.soundboardSounds.delete(sound).then(x => true).catch(ctx.noop)
+            const success = await sound.delete().then(x => true).catch(ctx.noop)
             if (success) count++
         }
 
