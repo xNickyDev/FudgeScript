@@ -11,5 +11,5 @@ export declare enum AuditProperty {
     changes = "changes",
     extra = "extra"
 }
-export declare const AuditProperties: import("../functions/defineProperties").Properties<typeof AuditProperty, GuildAuditLogsEntry<AuditLogEvent, import("discord.js").GuildAuditLogsActionType, import("discord.js").GuildAuditLogsTargetType, AuditLogEvent>>;
+export declare const AuditProperties: import("../functions/defineProperties").Properties<typeof AuditProperty, GuildAuditLogsEntry<AuditLogEvent, "Update" | "Create" | "Delete" | "All", "Guild" | "Channel" | "User" | "Role" | "Invite" | "Webhook" | "Emoji" | "Message" | "Integration" | "StageInstance" | "Sticker" | "GuildScheduledEvent" | "Thread" | "ApplicationCommand" | "SoundboardSound" | "AutoModeration" | "GuildOnboardingPrompt" | "GuildOnboarding" | "Unknown">>;
 //# sourceMappingURL=audit.d.ts.map

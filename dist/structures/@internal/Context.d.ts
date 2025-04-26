@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, Message, MessageReaction, Role, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, Message, MessageReaction, Role, SoundboardSound, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
@@ -82,6 +82,7 @@ export interface IContextCache {
     emoji: Emoji | null;
     automod: AutoModerationActionExecution | null;
     sticker: Sticker | null;
+    sound: SoundboardSound | null;
 }
 export declare class Context {
     #private;
@@ -111,6 +112,7 @@ export declare class Context {
     get emoji(): Emoji | null;
     get sticker(): Sticker | null;
     get role(): Role | null;
+    get sound(): SoundboardSound | null;
     get reaction(): MessageReaction | null;
     get message(): Message<any> | null;
     get interaction(): Interaction | null;

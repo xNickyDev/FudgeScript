@@ -37,7 +37,8 @@ var ArgType;
     ArgType[ArgType["Entitlement"] = 31] = "Entitlement";
     ArgType[ArgType["ScheduledEvent"] = 32] = "ScheduledEvent";
     ArgType[ArgType["StageInstance"] = 33] = "StageInstance";
-    ArgType[ArgType["Template"] = 34] = "Template";
+    ArgType[ArgType["SoundboardSound"] = 34] = "SoundboardSound";
+    ArgType[ArgType["Template"] = 35] = "Template";
 })(ArgType || (exports.ArgType = ArgType = {}));
 class NativeFunction {
     data;

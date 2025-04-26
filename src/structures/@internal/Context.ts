@@ -19,6 +19,7 @@ import {
     Message,
     MessageReaction,
     Role,
+    SoundboardSound,
     Sticker,
     User,
     VoiceBasedChannel,
@@ -123,6 +124,7 @@ export interface IContextCache {
     emoji: Emoji | null
     automod: AutoModerationActionExecution | null
     sticker: Sticker | null
+    sound: SoundboardSound | null
 }
 
 export class Context {
@@ -207,6 +209,10 @@ export class Context {
 
     public get role() {
         return (this.#cache.role ??= this.obj instanceof Role ? this.obj : null)
+    }
+
+    public get sound() {
+        return (this.#cache.sound ??= this.obj instanceof SoundboardSound ? this.obj : null)
     }
 
     public get reaction() {

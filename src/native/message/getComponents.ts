@@ -59,7 +59,7 @@ export default new NativeFunction({
     ],
     execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
         if (typeof rowIndex !== "number") {
-            return this.successJSON((m ?? ctx.message)?.components.map((x) => x.components))
+            return this.successJSON((m ?? ctx.message)?.components.map((x) => x))
         }
 
         const row = m.components[rowIndex] as ActionRow<MessageActionRowComponent> | undefined

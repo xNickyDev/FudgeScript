@@ -16,6 +16,7 @@ import {
     MessageReaction,
     PermissionsString,
     Role,
+    SoundboardSound,
     StageInstance,
     Sticker,
     TextBasedChannel,
@@ -68,6 +69,7 @@ export enum ArgType {
     Entitlement,
     ScheduledEvent,
     StageInstance,
+    SoundboardSound,
     Template
 }
 
@@ -216,6 +218,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? GuildScheduledEvent
     : T extends ArgType.StageInstance
     ? StageInstance
+    : T extends ArgType.SoundboardSound
+    ? SoundboardSound
     : T extends ArgType.Template
     ? GuildTemplate
     : null

@@ -330,6 +330,11 @@ class CompiledFunction {
             return;
         return await this.resolvePointer(arg, ref, ctx.guild)?.scheduledEvents.fetch(str).catch(ctx.noop);
     }
+    resolveSoundboardSound(ctx, arg, str, ref) {
+        if (!CompiledFunction.IdRegex.test(str))
+            return;
+        return this.resolvePointer(arg, ref, ctx.guild)?.soundboardSounds.cache.get(str);
+    }
     resolveStageInstance(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
             return;

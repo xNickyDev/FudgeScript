@@ -102,6 +102,9 @@ class Context {
     get role() {
         return (this.#cache.role ??= this.obj instanceof discord_js_1.Role ? this.obj : null);
     }
+    get sound() {
+        return (this.#cache.sound ??= this.obj instanceof discord_js_1.SoundboardSound ? this.obj : null);
+    }
     get reaction() {
         return (this.#cache.reaction ??= this.obj instanceof discord_js_1.MessageReaction ? this.obj : null);
     }
