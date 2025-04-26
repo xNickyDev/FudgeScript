@@ -49,8 +49,8 @@ exports.default = new structures_1.NativeFunction({
         return this.success(!!(await sound.edit({
             volume,
             name: name || undefined,
-            emojiId: parsed?.id,
-            emojiName: parsed?.id ? null : parsed?.name,
+            emojiId: parsed?.id || null,
+            emojiName: parsed?.id ? null : parsed?.name || null,
         }).catch(ctx.noop)));
     },
 });
