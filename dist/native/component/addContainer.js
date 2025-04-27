@@ -7,10 +7,24 @@ exports.default = new structures_1.NativeFunction({
     version: "2.3.0",
     description: "Adds a new component container",
     unwrap: false,
+    brackets: true,
     experimental: true,
-    execute(ctx) {
+    args: [
+        {
+            name: "components",
+            description: "The components to add",
+            rest: false,
+            required: true,
+            type: structures_1.ArgType.String,
+        },
+    ],
+    async execute(ctx) {
+        const comp = this.data.fields[0];
         ctx.container.isComponentsV2 = true;
         ctx.container.containers.push(new discord_js_1.ContainerBuilder());
+        const resolved = await this["resolveCode"](ctx, comp);
+        if (!this["isValidReturnType"](resolved))
+            return resolved;
         return this.success();
     },
 });
