@@ -24,8 +24,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [url, spoiler]) {
-        const comp = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
-        ctx.container.containers.at(-1)?.addFileComponents(comp);
+        const comp = ctx.container.components.at(-1);
+        if (comp instanceof discord_js_1.ContainerBuilder) {
+            const file = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
+            comp.addFileComponents(file);
+        }
         return this.success();
     },
 });

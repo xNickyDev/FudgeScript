@@ -24,12 +24,8 @@ exports.default = new structures_1.NativeFunction({
         components.forEach(row => {
             const actionRow = new discord_js_1.ActionRowBuilder();
             row?.components.forEach(component => {
-                if (component instanceof discord_js_1.ButtonBuilder) {
+                if (component instanceof discord_js_1.ButtonBuilder)
                     actionRow.addComponents(component.setDisabled(true));
-                }
-                else {
-                    actionRow.addComponents(component);
-                }
             });
         });
         return this.success();

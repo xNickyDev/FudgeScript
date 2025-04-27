@@ -12,7 +12,6 @@ class Container {
     content;
     embeds = new Array();
     components = new Array();
-    containers = new Array();
     reference;
     reply = false;
     followUp = false;
@@ -138,7 +137,6 @@ class Container {
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
-        this.containers.length = 0;
         this.embeds.length = 0;
         this.files.length = 0;
         this.allowedMentions = {};
@@ -165,7 +163,7 @@ class Container {
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,
                 content: this.content?.trim() || null,
-                components: this.containers,
+                components: this.components,
                 embeds: this.embeds,
                 tts: this.tts,
                 threadId: this.threadId,

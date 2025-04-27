@@ -1,3 +1,4 @@
+import { ContainerBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -16,7 +17,8 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [color]) {
-        ctx.container.containers.at(-1)?.setAccentColor(color)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.setAccentColor(color)
         return this.success()
     },
 })

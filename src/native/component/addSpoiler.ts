@@ -1,3 +1,4 @@
+import { ContainerBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -6,7 +7,8 @@ export default new NativeFunction({
     description: "Adds a spoiler to the current container",
     unwrap: false,
     execute(ctx) {
-        ctx.container.containers.at(-1)?.setSpoiler(true)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.setSpoiler(true)
         return this.success()
     },
 })

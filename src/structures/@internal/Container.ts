@@ -61,8 +61,7 @@ export type Sendable =
 export class Container {
     public content?: string
     public embeds = new Array<EmbedBuilder>()
-    public components = new Array<ActionRowBuilder<AnyComponentBuilder>>()
-    public containers = new Array<ContainerBuilder>()
+    public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder>()
     public reference?: string
     public reply = false
     public followUp = false
@@ -195,7 +194,6 @@ export class Container {
         this.stickers.length = 0
         this.choices.length = 0
         this.components.length = 0
-        this.containers.length = 0
         this.embeds.length = 0
         this.files.length = 0
 
@@ -226,7 +224,7 @@ export class Container {
                       files: this.files.length === 0 ? null : this.files,
                       stickers: this.stickers.length === 0 ? null : this.stickers,
                       content: this.content?.trim() || null,
-                      components: this.containers,
+                      components: this.components,
                       embeds: this.embeds,
                       tts: this.tts,
                       threadId: this.threadId,

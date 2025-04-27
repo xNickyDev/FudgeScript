@@ -1,4 +1,4 @@
-import { ChannelSelectMenuBuilder } from "discord.js"
+import { ChannelSelectMenuBuilder, ContainerBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -58,8 +58,11 @@ export default new NativeFunction({
             menu.setMinValues(min)
         if (max)
             menu.setMaxValues(max)
-        
-        ctx.container.components.at(-1)?.addComponents(menu)
+
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row.addComponents(menu))
+        else comp?.addComponents(menu)
+
         return this.success()
     }
 })

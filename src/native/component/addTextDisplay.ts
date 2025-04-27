@@ -1,4 +1,4 @@
-import { TextDisplayBuilder } from "discord.js"
+import { ContainerBuilder, TextDisplayBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -17,8 +17,11 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [content]) {
-        const comp = new TextDisplayBuilder().setContent(content)
-        ctx.container.containers.at(-1)?.addTextDisplayComponents(comp)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) {
+            const text = new TextDisplayBuilder().setContent(content)
+            comp.addTextDisplayComponents(text)
+        }
         return this.success()
     },
 })

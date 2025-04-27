@@ -1,4 +1,4 @@
-import { ButtonBuilder, ButtonStyle } from "discord.js"
+import { ButtonBuilder, ButtonStyle, ContainerBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -57,7 +57,10 @@ export default new NativeFunction({
             if (emoji) btn.setEmoji(emoji)
         }
 
-        ctx.container.components.at(-1)?.addComponents(btn)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row.addComponents(btn))
+        else comp?.addComponents(btn)
+
         return this.success()
     },
 })

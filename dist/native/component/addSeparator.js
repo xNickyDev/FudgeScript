@@ -25,8 +25,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
-        const comp = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
-        ctx.container.containers.at(-1)?.addSeparatorComponents(comp);
+        const comp = ctx.container.components.at(-1);
+        if (comp instanceof discord_js_1.ContainerBuilder) {
+            const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
+            comp.addSeparatorComponents(sep);
+        }
         return this.success();
     },
 });

@@ -3,8 +3,7 @@ export type Sendable = {} | Sticker | GuildScheduledEvent | Role | Presence | Me
 export declare class Container {
     content?: string;
     embeds: EmbedBuilder[];
-    components: ActionRowBuilder<AnyComponentBuilder>[];
-    containers: ContainerBuilder[];
+    components: (ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder)[];
     reference?: string;
     reply: boolean;
     followUp: boolean;

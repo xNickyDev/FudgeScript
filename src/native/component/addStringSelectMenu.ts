@@ -1,4 +1,4 @@
-import { StringSelectMenuBuilder } from "discord.js"
+import { ContainerBuilder, StringSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -44,10 +44,12 @@ export default new NativeFunction({
         const menu = new StringSelectMenuBuilder().setCustomId(id).setDisabled(disabled || false)
 
         if (placeholder) menu.setPlaceholder(placeholder)
-        if (min !== null) menu.setMinValues(min)
-        if (max !== null) menu.setMaxValues(max)
+        if (min != null) menu.setMinValues(min)
+        if (max != null) menu.setMaxValues(max)
 
-        ctx.container.components.at(-1)?.addComponents(menu)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row.addComponents(menu))
+        else comp?.addComponents(menu)
 
         return this.success()
     },

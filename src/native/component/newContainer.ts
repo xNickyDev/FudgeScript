@@ -19,7 +19,7 @@ export default new NativeFunction({
     ],
     async execute(ctx) {
         ctx.container.isComponentsV2 = true
-        ctx.container.containers.push(new ContainerBuilder())
+        ctx.container.components.push(new ContainerBuilder())
 
         if (this.hasFields) {
             const code = this.data.fields![0] as IExtendedCompiledFunctionField

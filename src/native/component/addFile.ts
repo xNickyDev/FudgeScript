@@ -1,4 +1,4 @@
-import { FileBuilder } from "discord.js"
+import { ContainerBuilder, FileBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -23,8 +23,11 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [url, spoiler]) {
-        const comp = new FileBuilder().setURL(url).setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
-        ctx.container.containers.at(-1)?.addFileComponents(comp)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) {
+            const file = new FileBuilder().setURL(url).setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
+            comp.addFileComponents(file)
+        }
         return this.success()
     },
 })

@@ -1,4 +1,4 @@
-import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ContainerBuilder, MentionableSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -53,7 +53,10 @@ export default new NativeFunction({
         if (max)
             menu.setMaxValues(max)
         
-        ctx.container.components.at(-1)?.addComponents(menu)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row.addComponents(menu))
+        else comp?.addComponents(menu)
+
         return this.success()
     }
 })

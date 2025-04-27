@@ -1,1 +1,1 @@
-{"version":3,"file":"addSeparator.d.ts","sourceRoot":"","sources":["../../../src/native/component/addSeparator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAoB,oBAAoB,EAAE,MAAM,YAAY,CAAA;AACnE,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;;AAElE,wBA2BE"}
+{"version":3,"file":"addSeparator.d.ts","sourceRoot":"","sources":["../../../src/native/component/addSeparator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAsC,oBAAoB,EAAE,MAAM,YAAY,CAAA;AACrF,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;;AAElE,wBA8BE"}

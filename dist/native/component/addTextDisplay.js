@@ -18,8 +18,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [content]) {
-        const comp = new discord_js_1.TextDisplayBuilder().setContent(content);
-        ctx.container.containers.at(-1)?.addTextDisplayComponents(comp);
+        const comp = ctx.container.components.at(-1);
+        if (comp instanceof discord_js_1.ContainerBuilder) {
+            const text = new discord_js_1.TextDisplayBuilder().setContent(content);
+            comp.addTextDisplayComponents(text);
+        }
         return this.success();
     },
 });

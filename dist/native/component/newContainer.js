@@ -20,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx) {
         ctx.container.isComponentsV2 = true;
-        ctx.container.containers.push(new discord_js_1.ContainerBuilder());
+        ctx.container.components.push(new discord_js_1.ContainerBuilder());
         if (this.hasFields) {
             const code = this.data.fields[0];
             const resolved = await this["resolveCode"](ctx, code);

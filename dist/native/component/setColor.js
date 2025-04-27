@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setColor",
@@ -17,7 +18,9 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [color]) {
-        ctx.container.containers.at(-1)?.setAccentColor(color);
+        const comp = ctx.container.components.at(-1);
+        if (comp instanceof discord_js_1.ContainerBuilder)
+            comp.setAccentColor(color);
         return this.success();
     },
 });

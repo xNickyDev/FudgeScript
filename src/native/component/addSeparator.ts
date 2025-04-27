@@ -1,4 +1,4 @@
-import { SeparatorBuilder, SeparatorSpacingSize } from "discord.js"
+import { ContainerBuilder, SeparatorBuilder, SeparatorSpacingSize } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -24,8 +24,11 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
-        const comp = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
-        ctx.container.containers.at(-1)?.addSeparatorComponents(comp)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ContainerBuilder) {
+            const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
+            comp.addSeparatorComponents(sep)
+        }
         return this.success()
     },
 })
