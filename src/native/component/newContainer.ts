@@ -18,13 +18,13 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx) {
-        const [comp] = this.data.fields as [IExtendedCompiledFunctionField]
+        const [code] = this.data.fields! as [IExtendedCompiledFunctionField]
 
         ctx.container.isComponentsV2 = true
         ctx.container.containers.push(new ContainerBuilder())
 
-        if (comp) {
-            const resolved = await this["resolveCode"](ctx, comp)
+        if (code) {
+            const resolved = await this["resolveCode"](ctx, code)
             if (!this["isValidReturnType"](resolved)) return resolved
         }
 
