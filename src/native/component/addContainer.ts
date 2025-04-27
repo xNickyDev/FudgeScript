@@ -1,5 +1,6 @@
 import { ContainerBuilder } from "discord.js"
 import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
+import { MessageFlags } from "discord.js"
 
 export default new NativeFunction({
     name: "$addContainer",
@@ -23,6 +24,7 @@ export default new NativeFunction({
         const resolved = await this["resolveCode"](ctx, comp)
         if (!this["isValidReturnType"](resolved)) return resolved
 
+        ctx.container.isComponentsV2 = true
         ctx.container.containers.push(resolved.value as ContainerBuilder)
         return this.success()
     },

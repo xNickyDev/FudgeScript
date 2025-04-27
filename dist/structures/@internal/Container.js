@@ -20,6 +20,7 @@ class Container {
     ephemeral = false;
     tts = false;
     update = false;
+    isComponentsV2 = false;
     files = new Array();
     channel;
     stickers = new Array();
@@ -106,6 +107,14 @@ class Container {
     embed(index) {
         return (this.embeds[index] ??= new discord_js_1.EmbedBuilder());
     }
+    builtFlags() {
+        const flags = [];
+        if (this.ephemeral)
+            flags.push(discord_js_2.MessageFlags.Ephemeral);
+        if (this.isComponentsV2)
+            flags.push(discord_js_2.MessageFlags.IsComponentsV2);
+        return flags.length > 0 ? flags : undefined;
+    }
     reset() {
         delete this.channel;
         delete this.content;
@@ -125,6 +134,7 @@ class Container {
         this.withResponse = false;
         this.edit = false;
         this.tts = false;
+        this.isComponentsV2 = false;
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
@@ -150,7 +160,7 @@ class Container {
                         failIfNotExists: false,
                     }
                     : undefined,
-                flags: this.ephemeral ? discord_js_2.MessageFlags.Ephemeral : undefined,
+                flags: this.builtFlags(),
                 attachments: [],
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,

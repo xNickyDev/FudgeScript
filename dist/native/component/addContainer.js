@@ -22,6 +22,7 @@ exports.default = new structures_1.NativeFunction({
         const resolved = await this["resolveCode"](ctx, comp);
         if (!this["isValidReturnType"](resolved))
             return resolved;
+        ctx.container.isComponentsV2 = true;
         ctx.container.containers.push(resolved.value);
         return this.success();
     },

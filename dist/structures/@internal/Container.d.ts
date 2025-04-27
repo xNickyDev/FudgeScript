@@ -12,6 +12,7 @@ export declare class Container {
     ephemeral: boolean;
     tts: boolean;
     update: boolean;
+    isComponentsV2: boolean;
     files: AttachmentBuilder[];
     channel?: Channel;
     stickers: StickerResolvable[];
@@ -29,6 +30,7 @@ export declare class Container {
     send<T = unknown>(obj: Sendable, content?: string, messageID?: string): Promise<T | null>;
     isValidMessage(options: MessageReplyOptions & InteractionReplyOptions & InteractionEditReplyOptions): boolean;
     embed(index: number): EmbedBuilder;
+    private builtFlags;
     reset(): void;
     getOptions<T>(content?: string): T;
 }

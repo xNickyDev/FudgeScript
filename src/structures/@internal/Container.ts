@@ -37,8 +37,6 @@ import {
     WebhookClient,
 } from "discord.js"
 import noop from "../../functions/noop"
-import { ForgeClient } from "../../core"
-import { RawMessageData } from "discord.js/typings/rawDataTypes"
 import { MessageFlags } from "discord.js"
 
 export type Sendable =
@@ -72,6 +70,7 @@ export class Container {
     public ephemeral = false
     public tts = false
     public update = false
+    public isComponentsV2 = false
     public files = new Array<AttachmentBuilder>()
     public channel?: Channel
     public stickers = new Array<StickerResolvable>()
@@ -162,6 +161,15 @@ export class Container {
         return (this.embeds[index] ??= new EmbedBuilder())
     }
 
+    private builtFlags() {
+        const flags: MessageFlags[] = []
+
+        if (this.ephemeral) flags.push(MessageFlags.Ephemeral)
+        if (this.isComponentsV2) flags.push(MessageFlags.IsComponentsV2)
+
+        return flags.length > 0 ? flags : undefined
+    }
+
     public reset() {
         delete this.channel
         delete this.content
@@ -182,6 +190,7 @@ export class Container {
         this.withResponse = false
         this.edit = false
         this.tts = false
+        this.isComponentsV2 = false
 
         this.stickers.length = 0
         this.choices.length = 0
@@ -212,7 +221,7 @@ export class Container {
                                 failIfNotExists: false,
                             }
                           : undefined,
-                      flags: this.ephemeral ? MessageFlags.Ephemeral : undefined,
+                      flags: this.builtFlags(),
                       attachments: [],
                       files: this.files.length === 0 ? null : this.files,
                       stickers: this.stickers.length === 0 ? null : this.stickers,
