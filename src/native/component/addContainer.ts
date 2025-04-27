@@ -6,7 +6,7 @@ export default new NativeFunction({
     version: "2.3.0",
     description: "Adds a new component container",
     unwrap: false,
-    brackets: true,
+    brackets: false,
     experimental: true,
     args: [
         {
@@ -22,9 +22,11 @@ export default new NativeFunction({
 
         ctx.container.isComponentsV2 = true
         ctx.container.containers.push(new ContainerBuilder())
-         
-        const resolved = await this["resolveCode"](ctx, comp)
-        if (!this["isValidReturnType"](resolved)) return resolved
+
+        if (comp) {
+            const resolved = await this["resolveCode"](ctx, comp)
+            if (!this["isValidReturnType"](resolved)) return resolved
+        }
 
         return this.success()
     },
