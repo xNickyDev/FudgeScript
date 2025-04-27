@@ -18,7 +18,7 @@ export default new NativeFunction({
     ],
     execute(ctx, [content]) {
         const comp = new TextDisplayBuilder().setContent(content)
-        ctx.container.containers.at(ctx.container.containers.length)?.addTextDisplayComponents(comp)
+        ctx.container.containers.at(-1)?.addTextDisplayComponents(comp)
         return this.success()
     },
 })
