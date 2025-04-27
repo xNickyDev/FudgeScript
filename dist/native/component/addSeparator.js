@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addSeparator",
+    version: "2.3.0",
     description: "Adds a new separator component to the current container",
     unwrap: true,
     brackets: true,
@@ -24,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
-        const comp = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(divider || undefined);
+        const comp = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
         ctx.container.containers.at(-1)?.addSeparatorComponents(comp);
         return this.success();
     },

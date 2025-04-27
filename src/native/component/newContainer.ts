@@ -2,9 +2,9 @@ import { ContainerBuilder } from "discord.js"
 import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$addContainer",
+    name: "$newContainer",
     version: "2.3.0",
-    description: "Adds a new component container",
+    description: "Creates a new component container",
     unwrap: false,
     brackets: false,
     experimental: true,
@@ -18,7 +18,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx) {
-        const comp = this.data.fields![0] as IExtendedCompiledFunctionField
+        const [comp] = this.data.fields as [IExtendedCompiledFunctionField]
 
         ctx.container.isComponentsV2 = true
         ctx.container.containers.push(new ContainerBuilder())

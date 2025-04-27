@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$addContainer",
+    name: "$newContainer",
     version: "2.3.0",
-    description: "Adds a new component container",
+    description: "Creates a new component container",
     unwrap: false,
     brackets: false,
     experimental: true,
@@ -19,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx) {
-        const comp = this.data.fields[0];
+        const [comp] = this.data.fields;
         ctx.container.isComponentsV2 = true;
         ctx.container.containers.push(new discord_js_1.ContainerBuilder());
         if (comp) {
@@ -30,4 +30,4 @@ exports.default = new structures_1.NativeFunction({
         return this.success();
     },
 });
-//# sourceMappingURL=addContainer.js.map
+//# sourceMappingURL=newContainer.js.map

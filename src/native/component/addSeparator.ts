@@ -24,7 +24,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
-        const comp = new SeparatorBuilder().setSpacing(spacing).setDivider(divider || undefined)
+        const comp = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
         ctx.container.containers.at(-1)?.addSeparatorComponents(comp)
         return this.success()
     },
