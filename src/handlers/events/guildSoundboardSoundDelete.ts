@@ -24,5 +24,5 @@ export default new DiscordEventHandler({
             })
         }
     },
-    intents: ["Guilds"],
+    intents: ["GuildExpressions"],
 })

@@ -24,6 +24,6 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
             });
         }
     },
-    intents: ["Guilds"],
+    intents: ["GuildExpressions"],
 });
 //# sourceMappingURL=guildSoundboardSoundDelete.js.map

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const node_fs_1 = require("node:fs");
 exports.default = new structures_1.NativeFunction({
     name: "$createSoundboardSound",
     version: "2.3.0",
@@ -52,9 +53,16 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.SoundboardSound,
     async execute(ctx, [guild, name, file, emoji, volume, reason]) {
         const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? (0, discord_js_1.parseEmoji)(emoji) : undefined;
+        let soundFile;
+        try {
+            soundFile = (0, node_fs_1.readFileSync)(file);
+        }
+        catch {
+            soundFile = file;
+        }
         const sound = await guild.soundboardSounds.create({
             name,
-            file: Buffer.from(file, "base64"),
+            file: soundFile,
             emojiId: parsed?.id || undefined,
             emojiName: parsed?.id ? undefined : parsed?.name || undefined,
             volume: typeof (volume) === "number" ? volume : undefined,
