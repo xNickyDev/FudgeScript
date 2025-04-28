@@ -28,6 +28,7 @@ import {
     PollData,
     Presence,
     Role,
+    SoundboardSound,
     Sticker,
     StickerResolvable,
     TextChannel,
@@ -57,6 +58,7 @@ export type Sendable =
     | MessageReaction
     | Invite
     | AutoModerationActionExecution
+    | SoundboardSound
 
 export class Container {
     public content?: string

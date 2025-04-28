@@ -1,6 +1,6 @@
-import { parseEmoji } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { readFileSync } from "node:fs"
+import { parseSingleEmoji } from "../../functions/parseSingleEmoji"
 
 export default new NativeFunction({
     name: "$createSoundboardSound",
@@ -51,7 +51,7 @@ export default new NativeFunction({
     ],
     output: ArgType.SoundboardSound,
     async execute(ctx, [guild, name, file, emoji, volume, reason]) {
-        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? parseEmoji(emoji) : undefined
+        const parsed = parseSingleEmoji(ctx, emoji)
 
         let soundFile
         try {

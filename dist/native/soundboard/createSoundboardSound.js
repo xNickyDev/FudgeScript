@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const node_fs_1 = require("node:fs");
+const parseSingleEmoji_1 = require("../../functions/parseSingleEmoji");
 exports.default = new structures_1.NativeFunction({
     name: "$createSoundboardSound",
     version: "2.3.0",
@@ -52,7 +52,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.SoundboardSound,
     async execute(ctx, [guild, name, file, emoji, volume, reason]) {
-        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? (0, discord_js_1.parseEmoji)(emoji) : undefined;
+        const parsed = (0, parseSingleEmoji_1.parseSingleEmoji)(ctx, emoji);
         let soundFile;
         try {
             soundFile = (0, node_fs_1.readFileSync)(file);

@@ -1,6 +1,5 @@
-import { parseEmoji } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { EmbedProperties } from "../../properties/embed"
+import { parseSingleEmoji } from "../../functions/parseSingleEmoji"
 
 export default new NativeFunction({
     name: "$editSoundboardSound",
@@ -42,10 +41,16 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Number,
         },
+        {
+            name: "reason",
+            description: "The reason for editing the sound",
+            rest: false,
+            type: ArgType.String,
+        },
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [, sound, name, emoji, volume]) {
-        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? parseEmoji(emoji) : undefined
+    async execute(ctx, [, sound, name, emoji, volume, reason]) {
+        const parsed = parseSingleEmoji(ctx, emoji)
         const value = emoji === "" ? null : undefined
 
         return this.success(!!(await sound.edit({
@@ -53,6 +58,8 @@ export default new NativeFunction({
             name: name || undefined,
             emojiId: parsed?.id || value,
             emojiName: parsed?.id ? null : parsed?.name || value,
+            // @ts-ignore
+            reason: reason || undefined
         }).catch(ctx.noop)))
     },
 })

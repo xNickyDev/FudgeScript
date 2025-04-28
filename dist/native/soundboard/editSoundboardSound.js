@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const parseSingleEmoji_1 = require("../../functions/parseSingleEmoji");
 exports.default = new structures_1.NativeFunction({
     name: "$editSoundboardSound",
     version: "2.3.0",
@@ -42,16 +42,24 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "reason",
+            description: "The reason for editing the sound",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [, sound, name, emoji, volume]) {
-        const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? (0, discord_js_1.parseEmoji)(emoji) : undefined;
+    async execute(ctx, [, sound, name, emoji, volume, reason]) {
+        const parsed = (0, parseSingleEmoji_1.parseSingleEmoji)(ctx, emoji);
         const value = emoji === "" ? null : undefined;
         return this.success(!!(await sound.edit({
             volume,
             name: name || undefined,
             emojiId: parsed?.id || value,
             emojiName: parsed?.id ? null : parsed?.name || value,
+            // @ts-ignore
+            reason: reason || undefined
         }).catch(ctx.noop)));
     },
 });
