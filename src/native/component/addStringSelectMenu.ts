@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ContainerBuilder, StringSelectMenuBuilder } from "discord.js"
+import { StringSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -47,10 +47,7 @@ export default new NativeFunction({
         if (min != null) menu.setMinValues(min)
         if (max != null) menu.setMaxValues(max)
 
-        const comp = ctx.container.components.at(-1)
-        if (comp instanceof ActionRowBuilder) comp.addComponents(menu)
-        else if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row.addComponents(menu))
-
+        ctx.container.actionRow?.addComponents(menu)
         return this.success()
     },
 })

@@ -12,6 +12,7 @@ class Container {
     content;
     embeds = new Array();
     components = new Array();
+    actionRow;
     reference;
     reply = false;
     followUp = false;
@@ -126,6 +127,7 @@ class Container {
         delete this.threadName;
         delete this.appliedTags;
         delete this.deleteIn;
+        delete this.actionRow;
         this.followUp = false;
         this.reply = false;
         this.update = false;

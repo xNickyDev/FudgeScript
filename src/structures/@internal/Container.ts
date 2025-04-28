@@ -21,6 +21,7 @@ import {
     InteractionReplyOptions,
     Invite,
     Message,
+    MessageActionRowComponentBuilder,
     MessageMentionOptions,
     MessageReaction,
     MessageReplyOptions,
@@ -64,6 +65,7 @@ export class Container {
     public content?: string
     public embeds = new Array<EmbedBuilder>()
     public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder>()
+    public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
     public reference?: string
     public reply = false
     public followUp = false
@@ -183,6 +185,7 @@ export class Container {
         delete this.threadName
         delete this.appliedTags
         delete this.deleteIn
+        delete this.actionRow
 
         this.followUp = false
         this.reply = false

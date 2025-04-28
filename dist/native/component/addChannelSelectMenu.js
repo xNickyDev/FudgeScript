@@ -58,11 +58,7 @@ exports.default = new structures_1.NativeFunction({
             menu.setMinValues(min);
         if (max)
             menu.setMaxValues(max);
-        const comp = ctx.container.components.at(-1);
-        if (comp instanceof discord_js_1.ContainerBuilder)
-            comp.addActionRowComponents(row => row.addComponents(menu));
-        else
-            comp?.addComponents(menu);
+        ctx.container.actionRow?.addComponents(menu);
         return this.success();
     }
 });

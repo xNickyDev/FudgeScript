@@ -7,7 +7,9 @@ export default new NativeFunction({
     description: "Adds an action row",
     unwrap: true,
     execute(ctx) {
-        ctx.container.components.push(new ActionRowBuilder())
+        const { actionRow, components } = ctx.container
+        if (actionRow) components.push(actionRow)
+        ctx.container.actionRow = new ActionRowBuilder()
         return this.success()
     },
 })

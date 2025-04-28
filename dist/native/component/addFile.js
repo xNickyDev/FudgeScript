@@ -25,6 +25,11 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [url, spoiler]) {
         const comp = ctx.container.components.at(-1);
+        const row = ctx.container.actionRow;
+        if (row && comp instanceof discord_js_1.ContainerBuilder) {
+            comp.addActionRowComponents(row);
+            delete ctx.container.actionRow;
+        }
         if (comp instanceof discord_js_1.ContainerBuilder) {
             const file = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
             comp.addFileComponents(file);

@@ -18,6 +18,13 @@ export default new NativeFunction({
     ],
     execute(ctx, [content]) {
         const comp = ctx.container.components.at(-1)
+
+        const row = ctx.container.actionRow
+        if (row && comp instanceof ContainerBuilder) {
+            comp.addActionRowComponents(row)
+            delete ctx.container.actionRow
+        }
+        
         const text = new TextDisplayBuilder().setContent(content)
         if (comp instanceof ContainerBuilder) comp.addTextDisplayComponents(text)
         return this.success()
