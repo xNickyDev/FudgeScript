@@ -54,10 +54,10 @@ exports.default = new structures_1.NativeFunction({
         const parsed = (0, parseSingleEmoji_1.parseSingleEmoji)(ctx, emoji);
         const value = emoji === "" ? null : undefined;
         return this.success(!!(await sound.edit({
-            volume,
             name: name || undefined,
             emojiId: parsed?.id || value,
             emojiName: parsed?.id ? null : parsed?.name || value,
+            volume: typeof (volume) === "string" ? null : volume || undefined,
             // @ts-ignore
             reason: reason || undefined
         }).catch(ctx.noop)));
