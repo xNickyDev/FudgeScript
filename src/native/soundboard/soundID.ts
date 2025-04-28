@@ -9,7 +9,7 @@ export default new NativeFunction({
     args: [
         {
             name: "guild ID",
-            description: "The guild to return the sound from",
+            description: "The guild to get sound from",
             rest: false,
             type: ArgType.Guild,
             required: true,

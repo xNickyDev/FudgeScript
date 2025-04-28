@@ -10,7 +10,7 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "guild ID",
-            description: "The guild to return the sound from",
+            description: "The guild to get sound from",
             rest: false,
             type: structures_1.ArgType.Guild,
             required: true,

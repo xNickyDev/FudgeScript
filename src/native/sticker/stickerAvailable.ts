@@ -1,4 +1,3 @@
-import { StickerFormatType } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -19,6 +18,6 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     execute(ctx, [ s ]) {
         s ??= ctx.sticker!
-        return this.success(s.available)
+        return this.success(s?.available)
     },
 })

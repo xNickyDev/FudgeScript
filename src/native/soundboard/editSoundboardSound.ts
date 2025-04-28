@@ -57,7 +57,7 @@ export default new NativeFunction({
             name: name || undefined,
             emojiId: parsed?.id || value,
             emojiName: parsed?.id ? null : parsed?.name || value,
-            volume: typeof(volume) === "string" ? null : volume || undefined,
+            volume: typeof(volume) === "number" ? volume : undefined,
             // @ts-ignore
             reason: reason || undefined
         }).catch(ctx.noop)))
