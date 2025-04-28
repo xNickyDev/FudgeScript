@@ -7,4 +7,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.String;
 }], false>;
 export default _default;
-//# sourceMappingURL=newContainer.d.ts.map
+//# sourceMappingURL=addContainer.d.ts.map

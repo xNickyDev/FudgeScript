@@ -19,10 +19,9 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [content]) {
         const comp = ctx.container.components.at(-1);
-        if (comp instanceof discord_js_1.ContainerBuilder) {
-            const text = new discord_js_1.TextDisplayBuilder().setContent(content);
+        const text = new discord_js_1.TextDisplayBuilder().setContent(content);
+        if (comp instanceof discord_js_1.ContainerBuilder)
             comp.addTextDisplayComponents(text);
-        }
         return this.success();
     },
 });

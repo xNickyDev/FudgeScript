@@ -18,10 +18,8 @@ export default new NativeFunction({
     ],
     execute(ctx, [content]) {
         const comp = ctx.container.components.at(-1)
-        if (comp instanceof ContainerBuilder) {
-            const text = new TextDisplayBuilder().setContent(content)
-            comp.addTextDisplayComponents(text)
-        }
+        const text = new TextDisplayBuilder().setContent(content)
+        if (comp instanceof ContainerBuilder) comp.addTextDisplayComponents(text)
         return this.success()
     },
 })

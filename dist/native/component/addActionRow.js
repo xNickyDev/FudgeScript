@@ -8,11 +8,7 @@ exports.default = new structures_1.NativeFunction({
     description: "Adds an action row",
     unwrap: true,
     execute(ctx) {
-        const comp = ctx.container.components.at(-1);
-        if (comp instanceof discord_js_1.ContainerBuilder)
-            comp.addActionRowComponents(row => row);
-        else
-            ctx.container.components.push(new discord_js_1.ActionRowBuilder());
+        ctx.container.components.push(new discord_js_1.ActionRowBuilder());
         return this.success();
     },
 });

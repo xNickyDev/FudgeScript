@@ -54,7 +54,7 @@ export default new NativeFunction({
 
         const sound = await guild.soundboardSounds.create({
             name,
-            file,
+            file: Buffer.from(file, "base64"),
             emojiId: parsed?.id || undefined,
             emojiName: parsed?.id ? undefined : parsed?.name || undefined,
             volume: typeof(volume) === "number" ? volume : undefined,

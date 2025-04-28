@@ -1,6 +1,5 @@
 import { ChannelSelectMenuBuilder, ChannelType } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
-import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder } from "@discordjs/builders"
 
 export default new NativeFunction({
     name: "$setChannelType",

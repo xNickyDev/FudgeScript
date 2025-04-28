@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ContainerBuilder } from "discord.js"
+import { ActionRowBuilder } from "discord.js"
 import { NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -7,9 +7,7 @@ export default new NativeFunction({
     description: "Adds an action row",
     unwrap: true,
     execute(ctx) {
-        const comp = ctx.container.components.at(-1)
-        if (comp instanceof ContainerBuilder) comp.addActionRowComponents(row => row)
-        else ctx.container.components.push(new ActionRowBuilder())
+        ctx.container.components.push(new ActionRowBuilder())
         return this.success()
     },
 })

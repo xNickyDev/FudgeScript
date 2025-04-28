@@ -2,7 +2,7 @@ import { ContainerBuilder } from "discord.js"
 import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$newContainer",
+    name: "$addContainer",
     version: "2.3.0",
     description: "Creates a new component container",
     unwrap: false,

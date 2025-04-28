@@ -60,10 +60,10 @@ exports.default = new structures_1.NativeFunction({
                 btn.setEmoji(emoji);
         }
         const comp = ctx.container.components.at(-1);
-        if (comp instanceof discord_js_1.ContainerBuilder)
+        if (comp instanceof discord_js_1.ActionRowBuilder)
+            comp.addComponents(btn);
+        else if (comp instanceof discord_js_1.ContainerBuilder)
             comp.addActionRowComponents(row => row.addComponents(btn));
-        else
-            comp?.addComponents(btn);
         return this.success();
     },
 });

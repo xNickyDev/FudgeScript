@@ -54,7 +54,7 @@ exports.default = new structures_1.NativeFunction({
         const parsed = emoji ? ctx.client.emojis.cache.get(emoji) ?? (0, discord_js_1.parseEmoji)(emoji) : undefined;
         const sound = await guild.soundboardSounds.create({
             name,
-            file,
+            file: Buffer.from(file, "base64"),
             emojiId: parsed?.id || undefined,
             emojiName: parsed?.id ? undefined : parsed?.name || undefined,
             volume: typeof (volume) === "number" ? volume : undefined,
