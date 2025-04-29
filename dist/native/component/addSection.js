@@ -26,6 +26,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
+        ctx.container.section = new discord_js_1.SectionBuilder();
         const textDisplay = this.getFunction(0, addTextDisplay_1.default);
         const newButton = this.getFunction(0, addButton_1.default);
         const text = await textDisplay?.execute(ctx);
@@ -37,10 +38,10 @@ exports.default = new structures_1.NativeFunction({
                 return button;
         }
         if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
-            comp.addSectionComponents(ctx.component.section);
+            comp.addSectionComponents(ctx.container.section);
         else
-            ctx.container.components.push(ctx.component.section);
-        delete ctx.component.section;
+            ctx.container.components.push(ctx.container.section);
+        delete ctx.container.section;
         return this.success();
     },
 });

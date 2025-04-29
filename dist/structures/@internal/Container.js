@@ -13,6 +13,7 @@ class Container {
     embeds = new Array();
     components = new Array();
     actionRow;
+    section;
     context = Array();
     reference;
     reply = false;
@@ -132,6 +133,7 @@ class Container {
         delete this.appliedTags;
         delete this.deleteIn;
         delete this.actionRow;
+        delete this.section;
         this.followUp = false;
         this.reply = false;
         this.update = false;

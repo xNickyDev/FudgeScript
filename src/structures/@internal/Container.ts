@@ -31,6 +31,7 @@ import {
     PollData,
     Presence,
     Role,
+    SectionBuilder,
     SoundboardSound,
     Sticker,
     StickerResolvable,
@@ -68,6 +69,7 @@ export class Container {
     public embeds = new Array<EmbedBuilder>()
     public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder>()
     public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
+    public section?: SectionBuilder
     public context = Array<ComponentType>()
     public reference?: string
     public reply = false
@@ -193,6 +195,7 @@ export class Container {
         delete this.appliedTags
         delete this.deleteIn
         delete this.actionRow
+        delete this.section
 
         this.followUp = false
         this.reply = false
