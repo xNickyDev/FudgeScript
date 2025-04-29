@@ -1,1 +1,1 @@
-{"version":3,"file":"addSection.d.ts","sourceRoot":"","sources":["../../../src/native/component/addSection.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;AAMlE,wBAsCE"}
+{"version":3,"file":"addSection.d.ts","sourceRoot":"","sources":["../../../src/native/component/addSection.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAkC,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;AAMlG,wBA+BE"}

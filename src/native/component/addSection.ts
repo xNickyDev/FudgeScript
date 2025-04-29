@@ -1,4 +1,4 @@
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 import { buildActionRow } from "../../functions/buildActionRow"
 import { ComponentType, ContainerBuilder, SectionBuilder } from "discord.js"
 import addButton from "./addButton"
@@ -13,7 +13,7 @@ export default new NativeFunction({
     args: [
         {
             name: "components",
-            description: "The components and accessories to add",
+            description: "The components and accessory to add",
             rest: false,
             required: true,
             type: ArgType.String,
@@ -24,16 +24,9 @@ export default new NativeFunction({
         const comp = ctx.container.components.at(-1)
         ctx.container.section = new SectionBuilder()
 
-        const textDisplay = this.getFunction(0, addTextDisplay)!
-        const newButton = this.getFunction(0, addButton)
-
-        const text = await textDisplay?.execute(ctx)
-        if (!this["isValidReturnType"](text)) return text
-
-        if (newButton) {
-            const button = await newButton.execute(ctx)
-            if (!this["isValidReturnType"](button)) return button
-        }
+        const code = this.data.fields![0] as IExtendedCompiledFunctionField
+        const resolved = await this["resolveCode"](ctx, code)
+        if (!this["isValidReturnType"](resolved)) return resolved
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addSectionComponents(ctx.container.section)
