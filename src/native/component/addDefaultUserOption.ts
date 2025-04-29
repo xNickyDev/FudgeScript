@@ -1,6 +1,6 @@
-import { BaseSelectMenuBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ActionRow, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
-import { MentionableSelectMenuBuilder, RoleSelectMenuBuilder } from "@discordjs/builders"
+import { MentionableSelectMenuBuilder } from "@discordjs/builders"
 
 export default new NativeFunction({
     name: "$addDefaultUserOption",
@@ -22,14 +22,12 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ ids ]) {
-        const menu = ctx.container.components.at(-1)?.components.at(0)
-        if (menu instanceof BaseSelectMenuBuilder) {
-            if (menu instanceof UserSelectMenuBuilder)
-                menu.addDefaultUsers(ids)
-            else if (menu instanceof MentionableSelectMenuBuilder)
+        const comp = ctx.container.components.at(-1)
+        if (comp instanceof ActionRow) {
+            const menu = comp.components[0]
+            if (menu instanceof UserSelectMenuBuilder || menu instanceof MentionableSelectMenuBuilder) 
                 menu.addDefaultUsers(ids)
         }
-
         return this.success()
     },
 })

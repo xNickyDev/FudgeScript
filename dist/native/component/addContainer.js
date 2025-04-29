@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
     name: "$addContainer",
-    version: "2.3.0",
     description: "Creates a new component container",
     unwrap: false,
-    brackets: false,
+    brackets: true,
     experimental: true,
     args: [
         {
@@ -19,20 +19,14 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx) {
-        ctx.container.isComponentsV2 = true;
+        ctx.container.insideContainer = true;
         ctx.container.components.push(new discord_js_1.ContainerBuilder());
-        if (this.hasFields) {
-            const code = this.data.fields[0];
-            const resolved = await this["resolveCode"](ctx, code);
-            if (!this["isValidReturnType"](resolved))
-                return resolved;
-        }
-        const row = ctx.container.actionRow;
-        const comp = ctx.container.components.at(-1);
-        if (row && comp instanceof discord_js_1.ContainerBuilder) {
-            comp.addActionRowComponents(row);
-            delete ctx.container.actionRow;
-        }
+        const code = this.data.fields[0];
+        const resolved = await this["resolveCode"](ctx, code);
+        if (!this["isValidReturnType"](resolved))
+            return resolved;
+        (0, buildActionRow_1.buildActionRow)(ctx);
+        ctx.container.insideContainer = false;
         return this.success();
     },
 });

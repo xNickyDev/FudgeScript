@@ -23,11 +23,10 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [ids]) {
-        const menu = ctx.container.components.at(-1)?.components.at(0);
-        if (menu instanceof discord_js_1.BaseSelectMenuBuilder) {
-            if (menu instanceof builders_1.RoleSelectMenuBuilder)
-                menu.addDefaultRoles(ids);
-            else if (menu instanceof builders_1.MentionableSelectMenuBuilder)
+        const comp = ctx.container.components.at(-1);
+        if (comp instanceof discord_js_1.ActionRow) {
+            const menu = comp.components[0];
+            if (menu instanceof builders_1.RoleSelectMenuBuilder || menu instanceof builders_1.MentionableSelectMenuBuilder)
                 menu.addDefaultRoles(ids);
         }
         return this.success();

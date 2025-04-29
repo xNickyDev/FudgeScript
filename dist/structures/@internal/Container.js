@@ -13,6 +13,7 @@ class Container {
     embeds = new Array();
     components = new Array();
     actionRow;
+    insideContainer = false;
     reference;
     reply = false;
     followUp = false;
@@ -136,6 +137,7 @@ class Container {
         this.edit = false;
         this.tts = false;
         this.isComponentsV2 = false;
+        this.insideContainer = false;
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;

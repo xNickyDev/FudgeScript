@@ -10,6 +10,7 @@ import {
     BaseInteraction,
     Channel,
     ContainerBuilder,
+    ContainerComponentBuilder,
     EmbedBuilder,
     Guild,
     GuildEmoji,
@@ -64,8 +65,9 @@ export type Sendable =
 export class Container {
     public content?: string
     public embeds = new Array<EmbedBuilder>()
-    public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder>()
+    public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder>()
     public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
+    public insideContainer = false
     public reference?: string
     public reply = false
     public followUp = false
@@ -195,6 +197,7 @@ export class Container {
         this.edit = false
         this.tts = false
         this.isComponentsV2 = false
+        this.insideContainer = false
 
         this.stickers.length = 0
         this.choices.length = 0

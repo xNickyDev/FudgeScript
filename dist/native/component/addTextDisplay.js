@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
     name: "$addTextDisplay",
     version: "2.3.0",
@@ -18,15 +19,13 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [content]) {
+        (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        const row = ctx.container.actionRow;
-        if (row && comp instanceof discord_js_1.ContainerBuilder) {
-            comp.addActionRowComponents(row);
-            delete ctx.container.actionRow;
-        }
         const text = new discord_js_1.TextDisplayBuilder().setContent(content);
-        if (comp instanceof discord_js_1.ContainerBuilder)
+        if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.insideContainer)
             comp.addTextDisplayComponents(text);
+        else
+            ctx.container.components.push(text);
         return this.success();
     },
 });

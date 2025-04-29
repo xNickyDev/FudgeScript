@@ -1,5 +1,6 @@
 import { ContainerBuilder, TextDisplayBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { buildActionRow } from "../../functions/buildActionRow"
 
 export default new NativeFunction({
     name: "$addTextDisplay",
@@ -17,16 +18,13 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [content]) {
+        buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
-
-        const row = ctx.container.actionRow
-        if (row && comp instanceof ContainerBuilder) {
-            comp.addActionRowComponents(row)
-            delete ctx.container.actionRow
-        }
-        
         const text = new TextDisplayBuilder().setContent(content)
-        if (comp instanceof ContainerBuilder) comp.addTextDisplayComponents(text)
+
+        if (comp instanceof ContainerBuilder && ctx.container.insideContainer) comp.addTextDisplayComponents(text)
+        else ctx.container.components.push(text)
+
         return this.success()
     },
 })
