@@ -5,6 +5,7 @@ const structures_1 = require("../../structures");
 const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
     name: "$addTextDisplay",
+    version: "2.4.0",
     description: "Adds a new text display component",
     unwrap: true,
     brackets: true,
@@ -21,8 +22,10 @@ exports.default = new structures_1.NativeFunction({
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         const text = new discord_js_1.TextDisplayBuilder().setContent(content);
-        if (ctx.container.isInside(discord_js_1.ComponentType.Section))
-            ctx.component.section?.addTextDisplayComponents(text);
+        if (ctx.container.isInside(discord_js_1.ComponentType.Section)) {
+            ctx.component.section ??= new discord_js_1.SectionBuilder();
+            ctx.component.section.addTextDisplayComponents(text);
+        }
         else if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addTextDisplayComponents(text);
         else

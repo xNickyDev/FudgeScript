@@ -10,6 +10,7 @@ const addButton_1 = __importDefault(require("./addButton"));
 const addTextDisplay_1 = __importDefault(require("./addTextDisplay"));
 exports.default = new structures_1.NativeFunction({
     name: "$addSection",
+    version: "2.4.0",
     description: "Adds a new section component",
     unwrap: false,
     brackets: true,
@@ -25,7 +26,6 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        ctx.component.section = new discord_js_1.SectionBuilder();
         const textDisplay = this.getFunction(0, addTextDisplay_1.default);
         const newButton = this.getFunction(0, addButton_1.default);
         const text = await textDisplay?.execute(ctx);
@@ -40,6 +40,7 @@ exports.default = new structures_1.NativeFunction({
             comp.addSectionComponents(ctx.component.section);
         else
             ctx.container.components.push(ctx.component.section);
+        delete ctx.component.section;
         return this.success();
     },
 });
