@@ -19,6 +19,7 @@ import {
     Message,
     MessageReaction,
     Role,
+    SectionBuilder,
     SoundboardSound,
     Sticker,
     User,
@@ -84,6 +85,10 @@ export interface ILocalFunctionData {
     args: string[]
 }
 
+export interface IComponentOptions {
+    section: SectionBuilder
+}
+
 export enum CalendarType {
     Buddhist = "buddhist",
     Chinese = "chinese",
@@ -141,6 +146,8 @@ export class Context {
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
+
+    component: Partial<IComponentOptions> = {}
 
     localFunctions: Map<string, ILocalFunctionData> = new Map()
     suppressErrors: boolean = false

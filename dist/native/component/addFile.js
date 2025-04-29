@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
     name: "$addFile",
-    version: "2.3.0",
-    description: "Adds a new file component to the current container",
+    description: "Adds a new file component",
     unwrap: true,
     brackets: true,
     args: [
@@ -24,16 +24,13 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [url, spoiler]) {
+        (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        const row = ctx.container.actionRow;
-        if (row && comp instanceof discord_js_1.ContainerBuilder) {
-            comp.addActionRowComponents(row);
-            delete ctx.container.actionRow;
-        }
-        if (comp instanceof discord_js_1.ContainerBuilder) {
-            const file = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
+        const file = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
+        if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addFileComponents(file);
-        }
+        else
+            ctx.container.components.push(file);
         return this.success();
     },
 });

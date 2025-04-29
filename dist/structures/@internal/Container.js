@@ -13,7 +13,7 @@ class Container {
     embeds = new Array();
     components = new Array();
     actionRow;
-    insideContainer = false;
+    context = Array();
     reference;
     reply = false;
     followUp = false;
@@ -108,7 +108,10 @@ class Container {
     embed(index) {
         return (this.embeds[index] ??= new discord_js_1.EmbedBuilder());
     }
-    builtFlags() {
+    isInside(type) {
+        return this.context.includes(type);
+    }
+    buildFlags() {
         const flags = [];
         if (this.ephemeral)
             flags.push(discord_js_2.MessageFlags.Ephemeral);
@@ -137,10 +140,10 @@ class Container {
         this.edit = false;
         this.tts = false;
         this.isComponentsV2 = false;
-        this.insideContainer = false;
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
+        this.context.length = 0;
         this.embeds.length = 0;
         this.files.length = 0;
         this.allowedMentions = {};
@@ -162,7 +165,7 @@ class Container {
                         failIfNotExists: false,
                     }
                     : undefined,
-                flags: this.builtFlags(),
+                flags: this.buildFlags(),
                 attachments: [],
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,

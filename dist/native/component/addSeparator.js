@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
     name: "$addSeparator",
-    version: "2.3.0",
     description: "Adds a new separator component to the current container",
     unwrap: true,
     brackets: true,
@@ -25,16 +25,13 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
+        (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        const row = ctx.container.actionRow;
-        if (row && comp instanceof discord_js_1.ContainerBuilder) {
-            comp.addActionRowComponents(row);
-            delete ctx.container.actionRow;
-        }
-        if (comp instanceof discord_js_1.ContainerBuilder) {
-            const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
+        const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
+        if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addSeparatorComponents(sep);
-        }
+        else
+            ctx.container.components.push(sep);
         return this.success();
     },
 });

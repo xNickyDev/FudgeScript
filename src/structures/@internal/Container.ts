@@ -9,6 +9,7 @@ import {
     BaseChannel,
     BaseInteraction,
     Channel,
+    ComponentType,
     ContainerBuilder,
     ContainerComponentBuilder,
     EmbedBuilder,
@@ -67,7 +68,7 @@ export class Container {
     public embeds = new Array<EmbedBuilder>()
     public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder>()
     public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
-    public insideContainer = false
+    public context = Array<ComponentType>()
     public reference?: string
     public reply = false
     public followUp = false
@@ -166,7 +167,11 @@ export class Container {
         return (this.embeds[index] ??= new EmbedBuilder())
     }
 
-    private builtFlags() {
+    public isInside(type: ComponentType) {
+        return this.context.includes(type)
+    }
+
+    private buildFlags() {
         const flags: MessageFlags[] = []
 
         if (this.ephemeral) flags.push(MessageFlags.Ephemeral)
@@ -197,11 +202,11 @@ export class Container {
         this.edit = false
         this.tts = false
         this.isComponentsV2 = false
-        this.insideContainer = false
 
         this.stickers.length = 0
         this.choices.length = 0
         this.components.length = 0
+        this.context.length = 0
         this.embeds.length = 0
         this.files.length = 0
 
@@ -227,7 +232,7 @@ export class Container {
                                 failIfNotExists: false,
                             }
                           : undefined,
-                      flags: this.builtFlags(),
+                      flags: this.buildFlags(),
                       attachments: [],
                       files: this.files.length === 0 ? null : this.files,
                       stickers: this.stickers.length === 0 ? null : this.stickers,

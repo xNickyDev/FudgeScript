@@ -1,9 +1,10 @@
-import { ContainerBuilder, SeparatorBuilder, SeparatorSpacingSize } from "discord.js"
+import { ComponentType, ContainerBuilder, SeparatorBuilder, SeparatorSpacingSize } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { buildActionRow } from "../../functions/buildActionRow"
 
 export default new NativeFunction({
     name: "$addSeparator",
-    version: "2.3.0",
+    version: "2.4.0",
     description: "Adds a new separator component to the current container",
     unwrap: true,
     brackets: true,
@@ -24,18 +25,14 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [spacing, divider]) {
+        buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
+        const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
 
-        const row = ctx.container.actionRow
-        if (row && comp instanceof ContainerBuilder) {
-            comp.addActionRowComponents(row)
-            delete ctx.container.actionRow
-        }
-        
-        if (comp instanceof ContainerBuilder) {
-            const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
+        if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addSeparatorComponents(sep)
-        }
+        else ctx.container.components.push(sep)
+
         return this.success()
     },
 })

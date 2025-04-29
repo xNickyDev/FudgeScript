@@ -1,4 +1,4 @@
-import { ContainerBuilder } from "discord.js"
+import { ComponentType, ContainerBuilder } from "discord.js"
 import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 import { buildActionRow } from "../../functions/buildActionRow"
 
@@ -8,7 +8,6 @@ export default new NativeFunction({
     description: "Creates a new component container",
     unwrap: false,
     brackets: true,
-    experimental: true,
     args: [
         {
             name: "components",
@@ -19,15 +18,15 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx) {
-        ctx.container.insideContainer = true
         ctx.container.components.push(new ContainerBuilder())
+        ctx.container.context.push(ComponentType.Container)
 
         const code = this.data.fields![0] as IExtendedCompiledFunctionField
         const resolved = await this["resolveCode"](ctx, code)
         if (!this["isValidReturnType"](resolved)) return resolved
 
         buildActionRow(ctx)
-        ctx.container.insideContainer = false
+        ctx.container.context.pop()
         return this.success()
     },
 })

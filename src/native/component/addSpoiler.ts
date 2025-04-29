@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$addSpoiler",
-    version: "2.3.0",
+    version: "2.4.0",
     description: "Adds a spoiler to the current container",
     unwrap: false,
     execute(ctx) {

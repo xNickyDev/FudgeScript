@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setColor",
-    version: "2.3.0",
+    version: "2.4.0",
     description: "Sets a color for the current container",
     unwrap: true,
     brackets: true,

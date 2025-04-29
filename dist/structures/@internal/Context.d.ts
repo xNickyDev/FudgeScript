@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, Message, MessageReaction, Role, SoundboardSound, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, Message, MessageReaction, Role, SectionBuilder, SoundboardSound, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
@@ -43,6 +43,9 @@ export interface IScheduledEventOptions {
 export interface ILocalFunctionData {
     code: IExtendedCompiledFunctionField;
     args: string[];
+}
+export interface IComponentOptions {
+    section: SectionBuilder;
 }
 export declare enum CalendarType {
     Buddhist = "buddhist",
@@ -96,6 +99,7 @@ export declare class Context {
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;
+    component: Partial<IComponentOptions>;
     localFunctions: Map<string, ILocalFunctionData>;
     suppressErrors: boolean;
     container: Container;

@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addSpoiler",
-    version: "2.3.0",
     description: "Adds a spoiler to the current container",
     unwrap: false,
     execute(ctx) {
