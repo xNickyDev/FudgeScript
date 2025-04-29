@@ -407,7 +407,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
 
     private resolveSoundboardSound(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
         if (!CompiledFunction.IdRegex.test(str)) return
-        return this.resolvePointer(arg, ref, ctx.guild)?.soundboardSounds.fetch({ soundboardSound: str }).catch(ctx.noop)
+        return this.resolvePointer(arg, ref, ctx.guild)?.soundboardSounds.fetch(str).catch(ctx.noop)
     }
 
     private resolveStageInstance(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
