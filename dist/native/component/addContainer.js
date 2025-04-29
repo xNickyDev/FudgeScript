@@ -26,12 +26,12 @@ exports.default = new structures_1.NativeFunction({
             const resolved = await this["resolveCode"](ctx, code);
             if (!this["isValidReturnType"](resolved))
                 return resolved;
-            const row = ctx.container.actionRow;
-            const comp = ctx.container.components.at(-1);
-            if (row && comp instanceof discord_js_1.ContainerBuilder) {
-                comp.addActionRowComponents(row);
-                delete ctx.container.actionRow;
-            }
+        }
+        const row = ctx.container.actionRow;
+        const comp = ctx.container.components.at(-1);
+        if (row && comp instanceof discord_js_1.ContainerBuilder) {
+            comp.addActionRowComponents(row);
+            delete ctx.container.actionRow;
         }
         return this.success();
     },

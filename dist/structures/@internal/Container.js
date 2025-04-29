@@ -165,7 +165,7 @@ class Container {
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,
                 content: this.content?.trim() || null,
-                components: this.components,
+                components: this.actionRow ? this.components.push(this.actionRow) : this.components,
                 embeds: this.embeds,
                 tts: this.tts,
                 threadId: this.threadId,
