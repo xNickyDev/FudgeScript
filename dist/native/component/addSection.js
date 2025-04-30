@@ -1,8 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const buildActionRow_1 = require("../../functions/buildActionRow");
 const discord_js_1 = require("discord.js");
+const addButton_1 = __importDefault(require("./addButton"));
+const addTextDisplay_1 = __importDefault(require("./addTextDisplay"));
 exports.default = new structures_1.NativeFunction({
     name: "$addSection",
     version: "2.4.0",
@@ -21,16 +26,24 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        ctx.container.section = new discord_js_1.SectionBuilder();
-        const code = this.data.fields[0];
-        const resolved = await this["resolveCode"](ctx, code);
-        if (!this["isValidReturnType"](resolved))
-            return resolved;
+        ctx.component.section = new discord_js_1.SectionBuilder();
+        ctx.container.context.push(discord_js_1.ComponentType.Section);
+        const textDisplay = this.getFunction(0, addTextDisplay_1.default);
+        const newButton = this.getFunction(0, addButton_1.default);
+        const text = await textDisplay?.execute(ctx);
+        if (!this["isValidReturnType"](text))
+            return text;
+        if (newButton) {
+            const button = await newButton.execute(ctx);
+            if (!this["isValidReturnType"](button))
+                return button;
+        }
         if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
-            comp.addSectionComponents(ctx.container.section);
+            comp.addSectionComponents(ctx.component.section);
         else
-            ctx.container.components.push(ctx.container.section);
-        delete ctx.container.section;
+            ctx.container.components.push(ctx.component.section);
+        delete ctx.component.section;
+        ctx.container.context.pop();
         return this.success();
     },
 });

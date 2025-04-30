@@ -22,17 +22,26 @@ export default new NativeFunction({
     async execute(ctx) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
-        ctx.container.section = new SectionBuilder()
+        ctx.component.section = new SectionBuilder()
+        ctx.container.context.push(ComponentType.Section)
 
-        const code = this.data.fields![0] as IExtendedCompiledFunctionField
-        const resolved = await this["resolveCode"](ctx, code)
-        if (!this["isValidReturnType"](resolved)) return resolved
+        const textDisplay = this.getFunction(0, addTextDisplay)!
+        const newButton = this.getFunction(0, addButton)
+
+        const text = await textDisplay?.execute(ctx)
+        if (!this["isValidReturnType"](text)) return text
+
+        if (newButton) {
+            const button = await newButton.execute(ctx)
+            if (!this["isValidReturnType"](button)) return button
+        }
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
-            comp.addSectionComponents(ctx.container.section)
-        else ctx.container.components.push(ctx.container.section)
+            comp.addSectionComponents(ctx.component.section)
+        else ctx.container.components.push(ctx.component.section)
 
-        delete ctx.container.section
+        delete ctx.component.section
+        ctx.container.context.pop()
         return this.success()
     },
 })

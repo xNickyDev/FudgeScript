@@ -57,7 +57,7 @@ export default new NativeFunction({
             if (emoji) btn.setEmoji(emoji)
         }
 
-        if (ctx.container.isInside(ComponentType.Section)) ctx.container.section?.setButtonAccessory(btn)
+        if (ctx.container.isInside(ComponentType.Section)) ctx.component.section?.setButtonAccessory(btn)
         else ctx.container.actionRow?.addComponents(btn)
 
         return this.success()

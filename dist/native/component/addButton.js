@@ -60,7 +60,7 @@ exports.default = new structures_1.NativeFunction({
                 btn.setEmoji(emoji);
         }
         if (ctx.container.isInside(discord_js_1.ComponentType.Section))
-            ctx.container.section?.setButtonAccessory(btn);
+            ctx.component.section?.setButtonAccessory(btn);
         else
             ctx.container.actionRow?.addComponents(btn);
         return this.success();
