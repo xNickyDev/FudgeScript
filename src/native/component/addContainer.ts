@@ -1,6 +1,7 @@
 import { ComponentType, ContainerBuilder } from "discord.js"
 import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 import { buildActionRow } from "../../functions/buildActionRow"
+import { resolveColor } from "../../functions/hex"
 
 export default new NativeFunction({
     name: "$addContainer",
@@ -41,12 +42,16 @@ export default new NativeFunction({
         ctx.container.context.push(ComponentType.Container)
         const comp = ctx.container.components.at(-1) as ContainerBuilder
 
-        const fields = this.data.fields!
-        if (fields.length >= 2) comp.setAccentColor(Number(this.displayField(1)))
-        if (fields.length >= 3) comp.setSpoiler(Boolean(this.displayField(2)))
-        if (fields.length === 4) comp.setId(Number(this.displayField(3)))
+        const color = this.displayField(1)
+        if (color) comp.setAccentColor(resolveColor(color))
 
-        const code = fields![0] as IExtendedCompiledFunctionField
+        const spoiler = this.displayField(2)
+        if (spoiler) comp.setSpoiler(Boolean(spoiler))
+
+        const id = this.displayField(2)
+        if (id) comp.setId(Number(id))
+
+        const code = this.data.fields![0] as IExtendedCompiledFunctionField
         const resolved = await this["resolveCode"](ctx, code)
         if (!this["isValidReturnType"](resolved)) return resolved
 
