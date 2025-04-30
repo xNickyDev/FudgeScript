@@ -5,6 +5,21 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.String;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.Color;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.Boolean;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.Number;
 }], false>;
 export default _default;
 //# sourceMappingURL=addContainer.d.ts.map

@@ -16,6 +16,7 @@ import {
     GuildScheduledEventEntityMetadataOptions,
     GuildScheduledEventRecurrenceRuleOptions,
     Interaction,
+    MediaGalleryBuilder,
     Message,
     MessageReaction,
     Role,
@@ -87,6 +88,7 @@ export interface ILocalFunctionData {
 
 export interface IComponentOptions {
     section: SectionBuilder
+    gallery: MediaGalleryBuilder
 }
 
 export enum CalendarType {

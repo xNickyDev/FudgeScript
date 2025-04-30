@@ -1,11 +1,10 @@
-import { ActionRowBuilder, AnyComponentBuilder, ApplicationCommandOptionChoiceData, AttachmentBuilder, AutoModerationActionExecution, BaseChannel, Channel, ComponentType, ContainerBuilder, ContainerComponentBuilder, EmbedBuilder, Guild, GuildEmoji, GuildMember, GuildScheduledEvent, Interaction, InteractionEditReplyOptions, InteractionReplyOptions, Invite, Message, MessageActionRowComponentBuilder, MessageMentionOptions, MessageReaction, MessageReplyOptions, ModalBuilder, PollData, Presence, Role, SectionBuilder, SoundboardSound, Sticker, StickerResolvable, ThreadChannelResolvable, User, VoiceState, WebhookClient } from "discord.js";
+import { ActionRowBuilder, AnyComponentBuilder, ApplicationCommandOptionChoiceData, AttachmentBuilder, AutoModerationActionExecution, BaseChannel, Channel, ComponentType, ContainerBuilder, ContainerComponentBuilder, EmbedBuilder, Guild, GuildEmoji, GuildMember, GuildScheduledEvent, Interaction, InteractionEditReplyOptions, InteractionReplyOptions, Invite, Message, MessageActionRowComponentBuilder, MessageMentionOptions, MessageReaction, MessageReplyOptions, ModalBuilder, PollData, Presence, Role, SoundboardSound, Sticker, StickerResolvable, ThreadChannelResolvable, User, VoiceState, WebhookClient } from "discord.js";
 export type Sendable = {} | Sticker | GuildScheduledEvent | Role | Presence | Message | User | GuildMember | BaseChannel | Interaction | VoiceState | WebhookClient | GuildEmoji | Guild | MessageReaction | Invite | AutoModerationActionExecution | SoundboardSound;
 export declare class Container {
     content?: string;
     embeds: EmbedBuilder[];
     components: (ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder)[];
     actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>;
-    section?: SectionBuilder;
     context: ComponentType[];
     reference?: string;
     reply: boolean;
@@ -33,7 +32,6 @@ export declare class Container {
     isValidMessage(options: MessageReplyOptions & InteractionReplyOptions & InteractionEditReplyOptions): boolean;
     embed(index: number): EmbedBuilder;
     isInside(type: ComponentType): boolean;
-    private buildFlags;
     reset(): void;
     getOptions<T>(content?: string): T;
 }

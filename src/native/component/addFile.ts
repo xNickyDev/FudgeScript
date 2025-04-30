@@ -1,4 +1,4 @@
-import { ComponentType, ContainerBuilder, ContainerComponent, FileBuilder } from "discord.js"
+import { ComponentType, ContainerBuilder, FileBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildActionRow } from "../../functions/buildActionRow"
 
@@ -22,11 +22,19 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
+        {
+            name: "id",
+            description: "The id for this file component",
+            rest: false,
+            type: ArgType.Number,
+        },
     ],
-    execute(ctx, [url, spoiler]) {
+    execute(ctx, [url, spoiler, id]) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
         const file = new FileBuilder().setURL(url).setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
+
+        if (id) file.setId(id)
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addFileComponents(file)

@@ -2,20 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
-const buildActionRow_1 = require("../../functions/buildActionRow");
 exports.default = new structures_1.NativeFunction({
-    name: "$addFile",
-    version: "2.4.0",
-    description: "Adds a new file component",
+    name: "$addThumbnail",
+    description: "Adds a new thumbnail accessory",
     unwrap: true,
     brackets: true,
     args: [
         {
             name: "url",
-            description: "The url of the file",
+            description: "The url for the thumbnail",
             rest: false,
             required: true,
             type: structures_1.ArgType.URL,
+        },
+        {
+            name: "description",
+            description: "The description of the thumbnail",
+            rest: false,
+            type: structures_1.ArgType.String,
         },
         {
             name: "spoiler",
@@ -30,17 +34,15 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Number,
         },
     ],
-    execute(ctx, [url, spoiler, id]) {
-        (0, buildActionRow_1.buildActionRow)(ctx);
-        const comp = ctx.container.components.at(-1);
-        const file = new discord_js_1.FileBuilder().setURL(url).setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
+    execute(ctx, [url, desc, spoiler, id]) {
+        const thumbnail = new discord_js_1.ThumbnailBuilder()
+            .setURL(url)
+            .setDescription(desc ?? "")
+            .setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
         if (id)
-            file.setId(id);
-        if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
-            comp.addFileComponents(file);
-        else
-            ctx.container.components.push(file);
+            thumbnail.setId(id);
+        ctx.component.section?.setThumbnailAccessory(thumbnail);
         return this.success();
     },
 });
-//# sourceMappingURL=addFile.js.map
+//# sourceMappingURL=addThumbnail.js.map

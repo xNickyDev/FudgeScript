@@ -13,7 +13,6 @@ class Container {
     embeds = new Array();
     components = new Array();
     actionRow;
-    section;
     context = Array();
     reference;
     reply = false;
@@ -112,14 +111,6 @@ class Container {
     isInside(type) {
         return this.context.includes(type);
     }
-    buildFlags() {
-        const flags = [];
-        if (this.ephemeral)
-            flags.push(discord_js_2.MessageFlags.Ephemeral);
-        if (this.isComponentsV2)
-            flags.push(discord_js_2.MessageFlags.IsComponentsV2);
-        return flags.length > 0 ? flags : undefined;
-    }
     reset() {
         delete this.channel;
         delete this.content;
@@ -133,7 +124,6 @@ class Container {
         delete this.appliedTags;
         delete this.deleteIn;
         delete this.actionRow;
-        delete this.section;
         this.followUp = false;
         this.reply = false;
         this.update = false;
@@ -151,6 +141,13 @@ class Container {
         this.allowedMentions = {};
     }
     getOptions(content) {
+        if (this.actionRow)
+            this.components.push(this.actionRow);
+        const flags = new Array();
+        if (this.ephemeral)
+            flags.push(discord_js_2.MessageFlags.Ephemeral);
+        if (this.isComponentsV2)
+            flags.push(discord_js_2.MessageFlags.IsComponentsV2);
         return (content
             ? {
                 content,
@@ -167,12 +164,12 @@ class Container {
                         failIfNotExists: false,
                     }
                     : undefined,
-                flags: this.buildFlags(),
+                flags: flags.length === 0 ? undefined : flags,
                 attachments: [],
                 files: this.files.length === 0 ? null : this.files,
                 stickers: this.stickers.length === 0 ? null : this.stickers,
                 content: this.content?.trim() || null,
-                components: this.actionRow ? this.components.push(this.actionRow) : this.components,
+                components: this.components,
                 embeds: this.embeds,
                 tts: this.tts,
                 threadId: this.threadId,

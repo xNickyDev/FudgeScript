@@ -4,12 +4,22 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
+    type: ArgType.URL;
+}, {
+    name: string;
+    description: string;
+    rest: false;
     type: ArgType.String;
 }, {
     name: string;
     description: string;
     rest: false;
+    type: ArgType.Boolean;
+}, {
+    name: string;
+    description: string;
+    rest: false;
     type: ArgType.Number;
-}], false>;
+}], true>;
 export default _default;
-//# sourceMappingURL=addSection.d.ts.map
+//# sourceMappingURL=addThumbnail.d.ts.map

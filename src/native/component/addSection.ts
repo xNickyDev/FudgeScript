@@ -1,8 +1,9 @@
-import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
+import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildActionRow } from "../../functions/buildActionRow"
 import { ComponentType, ContainerBuilder, SectionBuilder } from "discord.js"
 import addButton from "./addButton"
 import addTextDisplay from "./addTextDisplay"
+import addThumbnail from "./addThumbnail"
 
 export default new NativeFunction({
     name: "$addSection",
@@ -18,6 +19,12 @@ export default new NativeFunction({
             required: true,
             type: ArgType.String,
         },
+        {
+            name: "id",
+            description: "The id for this section component",
+            rest: false,
+            type: ArgType.Number,
+        },
     ],
     async execute(ctx) {
         buildActionRow(ctx)
@@ -25,15 +32,27 @@ export default new NativeFunction({
         ctx.component.section = new SectionBuilder()
         ctx.container.context.push(ComponentType.Section)
 
-        const textDisplay = this.getFunction(0, addTextDisplay)!
-        const newButton = this.getFunction(0, addButton)
+        const id = this.displayField(1)
+        if (id) ctx.component.section?.setId(Number(id))
 
-        const text = await textDisplay?.execute(ctx)
-        if (!this["isValidReturnType"](text)) return text
+        const textDisplays = this.getFunctions(0, addTextDisplay)
+        const newButton = this.getFunction(0, addButton)
+        const newThumbnail = this.getFunction(0, addThumbnail)
+
+        for (let i = 0, len = textDisplays.length;i < len;i++) {
+            const textDisplay = textDisplays[i]
+            const text = await textDisplay.execute(ctx)
+            if (!this["isValidReturnType"](text)) return text
+        }
 
         if (newButton) {
             const button = await newButton.execute(ctx)
             if (!this["isValidReturnType"](button)) return button
+        }
+
+        if (newThumbnail) {
+            const thumbnail = await newThumbnail.execute(ctx)
+            if (!this["isValidReturnType"](thumbnail)) return thumbnail
         }
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))

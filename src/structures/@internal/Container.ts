@@ -69,7 +69,6 @@ export class Container {
     public embeds = new Array<EmbedBuilder>()
     public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder>()
     public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
-    public section?: SectionBuilder
     public context = Array<ComponentType>()
     public reference?: string
     public reply = false
@@ -173,15 +172,6 @@ export class Container {
         return this.context.includes(type)
     }
 
-    private buildFlags() {
-        const flags: MessageFlags[] = []
-
-        if (this.ephemeral) flags.push(MessageFlags.Ephemeral)
-        if (this.isComponentsV2) flags.push(MessageFlags.IsComponentsV2)
-
-        return flags.length > 0 ? flags : undefined
-    }
-
     public reset() {
         delete this.channel
         delete this.content
@@ -195,7 +185,6 @@ export class Container {
         delete this.appliedTags
         delete this.deleteIn
         delete this.actionRow
-        delete this.section
 
         this.followUp = false
         this.reply = false
@@ -217,6 +206,12 @@ export class Container {
     }
 
     public getOptions<T>(content?: string): T {
+        if (this.actionRow) this.components.push(this.actionRow)
+
+        const flags = new Array<MessageFlags>()
+        if (this.ephemeral) flags.push(MessageFlags.Ephemeral)
+        if (this.isComponentsV2) flags.push(MessageFlags.IsComponentsV2)
+
         return (
             content
                 ? {
@@ -235,12 +230,12 @@ export class Container {
                                 failIfNotExists: false,
                             }
                           : undefined,
-                      flags: this.buildFlags(),
+                      flags: flags.length === 0 ? undefined : flags,
                       attachments: [],
                       files: this.files.length === 0 ? null : this.files,
                       stickers: this.stickers.length === 0 ? null : this.stickers,
                       content: this.content?.trim() || null,
-                      components: this.actionRow ? this.components.push(this.actionRow) : this.components,
+                      components: this.components,
                       embeds: this.embeds,
                       tts: this.tts,
                       threadId: this.threadId,
