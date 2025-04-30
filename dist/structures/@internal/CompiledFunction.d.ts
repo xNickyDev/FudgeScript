@@ -32,7 +32,7 @@ export declare class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap ext
     readonly data: IExtendedCompiledFunction;
     readonly fn: NativeFunction<T, Unwrap>;
     constructor(raw: ICompiledFunction);
-    displayField(i: number): string;
+    displayField(i: number): string | null;
     displayFields(): string[] | undefined;
     get display(): string;
     /**

@@ -1,5 +1,4 @@
 import { ArgType, NativeFunction } from "../../structures";
-export declare const BigIntFormatRegex: RegExp;
 declare const _default: NativeFunction<[{
     name: string;
     rest: false;

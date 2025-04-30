@@ -41,16 +41,14 @@ exports.default = new structures_1.NativeFunction({
         ctx.container.components.push(new discord_js_1.ContainerBuilder());
         ctx.container.context.push(discord_js_1.ComponentType.Container);
         const comp = ctx.container.components.at(-1);
-        const color = this.displayField(1);
-        if (color)
-            comp.setAccentColor(Number(color));
-        const spoiler = this.displayField(2);
-        if (spoiler)
-            comp.setSpoiler(Boolean(spoiler));
-        const id = this.displayField(3);
-        if (id)
-            comp.setId(Number(id));
-        const code = this.data.fields[0];
+        const fields = this.data.fields;
+        if (fields.length >= 2)
+            comp.setAccentColor(Number(this.displayField(1)));
+        if (fields.length >= 3)
+            comp.setSpoiler(Boolean(this.displayField(2)));
+        if (fields.length === 4)
+            comp.setId(Number(this.displayField(3)));
+        const code = fields[0];
         const resolved = await this["resolveCode"](ctx, code);
         if (!this["isValidReturnType"](resolved))
             return resolved;
