@@ -41,17 +41,23 @@ export default new NativeFunction({
         ctx.container.context.push(ComponentType.Container)
         const comp = ctx.container.components.at(-1) as ContainerBuilder
 
-        const color = await this["resolveUnhandledArg"](ctx, 1)
-        if (!this["isValidReturnType"](color)) return color
-        if (color) comp.setAccentColor(color.value as number)
+        if (this.displayField(1)) {
+            const color = await this["resolveUnhandledArg"](ctx, 1)
+            if (!this["isValidReturnType"](color)) return color
+            comp.setAccentColor(color.value as number)
+        }
 
-        const spoiler = await this["resolveUnhandledArg"](ctx, 2)
-        if (!this["isValidReturnType"](spoiler)) return spoiler
-        if (spoiler) comp.setSpoiler(spoiler.value as boolean)
+        if (this.displayField(2)) {
+            const spoiler = await this["resolveUnhandledArg"](ctx, 2)
+            if (!this["isValidReturnType"](spoiler)) return spoiler
+            comp.setSpoiler(spoiler.value as boolean)
+        }
 
-        const id = await this["resolveUnhandledArg"](ctx, 3)
-        if (!this["isValidReturnType"](id)) return id
-        if (id) comp.setId(id.value as number)
+        if (this.displayField(3)) {
+            const id = await this["resolveUnhandledArg"](ctx, 3)
+            if (!this["isValidReturnType"](id)) return id
+            comp.setId(id.value as number)
+        }
 
         const code = this.data.fields![0] as IExtendedCompiledFunctionField
         const resolved = await this["resolveCode"](ctx, code)

@@ -41,21 +41,24 @@ exports.default = new structures_1.NativeFunction({
         ctx.container.components.push(new discord_js_1.ContainerBuilder());
         ctx.container.context.push(discord_js_1.ComponentType.Container);
         const comp = ctx.container.components.at(-1);
-        const color = await this["resolveUnhandledArg"](ctx, 1);
-        if (!this["isValidReturnType"](color))
-            return color;
-        if (color)
+        if (this.displayField(1)) {
+            const color = await this["resolveUnhandledArg"](ctx, 1);
+            if (!this["isValidReturnType"](color))
+                return color;
             comp.setAccentColor(color.value);
-        const spoiler = await this["resolveUnhandledArg"](ctx, 2);
-        if (!this["isValidReturnType"](spoiler))
-            return spoiler;
-        if (spoiler)
+        }
+        if (this.displayField(2)) {
+            const spoiler = await this["resolveUnhandledArg"](ctx, 2);
+            if (!this["isValidReturnType"](spoiler))
+                return spoiler;
             comp.setSpoiler(spoiler.value);
-        const id = await this["resolveUnhandledArg"](ctx, 3);
-        if (!this["isValidReturnType"](id))
-            return id;
-        if (id)
+        }
+        if (this.displayField(3)) {
+            const id = await this["resolveUnhandledArg"](ctx, 3);
+            if (!this["isValidReturnType"](id))
+                return id;
             comp.setId(id.value);
+        }
         const code = this.data.fields[0];
         const resolved = await this["resolveCode"](ctx, code);
         if (!this["isValidReturnType"](resolved))
