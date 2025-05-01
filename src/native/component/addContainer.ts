@@ -28,12 +28,6 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
-        {
-            name: "id",
-            description: "The id for this container component",
-            rest: false,
-            type: ArgType.Number,
-        },
     ],
     async execute(ctx) {
         buildActionRow(ctx)
@@ -51,12 +45,6 @@ export default new NativeFunction({
             const spoiler = await this["resolveUnhandledArg"](ctx, 2)
             if (!this["isValidReturnType"](spoiler)) return spoiler
             comp.setSpoiler(spoiler.value as boolean)
-        }
-
-        if (this.displayField(3)) {
-            const id = await this["resolveUnhandledArg"](ctx, 3)
-            if (!this["isValidReturnType"](id)) return id
-            comp.setId(id.value as number)
         }
 
         const code = this.data.fields![0] as IExtendedCompiledFunctionField

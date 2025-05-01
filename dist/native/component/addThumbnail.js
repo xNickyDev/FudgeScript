@@ -28,20 +28,12 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Boolean,
         },
-        {
-            name: "id",
-            description: "The id for this file component",
-            rest: false,
-            type: structures_1.ArgType.Number,
-        },
     ],
-    execute(ctx, [url, desc, spoiler, id]) {
+    execute(ctx, [url, desc, spoiler]) {
         const thumbnail = new discord_js_1.ThumbnailBuilder()
             .setURL(url)
             .setDescription(desc ?? "")
             .setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
-        if (id)
-            thumbnail.setId(id);
         ctx.component.section?.setThumbnailAccessory(thumbnail);
         return this.success();
     },

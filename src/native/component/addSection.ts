@@ -19,21 +19,12 @@ export default new NativeFunction({
             required: true,
             type: ArgType.String,
         },
-        {
-            name: "id",
-            description: "The id for this section component",
-            rest: false,
-            type: ArgType.Number,
-        },
     ],
     async execute(ctx) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
         ctx.component.section = new SectionBuilder()
         ctx.container.context.push(ComponentType.Section)
-
-        const id = this.displayField(1)
-        if (id) ctx.component.section?.setId(Number(id))
 
         const textDisplays = this.getFunctions(0, addTextDisplay)
         const newButton = this.getFunction(0, addButton)

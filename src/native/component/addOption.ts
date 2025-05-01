@@ -1,4 +1,4 @@
-import { ActionRow, APISelectMenuOption, parseEmoji } from "discord.js"
+import { APISelectMenuOption, BaseSelectMenuBuilder, parseEmoji } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -43,9 +43,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [name, desc, value, emoji, def]) {
-        const comp = ctx.container.components.at(-1)
-        if (!(comp instanceof ActionRow)) return this.success()
-        const menu = comp.components[0]
+        const menu = ctx.container.actionRow?.components[0]
 
         const data: APISelectMenuOption = {
             label: name,
@@ -59,7 +57,7 @@ export default new NativeFunction({
                 : undefined,
         }
 
-        if (!!menu && "addOptions" in menu) {
+        if (menu instanceof BaseSelectMenuBuilder && "addOptions" in menu) {
             menu.addOptions(data)
         }
 

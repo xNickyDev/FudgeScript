@@ -22,9 +22,9 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [ids]) {
-        const comp = ctx.container.components.at(-1);
-        if (comp instanceof discord_js_1.ActionRow && comp.components[0] instanceof discord_js_1.ChannelSelectMenuBuilder) {
-            comp.components[0].addDefaultChannels(ids);
+        const menu = ctx.container.actionRow?.components[0];
+        if (menu instanceof discord_js_1.ChannelSelectMenuBuilder) {
+            menu.addDefaultChannels(ids);
         }
         return this.success();
     },

@@ -22,19 +22,11 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
-        {
-            name: "id",
-            description: "The id for this file component",
-            rest: false,
-            type: ArgType.Number,
-        },
     ],
-    execute(ctx, [url, spoiler, id]) {
+    execute(ctx, [url, spoiler]) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
         const file = new FileBuilder().setURL(url).setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
-
-        if (id) file.setId(id)
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addFileComponents(file)

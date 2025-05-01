@@ -23,21 +23,12 @@ exports.default = new structures_1.NativeFunction({
             required: true,
             type: structures_1.ArgType.String,
         },
-        {
-            name: "id",
-            description: "The id for this section component",
-            rest: false,
-            type: structures_1.ArgType.Number,
-        },
     ],
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         ctx.component.section = new discord_js_1.SectionBuilder();
         ctx.container.context.push(discord_js_1.ComponentType.Section);
-        const id = this.displayField(1);
-        if (id)
-            ctx.component.section?.setId(Number(id));
         const textDisplays = this.getFunctions(0, addTextDisplay_1.default);
         const newButton = this.getFunction(0, addButton_1.default);
         const newThumbnail = this.getFunction(0, addThumbnail_1.default);

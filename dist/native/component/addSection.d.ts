@@ -5,11 +5,6 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.String;
-}, {
-    name: string;
-    description: string;
-    rest: false;
-    type: ArgType.Number;
 }], false>;
 export default _default;
 //# sourceMappingURL=addSection.d.ts.map

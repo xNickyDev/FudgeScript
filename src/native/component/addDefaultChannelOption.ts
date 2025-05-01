@@ -1,4 +1,4 @@
-import { ActionRow, ChannelSelectMenuBuilder } from "discord.js"
+import { ChannelSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -21,9 +21,9 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ ids ]) {
-        const comp = ctx.container.components.at(-1)
-        if (comp instanceof ActionRow && comp.components[0] instanceof ChannelSelectMenuBuilder) {
-            comp.components[0].addDefaultChannels(ids)
+        const menu = ctx.container.actionRow?.components[0]
+        if (menu instanceof ChannelSelectMenuBuilder) {
+            menu.addDefaultChannels(ids)
         }
         return this.success()
     },

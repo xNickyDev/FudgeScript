@@ -29,12 +29,6 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Boolean,
         },
-        {
-            name: "id",
-            description: "The id for this container component",
-            rest: false,
-            type: structures_1.ArgType.Number,
-        },
     ],
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
@@ -52,12 +46,6 @@ exports.default = new structures_1.NativeFunction({
             if (!this["isValidReturnType"](spoiler))
                 return spoiler;
             comp.setSpoiler(spoiler.value);
-        }
-        if (this.displayField(3)) {
-            const id = await this["resolveUnhandledArg"](ctx, 3);
-            if (!this["isValidReturnType"](id))
-                return id;
-            comp.setId(id.value);
         }
         const code = this.data.fields[0];
         const resolved = await this["resolveCode"](ctx, code);

@@ -27,20 +27,13 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
-        {
-            name: "id",
-            description: "The id for this file component",
-            rest: false,
-            type: ArgType.Number,
-        },
     ],
-    execute(ctx, [url, desc, spoiler, id]) {
+    execute(ctx, [url, desc, spoiler]) {
         const thumbnail = new ThumbnailBuilder()
             .setURL(url)
             .setDescription(desc ?? "")
             .setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
 
-        if (id) thumbnail.setId(id)
         ctx.component.section?.setThumbnailAccessory(thumbnail)
 
         return this.success()
