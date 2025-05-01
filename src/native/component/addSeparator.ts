@@ -7,7 +7,7 @@ export default new NativeFunction({
     version: "2.4.0",
     description: "Adds a new separator component to the current container",
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "spacing",
@@ -27,7 +27,10 @@ export default new NativeFunction({
     execute(ctx, [spacing, divider]) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
-        const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
+        const sep = new SeparatorBuilder()
+
+        if (spacing) sep.setSpacing(spacing)
+        if (divider === false) sep.setDivider(false)
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addSeparatorComponents(sep)

@@ -8,7 +8,7 @@ exports.default = new structures_1.NativeFunction({
     version: "2.4.0",
     description: "Adds a new separator component to the current container",
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "spacing",
@@ -28,7 +28,11 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [spacing, divider]) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
+        const sep = new discord_js_1.SeparatorBuilder();
+        if (spacing)
+            sep.setSpacing(spacing);
+        if (divider === false)
+            sep.setDivider(false);
         if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addSeparatorComponents(sep);
         else
