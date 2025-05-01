@@ -32,8 +32,9 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [url, desc, spoiler]) {
         const thumbnail = new discord_js_1.ThumbnailBuilder()
             .setURL(url)
-            .setDescription(desc ?? "")
             .setSpoiler(typeof (spoiler) === "boolean" ? spoiler : undefined);
+        if (desc)
+            thumbnail.setDescription(desc);
         ctx.component.section?.setThumbnailAccessory(thumbnail);
         return this.success();
     },
