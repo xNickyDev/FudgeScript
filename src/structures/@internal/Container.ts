@@ -31,7 +31,6 @@ import {
     PollData,
     Presence,
     Role,
-    SectionBuilder,
     SoundboardSound,
     Sticker,
     StickerResolvable,

@@ -14,7 +14,7 @@ export default new NativeFunction({
             description: "The url of the file",
             rest: false,
             required: true,
-            type: ArgType.URL,
+            type: ArgType.String,
         },
         {
             name: "spoiler",

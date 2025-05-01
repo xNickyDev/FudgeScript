@@ -13,7 +13,7 @@ export default new NativeFunction({
             description: "The url for the thumbnail",
             rest: false,
             required: true,
-            type: ArgType.URL,
+            type: ArgType.String,
         },
         {
             name: "description",
