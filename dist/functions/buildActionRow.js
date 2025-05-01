@@ -8,10 +8,10 @@ const discord_js_1 = require("discord.js");
  * @returns
  */
 function buildActionRow(ctx) {
+    ctx.container.isComponentsV2 = true;
     const row = ctx.container.actionRow;
     if (!row)
         return;
-    ctx.container.isComponentsV2 = true;
     const comp = ctx.container.components.at(-1);
     if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
         comp.addActionRowComponents(row);

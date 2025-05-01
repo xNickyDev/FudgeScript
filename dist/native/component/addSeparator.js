@@ -28,7 +28,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [spacing, divider]) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
-        const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(!!divider);
+        const sep = new discord_js_1.SeparatorBuilder().setSpacing(spacing).setDivider(typeof (divider) === "boolean" ? divider : undefined);
         if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addSeparatorComponents(sep);
         else

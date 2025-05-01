@@ -7,10 +7,11 @@ import { Context } from "../structures"
  * @returns 
  */
 export function buildActionRow(ctx: Context) {
+    ctx.container.isComponentsV2 = true
+
     const row = ctx.container.actionRow
     if (!row) return
 
-    ctx.container.isComponentsV2 = true
     const comp = ctx.container.components.at(-1)
 
     if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container)) 
