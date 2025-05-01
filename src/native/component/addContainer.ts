@@ -32,7 +32,7 @@ export default new NativeFunction({
     async execute(ctx) {
         buildActionRow(ctx)
         ctx.container.components.push(new ContainerBuilder())
-        ctx.container.context.push(ComponentType.Container)
+        ctx.container.inside.push(ComponentType.Container)
         const comp = ctx.container.components.at(-1) as ContainerBuilder
 
         if (this.displayField(1)) {
@@ -52,7 +52,7 @@ export default new NativeFunction({
         if (!this["isValidReturnType"](resolved)) return resolved
 
         buildActionRow(ctx)
-        ctx.container.context.pop()
+        ctx.container.inside.pop()
         return this.success()
     },
 })

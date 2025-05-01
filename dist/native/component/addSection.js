@@ -28,7 +28,7 @@ exports.default = new structures_1.NativeFunction({
         (0, buildActionRow_1.buildActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         ctx.component.section = new discord_js_1.SectionBuilder();
-        ctx.container.context.push(discord_js_1.ComponentType.Section);
+        ctx.container.inside.push(discord_js_1.ComponentType.Section);
         const textDisplays = this.getFunctions(0, addTextDisplay_1.default);
         const newButton = this.getFunction(0, addButton_1.default);
         const newThumbnail = this.getFunction(0, addThumbnail_1.default);
@@ -53,7 +53,7 @@ exports.default = new structures_1.NativeFunction({
         else
             ctx.container.components.push(ctx.component.section);
         delete ctx.component.section;
-        ctx.container.context.pop();
+        ctx.container.inside.pop();
         return this.success();
     },
 });

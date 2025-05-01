@@ -58,12 +58,13 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
         if (typeof rowIndex !== "number") {
-            return this.successJSON((m ?? ctx.message)?.components.map((x) => x));
+            return this.successJSON((m ?? ctx.message)?.components);
         }
         const row = m.components[rowIndex];
-        const comp = row?.components[compIndex];
+        const comps = "components" in row ? row.components : undefined;
+        const comp = comps?.at(compIndex);
         if (prop === null) {
-            return this.successJSON(comp?.data ?? row?.components);
+            return this.successJSON(comp?.data ?? comps);
         }
         return this.success(component_1.ComponentProperties[prop](comp, sep));
     },

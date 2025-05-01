@@ -5,7 +5,7 @@ export declare class Container {
     embeds: EmbedBuilder[];
     components: (ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder)[];
     actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>;
-    context: ComponentType[];
+    inside: ComponentType[];
     reference?: string;
     reply: boolean;
     followUp: boolean;
@@ -31,6 +31,11 @@ export declare class Container {
     send<T = unknown>(obj: Sendable, content?: string, messageID?: string): Promise<T | null>;
     isValidMessage(options: MessageReplyOptions & InteractionReplyOptions & InteractionEditReplyOptions): boolean;
     embed(index: number): EmbedBuilder;
+    /**
+     * Checks if current context is inside a component builder function.
+     * @param type The type of the component to check for.
+     * @returns
+     */
     isInside(type: ComponentType): boolean;
     reset(): void;
     getOptions<T>(content?: string): T;

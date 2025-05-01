@@ -68,7 +68,7 @@ export class Container {
     public embeds = new Array<EmbedBuilder>()
     public components = new Array<ActionRowBuilder<AnyComponentBuilder> | ContainerBuilder | ContainerComponentBuilder>()
     public actionRow?: ActionRowBuilder<MessageActionRowComponentBuilder>
-    public context = Array<ComponentType>()
+    public inside = Array<ComponentType>()
     public reference?: string
     public reply = false
     public followUp = false
@@ -167,8 +167,13 @@ export class Container {
         return (this.embeds[index] ??= new EmbedBuilder())
     }
 
+    /**
+     * Checks if current context is inside a component builder function.
+     * @param type The type of the component to check for.
+     * @returns 
+     */
     public isInside(type: ComponentType) {
-        return this.context.includes(type)
+        return this.inside.includes(type)
     }
 
     public reset() {
@@ -197,7 +202,7 @@ export class Container {
         this.stickers.length = 0
         this.choices.length = 0
         this.components.length = 0
-        this.context.length = 0
+        this.inside.length = 0
         this.embeds.length = 0
         this.files.length = 0
 

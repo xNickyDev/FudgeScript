@@ -13,7 +13,7 @@ class Container {
     embeds = new Array();
     components = new Array();
     actionRow;
-    context = Array();
+    inside = Array();
     reference;
     reply = false;
     followUp = false;
@@ -108,8 +108,13 @@ class Container {
     embed(index) {
         return (this.embeds[index] ??= new discord_js_1.EmbedBuilder());
     }
+    /**
+     * Checks if current context is inside a component builder function.
+     * @param type The type of the component to check for.
+     * @returns
+     */
     isInside(type) {
-        return this.context.includes(type);
+        return this.inside.includes(type);
     }
     reset() {
         delete this.channel;
@@ -135,7 +140,7 @@ class Container {
         this.stickers.length = 0;
         this.choices.length = 0;
         this.components.length = 0;
-        this.context.length = 0;
+        this.inside.length = 0;
         this.embeds.length = 0;
         this.files.length = 0;
         this.allowedMentions = {};

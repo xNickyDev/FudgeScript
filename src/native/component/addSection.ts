@@ -24,7 +24,7 @@ export default new NativeFunction({
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
         ctx.component.section = new SectionBuilder()
-        ctx.container.context.push(ComponentType.Section)
+        ctx.container.inside.push(ComponentType.Section)
 
         const textDisplays = this.getFunctions(0, addTextDisplay)
         const newButton = this.getFunction(0, addButton)
@@ -51,7 +51,7 @@ export default new NativeFunction({
         else ctx.container.components.push(ctx.component.section)
 
         delete ctx.component.section
-        ctx.container.context.pop()
+        ctx.container.inside.pop()
         return this.success()
     },
 })

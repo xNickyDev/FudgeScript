@@ -27,7 +27,7 @@ export default new NativeFunction({
     execute(ctx, [spacing, divider]) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
-        const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(typeof(divider) === "boolean" ? divider : undefined)
+        const sep = new SeparatorBuilder().setSpacing(spacing).setDivider(!!divider)
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addSeparatorComponents(sep)

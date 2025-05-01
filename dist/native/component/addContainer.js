@@ -33,7 +33,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx) {
         (0, buildActionRow_1.buildActionRow)(ctx);
         ctx.container.components.push(new discord_js_1.ContainerBuilder());
-        ctx.container.context.push(discord_js_1.ComponentType.Container);
+        ctx.container.inside.push(discord_js_1.ComponentType.Container);
         const comp = ctx.container.components.at(-1);
         if (this.displayField(1)) {
             const color = await this["resolveUnhandledArg"](ctx, 1);
@@ -52,7 +52,7 @@ exports.default = new structures_1.NativeFunction({
         if (!this["isValidReturnType"](resolved))
             return resolved;
         (0, buildActionRow_1.buildActionRow)(ctx);
-        ctx.container.context.pop();
+        ctx.container.inside.pop();
         return this.success();
     },
 });
