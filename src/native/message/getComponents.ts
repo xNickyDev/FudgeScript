@@ -1,4 +1,4 @@
-import { BaseChannel, MessageActionRowComponent } from "discord.js"
+import { ActionRow, BaseChannel, MessageActionRowComponent } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ComponentProperties, ComponentProperty } from "../../properties/component"
 
@@ -58,17 +58,16 @@ export default new NativeFunction({
     ],
     execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
         if (typeof rowIndex !== "number") {
-            return this.successJSON((m ?? ctx.message)?.components)
+            return this.successJSON((m ?? ctx.message)?.components.filter((x) => "components" in x).map((x) => (x as any).components))
         }
 
-        const row = m.components[rowIndex]
-        const comps = "components" in row ? row.components : undefined
-        const comp = comps?.at(compIndex!)
+        const row = m.components[rowIndex] as ActionRow<MessageActionRowComponent> | undefined
+        const comp = row?.components[compIndex!] as MessageActionRowComponent | undefined
 
         if (prop === null) {
-            return this.successJSON(comp?.data ?? comps)
+            return this.successJSON(comp?.data ?? row?.components)
         }
 
-        return this.success(ComponentProperties[prop](comp as MessageActionRowComponent, sep))
+        return this.success(ComponentProperties[prop](comp, sep))
     },
 })
