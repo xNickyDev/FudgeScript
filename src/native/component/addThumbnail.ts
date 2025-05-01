@@ -29,9 +29,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [url, desc, spoiler]) {
-        const thumbnail = new ThumbnailBuilder()
-            .setURL(url)
-            .setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
+        const thumbnail = new ThumbnailBuilder().setURL(url).setSpoiler(!!spoiler)
 
         if (desc) thumbnail.setDescription(desc)
         ctx.component.section?.setThumbnailAccessory(thumbnail)

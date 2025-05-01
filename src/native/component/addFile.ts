@@ -26,7 +26,7 @@ export default new NativeFunction({
     execute(ctx, [url, spoiler]) {
         buildActionRow(ctx)
         const comp = ctx.container.components.at(-1)
-        const file = new FileBuilder().setURL(url).setSpoiler(typeof(spoiler) === "boolean" ? spoiler : undefined)
+        const file = new FileBuilder().setURL(url).setSpoiler(!!spoiler)
 
         if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
             comp.addFileComponents(file)
