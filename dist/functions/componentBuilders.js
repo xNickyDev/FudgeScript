@@ -12,7 +12,7 @@ const ComponentBuilders = {
     [discord_js_1.ComponentType.Section]: discord_js_1.SeparatorBuilder,
 };
 function buildComponent(comp) {
-    return new ComponentBuilders[comp.type](comp);
+    return new ComponentBuilders[comp.type](comp.toJSON?.() ?? comp);
 }
 exports.buildComponent = buildComponent;
 /**

@@ -20,7 +20,7 @@ const ComponentBuilders = {
 }
 
 export function buildComponent(comp: any) {
-    return new ComponentBuilders[comp.type as ComponentType](comp)
+    return new ComponentBuilders[comp.type as ComponentType](comp.toJSON?.() ?? comp)
 }
 
 /**
