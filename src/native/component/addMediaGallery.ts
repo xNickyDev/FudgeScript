@@ -1,5 +1,5 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildActionRow } from "../../functions/buildActionRow"
+import { buildActionRow } from "../../functions/componentBuilders"
 import { ComponentType, ContainerBuilder, MediaGalleryBuilder } from "discord.js"
 import addItem from "./addItem"
 

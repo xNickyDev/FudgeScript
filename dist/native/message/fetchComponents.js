@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
+const componentBuilders_1 = require("../../functions/componentBuilders");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$fetchRows",
+    name: "$fetchComponents",
     version: "1.0.0",
     description: "Fetch a message's components, this will override any other component added to the response",
+    aliases: ["$fetchRows"],
     unwrap: true,
     args: [
         {
@@ -13,7 +14,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The channel id to get the message from",
             rest: false,
             required: true,
-            type: structures_1.ArgType.Channel,
+            type: structures_1.ArgType.TextChannel,
         },
         {
             name: "message ID",
@@ -26,8 +27,8 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, msg]) {
-        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => discord_js_1.ActionRowBuilder.from(x)) ?? [];
+        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => (0, componentBuilders_1.buildComponent)(x)) ?? [];
         return this.success();
     },
 });
-//# sourceMappingURL=fetchRows.js.map
+//# sourceMappingURL=fetchComponents.js.map

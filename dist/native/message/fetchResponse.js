@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const componentBuilders_1 = require("../../functions/componentBuilders");
 exports.default = new structures_1.NativeFunction({
     name: "$fetchResponse",
     version: "1.4.0",
@@ -30,21 +31,7 @@ exports.default = new structures_1.NativeFunction({
         if (msg) {
             ctx.container.content = msg.content;
             ctx.container.embeds.push(...msg.embeds.map(x => discord_js_1.EmbedBuilder.from(x)));
-            ctx.container.components.push(...msg.components.map(x => x instanceof discord_js_1.ActionRow
-                ? discord_js_1.ActionRowBuilder.from(x)
-                : x instanceof discord_js_1.ContainerComponent
-                    ? new discord_js_1.ContainerBuilder(x.toJSON())
-                    : x instanceof discord_js_1.TextDisplayComponent
-                        ? new discord_js_1.TextDisplayBuilder(x.toJSON())
-                        : x instanceof discord_js_1.SeparatorComponent
-                            ? new discord_js_1.SeparatorBuilder(x.toJSON())
-                            : x instanceof discord_js_1.FileComponent
-                                ? new discord_js_1.FileBuilder(x.toJSON())
-                                : x instanceof discord_js_1.MediaGalleryComponent
-                                    ? new discord_js_1.MediaGalleryBuilder(x.toJSON())
-                                    : x instanceof discord_js_1.SectionComponent
-                                        ? new discord_js_1.SectionBuilder(x.toJSON())
-                                        : null));
+            ctx.container.components.push(...msg.components.map(x => (0, componentBuilders_1.buildComponent)(x)));
             ctx.container.files.push(...msg.attachments.map(x => new discord_js_1.AttachmentBuilder(x.url, { name: x.name })));
             ctx.container.stickers.push(...msg.stickers.map(x => x.id));
         }

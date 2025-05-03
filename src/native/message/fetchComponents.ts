@@ -1,10 +1,11 @@
-import { ActionRow, ActionRowBuilder, MessageActionRowComponent } from "discord.js"
+import { buildComponent } from "../../functions/componentBuilders"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$fetchRows",
+    name: "$fetchComponents",
     version: "1.0.0",
     description: "Fetch a message's components, this will override any other component added to the response",
+    aliases: ["$fetchRows"],
     unwrap: true,
     args: [
         {
@@ -12,7 +13,7 @@ export default new NativeFunction({
             description: "The channel id to get the message from",
             rest: false,
             required: true,
-            type: ArgType.Channel,
+            type: ArgType.TextChannel,
         },
         {
             name: "message ID",
@@ -25,7 +26,7 @@ export default new NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, msg]) {
-        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>)) ?? []
+        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => buildComponent(x)) ?? []
         return this.success()
     },
 })

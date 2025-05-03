@@ -1,6 +1,6 @@
 import { ComponentType, ContainerBuilder, FileBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildActionRow } from "../../functions/buildActionRow"
+import { buildActionRow } from "../../functions/componentBuilders"
 
 export default new NativeFunction({
     name: "$addFile",
