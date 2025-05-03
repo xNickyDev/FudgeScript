@@ -23,7 +23,7 @@ export default new NativeFunction({
     version: "1.4.0",
     brackets: false,
     unwrap: true,
-    description: "Fetches all data from the message and loads it to response, this includes: embeds, components, attachments, stickers",
+    description: "Fetches all data from the message and loads it to response, this includes: content, embeds, components, attachments, stickers",
     args: [
         {
             name: "channel ID",
@@ -44,6 +44,7 @@ export default new NativeFunction({
     execute(ctx, [, msg ]) {
         msg ??= ctx.message!
         if (msg) {
+            ctx.container.content = msg.content
             ctx.container.embeds.push(...msg.embeds.map(x => EmbedBuilder.from(x)))
             ctx.container.components.push(...msg.components.map(x =>
                 x instanceof ActionRow

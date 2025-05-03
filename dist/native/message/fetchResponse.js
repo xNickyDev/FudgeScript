@@ -7,7 +7,7 @@ exports.default = new structures_1.NativeFunction({
     version: "1.4.0",
     brackets: false,
     unwrap: true,
-    description: "Fetches all data from the message and loads it to response, this includes: embeds, components, attachments, stickers",
+    description: "Fetches all data from the message and loads it to response, this includes: content, embeds, components, attachments, stickers",
     args: [
         {
             name: "channel ID",
@@ -28,6 +28,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [, msg]) {
         msg ??= ctx.message;
         if (msg) {
+            ctx.container.content = msg.content;
             ctx.container.embeds.push(...msg.embeds.map(x => discord_js_1.EmbedBuilder.from(x)));
             ctx.container.components.push(...msg.components.map(x => x instanceof discord_js_1.ActionRow
                 ? discord_js_1.ActionRowBuilder.from(x)
