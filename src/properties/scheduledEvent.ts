@@ -1,4 +1,4 @@
-import { Channel, ChannelType, Collection, GuildMember, GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, GuildScheduledEventStatus, Status } from "discord.js"
+import { GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, GuildScheduledEventStatus } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 import { IStates, States } from "../core"
 
