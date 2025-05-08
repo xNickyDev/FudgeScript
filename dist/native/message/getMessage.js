@@ -32,7 +32,6 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Enum,
             enum: message_1.MessageProperty,
-            required: true,
         },
         {
             name: "separator",
@@ -42,7 +41,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [, m, prop, sep]) {
-        return this.success(message_1.MessageProperties[prop](m, sep || ", "));
+        return this.success(prop ? message_1.MessageProperties[prop](m, sep ?? ", ") : m);
     },
 });
 //# sourceMappingURL=getMessage.js.map

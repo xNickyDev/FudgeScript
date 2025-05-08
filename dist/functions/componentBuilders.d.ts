@@ -1,6 +1,6 @@
-import { ActionRowBuilder, ContainerBuilder, FileBuilder, MediaGalleryBuilder, SeparatorBuilder, TextDisplayBuilder } from "discord.js";
+import { ActionRowBuilder, ContainerBuilder, FileBuilder, MediaGalleryBuilder, SectionBuilder, SeparatorBuilder, TextDisplayBuilder } from "discord.js";
 import { Context } from "../structures";
-export declare function buildComponent(comp: any): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<import("@discordjs/builders").AnyComponentBuilder>;
+export declare function buildComponent(comp: any): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<import("@discordjs/builders").AnyComponentBuilder>;
 /**
  * Builds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.

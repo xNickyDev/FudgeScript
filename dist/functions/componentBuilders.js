@@ -2,17 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildActionRow = exports.buildComponent = void 0;
 const discord_js_1 = require("discord.js");
-const ComponentBuilders = {
+const MessageComponentBuilders = {
+    [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
+    [discord_js_1.ComponentType.StringSelect]: discord_js_1.StringSelectMenuBuilder,
+    [discord_js_1.ComponentType.UserSelect]: discord_js_1.UserSelectMenuBuilder,
+    [discord_js_1.ComponentType.ChannelSelect]: discord_js_1.ChannelSelectMenuBuilder,
+    [discord_js_1.ComponentType.RoleSelect]: discord_js_1.RoleSelectMenuBuilder,
+    [discord_js_1.ComponentType.MentionableSelect]: discord_js_1.MentionableSelectMenuBuilder,
+};
+const TopLevelComponentBuilders = {
     [discord_js_1.ComponentType.ActionRow]: discord_js_1.ActionRowBuilder,
     [discord_js_1.ComponentType.Container]: discord_js_1.ContainerBuilder,
     [discord_js_1.ComponentType.TextDisplay]: discord_js_1.TextDisplayBuilder,
     [discord_js_1.ComponentType.Separator]: discord_js_1.SeparatorBuilder,
     [discord_js_1.ComponentType.MediaGallery]: discord_js_1.MediaGalleryBuilder,
+    [discord_js_1.ComponentType.Section]: discord_js_1.SectionBuilder,
     [discord_js_1.ComponentType.File]: discord_js_1.FileBuilder,
-    [discord_js_1.ComponentType.Section]: discord_js_1.SeparatorBuilder,
 };
 function buildComponent(comp) {
-    return new ComponentBuilders[comp.type](comp.toJSON?.() ?? comp);
+    const type = comp.type;
+    const Builder = TopLevelComponentBuilders[type] ?? MessageComponentBuilders[type];
+    return new Builder(comp.toJSON?.() ?? comp);
 }
 exports.buildComponent = buildComponent;
 /**

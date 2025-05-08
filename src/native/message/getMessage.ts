@@ -32,7 +32,6 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Enum,
             enum: MessageProperty,
-            required: true,
         },
         {
             name: "separator",
@@ -42,6 +41,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [, m, prop, sep]) {
-        return this.success(MessageProperties[prop](m, sep || ", "))
+        return this.success(prop ? MessageProperties[prop](m, sep ?? ", ") : m)
     },
 })

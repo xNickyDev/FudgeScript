@@ -1,26 +1,45 @@
 import {
     ActionRowBuilder,
+    ButtonBuilder,
+    ChannelSelectMenuBuilder,
+    Component,
     ComponentType,
     ContainerBuilder,
     FileBuilder,
     MediaGalleryBuilder,
+    MentionableSelectMenuBuilder,
+    RoleSelectMenuBuilder,
+    SectionBuilder,
     SeparatorBuilder,
-    TextDisplayBuilder
+    StringSelectMenuBuilder,
+    TextDisplayBuilder,
+    UserSelectMenuBuilder
 } from "discord.js"
 import { Context } from "../structures"
 
-const ComponentBuilders = {
+const MessageComponentBuilders = {
+    [ComponentType.Button as ComponentType]: ButtonBuilder,
+    [ComponentType.StringSelect as ComponentType]: StringSelectMenuBuilder,
+    [ComponentType.UserSelect as ComponentType]: UserSelectMenuBuilder,
+    [ComponentType.ChannelSelect as ComponentType]: ChannelSelectMenuBuilder,
+    [ComponentType.RoleSelect as ComponentType]: RoleSelectMenuBuilder,
+    [ComponentType.MentionableSelect as ComponentType]: MentionableSelectMenuBuilder,
+}
+
+const TopLevelComponentBuilders = {
     [ComponentType.ActionRow as ComponentType]: ActionRowBuilder,
     [ComponentType.Container as ComponentType]: ContainerBuilder,
     [ComponentType.TextDisplay as ComponentType]: TextDisplayBuilder,
     [ComponentType.Separator as ComponentType]: SeparatorBuilder,
     [ComponentType.MediaGallery as ComponentType]: MediaGalleryBuilder,
+    [ComponentType.Section as ComponentType]: SectionBuilder,
     [ComponentType.File as ComponentType]: FileBuilder,
-    [ComponentType.Section as ComponentType]: SeparatorBuilder,
 }
 
 export function buildComponent(comp: any) {
-    return new ComponentBuilders[comp.type as ComponentType](comp.toJSON?.() ?? comp)
+    const type = comp.type as ComponentType
+    const Builder = TopLevelComponentBuilders[type] ?? MessageComponentBuilders[type]
+    return new Builder(comp.toJSON?.() ?? comp)
 }
 
 /**
