@@ -14,8 +14,7 @@ var TeamMemberProperty;
 })(TeamMemberProperty || (exports.TeamMemberProperty = TeamMemberProperty = {}));
 exports.TeamMemberProperties = (0, defineProperties_1.default)({
     id: (i) => i?.id,
-    // @ts-ignore
-    role: (i) => discord_js_1.TeamMemberRole[i?.role],
+    role: (i) => Object.entries(discord_js_1.TeamMemberRole).find(([, x]) => x === i?.role)?.[0],
     membership: (i) => discord_js_1.TeamMemberMembershipState[i?.membershipState]
 });
 //# sourceMappingURL=teamMember.js.map

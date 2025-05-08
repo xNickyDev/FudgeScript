@@ -9,7 +9,6 @@ export enum TeamMemberProperty {
 
 export const TeamMemberProperties = defineProperties<typeof TeamMemberProperty, TeamMember>({
     id: (i) => i?.id,
-    // @ts-ignore
-    role: (i) => TeamMemberRole[i?.role!],
+    role: (i) => Object.entries(TeamMemberRole).find(([, x]) => x === i?.role)?.[0],
     membership: (i) => TeamMemberMembershipState[i?.membershipState!]
 })
