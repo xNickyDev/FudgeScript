@@ -1,1 +1,1 @@
-{"version":3,"file":"botOwnerID.d.ts","sourceRoot":"","sources":["../../../src/native/bot/botOwnerID.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;AAElE,OAAO,EAAwB,kBAAkB,EAAE,MAAM,6BAA6B,CAAA;;;;;;;;;;;;;;;;;;;AAEtF,wBA0CE"}
+{"version":3,"file":"botOwnerID.d.ts","sourceRoot":"","sources":["../../../src/native/bot/botOwnerID.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,cAAc,EAAU,MAAM,kBAAkB,CAAA;;;;;;;;;;;;;AAGlE,wBA8BE"}

@@ -1,10 +1,12 @@
 import { ArgType, NativeFunction } from "../../structures";
+import { TeamMemberProperty } from "../../properties/teamMember";
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    required: false;
-    type: ArgType.Boolean;
+    required: true;
+    type: ArgType.Enum;
+    enum: typeof TeamMemberProperty;
 }, {
     name: string;
     description: string;
@@ -12,4 +14,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.String;
 }], true>;
 export default _default;
-//# sourceMappingURL=botOwnerID.d.ts.map
+//# sourceMappingURL=botTeamMembers.d.ts.map

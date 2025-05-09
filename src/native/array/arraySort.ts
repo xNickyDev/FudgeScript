@@ -1,5 +1,9 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { SortType } from "../statement/loop"
+
+export enum SortType {
+    asc,
+    desc
+}
 
 export default new NativeFunction({
     name: "$arraySort",
