@@ -1,6 +1,7 @@
 import { Team } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { TeamMemberProperties, TeamMemberProperty } from "../../properties/teamMember"
+import array from "../../functions/array"
 
 export default new NativeFunction({
     name: "$botTeamMembers",
@@ -27,10 +28,15 @@ export default new NativeFunction({
             type: ArgType.String
         },
     ],
-    output: ArgType.String,
+    output: [
+        ArgType.Json,
+        array<ArgType.Unknown>()
+    ],
     async execute(ctx, [prop, sep]) {
         if (!ctx.client.application.owner) await ctx.client.application.fetch().catch(ctx.noop)
         const owner = ctx.client.application.owner
-        return this.success(owner instanceof Team ? owner.members.map(x => TeamMemberProperties[prop || TeamMemberProperty.id](x)).join(sep ?? ", ") : null)
+        const members = owner instanceof Team ? owner.members : null
+        if (members && !this.hasFields) return this.successJSON(members)
+        return this.success(prop ? members?.map(x => TeamMemberProperties[prop](x)).join(sep ?? ", ") : null)
     },
 })
