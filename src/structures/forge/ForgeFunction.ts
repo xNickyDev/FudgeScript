@@ -2,7 +2,6 @@ import { ArgType, Context, IArg, IExtendedCompiledFunctionConditionField, Native
 import { IExtendedCompilationResult, Compiler, Interpreter } from "../../core"
 import isTrue from "../../functions/isTrue"
 import { FunctionManager } from "../../managers"
-import callFunction from "../../native/other/callFunction"
 import { Return, ReturnType } from "../@internal/Return"
 import { ForgeError, ErrorType } from "./ForgeError"
 
@@ -10,6 +9,7 @@ export interface IForgeFunctionParam {
     name: string
     type?: ArgType | keyof typeof ArgType
     required?: boolean
+    rest?: boolean
 }
 
 export interface IForgeFunction {
@@ -41,10 +41,10 @@ export class ForgeFunction {
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
             args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
-                rest: false,
+                rest: typeof x === "string" ? false : !!x.rest,
                 condition: i === 0 && !!this.data.firstParamCondition,
                 type: typeof x === "string" ? ArgType.String : (typeof x.type === "number" && x.type in ArgType ? x.type : ArgType[x.type!]) ?? ArgType.String,
-                required: typeof x === "string" ? true : x.required ?? true
+                required: typeof x === "string" ? true : x.required ?? true,
             }) as IArg<ArgType.String>) : undefined,
             brackets: this.data.brackets ?? (this.data.params?.length ? true : undefined),
             async execute(ctx, args: string[]) {
