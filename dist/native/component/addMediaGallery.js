@@ -23,7 +23,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx) {
-        (0, componentBuilders_1.buildActionRow)(ctx);
+        (0, componentBuilders_1.addActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         ctx.component.gallery = new discord_js_1.MediaGalleryBuilder();
         const items = this.getFunctions(0, addItem_1.default);

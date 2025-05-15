@@ -25,7 +25,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx) {
-        (0, componentBuilders_1.buildActionRow)(ctx);
+        (0, componentBuilders_1.addActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         ctx.component.section = new discord_js_1.SectionBuilder();
         ctx.container.inside.push(discord_js_1.ComponentType.Section);

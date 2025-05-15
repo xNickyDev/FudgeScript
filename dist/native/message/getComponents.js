@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const component_1 = require("../../properties/component");
+const discord_js_1 = require("discord.js");
 exports.default = new structures_1.NativeFunction({
     name: "$getComponents",
     version: "1.4.0",
@@ -57,8 +58,9 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
+        m ??= ctx.message;
         if (typeof rowIndex !== "number") {
-            return this.successJSON((m ?? ctx.message)?.components.filter((x) => "components" in x).map((x) => x.components));
+            return this.successJSON(m?.components.map((x) => m.flags.has(discord_js_1.MessageFlags.IsComponentsV2) ? x : x.components));
         }
         const row = m.components[rowIndex];
         const comp = row?.components[compIndex];

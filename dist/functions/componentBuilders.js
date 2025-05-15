@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildActionRow = exports.buildComponent = void 0;
+exports.addActionRow = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -19,18 +19,44 @@ const TopLevelComponentBuilders = {
     [discord_js_1.ComponentType.Section]: discord_js_1.SectionBuilder,
     [discord_js_1.ComponentType.File]: discord_js_1.FileBuilder,
 };
-function buildComponent(comp) {
+/**
+ * Checks whether the specified component type is a top level component. Exludes action rows.
+ * @param type The component type.
+ * @returns
+ */
+function isTopLevel(type) {
+    return (type in TopLevelComponentBuilders && type !== discord_js_1.ComponentType.ActionRow);
+}
+exports.isTopLevel = isTopLevel;
+/**
+ * Builds a message component for action rows.
+ * @param comp The component data.
+ * @returns
+ */
+function buildActionRow(comp) {
     const type = comp.type;
-    const Builder = TopLevelComponentBuilders[type] ?? MessageComponentBuilders[type];
-    return new Builder(comp.toJSON?.() ?? comp);
+    return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp);
+}
+exports.buildActionRow = buildActionRow;
+/**
+ * Builds a top level component.
+ * @param ctx The current context.
+ * @param comp The component data.
+ * @returns
+ */
+function buildComponent(ctx, comp) {
+    const type = comp.type;
+    if (isTopLevel(type))
+        ctx.container.isComponentsV2 = true;
+    return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
 exports.buildComponent = buildComponent;
 /**
- * Builds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
+ * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.
  * @returns
  */
-function buildActionRow(ctx) {
+function addActionRow(ctx) {
     ctx.container.isComponentsV2 = true;
     const row = ctx.container.actionRow;
     if (!row)
@@ -42,5 +68,5 @@ function buildActionRow(ctx) {
         ctx.container.components.push(row);
     delete ctx.container.actionRow;
 }
-exports.buildActionRow = buildActionRow;
+exports.addActionRow = addActionRow;
 //# sourceMappingURL=componentBuilders.js.map

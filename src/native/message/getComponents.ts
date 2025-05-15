@@ -1,6 +1,7 @@
 import { ActionRow, BaseChannel, MessageActionRowComponent } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ComponentProperties, ComponentProperty } from "../../properties/component"
+import { MessageFlags } from "discord.js"
 
 export default new NativeFunction({
     name: "$getComponents",
@@ -57,8 +58,12 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
+        m ??= ctx.message!
+
         if (typeof rowIndex !== "number") {
-            return this.successJSON((m ?? ctx.message)?.components.filter((x) => "components" in x).map((x) => (x as any).components))
+            return this.successJSON(m?.components.map((x) =>
+                m.flags.has(MessageFlags.IsComponentsV2) ? x : (x as ActionRow<MessageActionRowComponent>).components
+            ))
         }
 
         const row = m.components[rowIndex] as ActionRow<MessageActionRowComponent> | undefined

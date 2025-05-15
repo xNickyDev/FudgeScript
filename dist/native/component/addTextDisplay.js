@@ -19,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [content]) {
-        (0, componentBuilders_1.buildActionRow)(ctx);
+        (0, componentBuilders_1.addActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         const text = new discord_js_1.TextDisplayBuilder().setContent(content);
         if (ctx.container.isInside(discord_js_1.ComponentType.Section))

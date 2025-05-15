@@ -2,7 +2,6 @@ import {
     ActionRowBuilder,
     ButtonBuilder,
     ChannelSelectMenuBuilder,
-    Component,
     ComponentType,
     ContainerBuilder,
     FileBuilder,
@@ -36,18 +35,43 @@ const TopLevelComponentBuilders = {
     [ComponentType.File as ComponentType]: FileBuilder,
 }
 
-export function buildComponent(comp: any) {
-    const type = comp.type as ComponentType
-    const Builder = TopLevelComponentBuilders[type] ?? MessageComponentBuilders[type]
-    return new Builder(comp.toJSON?.() ?? comp)
+/**
+ * Checks whether the specified component type is a top level component. Exludes action rows.
+ * @param type The component type.
+ * @returns 
+ */
+export function isTopLevel(type: ComponentType) {
+    return (type in TopLevelComponentBuilders && type !== ComponentType.ActionRow)
 }
 
 /**
- * Builds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
+ * Builds a message component for action rows.
+ * @param comp The component data.
+ * @returns 
+ */
+export function buildActionRow(comp: any) {
+    const type = comp.type as ComponentType
+    return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp)
+}
+
+/**
+ * Builds a top level component.
+ * @param ctx The current context.
+ * @param comp The component data.
+ * @returns 
+ */
+export function buildComponent(ctx: Context, comp: any) {
+    const type = comp.type as ComponentType
+    if (isTopLevel(type)) ctx.container.isComponentsV2 = true
+    return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp)
+}
+
+/**
+ * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.
  * @returns 
  */
-export function buildActionRow(ctx: Context) {
+export function addActionRow(ctx: Context) {
     ctx.container.isComponentsV2 = true
 
     const row = ctx.container.actionRow

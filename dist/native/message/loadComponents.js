@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const componentBuilders_1 = require("../../functions/componentBuilders");
+const discord_js_1 = require("discord.js");
 exports.default = new structures_1.NativeFunction({
     name: "$loadComponents",
     version: "1.4.0",
@@ -19,7 +20,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [json]) {
-        const components = Array.isArray(json) ? json.map((x) => (0, componentBuilders_1.buildComponent)(x)) : new Array((0, componentBuilders_1.buildComponent)(json));
+        const components = Array.isArray(json)
+            ? Array.isArray(json[0])
+                ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row?.map((x) => (0, componentBuilders_1.buildActionRow)(x))))
+                : json.map((comp) => (0, componentBuilders_1.buildComponent)(ctx, comp))
+            : new Array((0, componentBuilders_1.isTopLevel)(json.type) ? (0, componentBuilders_1.buildComponent)(ctx, json) : new discord_js_1.ActionRowBuilder(json));
         ctx.container.components.push(...components);
         return this.success();
     },
