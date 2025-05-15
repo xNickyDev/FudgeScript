@@ -1,11 +1,12 @@
 import { ActionRowBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
 import { Context } from "../structures";
 /**
- * Checks whether the specified component type is a top level component. Exludes action rows.
+ * Checks whether the specified component type is a top level component.
  * @param type The component type.
+ * @param include Whether to include action rows when checking. Defaults to true.
  * @returns
  */
-export declare function isTopLevel(type: ComponentType): boolean;
+export declare function isTopLevel(type: ComponentType, include?: boolean): boolean;
 /**
  * Builds a message component for action rows.
  * @param comp The component data.

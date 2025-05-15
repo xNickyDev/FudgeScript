@@ -20,12 +20,13 @@ const TopLevelComponentBuilders = {
     [discord_js_1.ComponentType.File]: discord_js_1.FileBuilder,
 };
 /**
- * Checks whether the specified component type is a top level component. Exludes action rows.
+ * Checks whether the specified component type is a top level component.
  * @param type The component type.
+ * @param include Whether to include action rows when checking. Defaults to true.
  * @returns
  */
-function isTopLevel(type) {
-    return (type in TopLevelComponentBuilders && type !== discord_js_1.ComponentType.ActionRow);
+function isTopLevel(type, include = true) {
+    return (type in TopLevelComponentBuilders) && (include || type !== discord_js_1.ComponentType.ActionRow);
 }
 exports.isTopLevel = isTopLevel;
 /**
@@ -46,7 +47,7 @@ exports.buildActionRow = buildActionRow;
  */
 function buildComponent(ctx, comp) {
     const type = comp.type;
-    if (isTopLevel(type))
+    if (isTopLevel(type, false))
         ctx.container.isComponentsV2 = true;
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
