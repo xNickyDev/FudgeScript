@@ -26,7 +26,7 @@ exports.default = new structures_1.NativeFunction({
                 : (0, componentBuilders_1.isTopLevel)(json[0].type)
                     ? json.map((comp) => (0, componentBuilders_1.buildComponent)(ctx, comp))
                     : new Array(new discord_js_1.ActionRowBuilder().addComponents(json.map((comp) => (0, componentBuilders_1.buildActionRow)(comp))))
-            : new Array((0, componentBuilders_1.isTopLevel)(json.type) ? (0, componentBuilders_1.buildComponent)(ctx, json) : new discord_js_1.ActionRowBuilder(json));
+            : new Array((0, componentBuilders_1.isTopLevel)(json.type) ? (0, componentBuilders_1.buildComponent)(ctx, json) : new discord_js_1.ActionRowBuilder().addComponents((0, componentBuilders_1.buildActionRow)(json)));
         ctx.container.components.push(...components);
         return this.success();
     },

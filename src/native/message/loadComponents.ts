@@ -25,7 +25,7 @@ export default new NativeFunction({
                 : isTopLevel(json[0].type as ComponentType)
                     ? json.map((comp) => buildComponent(ctx, comp))
                     : new Array(new ActionRowBuilder().addComponents(json.map((comp) => buildActionRow(comp))))
-            : new Array(isTopLevel(json.type as ComponentType) ? buildComponent(ctx, json) : new ActionRowBuilder(json))
+            : new Array(isTopLevel(json.type as ComponentType) ? buildComponent(ctx, json) : new ActionRowBuilder().addComponents(buildActionRow(json)))
 
         ctx.container.components.push(...components)
 
