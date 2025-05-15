@@ -38,11 +38,11 @@ const TopLevelComponentBuilders = {
 /**
  * Checks whether the specified component type is a top level component.
  * @param type The component type.
- * @param include Whether to include action rows when checking. Defaults to true.
+ * @param actionRow Whether to include action rows when checking. Defaults to true.
  * @returns 
  */
-export function isTopLevel(type: ComponentType, include: boolean = true) {
-    return (type in TopLevelComponentBuilders) && (include || type !== ComponentType.ActionRow)
+export function isTopLevel(type: ComponentType, actionRow: boolean = true) {
+    return (type in TopLevelComponentBuilders) && (actionRow || type !== ComponentType.ActionRow)
 }
 
 /**
@@ -51,7 +51,7 @@ export function isTopLevel(type: ComponentType, include: boolean = true) {
  * @returns 
  */
 export function buildActionRow(comp: any) {
-    const type = comp.type as ComponentType
+    const type = comp?.type as ComponentType
     return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp)
 }
 
@@ -62,7 +62,7 @@ export function buildActionRow(comp: any) {
  * @returns 
  */
 export function buildComponent(ctx: Context, comp: any) {
-    const type = comp.type as ComponentType
+    const type = comp?.type as ComponentType
     if (isTopLevel(type, false)) ctx.container.isComponentsV2 = true
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp)
 }
