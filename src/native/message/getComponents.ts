@@ -67,12 +67,13 @@ export default new NativeFunction({
         }
 
         const row = m.components[rowIndex]
-        const comp = "components" in row ? row.components[compIndex!] : undefined
+        const comps = "components" in row ? row.components : undefined
+        const comp = (typeof compIndex === "number" && comps) ? comps[compIndex] : row
 
         if (prop === null) {
-            return this.successJSON(comp?.data ?? ("components" in row ? row.components : undefined))
+            return this.successJSON(comp?.data ?? comps)
         }
 
-        return this.success(ComponentProperties[prop](comp ?? row, sep))
+        return this.success(ComponentProperties[prop](comp, sep))
     },
 })
