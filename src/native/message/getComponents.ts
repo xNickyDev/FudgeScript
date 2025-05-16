@@ -66,13 +66,14 @@ export default new NativeFunction({
             ))
         }
 
-        const row = m.components[rowIndex] as ActionRow<MessageActionRowComponent> | undefined
-        const comp = row?.components[compIndex!] as MessageActionRowComponent | undefined
+        const row = m.components[rowIndex]
+        const comps = "components" in row ? row.components : undefined
+        const comp = comps?.[compIndex!]
 
         if (prop === null) {
-            return this.successJSON(comp?.data ?? row?.components)
+            return this.successJSON(comp?.data ?? comps)
         }
 
-        return this.success(ComponentProperties[prop](comp, sep))
+        return this.success(ComponentProperties[prop](comp ?? row, sep))
     },
 })

@@ -21,10 +21,10 @@ export default new NativeFunction({
     execute(ctx, [json]) {
         const components = Array.isArray(json)
             ? Array.isArray(json[0])
-                ? json.map((row) => new ActionRowBuilder().addComponents(row.map((comp: any) => buildActionRow(comp))))
+                ? json.map((row) => new ActionRowBuilder().addComponents(row?.map((comp: any) => buildActionRow(comp))))
                 : isTopLevel(json[0]?.type as ComponentType)
                     ? json.map((comp) => buildComponent(ctx, comp))
-                    : new Array(new ActionRowBuilder().addComponents(json.map((comp) => buildActionRow(comp))))
+                    : new Array(new ActionRowBuilder().addComponents(json?.map((comp) => buildActionRow(comp))))
             : new Array(isTopLevel(json?.type as ComponentType) ? buildComponent(ctx, json) : new ActionRowBuilder().addComponents(buildActionRow(json)))
 
         ctx.container.components.push(...components)

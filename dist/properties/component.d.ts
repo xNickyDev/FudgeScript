@@ -1,5 +1,6 @@
-import { MessageActionRowComponent } from "discord.js";
+import { ComponentInContainer, ContainerComponent, MessageActionRowComponent } from "discord.js";
 export declare enum ComponentProperty {
+    id = "id",
     type = "type",
     customID = "customID",
     label = "label",
@@ -13,7 +14,15 @@ export declare enum ComponentProperty {
     optionNames = "optionNames",
     emoji = "emoji",
     optionDescriptions = "optionDescriptions",
-    optionValues = "optionValues"
+    optionValues = "optionValues",
+    content = "content",
+    color = "color",
+    spoiler = "spoiler",
+    divider = "divider",
+    spacing = "spacing",
+    items = "items",
+    itemUrls = "itemUrls",
+    fileUrl = "fileUrl"
 }
-export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, MessageActionRowComponent>;
+export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, ContainerComponent | MessageActionRowComponent | ComponentInContainer>;
 //# sourceMappingURL=component.d.ts.map

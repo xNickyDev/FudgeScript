@@ -22,10 +22,10 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [json]) {
         const components = Array.isArray(json)
             ? Array.isArray(json[0])
-                ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row.map((comp) => (0, componentBuilders_1.buildActionRow)(comp))))
+                ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row?.map((comp) => (0, componentBuilders_1.buildActionRow)(comp))))
                 : (0, componentBuilders_1.isTopLevel)(json[0]?.type)
                     ? json.map((comp) => (0, componentBuilders_1.buildComponent)(ctx, comp))
-                    : new Array(new discord_js_1.ActionRowBuilder().addComponents(json.map((comp) => (0, componentBuilders_1.buildActionRow)(comp))))
+                    : new Array(new discord_js_1.ActionRowBuilder().addComponents(json?.map((comp) => (0, componentBuilders_1.buildActionRow)(comp))))
             : new Array((0, componentBuilders_1.isTopLevel)(json?.type) ? (0, componentBuilders_1.buildComponent)(ctx, json) : new discord_js_1.ActionRowBuilder().addComponents((0, componentBuilders_1.buildActionRow)(json)));
         ctx.container.components.push(...components);
         return this.success();

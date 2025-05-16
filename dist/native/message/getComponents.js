@@ -63,11 +63,12 @@ exports.default = new structures_1.NativeFunction({
             return this.successJSON(m?.components.map((x) => m.flags.has(discord_js_1.MessageFlags.IsComponentsV2) ? x : x.components));
         }
         const row = m.components[rowIndex];
-        const comp = row?.components[compIndex];
+        const comps = "components" in row ? row.components : undefined;
+        const comp = comps?.[compIndex];
         if (prop === null) {
-            return this.successJSON(comp?.data ?? row?.components);
+            return this.successJSON(comp?.data ?? comps);
         }
-        return this.success(component_1.ComponentProperties[prop](comp, sep));
+        return this.success(component_1.ComponentProperties[prop](comp ?? row, sep));
     },
 });
 //# sourceMappingURL=getComponents.js.map
