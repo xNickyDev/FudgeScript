@@ -31,6 +31,7 @@ var ComponentProperty;
     ComponentProperty["items"] = "items";
     ComponentProperty["itemUrls"] = "itemUrls";
     ComponentProperty["fileUrl"] = "fileUrl";
+    ComponentProperty["components"] = "components";
 })(ComponentProperty || (exports.ComponentProperty = ComponentProperty = {}));
 exports.ComponentProperties = (0, defineProperties_1.default)({
     id: (i) => i?.id,
@@ -60,5 +61,6 @@ exports.ComponentProperties = (0, defineProperties_1.default)({
     items: (i) => (i && "items" in i ? JSON.stringify(i.items, undefined, 4) : null),
     itemUrls: (i, sep) => (i && "items" in i ? i.items.map((x) => x.media.url).join(sep ?? ", ") : null),
     fileUrl: (i) => (i && "file" in i ? i.file.url : null),
+    components: (i) => (i && "components" in i ? JSON.stringify(i.components, undefined, 4) : null),
 });
 //# sourceMappingURL=component.js.map

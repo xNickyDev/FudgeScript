@@ -9,7 +9,6 @@ export interface IForgeFunctionParam {
     name: string
     type?: ArgType | keyof typeof ArgType
     required?: boolean
-    rest?: boolean
 }
 
 export interface IForgeFunction {
@@ -42,7 +41,7 @@ export class ForgeFunction {
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
             args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
-                rest: typeof x === "string" ? false : !!x.rest,
+                rest: false,
                 condition: i === 0 && !!this.data.firstParamCondition,
                 type: typeof x === "string" ? ArgType.String : (typeof x.type === "number" && x.type in ArgType ? x.type : ArgType[x.type!]) ?? ArgType.String,
                 required: typeof x === "string" ? true : x.required ?? true,

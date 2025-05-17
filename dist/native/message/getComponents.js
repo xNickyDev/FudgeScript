@@ -8,7 +8,6 @@ exports.default = new structures_1.NativeFunction({
     version: "1.4.0",
     description: "Retrieves data of a component, not providing any property returns component json",
     unwrap: true,
-    output: structures_1.ArgType.Unknown,
     brackets: false,
     aliases: ["$getComponent"],
     args: [
@@ -37,7 +36,7 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "component index",
-            description: "The component index to get data from",
+            description: "The first component index to get data from",
             rest: false,
             required: false,
             type: structures_1.ArgType.Number,
@@ -56,15 +55,25 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.String,
         },
+        {
+            name: "component index",
+            description: "The second component index to get data from",
+            rest: false,
+            type: structures_1.ArgType.Number,
+        },
     ],
-    execute(ctx, [, m, rowIndex, compIndex, prop, sep]) {
+    output: [
+        structures_1.ArgType.Json,
+        structures_1.ArgType.Unknown
+    ],
+    execute(ctx, [, m, rowIndex, compIndex1, prop, sep, compIndex2]) {
         m ??= ctx.message;
         if (typeof rowIndex !== "number") {
             return this.successJSON(m?.components.map((x) => m.flags.has(discord_js_1.MessageFlags.IsComponentsV2) ? x : x.components));
         }
         const row = m.components[rowIndex];
         const comps = "components" in row ? row.components : undefined;
-        const comp = (typeof compIndex === "number" && comps) ? comps[compIndex] : row;
+        const comp = (typeof compIndex1 === "number" && comps) ? comps[compIndex1] : row;
         if (prop === null) {
             return this.successJSON(comp?.data ?? comps);
         }

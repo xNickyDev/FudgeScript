@@ -22,7 +22,8 @@ export declare enum ComponentProperty {
     spacing = "spacing",
     items = "items",
     itemUrls = "itemUrls",
-    fileUrl = "fileUrl"
+    fileUrl = "fileUrl",
+    components = "components"
 }
 export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, ContainerComponent | MessageActionRowComponent | ComponentInContainer>;
 //# sourceMappingURL=component.d.ts.map

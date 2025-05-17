@@ -32,6 +32,7 @@ export enum ComponentProperty {
     items = "items",
     itemUrls = "itemUrls",
     fileUrl = "fileUrl",
+    components = "components",
 }
 
 export const ComponentProperties = defineProperties<typeof ComponentProperty, MessageActionRowComponent | ComponentInContainer | ContainerComponent>({
@@ -64,4 +65,5 @@ export const ComponentProperties = defineProperties<typeof ComponentProperty, Me
     items: (i) => (i && "items" in i ? JSON.stringify(i.items, undefined, 4) : null),
     itemUrls: (i, sep) => (i && "items" in i ? i.items.map((x) => x.media.url).join(sep ?? ", ") : null),
     fileUrl: (i) => (i && "file" in i ? i.file.url : null),
+    components: (i) => (i && "components" in i ? JSON.stringify(i.components, undefined, 4) : null),
 })
