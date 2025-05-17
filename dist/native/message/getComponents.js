@@ -68,14 +68,15 @@ exports.default = new structures_1.NativeFunction({
     ],
     execute(ctx, [, m, rowIndex, compIndex1, prop, sep, compIndex2]) {
         m ??= ctx.message;
+        let isV2 = m.flags.has(discord_js_1.MessageFlags.IsComponentsV2);
         if (typeof rowIndex !== "number") {
-            return this.successJSON(m?.components.map((x) => m.flags.has(discord_js_1.MessageFlags.IsComponentsV2) ? x : x.components));
+            return this.successJSON(m?.components.map((x) => isV2 ? x : x.components));
         }
         const row = m.components[rowIndex];
         const comps = "components" in row ? row.components : undefined;
-        const comp = (typeof compIndex1 === "number" && comps) ? comps[compIndex1] : row;
+        const comp = (typeof compIndex1 === "number" && comps ? comps[compIndex1] : undefined);
         if (prop === null) {
-            return this.successJSON(comp?.data ?? comps);
+            return this.successJSON(comp?.toJSON() ?? (isV2 ? row : comps));
         }
         return this.success(component_1.ComponentProperties[prop](comp, sep));
     },
