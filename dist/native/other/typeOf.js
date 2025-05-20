@@ -21,7 +21,9 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.String,
     execute(ctx, [arg]) {
         let type;
-        if (arg === "true" || arg === "false")
+        if (arg === "undefined")
+            type = "undefined";
+        else if (arg === "true" || arg === "false")
             type = "boolean";
         else if (exports.BigIntFormatRegex.test(arg))
             type = "bigint";

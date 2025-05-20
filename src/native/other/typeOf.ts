@@ -21,7 +21,8 @@ export default new NativeFunction({
     execute(ctx, [arg]) {
         let type: string
 
-        if (arg === "true" || arg === "false") type = "boolean"
+        if (arg === "undefined") type = "undefined"
+        else if (arg === "true" || arg === "false") type = "boolean"
         else if (BigIntFormatRegex.test(arg)) type = "bigint"
         else if (!!arg.trim() && !isNaN(Number(arg))) type = "number"
         else {
