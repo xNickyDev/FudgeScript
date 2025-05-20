@@ -1,4 +1,3 @@
-import { isBoolean, isNumber, isObject } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export const BigIntFormatRegex = /^\d+n$/
@@ -20,13 +19,17 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx, [arg]) {
-        let type
+        let type: string
 
-        if (isBoolean(arg)) type = "boolean"
-        else if (BigIntFormatRegex.test(arg)) type = "bigint"
-        else if (isNumber(arg)) type = "number"
-        else if (isObject(arg)) type = "object"
-        else type = "string"
+        try {
+            JSON.parse(arg)
+            type = "object"
+        } catch {
+            if (arg === "true" || arg === "false") type = "boolean"
+            else if (BigIntFormatRegex.test(arg)) type = "bigint"
+            else if (!!arg.trim() && !isNaN(Number(arg))) type = "number"
+            else type = "string"
+        }
 
         return this.success(type)
     },
