@@ -21,19 +21,20 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.String,
     execute(ctx, [arg]) {
         let type;
-        try {
-            JSON.parse(arg);
-            type = "object";
-        }
-        catch {
-            if (arg === "true" || arg === "false")
-                type = "boolean";
-            else if (exports.BigIntFormatRegex.test(arg))
-                type = "bigint";
-            else if (!!arg.trim() && !isNaN(Number(arg)))
-                type = "number";
-            else
+        if (arg === "true" || arg === "false")
+            type = "boolean";
+        else if (exports.BigIntFormatRegex.test(arg))
+            type = "bigint";
+        else if (!!arg.trim() && !isNaN(Number(arg)))
+            type = "number";
+        else {
+            try {
+                JSON.parse(arg);
+                type = "object";
+            }
+            catch {
                 type = "string";
+            }
         }
         return this.success(type);
     },

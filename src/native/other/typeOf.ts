@@ -21,14 +21,16 @@ export default new NativeFunction({
     execute(ctx, [arg]) {
         let type: string
 
-        try {
-            JSON.parse(arg)
-            type = "object"
-        } catch {
-            if (arg === "true" || arg === "false") type = "boolean"
-            else if (BigIntFormatRegex.test(arg)) type = "bigint"
-            else if (!!arg.trim() && !isNaN(Number(arg))) type = "number"
-            else type = "string"
+        if (arg === "true" || arg === "false") type = "boolean"
+        else if (BigIntFormatRegex.test(arg)) type = "bigint"
+        else if (!!arg.trim() && !isNaN(Number(arg))) type = "number"
+        else {
+            try {
+                JSON.parse(arg)
+                type = "object"
+            } catch {
+                type = "string"
+            }
         }
 
         return this.success(type)
