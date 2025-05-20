@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BigIntFormatRegex = void 0;
+const lodash_1 = require("lodash");
 const structures_1 = require("../../structures");
+exports.BigIntFormatRegex = /^\d+n$/;
 exports.default = new structures_1.NativeFunction({
-    name: "$typeOf",
-    version: "2.3.0",
+    name: "$typeof",
     description: "Returns the type of the provided argument",
-    unwrap: false,
+    unwrap: true,
     brackets: true,
     args: [
         {
@@ -17,8 +19,19 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.String,
-    execute(ctx) {
-        return this.success();
+    execute(ctx, [arg]) {
+        let type;
+        if ((0, lodash_1.isBoolean)(arg))
+            type = "boolean";
+        else if (exports.BigIntFormatRegex.test(arg))
+            type = "bigint";
+        else if ((0, lodash_1.isNumber)(arg))
+            type = "number";
+        else if ((0, lodash_1.isObject)(arg))
+            type = "object";
+        else
+            type = "string";
+        return this.success(type);
     },
 });
-//# sourceMappingURL=typeOf.js.map
+//# sourceMappingURL=typeof.js.map

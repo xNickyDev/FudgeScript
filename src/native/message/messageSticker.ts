@@ -1,12 +1,11 @@
 import { BaseChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import array from "../../functions/array"
+import { StickerReturnType } from "./messageStickers"
 
 export default new NativeFunction({
     name: "$messageSticker",
     version: "1.4.0",
-    output: ArgType.Sticker,
-    description: "Retrieves a sticker url of this message",
+    description: "Retrieves a sticker of this message",
     brackets: false,
     unwrap: true,
     args: [
@@ -32,9 +31,18 @@ export default new NativeFunction({
             required: true,
             description: "The index to get sticker",
             type: ArgType.Number,
+        },
+        {
+            name: "type",
+            rest: false,
+            description: "The type to return, default is url",
+            type: ArgType.Enum,
+            enum: StickerReturnType
         }
     ],
-    execute(ctx, [, message, index]) {
-        return this.success((message ?? ctx.message)?.stickers.at(index)?.url)
+    output: ArgType.Sticker,
+    execute(ctx, [, message, index, type]) {
+        type ??= StickerReturnType.url
+        return this.success((message ?? ctx.message)?.stickers.at(index)?.[type])
     },
 })

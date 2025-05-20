@@ -1,10 +1,13 @@
+import { isBoolean, isNumber, isObject } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
+export const BigIntFormatRegex = /^\d+n$/
+
 export default new NativeFunction({
-    name: "$typeOf",
-    version: "2.3.0",
+    name: "$typeof",
+    version: "2.4.0",
     description: "Returns the type of the provided argument",
-    unwrap: false,
+    unwrap: true,
     brackets: true,
     args: [
         {
@@ -16,7 +19,15 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.String,
-    execute(ctx) {
-        return this.success()
+    execute(ctx, [arg]) {
+        let type
+
+        if (isBoolean(arg)) type = "boolean"
+        else if (BigIntFormatRegex.test(arg)) type = "bigint"
+        else if (isNumber(arg)) type = "number"
+        else if (isObject(arg)) type = "object"
+        else type = "string"
+
+        return this.success(type)
     },
 })

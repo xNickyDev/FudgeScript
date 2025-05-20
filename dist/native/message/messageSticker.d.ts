@@ -1,5 +1,6 @@
 import { BaseChannel } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
+import { StickerReturnType } from "./messageStickers";
 declare const _default: NativeFunction<[{
     name: string;
     rest: false;
@@ -20,6 +21,12 @@ declare const _default: NativeFunction<[{
     required: true;
     description: string;
     type: ArgType.Number;
+}, {
+    name: string;
+    rest: false;
+    description: string;
+    type: ArgType.Enum;
+    enum: typeof StickerReturnType;
 }], true>;
 export default _default;
 //# sourceMappingURL=messageSticker.d.ts.map
