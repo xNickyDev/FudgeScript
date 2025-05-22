@@ -38,8 +38,9 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [guild, user, size, ext]) {
-        const member = user ?? ctx.member ?? ctx.interaction?.member;
+    async execute(ctx, [guild, user, size, ext]) {
+        const memb = user ?? ctx.member ?? ctx.interaction?.member;
+        const member = memb instanceof discord_js_1.GuildMember && (memb.banner == null || memb.user.banner == null) ? await memb.fetch() : memb;
         if (member.banner) {
             return this.success(new discord_js_1.CDN().guildMemberBanner(guild?.id ?? ctx.guild?.id, member.user.id, member.banner, {
                 extension: ext || undefined,
