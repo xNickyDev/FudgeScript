@@ -41,7 +41,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [guild, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
         if (member.avatar) {
-            return this.success(new discord_js_1.CDN().guildMemberAvatar(guild.id, member.user.id, member.avatar, {
+            return this.success(new discord_js_1.CDN().guildMemberAvatar(guild?.id ?? ctx.guild?.id, member.user.id, member.avatar, {
                 extension: ext || undefined,
                 size: size || 2048,
             }));

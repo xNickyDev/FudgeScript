@@ -41,7 +41,7 @@ export default new NativeFunction({
         const member = user ?? ctx.member ?? ctx.interaction?.member
         
         if (member.banner) {
-            return this.success(new CDN().guildMemberBanner(guild.id, member.user.id, member.banner, {
+            return this.success(new CDN().guildMemberBanner(guild?.id ?? ctx.guild?.id, member.user.id, member.banner, {
                 extension: (ext as ImageExtension) || undefined,
                 size: (size as ImageSize) || 2048,
             }))

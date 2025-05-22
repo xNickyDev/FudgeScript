@@ -41,7 +41,7 @@ export default new NativeFunction({
         const member = user ?? ctx.member ?? ctx.interaction?.member
 
         if (member.avatar) {
-            return this.success(new CDN().guildMemberAvatar(guild.id, member.user.id, member.avatar, {
+            return this.success(new CDN().guildMemberAvatar(guild?.id ?? ctx.guild?.id, member.user.id, member.avatar, {
                 extension: (ext as ImageExtension) || undefined,
                 size: (size as ImageSize) || 2048,
             }))
