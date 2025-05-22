@@ -37,17 +37,22 @@ export default new NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [, user, size, ext]) {
+    execute(ctx, [guild, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        const hash = member?.banner ?? member?.user?.banner
         
-        return this.success(
-            member?.user && hash
-                ? new CDN().banner(member.user.id, hash, {
-                    extension: (ext as ImageExtension) || undefined,
-                    size: (size as ImageSize) || 2048,
-                })
-                : null
+        if (member.banner) {
+            return this.success(new CDN().guildMemberBanner(guild.id, member.user.id, member.banner, {
+                extension: (ext as ImageExtension) || undefined,
+                size: (size as ImageSize) || 2048,
+            }))
+        }
+
+        return this.success(member.user.banner
+            ? new CDN().banner(member.user.id, member.user.banner, {
+                extension: (ext as ImageExtension) || undefined,
+                size: (size as ImageSize) || 2048,
+            })
+            : null
         )
     },
 })

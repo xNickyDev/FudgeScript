@@ -38,11 +38,16 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     unwrap: true,
-    execute(ctx, [, user, size, ext]) {
+    execute(ctx, [guild, user, size, ext]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
-        const hash = member?.banner ?? member?.user?.banner;
-        return this.success(member?.user && hash
-            ? new discord_js_1.CDN().banner(member.user.id, hash, {
+        if (member.banner) {
+            return this.success(new discord_js_1.CDN().guildMemberBanner(guild.id, member.user.id, member.banner, {
+                extension: ext || undefined,
+                size: size || 2048,
+            }));
+        }
+        return this.success(member.user.banner
+            ? new discord_js_1.CDN().banner(member.user.id, member.user.banner, {
                 extension: ext || undefined,
                 size: size || 2048,
             })
