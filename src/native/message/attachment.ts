@@ -53,9 +53,8 @@ export default new NativeFunction({
     execute(ctx, [url, name, asText, enc, desc, spoiler]) {
         const attachment = new AttachmentBuilder(asText ? Buffer.from(url, enc as BufferEncoding ?? "utf-8") : url, {
             name,
+            description: desc || undefined
         }).setSpoiler(!!spoiler)
-
-        if (desc) attachment.setDescription(desc)
 
         ctx.container.files.push(attachment)
         return this.success()
