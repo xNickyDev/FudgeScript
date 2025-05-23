@@ -46,16 +46,13 @@ generateMetadata(`${__dirname}/native`, "native")
 > *Replace `native` if your native functions folder has a different name.*
 
 \
-Then, add the following script to your `package.json` file:
+Then, add the following script to the existing scripts in your `package.json` file:
 
 ```json
 {
-  ...
   "scripts": {
-    ...
     "docgen": "tsc && typedoc src/index.ts && node dist/docgen"
   },
-  ...
 }
 ```
 \
@@ -143,12 +140,9 @@ main()
 Add the following script to the existing scripts in your `package.json` file:
 ```json
 {
-  ...
   "scripts": {
-    ...
     "commit": "npm run docgen && node dist/commit"
   },
-  ...
 }
 ```
 \
