@@ -21,7 +21,7 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "name",
-            description: "the name for this attachment, with the extension",
+            description: "The name for this attachment, with the extension",
             rest: false,
             type: structures_1.ArgType.String,
             required: true,
@@ -37,12 +37,25 @@ exports.default = new structures_1.NativeFunction({
             description: "Encoding to use for text, utf-8 default",
             rest: false,
             type: structures_1.ArgType.String
-        }
+        },
+        {
+            name: "description",
+            description: "The description for this attachment",
+            rest: false,
+            type: structures_1.ArgType.String,
+        },
+        {
+            name: "spoiler",
+            description: "Whether to mark this attachment as spoiler",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
+        },
     ],
-    execute(ctx, [url, name, asText, enc]) {
+    execute(ctx, [url, name, asText, enc, desc, spoiler]) {
         const attachment = new discord_js_1.AttachmentBuilder(asText ? Buffer.from(url, enc ?? "utf-8") : url, {
             name,
-        });
+            description: desc || undefined
+        }).setSpoiler(!!spoiler);
         ctx.container.files.push(attachment);
         return this.success();
     },
