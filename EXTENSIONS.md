@@ -82,7 +82,7 @@ export default async function(q: string) {
 }
 ```
 \
-Create a new `commit.ts` file in your `src` root folder. Copy and paste the code below in the newly created file. You may need to adjust the import for the `prompt` function, depending on where you have this file located in your project.
+Create a new `commit.ts` file in your `src` root folder. Copy and paste the code below into the newly created file. You may need to adjust the import for the `prompt` function, depending on where you have this file located in your project.
 ```ts
 import { execSync } from "child_process"
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs"
@@ -146,10 +146,10 @@ Add the following script to the existing scripts in your `package.json` file:
 }
 ```
 \
-Instead of running `npm run docgen` after compiling, you will now run:
+Instead of running `npm run docgen` after compiling, run:
 ```bash
 npm run commit
 ```
-This command allows you to add an additional changelog note to your commit and automatically pushes your changes. If your extension is added as an official or community extension, all changelog notes will be displayed in the "Changelog" tab on the docs.
+This command allows you to add an additional changelog note to your commit and automatically pushes your changes. If your extension was added as an official or community extension, all changelog notes will be displayed in the "Changelog" tab on the docs.
 
 > Note that you should not run both scripts for the same commit. Either run `docgen` or `commit`, whatever suits your needs best.
