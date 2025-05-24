@@ -609,6 +609,6 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     public success(value: ReturnValue<ReturnType.Success> = null) {
-        return new Return(ReturnType.Success, this.data.negated ? null : this.data.count !== null && typeof(value) === "string" ? value.split(this.data.count).length : value)
+        return new Return(ReturnType.Success, this.data.negated ? null : this.data.count !== null && typeof(value) === "string" ? (value === "" ? 0 : value.split(this.data.count).length) : value)
     }
 }
