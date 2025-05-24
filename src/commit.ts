@@ -31,19 +31,19 @@ async function main() {
     ).trim()
 
     const fileName = join(path, "changelogs.json")
-    const json: Record<string, string[]> = existsSync(fileName) ? JSON.parse(readFileSync(fileName, "utf-8")) : {}
+    const json: Record<string, (string | object)[]> = existsSync(fileName) ? JSON.parse(readFileSync(fileName, "utf-8")) : {}
     json[version] ??= []
 
     for (const key in json) {
-        json[key].map(str => JSON.stringify({ message: str }))
+        json[key] = json[key].map(str => typeof str === "string" ? {message:str} : str)
     }
 
     if (!skip) {
-        json[version].unshift(JSON.stringify({
+        json[version].unshift({
             message: msg,
             timestamp: new Date(),
             author: execSync("git config user.name").toString().trim()
-        }))
+        })
         writeFileSync(fileName, JSON.stringify(json), "utf-8")
     }
 
