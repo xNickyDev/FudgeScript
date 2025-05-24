@@ -30,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The channel to forward message to",
             rest: false,
             type: structures_1.ArgType.Channel,
-            check: (i) => i.isTextBased() && i.type !== discord_js_1.ChannelType.GroupDM,
+            check: (i) => i.isTextBased() && !(i instanceof discord_js_1.PartialGroupDMChannel),
         },
     ],
     output: structures_1.ArgType.Boolean,

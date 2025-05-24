@@ -1,4 +1,4 @@
-import { BaseChannel, ChannelType, PartialGroupDMChannel, TextBasedChannel } from "discord.js"
+import { BaseChannel, PartialGroupDMChannel, TextBasedChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -29,7 +29,7 @@ export default new NativeFunction({
             description: "The channel to forward message to",
             rest: false,
             type: ArgType.Channel,
-            check: (i: BaseChannel) => i.isTextBased() && i.type !== ChannelType.GroupDM,
+            check: (i: BaseChannel) => i.isTextBased() && !(i instanceof PartialGroupDMChannel),
         },
     ],
     output: ArgType.Boolean,
