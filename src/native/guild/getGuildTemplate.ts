@@ -1,4 +1,3 @@
-import { isArray } from "lodash"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export enum TemplateProperty {

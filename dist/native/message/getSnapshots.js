@@ -8,6 +8,7 @@ const message_1 = require("../../properties/message");
 const array_1 = __importDefault(require("../../functions/array"));
 exports.default = new structures_1.NativeFunction({
     name: "$getSnapshots",
+    version: "2.4.0",
     description: "Retrieves data of snapshots from a message",
     aliases: ["$getSnapshot"],
     unwrap: true,
