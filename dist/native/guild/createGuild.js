@@ -24,10 +24,18 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.URL,
         },
+        {
+            name: "template",
+            description: "The template to use for the guild",
+            rest: false,
+            type: structures_1.ArgType.Template,
+        },
     ],
     output: structures_1.ArgType.Guild,
-    async execute(ctx, [name, icon]) {
-        const guild = await ctx.client.guilds.create({ name: name, icon: icon }).catch(ctx.noop);
+    async execute(ctx, [name, icon, temp]) {
+        const guild = await (temp
+            ? temp.createGuild(name, icon || undefined).catch(ctx.noop)
+            : ctx.client.guilds.create({ name, icon }).catch(ctx.noop));
         return this.success(guild?.id);
     },
 });
