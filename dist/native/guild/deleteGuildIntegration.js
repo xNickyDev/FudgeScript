@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$deleteGuildIntegration",
+    version: "2.4.0",
     description: "Deletes an integration from a guild, returns bool",
     aliases: [
         "$deleteServerIntegration"

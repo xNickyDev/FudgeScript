@@ -4,6 +4,7 @@ const integration_1 = require("../../properties/integration");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$getGuildIntegration",
+    version: "2.4.0",
     description: "Returns an integration of a guild",
     aliases: [
         "$getServerIntegration"
