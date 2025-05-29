@@ -11,14 +11,13 @@ export enum IntegrationProperty {
     enabled = "enabled",
     revoked = "revoked",
     syncing = "syncing",
-    accountID = "accountID",
-    accountName = "accountName",
     applicationID = "applicationID",
     enableEmoticons = "enableEmoticons",
     subscriberCount = "subscriberCount",
     syncedTimestamp = "syncedTimestamp",
     expireBehavior = "expireBehavior",
     expireGracePeriod = "expireGracePeriod",
+    scopes = "scopes",
 }
 
 export const IntegrationProperties = defineProperties<typeof IntegrationProperty, Integration>({
@@ -31,12 +30,11 @@ export const IntegrationProperties = defineProperties<typeof IntegrationProperty
     enabled: (i) => i?.enabled ?? false,
     revoked: (i) => i?.revoked ?? false,
     syncing: (i) => i?.syncing ?? false,
-    accountID: (i) => i?.account.id,
-    accountName: (i) => i?.account.name,
     applicationID: (i) => i?.application?.id,
     enableEmoticons: (i) => i?.enableEmoticons ?? false,
     subscriberCount: (i) => i?.subscriberCount,
     syncedTimestamp: (i) => i?.syncedTimestamp,
     expireBehavior: (i) => IntegrationExpireBehavior[i?.expireBehavior!],
     expireGracePeriod: (i) => i?.expireGracePeriod,
+    scopes: (i, sep) => i?.scopes.join(sep ?? ", "),
 })

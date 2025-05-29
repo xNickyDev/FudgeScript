@@ -17,14 +17,13 @@ var IntegrationProperty;
     IntegrationProperty["enabled"] = "enabled";
     IntegrationProperty["revoked"] = "revoked";
     IntegrationProperty["syncing"] = "syncing";
-    IntegrationProperty["accountID"] = "accountID";
-    IntegrationProperty["accountName"] = "accountName";
     IntegrationProperty["applicationID"] = "applicationID";
     IntegrationProperty["enableEmoticons"] = "enableEmoticons";
     IntegrationProperty["subscriberCount"] = "subscriberCount";
     IntegrationProperty["syncedTimestamp"] = "syncedTimestamp";
     IntegrationProperty["expireBehavior"] = "expireBehavior";
     IntegrationProperty["expireGracePeriod"] = "expireGracePeriod";
+    IntegrationProperty["scopes"] = "scopes";
 })(IntegrationProperty || (exports.IntegrationProperty = IntegrationProperty = {}));
 exports.IntegrationProperties = (0, defineProperties_1.default)({
     id: (i) => i?.id,
@@ -36,13 +35,12 @@ exports.IntegrationProperties = (0, defineProperties_1.default)({
     enabled: (i) => i?.enabled ?? false,
     revoked: (i) => i?.revoked ?? false,
     syncing: (i) => i?.syncing ?? false,
-    accountID: (i) => i?.account.id,
-    accountName: (i) => i?.account.name,
     applicationID: (i) => i?.application?.id,
     enableEmoticons: (i) => i?.enableEmoticons ?? false,
     subscriberCount: (i) => i?.subscriberCount,
     syncedTimestamp: (i) => i?.syncedTimestamp,
     expireBehavior: (i) => discord_js_1.IntegrationExpireBehavior[i?.expireBehavior],
     expireGracePeriod: (i) => i?.expireGracePeriod,
+    scopes: (i, sep) => i?.scopes.join(sep ?? ", "),
 });
 //# sourceMappingURL=integration.js.map

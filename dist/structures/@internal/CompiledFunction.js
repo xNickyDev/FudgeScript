@@ -396,6 +396,9 @@ class CompiledFunction {
     async resolveTemplate(ctx, arg, str, ref) {
         return await ctx.client.fetchGuildTemplate(str).catch(ctx.noop);
     }
+    async resolveIntegration(ctx, arg, str, ref) {
+        return (await this.resolvePointer(arg, ref, ctx.guild)?.fetchIntegrations().catch(ctx.noop))?.get(str);
+    }
     resolvePointer(arg, ref, fallback) {
         const ptr = ref[arg.pointer] ?? fallback;
         return arg.pointerProperty ? ptr?.[arg.pointerProperty] : ptr;

@@ -443,6 +443,35 @@ class Arg {
             pointer: 0
         });
     }
+    static optionalIntegration(name = "integration ID", desc = "The guild integration to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: NativeFunction_1.ArgType.Integration,
+            pointer: 0
+        });
+    }
+    static restIntegration(name = "integration IDs", desc = "The guild integrations to use", required = false) {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required,
+            type: NativeFunction_1.ArgType.Integration,
+            pointer: 0
+        });
+    }
+    static requiredIntegration(name = "integration ID", desc = "The guild integration to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: NativeFunction_1.ArgType.Integration,
+            pointer: 0
+        });
+    }
     static restTextChannel(name = "text channel IDs", desc = "The text channels to use", required = false) {
         return Arg.create({
             name,

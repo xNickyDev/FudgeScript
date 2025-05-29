@@ -39,6 +39,7 @@ var ArgType;
     ArgType[ArgType["StageInstance"] = 33] = "StageInstance";
     ArgType[ArgType["SoundboardSound"] = 34] = "SoundboardSound";
     ArgType[ArgType["Template"] = 35] = "Template";
+    ArgType[ArgType["Integration"] = 36] = "Integration";
 })(ArgType || (exports.ArgType = ArgType = {}));
 class NativeFunction {
     data;

@@ -9,14 +9,13 @@ export declare enum IntegrationProperty {
     enabled = "enabled",
     revoked = "revoked",
     syncing = "syncing",
-    accountID = "accountID",
-    accountName = "accountName",
     applicationID = "applicationID",
     enableEmoticons = "enableEmoticons",
     subscriberCount = "subscriberCount",
     syncedTimestamp = "syncedTimestamp",
     expireBehavior = "expireBehavior",
-    expireGracePeriod = "expireGracePeriod"
+    expireGracePeriod = "expireGracePeriod",
+    scopes = "scopes"
 }
 export declare const IntegrationProperties: import("../functions/defineProperties").Properties<typeof IntegrationProperty, Integration>;
 //# sourceMappingURL=integration.d.ts.map

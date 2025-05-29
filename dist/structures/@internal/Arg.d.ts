@@ -49,6 +49,9 @@ export declare class Arg {
     static optionalSoundboardSound(name?: string, desc?: string): IArg<ArgType.SoundboardSound, boolean, false, EnumLike>;
     static restSoundboardSound(name?: string, desc?: string, required?: boolean): IArg<ArgType.SoundboardSound, boolean, true, EnumLike>;
     static requiredSoundboardSound(name?: string, desc?: string): IArg<ArgType.SoundboardSound, true, false, EnumLike>;
+    static optionalIntegration(name?: string, desc?: string): IArg<ArgType.Integration, boolean, false, EnumLike>;
+    static restIntegration(name?: string, desc?: string, required?: boolean): IArg<ArgType.Integration, boolean, true, EnumLike>;
+    static requiredIntegration(name?: string, desc?: string): IArg<ArgType.Integration, true, false, EnumLike>;
     static restTextChannel(name?: string, desc?: string, required?: boolean): IArg<ArgType.TextChannel, boolean, true, EnumLike>;
     static optionalTextChannel(name?: string, desc?: string): IArg<ArgType.TextChannel, boolean, false, EnumLike>;
     static requiredTextChannel(name?: string, desc?: string): IArg<ArgType.TextChannel, true, false, EnumLike>;

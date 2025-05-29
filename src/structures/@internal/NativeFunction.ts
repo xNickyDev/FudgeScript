@@ -11,6 +11,7 @@ import {
     GuildMember,
     GuildScheduledEvent,
     GuildTemplate,
+    Integration,
     Invite,
     Message,
     MessageReaction,
@@ -70,7 +71,8 @@ export enum ArgType {
     ScheduledEvent,
     StageInstance,
     SoundboardSound,
-    Template
+    Template,
+    Integration
 }
 
 export interface IArg<
@@ -222,6 +224,8 @@ export type GetArgType<T extends ArgType, Enum extends EnumLike> = T extends Arg
     ? SoundboardSound
     : T extends ArgType.Template
     ? GuildTemplate
+    : T extends ArgType.Integration
+    ? Integration
     : null
 
 export type MarkNullable<T, Req extends boolean, Rest extends boolean = boolean> = Rest extends true

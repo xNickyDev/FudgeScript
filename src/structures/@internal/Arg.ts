@@ -490,6 +490,38 @@ export class Arg {
         })
     }
 
+    public static optionalIntegration(name: string = "integration ID", desc: string = "The guild integration to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            type: ArgType.Integration,
+            pointer: 0
+        })
+    }
+
+    public static restIntegration(name: string = "integration IDs", desc: string = "The guild integrations to use", required: boolean = false) {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: true,
+            required,
+            type: ArgType.Integration,
+            pointer: 0
+        })
+    }
+
+    public static requiredIntegration(name: string = "integration ID", desc: string = "The guild integration to use") {
+        return Arg.create({
+            name,
+            description: desc,
+            rest: false,
+            required: true,
+            type: ArgType.Integration,
+            pointer: 0
+        })
+    }
+
     public static restTextChannel(name: string = "text channel IDs", desc: string = "The text channels to use", required: boolean = false) {
         return Arg.create({
             name,

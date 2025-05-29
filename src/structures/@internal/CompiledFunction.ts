@@ -482,6 +482,10 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return await ctx.client.fetchGuildTemplate(str).catch(ctx.noop)
     }
 
+    private async resolveIntegration(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
+        return (await this.resolvePointer(arg, ref, ctx.guild)?.fetchIntegrations().catch(ctx.noop))?.get(str)
+    }
+
     private resolvePointer<T>(arg: IArg, ref: Array<unknown>, fallback?: T) {
         const ptr = (ref[arg.pointer!] as T) ?? fallback
         return arg.pointerProperty ? (ptr?.[arg.pointerProperty as keyof T] as T) : ptr

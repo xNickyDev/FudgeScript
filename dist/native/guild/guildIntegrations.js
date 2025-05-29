@@ -8,6 +8,7 @@ const array_1 = __importDefault(require("../../functions/array"));
 const integration_1 = require("../../properties/integration");
 exports.default = new structures_1.NativeFunction({
     name: "$guildIntegrations",
+    version: "2.4.0",
     description: "Returns all integrations of a guild",
     unwrap: true,
     brackets: false,
