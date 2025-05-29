@@ -23,7 +23,11 @@ exports.default = new structures_1.NativeFunction({
             enum: AuthorizingIntegrationOwnersType
         },
     ],
-    output: structures_1.ArgType.Json,
+    output: [
+        structures_1.ArgType.Json,
+        structures_1.ArgType.User,
+        structures_1.ArgType.Guild
+    ],
     execute(ctx, [type]) {
         const owners = ctx.interaction && "authorizingIntegrationOwners" in ctx.interaction ? ctx.interaction.authorizingIntegrationOwners : undefined;
         return this.successJSON(owners && this.hasFields ? owners[type] : owners);

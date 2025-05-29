@@ -1,4 +1,4 @@
-import { GuildEmoji, Sticker, StickerFormatType } from "discord.js"
+import { Sticker, StickerFormatType, StickerPack } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum StickerProperty {
@@ -27,4 +27,26 @@ export const StickerProperties = defineProperties<typeof StickerProperty, Sticke
     tags: (i, sep) => i?.tags,
     sortValue: i => i?.sortValue,
     packID: i => i?.packId
+})
+
+export enum StickerPackProperty {
+    id = "id",
+    name = "name",
+    description = "description",
+    timestamp = "timestamp",
+    banner = "banner",
+    stickers = "stickers",
+    coverStickerID = "coverStickerID",
+    skuID = "skuID",
+}
+
+export const StickerPackProperties = defineProperties<typeof StickerPackProperty, StickerPack>({
+    id: (i) => i?.id,
+    name: (i) => i?.name,
+    description: (i) => i?.description,
+    timestamp: (i) => i?.createdTimestamp,
+    banner: (i) => i?.bannerURL(),
+    stickers: (i, sep) => i?.stickers.map((x) => x.id).join(sep ?? ", "),
+    coverStickerID: (i) => i?.coverStickerId,
+    skuID: (i) => i?.skuId
 })
