@@ -10,7 +10,7 @@ export default new NativeFunction({
         "$serverInvites"
     ],
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "guild ID",
@@ -22,7 +22,6 @@ export default new NativeFunction({
         {
             name: "property",
             rest: false,
-            required: true,
             type: ArgType.Enum,
             description: "The property of the invites to return",
             enum: InviteProperty
@@ -37,6 +36,6 @@ export default new NativeFunction({
     output: array<ArgType.Unknown>(),
     async execute(ctx, [ guild, prop, sep ]) {
         const invites = await (guild ?? ctx.guild).invites.fetch().catch(ctx.noop)
-        return this.successJSON(invites?.map(invite => InviteProperties[prop](invite)).join(sep ?? ", "))
+        return this.successJSON(invites?.map(invite => InviteProperties[prop || InviteProperty.code](invite)).join(sep ?? ", "))
     },
 })

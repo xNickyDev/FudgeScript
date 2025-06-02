@@ -14,7 +14,7 @@ exports.default = new structures_1.NativeFunction({
         "$serverInvites"
     ],
     unwrap: true,
-    brackets: true,
+    brackets: false,
     args: [
         {
             name: "guild ID",
@@ -26,7 +26,6 @@ exports.default = new structures_1.NativeFunction({
         {
             name: "property",
             rest: false,
-            required: true,
             type: structures_1.ArgType.Enum,
             description: "The property of the invites to return",
             enum: invite_1.InviteProperty
@@ -41,7 +40,7 @@ exports.default = new structures_1.NativeFunction({
     output: (0, array_1.default)(),
     async execute(ctx, [guild, prop, sep]) {
         const invites = await (guild ?? ctx.guild).invites.fetch().catch(ctx.noop);
-        return this.successJSON(invites?.map(invite => invite_1.InviteProperties[prop](invite)).join(sep ?? ", "));
+        return this.successJSON(invites?.map(invite => invite_1.InviteProperties[prop || invite_1.InviteProperty.code](invite)).join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=guildInvites.js.map

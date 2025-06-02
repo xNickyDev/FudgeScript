@@ -9,7 +9,6 @@ declare const _default: NativeFunction<[{
 }, {
     name: string;
     rest: false;
-    required: true;
     type: ArgType.Enum;
     description: string;
     enum: typeof InviteProperty;
