@@ -1,5 +1,4 @@
 import array from "../../functions/array"
-import noop from "../../functions/noop"
 import { InviteProperties, InviteProperty } from "../../properties/invite"
 import { ArgType, NativeFunction } from "../../structures"
 
@@ -35,7 +34,7 @@ export default new NativeFunction({
             description: "The separator to use for each property"
         }
     ],
-    output: array<ArgType.String>(),
+    output: array<ArgType.Unknown>(),
     async execute(ctx, [ guild, prop, sep ]) {
         const invites = await (guild ?? ctx.guild).invites.fetch().catch(ctx.noop)
         return this.successJSON(invites?.map(invite => InviteProperties[prop](invite)).join(sep ?? ", "))
