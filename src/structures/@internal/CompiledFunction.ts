@@ -525,6 +525,10 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         return this.data.fields !== null
     }
 
+    public hasField(i: number) {
+        return this.data.fields?.[i] != null
+    }
+
     public error(err: Error): Return<ReturnType.Error>
     public error<T extends ErrorType>(type: T, ...args: GetErrorArgs<T>): Return<ReturnType.Error>
     public error<T extends ErrorType>(type: T | Error, ...args: GetErrorArgs<T>): Return<ReturnType.Error> {

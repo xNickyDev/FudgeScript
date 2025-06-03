@@ -426,6 +426,9 @@ class CompiledFunction {
     get hasFields() {
         return this.data.fields !== null;
     }
+    hasField(i) {
+        return this.data.fields?.[i] != null;
+    }
     error(type, ...args) {
         if (type instanceof Error)
             return new Return_1.Return(Return_1.ReturnType.Error, type);
