@@ -19,6 +19,11 @@ declare const _default: NativeFunction<[{
     rest: false;
     description: string;
     type: ArgType.String;
+}, {
+    name: string;
+    rest: false;
+    description: string;
+    type: ArgType.Boolean;
 }], true>;
 export default _default;
 //# sourceMappingURL=messageEmojis.d.ts.map

@@ -33,9 +33,23 @@ export default new NativeFunction({
             description: "The separator to use for every emoji",
             type: ArgType.String,
         },
+        {
+            name: "return ids",
+            rest: false,
+            description: "Whether to return the emoji ids",
+            type: ArgType.Boolean,
+        },
     ],
     output: array<ArgType.Emoji>(),
-    execute(ctx, [, message, sep]) {
-        return this.success([...(message ?? ctx.message)?.content.matchAll(EmojiRegex)].map((x) => x[0]).join(sep ?? ", "))
+    execute(ctx, [, message, sep, returnIDs]) {
+        return this.success(
+            [...(message ?? ctx.message)?.content.matchAll(EmojiRegex) ?? []]
+                .map((x) =>
+                    returnIDs
+                        ? ctx.client.emojis.cache.find((e) => e.toString() === x[0])?.id
+                        : x[0]
+                )
+                .join(sep ?? ", ")
+        )
     },
 })

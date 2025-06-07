@@ -8,6 +8,7 @@ const array_1 = __importDefault(require("../../functions/array"));
 const EmojiRegex = /(<a?:\w+:\d+>)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
 exports.default = new structures_1.NativeFunction({
     name: "$messageEmojis",
+    version: "2.4.0",
     description: "Retrieves all emojis of this message",
     brackets: false,
     unwrap: true,
@@ -34,10 +35,20 @@ exports.default = new structures_1.NativeFunction({
             description: "The separator to use for every emoji",
             type: structures_1.ArgType.String,
         },
+        {
+            name: "return ids",
+            rest: false,
+            description: "Whether to return the emoji ids",
+            type: structures_1.ArgType.Boolean,
+        },
     ],
     output: (0, array_1.default)(),
-    execute(ctx, [, message, sep]) {
-        return this.success([...(message ?? ctx.message)?.content.matchAll(EmojiRegex)].map((x) => x[0]).join(sep ?? ", "));
+    execute(ctx, [, message, sep, returnIDs]) {
+        return this.success([...(message ?? ctx.message)?.content.matchAll(EmojiRegex) ?? []]
+            .map((x) => returnIDs
+            ? ctx.client.emojis.cache.find((e) => e.toString() === x[0])?.id
+            : x[0])
+            .join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=messageEmojis.js.map
