@@ -44,11 +44,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: (0, array_1.default)(),
     execute(ctx, [, message, sep, returnIDs]) {
-        return this.success([...(message ?? ctx.message)?.content.matchAll(EmojiRegex) ?? []]
-            .map((x) => returnIDs
-            ? ctx.client.emojis.cache.find((e) => e.toString() === x[0])?.id
-            : x[0])
-            .join(sep ?? ", "));
+        return this.success([...(message ?? ctx.message)?.content.matchAll(EmojiRegex) ?? []].map((x) => x[returnIDs ? 1 : 0]).filter(Boolean).join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=messageEmojis.js.map
