@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 const array_1 = __importDefault(require("../../functions/array"));
-const EmojiRegex = /(<a?:\w+:\d+>)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
+const EmojiRegex = /<a?:\w+:(\d+)>|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
 exports.default = new structures_1.NativeFunction({
     name: "$messageEmojis",
     version: "2.4.0",

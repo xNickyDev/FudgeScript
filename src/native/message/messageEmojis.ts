@@ -2,7 +2,7 @@ import { BaseChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import array from "../../functions/array"
 
-const EmojiRegex = /(<a?:\w+:\d+>)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu
+const EmojiRegex = /<a?:\w+:(\d+)>|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu
 
 export default new NativeFunction({
     name: "$messageEmojis",
