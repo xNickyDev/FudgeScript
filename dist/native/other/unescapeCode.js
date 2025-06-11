@@ -5,7 +5,7 @@ exports.default = new structures_1.NativeFunction({
     name: "$unescapeCode",
     version: "1.5.0",
     description: "Code inside this function will be executed",
-    unwrap: true,
+    unwrap: false,
     brackets: true,
     aliases: [
         "$unescape",
@@ -14,15 +14,16 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "code",
-            type: structures_1.ArgType.String,
             description: "The code to execute",
+            type: structures_1.ArgType.String,
             required: true,
-            rest: false
+            rest: true
         }
     ],
-    output: structures_1.ArgType.String,
-    execute(ctx) {
-        return this.success();
+    output: structures_1.ArgType.Unknown,
+    async execute(ctx) {
+        const code = this.data.fields[0];
+        return await this["resolveCode"](ctx, code);
     },
 });
 //# sourceMappingURL=unescapeCode.js.map
