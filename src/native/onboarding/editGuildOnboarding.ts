@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$editGuildOnboarding",
-    version: "2.1.0",
+    version: "2.4.0",
     description: "Edits the onboarding of a guild, returns bool",
     unwrap: true,
     aliases: [
@@ -42,8 +42,9 @@ export default new NativeFunction({
     async execute(ctx, [guild, enabled, mode, reason]) {
         return this.success((await guild.editOnboarding({
             mode: mode || undefined,
-            enabled: enabled || undefined,
-            defaultChannels: ctx.onboarding.defaultChannels || undefined,
+            enabled: typeof(enabled) === "boolean" ? enabled : undefined,
+            defaultChannels: ctx.onboarding.defaultChannels,
+            prompts: ctx.onboarding.prompts,
             reason: reason || undefined
         }).catch(() => false)) !== false)
     },

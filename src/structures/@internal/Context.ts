@@ -5,6 +5,7 @@ import {
     AutoModerationTriggerMetadataOptions,
     BaseChannel,
     BaseInteraction,
+    ChannelResolvable,
     ChatInputCommandInteraction,
     ContextMenuCommandInteraction,
     Emoji,
@@ -13,6 +14,7 @@ import {
     GuildEmoji,
     GuildMember,
     GuildOnboardingPromptData,
+    GuildOnboardingPromptOptionData,
     GuildScheduledEventEntityMetadataOptions,
     GuildScheduledEventRecurrenceRuleOptions,
     Interaction,
@@ -29,10 +31,9 @@ import {
 } from "discord.js"
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction"
 import { Container, Sendable } from "./Container"
-import { ArgType, IArg, NativeFunction, UnwrapArgs } from "./NativeFunction"
+import { IArg, UnwrapArgs } from "./NativeFunction"
 import { Return, ReturnType } from "./Return"
 import { IRunnable } from "../../core/Interpreter"
-import noop from "../../functions/noop"
 import { ForgeError } from "../forge/ForgeError"
 import { Logger } from "./Logger"
 import { FormData, Headers } from "undici"
@@ -71,8 +72,9 @@ export interface IAutomodRuleOptions {
 }
 
 export interface IOnboardingOptions {
-    defaultChannels?: string[]
+    defaultChannels?: ChannelResolvable[]
     prompts?: GuildOnboardingPromptData[]
+    options?: GuildOnboardingPromptOptionData[]
 }
 
 export interface IScheduledEventOptions {

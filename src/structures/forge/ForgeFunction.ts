@@ -9,6 +9,7 @@ export interface IForgeFunctionParam {
     name: string
     type?: ArgType | keyof typeof ArgType
     required?: boolean
+    rest?: boolean
 }
 
 export interface IForgeFunction {
@@ -41,7 +42,7 @@ export class ForgeFunction {
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
             args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
-                rest: false,
+                rest: typeof x === "string" ? false : !!x.rest,
                 condition: i === 0 && !!this.data.firstParamCondition,
                 type: typeof x === "string" ? ArgType.String : (typeof x.type === "number" && x.type in ArgType ? x.type : ArgType[x.type!]) ?? ArgType.String,
                 required: typeof x === "string" ? true : x.required ?? true,
@@ -59,8 +60,12 @@ export class ForgeFunction {
                         return this.stop()
                     // eslint-disable-next-line no-unsafe-optional-chaining
                     const params = await this["resolveMultipleArgs"](ctx, ...this.data.fields.slice(1).map((_, i) => i + 1))
-                    if (!this["isValidReturnType"](params.return))
+                    console.log("resolveMultipleArgs: " + params)
+                    if (!this["isValidReturnType"](params.return)) {
+                        console.log("resolveMultipleArgs RETURN: " + params.return)
                         return params.return
+                    }
+                    console.log("resolveMultipleArgs ARGS: " + params.args)
                     return outer.call(ctx, params.args)
                 } else {
                     return outer.call(ctx, args ?? [])

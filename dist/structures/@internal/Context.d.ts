@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, MediaGalleryBuilder, Message, MessageReaction, Role, SectionBuilder, SoundboardSound, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChannelResolvable, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildOnboardingPromptOptionData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, MediaGalleryBuilder, Message, MessageReaction, Role, SectionBuilder, SoundboardSound, Sticker, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
@@ -32,8 +32,9 @@ export interface IAutomodRuleOptions {
     exemptChannels?: string[];
 }
 export interface IOnboardingOptions {
-    defaultChannels?: string[];
+    defaultChannels?: ChannelResolvable[];
     prompts?: GuildOnboardingPromptData[];
+    options?: GuildOnboardingPromptOptionData[];
 }
 export interface IScheduledEventOptions {
     channel?: VoiceBasedChannel;

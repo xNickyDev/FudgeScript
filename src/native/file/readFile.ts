@@ -7,7 +7,7 @@ export default new NativeFunction({
     description: "Reads text from a file",
     unwrap: true,
     brackets: true,
-    output: ArgType.String,
+    output: ArgType.Unknown,
     args: [
         {
             name: "path",
