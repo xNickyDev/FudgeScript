@@ -21,6 +21,8 @@ export default new NativeFunction({
     ],
     output: ArgType.Unknown,
     async execute(ctx) {
-        return await this["resolveUnhandledArg"](ctx, 0)
+        const resolved = await this["resolveUnhandledArg"](ctx, 0)
+        if (!this["isValidReturnType"](resolved)) return resolved
+        return this.unsafeSuccess(Array.isArray(resolved.value) ? resolved.value.slice().join(";") : resolved.value)
     },
 })
