@@ -22,8 +22,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Unknown,
     async execute(ctx) {
-        const code = this.data.fields[0];
-        return await this["resolveCode"](ctx, code);
+        return await this["resolveUnhandledArg"](ctx, 0);
     },
 });
 //# sourceMappingURL=unescapeCode.js.map

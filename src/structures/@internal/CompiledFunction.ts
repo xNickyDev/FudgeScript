@@ -19,7 +19,6 @@ import { Context } from "./Context"
 import { IArg, UnwrapArgs, NativeFunction, ArgType, OverwritePermission } from "./NativeFunction"
 import { Return, ReturnType, ReturnValue } from "./Return"
 import { resolveColor } from "../../functions/hex"
-import noop from "../../functions/noop"
 
 export interface IExtendedCompiledFunctionConditionField extends Omit<ICompiledFunctionConditionField, "rhs" | "lhs"> {
     lhs: IExtendedCompiledFunctionField
