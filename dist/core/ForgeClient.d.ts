@@ -7,6 +7,7 @@ import { WebSocket } from "ws";
 export interface ITrackers {
     invites?: boolean;
     voice?: boolean;
+    boosts?: boolean;
 }
 export interface IRestrictions {
     guildIDs?: string[];

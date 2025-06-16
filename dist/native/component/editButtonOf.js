@@ -75,9 +75,7 @@ exports.default = new structures_1.NativeFunction({
         const btn = components[rowIndex].components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId);
         if (!btn)
             return this.success();
-        // @ts-ignore
-        btn.setCustomId(id || btn.data.custom_id)
-            .setDisabled(disabled || btn.data.disabled)
+        btn.setDisabled(disabled || btn.data.disabled)
             .setStyle(style || btn.data.style)
             // @ts-ignore
             .setLabel(label || btn.data.label || "");
@@ -86,6 +84,9 @@ exports.default = new structures_1.NativeFunction({
             btn.setURL(id || btn.data.custom_id);
         else if (style === discord_js_1.ButtonStyle.Premium)
             btn.setSKUId(id);
+        // @ts-ignore
+        else
+            btn.setCustomId(id || btn.data.custom_id);
         if (emoji)
             btn.setEmoji(emoji);
         return this.success(!!(await m.edit({ components: components }).catch(ctx.noop)));

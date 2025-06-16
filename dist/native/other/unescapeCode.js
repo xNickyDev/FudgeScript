@@ -23,9 +23,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Unknown,
     async execute(ctx) {
         const resolved = await this["resolveUnhandledArg"](ctx, 0);
-        if (!this["isValidReturnType"](resolved))
-            return resolved;
-        return this.unsafeSuccess(Array.isArray(resolved.value) ? resolved.value.slice().join(";") : resolved.value);
+        return this.unsafeSuccess(Array.isArray(resolved.value) ? resolved.value.slice().join("\\;") : resolved.value);
     },
 });
 //# sourceMappingURL=unescapeCode.js.map

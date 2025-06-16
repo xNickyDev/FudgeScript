@@ -35,12 +35,14 @@ import {
 import { VoiceTracker } from "../structures/trackers/VoiceTracker"
 import { Interpreter } from "./Interpreter"
 import { WebSocket } from "ws"
+import { BoostTracker } from "../structures/trackers/BoostTracker"
 
 disableValidators()
 
 export interface ITrackers {
     invites?: boolean
     voice?: boolean
+    boosts?: boolean
 }
 
 export interface IRestrictions {
@@ -174,6 +176,7 @@ export class ForgeClient extends Client<true> {
         if (this.options.trackers) {
             if (this.options.trackers.invites) InviteTracker["init"](this)
             if (this.options.trackers.voice) VoiceTracker["init"](this)
+            if (this.options.trackers.boosts) BoostTracker["init"](this)
         }
 
         if (this.options.commands) {

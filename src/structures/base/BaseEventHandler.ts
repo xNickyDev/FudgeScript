@@ -13,6 +13,8 @@ export interface IEvent<Events, T extends keyof Events> {
 
 export type CustomEvents = {
     forgeError: any
+    guildBoostStart: any
+    guildBoostEnd: any
 }
 
 export type ExtendedEvents = ClientEvents & CustomEvents

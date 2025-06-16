@@ -80,9 +80,7 @@ export default new NativeFunction({
 
         if (!btn) return this.success()
 
-        // @ts-ignore
-        btn.setCustomId(id || btn.data.custom_id)
-            .setDisabled(disabled || btn.data.disabled!)
+        btn.setDisabled(disabled || btn.data.disabled!)
             .setStyle(style || btn.data.style!)
             // @ts-ignore
             .setLabel(label || btn.data.label || "")
@@ -90,6 +88,8 @@ export default new NativeFunction({
         // @ts-ignore
         if (style === ButtonStyle.Link) btn.setURL(id || btn.data.custom_id)
         else if (style === ButtonStyle.Premium) btn.setSKUId(id)
+        // @ts-ignore
+        else btn.setCustomId(id || btn.data.custom_id)
 
         if (emoji) btn.setEmoji(emoji)
 

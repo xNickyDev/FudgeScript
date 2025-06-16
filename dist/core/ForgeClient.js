@@ -7,6 +7,7 @@ const managers_1 = require("../managers");
 const structures_1 = require("../structures");
 const VoiceTracker_1 = require("../structures/trackers/VoiceTracker");
 const Interpreter_1 = require("./Interpreter");
+const BoostTracker_1 = require("../structures/trackers/BoostTracker");
 (0, discord_js_1.disableValidators)();
 class ForgeClient extends discord_js_1.Client {
     commands = new managers_1.NativeCommandManager(this);
@@ -57,6 +58,8 @@ class ForgeClient extends discord_js_1.Client {
                 structures_1.InviteTracker["init"](this);
             if (this.options.trackers.voice)
                 VoiceTracker_1.VoiceTracker["init"](this);
+            if (this.options.trackers.boosts)
+                BoostTracker_1.BoostTracker["init"](this);
         }
         if (this.options.commands) {
             this.commands.load(this.options.commands);

@@ -1,0 +1,1 @@
+{"version":3,"file":"BoostTracker.d.ts","sourceRoot":"","sources":["../../../src/structures/trackers/BoostTracker.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,WAAW,EAAE,MAAM,YAAY,CAAA;AAIpD,MAAM,WAAW,WAAW;IACxB,MAAM,EAAE,WAAW,CAAA;CACtB;AAED,qBAAa,YAAY;IACrB,gBAAuB,MAAM,oCAA0C;IAEvE,OAAO,CAAC,MAAM,CAAC,IAAI;CAyBtB"}
