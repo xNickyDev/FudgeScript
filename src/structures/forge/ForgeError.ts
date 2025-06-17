@@ -21,7 +21,8 @@ export interface IForgeError {
     type: keyof typeof ErrorType
     message: string
     function?: `$${string}`
-    args: unknown[]
+    args?: unknown[]
+    index?: number
 }
 
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
@@ -35,10 +36,11 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         CustomEventEmitter.emit("forgeError", {
             type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type),
             message,
-            function: fn?.fn.name,
-            ...args
+            args,
+            function: fn?.data.name,
+            index: fn?.data.index
         })
-        console.log(fn)
+        console.log(fn?.data.fields)
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {
