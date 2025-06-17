@@ -4,6 +4,7 @@ export enum ForgeErrorData {
     type = "type",
     message = "message",
     function = "function",
+    args = "args"
 }
 
 export default new NativeFunction({

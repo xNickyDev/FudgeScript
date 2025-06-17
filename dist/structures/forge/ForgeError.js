@@ -26,7 +26,9 @@ class ForgeError extends Error {
             type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
             message,
             function: fn?.fn.name,
+            ...args
         });
+        console.log(fn);
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

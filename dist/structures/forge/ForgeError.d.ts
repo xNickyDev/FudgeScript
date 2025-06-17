@@ -17,6 +17,7 @@ export interface IForgeError {
     type: keyof typeof ErrorType;
     message: string;
     function?: `$${string}`;
+    args: unknown[];
 }
 export declare class ForgeError<T extends ErrorType = ErrorType> extends Error {
     static readonly Regex: RegExp;
