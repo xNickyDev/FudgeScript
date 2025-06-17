@@ -14,7 +14,7 @@ export declare enum ErrorType {
     CompilerError = "$1 at $2:$3 ($4)"
 }
 export interface IForgeError {
-    type: ErrorType;
+    type: keyof typeof ErrorType;
     message: string;
     function?: `$${string}`;
 }

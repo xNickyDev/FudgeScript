@@ -18,7 +18,7 @@ export enum ErrorType {
 }
 
 export interface IForgeError {
-    type: ErrorType
+    type: keyof typeof ErrorType
     message: string
     function?: `$${string}`
 }
@@ -32,9 +32,9 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         
         // Emits the forgeError event whenever an error is thrown
         CustomEventEmitter.emit("forgeError", {
-            type,
+            type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type),
             message,
-            function: fn?.data.name,
+            function: fn?.fn.name,
         })
     }
 

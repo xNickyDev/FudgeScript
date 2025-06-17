@@ -23,9 +23,9 @@ class ForgeError extends Error {
         super(message);
         // Emits the forgeError event whenever an error is thrown
         CustomEventHandler_1.CustomEventEmitter.emit("forgeError", {
-            type,
+            type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
             message,
-            function: fn?.data.name,
+            function: fn?.fn.name,
         });
     }
     static make(fn, type, ...args) {
