@@ -2,7 +2,6 @@
 import {
     APIApplicationCommandOption,
     APIApplicationCommandSubcommandOption,
-    ApplicationCommandData,
     ApplicationCommandDataResolvable,
     ApplicationCommandOptionType,
     ApplicationCommandType,
@@ -17,13 +16,11 @@ import {
     Interaction,
     PermissionsBitField,
     PermissionsString,
+    RESTPostAPIApplicationCommandsJSONBody,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
-    RESTPostAPIContextMenuApplicationCommandsJSONBody,
-    RESTPostAPIPrimaryEntryPointApplicationCommandJSONBody,
     SlashCommandBuilder,
 } from "discord.js"
 import { ApplicationCommand } from "../structures/base/ApplicationCommand"
-import recursiveReaddirSync from "../functions/recursiveReaddirSync"
 import { ForgeClient } from "../core"
 import { NativeEventName } from "./EventManager"
 import { readdirSync, readFileSync, statSync, existsSync } from "fs"
@@ -40,9 +37,7 @@ export interface IApplicationCommandData {
     data:
         | SlashCommandBuilder
         | ContextMenuCommandBuilder
-        | RESTPostAPIChatInputApplicationCommandsJSONBody
-        | RESTPostAPIContextMenuApplicationCommandsJSONBody
-        | RESTPostAPIPrimaryEntryPointApplicationCommandJSONBody
+        | RESTPostAPIApplicationCommandsJSONBody
     code: string
     type?: RegistrationType
     default_member_permissions?: PermissionsString[]
