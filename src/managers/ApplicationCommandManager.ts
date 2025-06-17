@@ -19,6 +19,7 @@ import {
     PermissionsString,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
     RESTPostAPIContextMenuApplicationCommandsJSONBody,
+    RESTPostAPIPrimaryEntryPointApplicationCommandJSONBody,
     SlashCommandBuilder,
 } from "discord.js"
 import { ApplicationCommand } from "../structures/base/ApplicationCommand"
@@ -41,6 +42,7 @@ export interface IApplicationCommandData {
         | ContextMenuCommandBuilder
         | RESTPostAPIChatInputApplicationCommandsJSONBody
         | RESTPostAPIContextMenuApplicationCommandsJSONBody
+        | RESTPostAPIPrimaryEntryPointApplicationCommandJSONBody
     code: string
     type?: RegistrationType
     default_member_permissions?: PermissionsString[]

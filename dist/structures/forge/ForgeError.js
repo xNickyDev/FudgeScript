@@ -16,19 +16,34 @@ var ErrorType;
     ErrorType["RequiredExtension"] = "Extension $1 requires the next extension: $2 loaded to work";
     ErrorType["CompilerError"] = "$1 at $2:$3 ($4)";
 })(ErrorType || (exports.ErrorType = ErrorType = {}));
+let isEmitting = false;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
         const message = ForgeError.make(fn, type, ...args);
         super(message);
         // Emits the forgeError event whenever an error is thrown
-        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", {
-            type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
-            message,
-            args,
-            function: fn?.data.name,
-            index: fn?.data.index
-        });
+        if (!isEmitting) {
+            try {
+                isEmitting = true;
+                CustomEventHandler_1.CustomEventEmitter.emit("forgeError", {
+                    type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
+                    message,
+                    args,
+                    function: fn?.data.name,
+                    index: fn?.data.index
+                });
+            }
+            catch (error) {
+                throw new ForgeError(null, ErrorType.Custom, "Error while handling forgeError: " + error);
+            }
+            finally {
+                isEmitting = false;
+            }
+        }
+        else {
+            throw new ForgeError(null, ErrorType.Custom, "forgeError emission prevented to avoid recursion: " + message);
+        }
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

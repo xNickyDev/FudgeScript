@@ -25,6 +25,8 @@ export interface IForgeError {
     index?: number
 }
 
+let isEmitting = false
+
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
 
@@ -33,13 +35,24 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         super(message)
         
         // Emits the forgeError event whenever an error is thrown
-        CustomEventEmitter.emit("forgeError", {
-            type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type),
-            message,
-            args,
-            function: fn?.data.name,
-            index: fn?.data.index
-        })
+        if (!isEmitting) {
+            try {
+                isEmitting = true
+                CustomEventEmitter.emit("forgeError", {
+                    type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type),
+                    message,
+                    args,
+                    function: fn?.data.name,
+                    index: fn?.data.index
+                })
+            } catch (error) {
+                throw new ForgeError(null, ErrorType.Custom, "Error while handling forgeError: " + error)
+            } finally {
+                isEmitting = false
+            }
+        } else {
+            throw new ForgeError(null, ErrorType.Custom, "forgeError emission prevented to avoid recursion: " + message)
+        }
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {
