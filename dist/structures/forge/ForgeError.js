@@ -29,7 +29,6 @@ class ForgeError extends Error {
             function: fn?.data.name,
             index: fn?.data.index
         });
-        console.log(fn?.data.fields);
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

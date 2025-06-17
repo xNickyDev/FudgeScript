@@ -40,7 +40,6 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
             function: fn?.data.name,
             index: fn?.data.index
         })
-        console.log(fn?.data.fields)
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {
