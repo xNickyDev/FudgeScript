@@ -7,6 +7,7 @@ export default new CustomEventHandler({
     description: "This event is fired when a custom forge error is thrown",
     listener: function (err) {
         const commands = this.commands.get("forgeError")
+
         if (commands.length) {
             for (const command of commands) {
                 Interpreter.run({

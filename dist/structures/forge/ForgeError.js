@@ -22,7 +22,11 @@ class ForgeError extends Error {
         const message = ForgeError.make(fn, type, ...args);
         super(message);
         // Emits the forgeError event whenever an error is thrown
-        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", { func: fn?.display, type: type, msg: message, args: args });
+        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", {
+            type,
+            message,
+            function: fn?.data.name,
+        });
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

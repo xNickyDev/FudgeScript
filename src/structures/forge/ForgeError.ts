@@ -17,6 +17,12 @@ export enum ErrorType {
     CompilerError = "$1 at $2:$3 ($4)",
 }
 
+export interface IForgeError {
+    type: ErrorType
+    message: string
+    function?: `$${string}`
+}
+
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
 
@@ -25,7 +31,11 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
         super(message)
         
         // Emits the forgeError event whenever an error is thrown
-        CustomEventEmitter.emit("forgeError", { func: fn?.display, type: type, msg: message, args: args })
+        CustomEventEmitter.emit("forgeError", {
+            type,
+            message,
+            function: fn?.data.name,
+        })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

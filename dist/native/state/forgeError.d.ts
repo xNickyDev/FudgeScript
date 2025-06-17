@@ -1,9 +1,8 @@
 import { ArgType, NativeFunction } from "../../structures";
 export declare enum ForgeErrorData {
     type = "type",
-    function = "func",
-    message = "msg",
-    args = "args"
+    message = "message",
+    function = "function"
 }
 declare const _default: NativeFunction<[{
     name: string;

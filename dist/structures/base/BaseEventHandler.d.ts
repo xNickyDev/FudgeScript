@@ -1,5 +1,6 @@
 import { ClientEvents, GatewayIntentsString } from "discord.js";
 import { type ForgeClient } from "../../core/ForgeClient";
+import { IForgeError } from "..";
 export type AssertArgs<T> = T extends unknown[] ? T : never;
 export interface IEvent<Events, T extends keyof Events> {
     name: T;
@@ -9,7 +10,7 @@ export interface IEvent<Events, T extends keyof Events> {
     intents?: GatewayIntentsString[];
 }
 export type CustomEvents = {
-    forgeError: any;
+    forgeError: IForgeError;
     guildBoostStart: any;
     guildBoostEnd: any;
 };

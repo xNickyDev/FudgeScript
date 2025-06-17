@@ -5,9 +5,8 @@ const structures_1 = require("../../structures");
 var ForgeErrorData;
 (function (ForgeErrorData) {
     ForgeErrorData["type"] = "type";
-    ForgeErrorData["function"] = "func";
-    ForgeErrorData["message"] = "msg";
-    ForgeErrorData["args"] = "args";
+    ForgeErrorData["message"] = "message";
+    ForgeErrorData["function"] = "function";
 })(ForgeErrorData || (exports.ForgeErrorData = ForgeErrorData = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$forgeError",
@@ -15,7 +14,6 @@ exports.default = new structures_1.NativeFunction({
     description: "Retrieves data from an event whose context was a forge error event",
     brackets: true,
     unwrap: true,
-    output: structures_1.ArgType.Unknown,
     args: [
         {
             name: "property",
@@ -32,6 +30,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
+    output: structures_1.ArgType.Unknown,
     execute(ctx, [prop, sep]) {
         return this.successJSON(ctx.runtime.extras[prop]);
     },

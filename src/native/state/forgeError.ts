@@ -1,10 +1,9 @@
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { ArgType, IForgeError, NativeFunction, Return } from "../../structures"
 
 export enum ForgeErrorData {
     type = "type",
-    function = "func",
-    message = "msg",
-    args = "args"
+    message = "message",
+    function = "function",
 }
 
 export default new NativeFunction({
@@ -13,7 +12,6 @@ export default new NativeFunction({
     description: "Retrieves data from an event whose context was a forge error event",
     brackets: true,
     unwrap: true,
-    output: ArgType.Unknown,
     args: [
         {
             name: "property",
@@ -30,7 +28,8 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
+    output: ArgType.Unknown,
     execute(ctx, [prop, sep]) {
-        return this.successJSON((ctx.runtime.extras as any)[prop])
+        return this.successJSON((ctx.runtime.extras as IForgeError)[prop])
     },
 })
