@@ -8,6 +8,7 @@ var ForgeErrorData;
     ForgeErrorData["message"] = "message";
     ForgeErrorData["function"] = "function";
     ForgeErrorData["args"] = "args";
+    ForgeErrorData["index"] = "index";
 })(ForgeErrorData || (exports.ForgeErrorData = ForgeErrorData = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$forgeError",

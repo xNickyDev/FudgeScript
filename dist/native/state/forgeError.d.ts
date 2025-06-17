@@ -3,7 +3,8 @@ export declare enum ForgeErrorData {
     type = "type",
     message = "message",
     function = "function",
-    args = "args"
+    args = "args",
+    index = "index"
 }
 declare const _default: NativeFunction<[{
     name: string;
