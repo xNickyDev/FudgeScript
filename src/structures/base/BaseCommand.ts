@@ -101,7 +101,8 @@ export class BaseCommand<T> {
                         (type === "selectMenu" && i.isAnySelectMenu()) ||
                         (type === "modal" && i.isModalSubmit()) ||
                         (type === "autocomplete" && i.isAutocomplete()) ||
-                        (type === "contextMenu" && i.isContextMenuCommand())
+                        (type === "contextMenu" && i.isContextMenuCommand()) ||
+                        (type === "activityCommand" && i.isPrimaryEntryPointCommand())
                 )
             )
         )
