@@ -16,6 +16,7 @@ import {
     Interaction,
     PermissionsBitField,
     PermissionsString,
+    PrimaryEntryPointCommandInteraction,
     RESTPostAPIApplicationCommandsJSONBody,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
     SlashCommandBuilder,
@@ -149,7 +150,9 @@ export class ApplicationCommandManager {
                     ? ` ${subcommandName}`
                     : ""
             } ${filteredOptions.join(" ")}`
-        } else if (input instanceof ContextMenuCommandInteraction) return `/${input.commandName}`
+        } else if (input instanceof ContextMenuCommandInteraction || input instanceof PrimaryEntryPointCommandInteraction) {
+            return `/${input.commandName}`
+        }
         return null
     }
 

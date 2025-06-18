@@ -13,7 +13,8 @@ export type CommandInteractionTypes =
     "slashCommand" | 
     "autocomplete" | 
     "contextMenu" |
-    "selectMenu"
+    "selectMenu" |
+    "activityCommand"
 
 export interface IBaseCommand<T> {
     name?: string
