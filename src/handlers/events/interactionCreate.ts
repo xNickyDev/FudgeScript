@@ -6,7 +6,6 @@ export default new DiscordEventHandler({
     version: "1.0.1",
     description: "This event is fired every time a user uses a slash command, context menu, button, etc",
     listener: async function (i) {
-        console.log(i, i.isCommand())
         if (i.isCommand()) {
             const command = this.applicationCommands.get(i)
             if (command) {

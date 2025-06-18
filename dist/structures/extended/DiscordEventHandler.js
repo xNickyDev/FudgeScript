@@ -5,6 +5,9 @@ const BaseEventHandler_1 = require("../base/BaseEventHandler");
 class DiscordEventHandler extends BaseEventHandler_1.BaseEventHandler {
     register(client) {
         client.on(this.name, this.listener.bind(client));
+        client.on("interactionCreate", (i) => {
+            console.log("Interaction received!", i);
+        });
     }
 }
 exports.DiscordEventHandler = DiscordEventHandler;
