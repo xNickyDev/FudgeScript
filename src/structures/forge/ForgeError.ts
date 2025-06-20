@@ -26,7 +26,7 @@ export interface IForgeError {
     index?: number
 }
 
-const emittedErrors = new WeakSet<IForgeError>()
+let inHandler = false
 
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
@@ -43,18 +43,21 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
             index: fn?.data.index
         }
         
-        if (!emittedErrors.has(error)) {
-            emittedErrors.add(error)
-            queueMicrotask(() => {
-                try {
-                    CustomEventEmitter.emit("forgeError", error)
-                } catch (err) {
-                    Logger.error("Handler forgeError failed:", err)
-                }
-            })
-        } else {
-            Logger.warn("Skipped re-emitting forgeError to avoid recursion:", message)
+        if (inHandler) {
+            Logger.warn("ForgeError suppressed inside forgeError handler to avoid recursion:", message)
+            return
         }
+
+        queueMicrotask(() => {
+            try {
+                inHandler = true
+                CustomEventEmitter.emit("forgeError", error)
+            } catch (err) {
+                Logger.error("Handler for forgeError failed:", err)
+            } finally {
+                inHandler = false
+            }
+        })
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

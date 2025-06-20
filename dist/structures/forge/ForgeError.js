@@ -17,7 +17,7 @@ var ErrorType;
     ErrorType["RequiredExtension"] = "Extension $1 requires the next extension: $2 loaded to work";
     ErrorType["CompilerError"] = "$1 at $2:$3 ($4)";
 })(ErrorType || (exports.ErrorType = ErrorType = {}));
-const emittedErrors = new WeakSet();
+let inHandler = false;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
@@ -30,20 +30,22 @@ class ForgeError extends Error {
             function: fn?.data.name,
             index: fn?.data.index
         };
-        if (!emittedErrors.has(error)) {
-            emittedErrors.add(error);
-            queueMicrotask(() => {
-                try {
-                    CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
-                }
-                catch (err) {
-                    Logger_1.Logger.error("Handler forgeError failed:", err);
-                }
-            });
+        if (inHandler) {
+            Logger_1.Logger.warn("ForgeError suppressed inside forgeError handler to avoid recursion:", message);
+            return;
         }
-        else {
-            Logger_1.Logger.warn("Skipped re-emitting forgeError to avoid recursion:", message);
-        }
+        queueMicrotask(() => {
+            try {
+                inHandler = true;
+                CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
+            }
+            catch (err) {
+                Logger_1.Logger.error("Handler for forgeError failed:", err);
+            }
+            finally {
+                inHandler = false;
+            }
+        });
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);
