@@ -48,16 +48,17 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
             return
         }
 
-        queueMicrotask(() => {
+        inHandler = true
+        
+        setTimeout(() => {
             try {
-                inHandler = true
                 CustomEventEmitter.emit("forgeError", error)
             } catch (err) {
-                Logger.error("Handler for forgeError failed:", err)
+                Logger.error("[ForgeError] Error in forgeError handler", err)
             } finally {
                 inHandler = false
             }
-        })
+        }, 0)
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

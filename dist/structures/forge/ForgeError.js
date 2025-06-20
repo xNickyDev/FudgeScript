@@ -34,18 +34,18 @@ class ForgeError extends Error {
             Logger_1.Logger.warn("ForgeError suppressed inside forgeError handler to avoid recursion:", message);
             return;
         }
-        queueMicrotask(() => {
+        inHandler = true;
+        setTimeout(() => {
             try {
-                inHandler = true;
                 CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
             }
             catch (err) {
-                Logger_1.Logger.error("Handler for forgeError failed:", err);
+                Logger_1.Logger.error("[ForgeError] Error in forgeError handler", err);
             }
             finally {
                 inHandler = false;
             }
-        });
+        }, 0);
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);
