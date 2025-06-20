@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForgeError = exports.ErrorType = void 0;
+const Logger_1 = require("../@internal/Logger");
 const CustomEventHandler_1 = require("../extended/CustomEventHandler");
 var ErrorType;
 (function (ErrorType) {
@@ -35,14 +36,14 @@ class ForgeError extends Error {
                 });
             }
             catch (error) {
-                throw new ForgeError(null, ErrorType.Custom, "Error while handling forgeError: " + error);
+                Logger_1.Logger.error(error);
             }
             finally {
                 isEmitting = false;
             }
         }
         else {
-            throw new ForgeError(null, ErrorType.Custom, "forgeError emission prevented to avoid recursion: " + message);
+            Logger_1.Logger.warn("Prevented ForgeError recursion!");
         }
     }
     static make(fn, type, ...args) {

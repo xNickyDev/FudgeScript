@@ -1,4 +1,5 @@
 import { CompiledFunction } from "../@internal/CompiledFunction"
+import { Logger } from "../@internal/Logger"
 import { CustomEventEmitter } from "../extended/CustomEventHandler"
 
 export type GetErrorArgs<T extends string> = T extends `${infer L}$${infer R}` ? [unknown, ...GetErrorArgs<R>] : []
@@ -46,12 +47,12 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
                     index: fn?.data.index
                 })
             } catch (error) {
-                throw new ForgeError(null, ErrorType.Custom, "Error while handling forgeError: " + error)
+                Logger.error(error)
             } finally {
                 isEmitting = false
             }
         } else {
-            throw new ForgeError(null, ErrorType.Custom, "forgeError emission prevented to avoid recursion: " + message)
+            Logger.warn("Prevented ForgeError recursion!")
         }
     }
 
