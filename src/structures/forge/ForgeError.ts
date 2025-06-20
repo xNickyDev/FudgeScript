@@ -21,12 +21,12 @@ export enum ErrorType {
 export interface IForgeError {
     type: keyof typeof ErrorType
     message: string
-    function?: `$${string}`
+    function?: string
     args?: unknown[]
     index?: number
 }
 
-let isEmitting = false
+const emittedErrors = new WeakSet<IForgeError>()
 
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
@@ -34,25 +34,26 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public constructor(fn: CompiledFunction | null, type: T, ...args: GetErrorArgs<T>) {
         const message = ForgeError.make(fn, type, ...args)
         super(message)
+
+        const error: IForgeError = {
+            type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type) as keyof typeof ErrorType,
+            message,
+            args,
+            function: fn?.data.name,
+            index: fn?.data.index
+        }
         
-        // Emits the forgeError event whenever an error is thrown
-        if (!isEmitting) {
-            try {
-                isEmitting = true
-                CustomEventEmitter.emit("forgeError", {
-                    type: Object.keys(ErrorType).find((x) => ErrorType[x as keyof typeof ErrorType] === type),
-                    message,
-                    args,
-                    function: fn?.data.name,
-                    index: fn?.data.index
-                })
-            } catch (error) {
-                Logger.error(error)
-            } finally {
-                isEmitting = false
-            }
+        if (!emittedErrors.has(error)) {
+            emittedErrors.add(error)
+            queueMicrotask(() => {
+                try {
+                    CustomEventEmitter.emit("forgeError", error)
+                } catch (err) {
+                    Logger.error("Handler forgeError failed:", err)
+                }
+            })
         } else {
-            Logger.warn("Prevented ForgeError recursion!")
+            Logger.warn("Skipped re-emitting forgeError to avoid recursion:", message)
         }
     }
 

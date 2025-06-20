@@ -17,33 +17,32 @@ var ErrorType;
     ErrorType["RequiredExtension"] = "Extension $1 requires the next extension: $2 loaded to work";
     ErrorType["CompilerError"] = "$1 at $2:$3 ($4)";
 })(ErrorType || (exports.ErrorType = ErrorType = {}));
-let isEmitting = false;
+const emittedErrors = new WeakSet();
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
         const message = ForgeError.make(fn, type, ...args);
         super(message);
-        // Emits the forgeError event whenever an error is thrown
-        if (!isEmitting) {
-            try {
-                isEmitting = true;
-                CustomEventHandler_1.CustomEventEmitter.emit("forgeError", {
-                    type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
-                    message,
-                    args,
-                    function: fn?.data.name,
-                    index: fn?.data.index
-                });
-            }
-            catch (error) {
-                Logger_1.Logger.error(error);
-            }
-            finally {
-                isEmitting = false;
-            }
+        const error = {
+            type: Object.keys(ErrorType).find((x) => ErrorType[x] === type),
+            message,
+            args,
+            function: fn?.data.name,
+            index: fn?.data.index
+        };
+        if (!emittedErrors.has(error)) {
+            emittedErrors.add(error);
+            queueMicrotask(() => {
+                try {
+                    CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
+                }
+                catch (err) {
+                    Logger_1.Logger.error("Handler forgeError failed:", err);
+                }
+            });
         }
         else {
-            Logger_1.Logger.warn("Prevented ForgeError recursion!");
+            Logger_1.Logger.warn("Skipped re-emitting forgeError to avoid recursion:", message);
         }
     }
     static make(fn, type, ...args) {

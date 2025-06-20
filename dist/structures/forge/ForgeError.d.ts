@@ -16,7 +16,7 @@ export declare enum ErrorType {
 export interface IForgeError {
     type: keyof typeof ErrorType;
     message: string;
-    function?: `$${string}`;
+    function?: string;
     args?: unknown[];
     index?: number;
 }
