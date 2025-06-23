@@ -66,7 +66,7 @@ export default new NativeFunction({
         ctx.container.content = content || undefined
         ctx.container.avatarURL = avatarUrl || undefined
         ctx.container.username = username || undefined
-        ctx.container.threadId = thread?.id as ThreadChannelResolvable || undefined
+        ctx.container.threadId = thread?.id || undefined
         ctx.container.threadName = name || undefined
         ctx.container.appliedTags = tags || undefined
         ctx.container.withComponents = true
