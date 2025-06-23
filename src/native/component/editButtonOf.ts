@@ -1,5 +1,6 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageActionRowComponent } from "discord.js"
+import { ButtonBuilder, ButtonStyle, createComponentBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { findComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editButtonOf",
@@ -67,18 +68,10 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>))
+        const components = m.components.map(x => createComponentBuilder(x.toJSON()))
+        const btn = findComponent(components, oldId)
 
-        const rowIndex = components.findIndex((x) =>
-            x.components.some((x) => "custom_id" in x.data && x.data.custom_id === oldId)
-        )
-        if (rowIndex === -1) return this.success()
-
-        const btn = components[rowIndex].components.find(
-            (x) => "custom_id" in x.data && x.data.custom_id === oldId
-        ) as ButtonBuilder
-
-        if (!btn) return this.success()
+        if (!(btn instanceof ButtonBuilder)) return this.success()
 
         btn.setDisabled(disabled || btn.data.disabled!)
             .setStyle(style || btn.data.style!)
@@ -94,7 +87,7 @@ export default new NativeFunction({
         if (emoji) btn.setEmoji(emoji)
 
         return this.success(
-            !!(await m.edit({ components: components as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })

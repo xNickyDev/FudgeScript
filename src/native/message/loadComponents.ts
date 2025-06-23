@@ -1,5 +1,5 @@
 import { ArgType, NativeFunction } from "../../structures"
-import { isTopLevel } from "../../functions/componentBuilders"
+import { isTopLevel } from "../../functions/components"
 import { ActionRowBuilder, ComponentType, createComponentBuilder } from "discord.js"
 
 export default new NativeFunction({

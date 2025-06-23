@@ -1,9 +1,11 @@
 import {
     ActionRowBuilder,
+    AnyComponentBuilder,
     ButtonBuilder,
     ChannelSelectMenuBuilder,
     ComponentType,
     ContainerBuilder,
+    ContainerComponentBuilder,
     FileBuilder,
     MediaGalleryBuilder,
     MentionableSelectMenuBuilder,
@@ -65,6 +67,29 @@ export function buildComponent(ctx: Context, comp: any) {
     const type = comp.type as ComponentType
     if (isTopLevel(type, false)) ctx.container.isComponentsV2 = true
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp)
+}
+
+/**
+ * Flattens all message components.
+ * @param comps The components to flatten.
+ * @returns 
+ */
+function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
+    return comps.flatMap((x) => {
+        if (x instanceof ActionRowBuilder) return x.components
+        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
+        if (x instanceof ContainerBuilder) return flattenComponents(x.components)
+        return []
+    })
+}
+
+/**
+ * Finds a message component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the message component to find.
+ */
+export function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
+    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
 }
 
 /**

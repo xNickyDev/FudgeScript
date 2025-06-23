@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const components_1 = require("../../functions/components");
 exports.default = new structures_1.NativeFunction({
     name: "$editButtonOf",
     version: "1.5.0",
@@ -68,12 +69,9 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        const rowIndex = components.findIndex((x) => x.components.some((x) => "custom_id" in x.data && x.data.custom_id === oldId));
-        if (rowIndex === -1)
-            return this.success();
-        const btn = components[rowIndex].components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId);
-        if (!btn)
+        const components = m.components.map(x => (0, discord_js_1.createComponentBuilder)(x.toJSON()));
+        const btn = (0, components_1.findComponent)(components, oldId);
+        if (!(btn instanceof discord_js_1.ButtonBuilder))
             return this.success();
         btn.setDisabled(disabled || btn.data.disabled)
             .setStyle(style || btn.data.style)
@@ -89,7 +87,7 @@ exports.default = new structures_1.NativeFunction({
             btn.setCustomId(id || btn.data.custom_id);
         if (emoji)
             btn.setEmoji(emoji);
-        return this.success(!!(await m.edit({ components: components }).catch(ctx.noop)));
+        return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=editButtonOf.js.map

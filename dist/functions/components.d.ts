@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
 import { Context } from "../structures";
 /**
  * Checks whether the specified component type is a top level component.
@@ -19,11 +19,17 @@ export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectM
  * @param comp The component data.
  * @returns
  */
-export declare function buildComponent(ctx: Context, comp: any): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<import("@discordjs/builders").AnyComponentBuilder>;
+export declare function buildComponent(ctx: Context, comp: any): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
+/**
+ * Finds a message component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the message component to find.
+ */
+export declare function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string): AnyComponentBuilder | undefined;
 /**
  * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.
  * @returns
  */
 export declare function addActionRow(ctx: Context): void;
-//# sourceMappingURL=componentBuilders.d.ts.map
+//# sourceMappingURL=components.d.ts.map

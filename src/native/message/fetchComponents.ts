@@ -1,5 +1,5 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildComponent } from "../../functions/componentBuilders"
+import { buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$fetchComponents",

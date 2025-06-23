@@ -1,6 +1,6 @@
 import { AttachmentBuilder, EmbedBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
-import { buildComponent } from "../../functions/componentBuilders"
+import { buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$fetchResponse",

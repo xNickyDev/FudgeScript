@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.addActionRow = exports.findComponent = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -53,6 +53,31 @@ function buildComponent(ctx, comp) {
 }
 exports.buildComponent = buildComponent;
 /**
+ * Flattens all message components.
+ * @param comps The components to flatten.
+ * @returns
+ */
+function flattenComponents(comps) {
+    return comps.flatMap((x) => {
+        if (x instanceof discord_js_1.ActionRowBuilder)
+            return x.components;
+        if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
+            return [x.accessory];
+        if (x instanceof discord_js_1.ContainerBuilder)
+            return flattenComponents(x.components);
+        return [];
+    });
+}
+/**
+ * Finds a message component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the message component to find.
+ */
+function findComponent(comps, id) {
+    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
+}
+exports.findComponent = findComponent;
+/**
  * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.
  * @returns
@@ -70,4 +95,4 @@ function addActionRow(ctx) {
     delete ctx.container.actionRow;
 }
 exports.addActionRow = addActionRow;
-//# sourceMappingURL=componentBuilders.js.map
+//# sourceMappingURL=components.js.map
