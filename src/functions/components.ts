@@ -89,7 +89,9 @@ function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBui
  * @param id The custom ID of the message component to find.
  */
 export function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
-    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
+    const flatten = flattenComponents(comps)
+    console.log(flatten)
+    return flatten.find((x) => "custom_id" in x.data && x.data.custom_id === id)
 }
 
 /**
