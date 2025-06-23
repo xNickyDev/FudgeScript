@@ -69,6 +69,7 @@ export default new NativeFunction({
         ctx.container.threadId = thread?.id as ThreadChannelResolvable || undefined
         ctx.container.threadName = name || undefined
         ctx.container.appliedTags = tags || undefined
+        ctx.container.withComponents = true
 
         const m = await ctx.container.send<Message>(web)
         return this.success(returnMessageID && m ? m.id : undefined)

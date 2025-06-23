@@ -70,7 +70,7 @@ exports.default = new structures_1.NativeFunction({
         m ??= ctx.message;
         let isV2 = m.flags.has(discord_js_1.MessageFlags.IsComponentsV2);
         if (typeof rowIndex !== "number") {
-            return this.successJSON(m?.components.map((x) => isV2 ? x.data : x.components));
+            return this.successJSON(m?.components.map((x) => isV2 ? x : x.components));
         }
         const row = m.components[rowIndex];
         const comps = "components" in row ? row.components : undefined;

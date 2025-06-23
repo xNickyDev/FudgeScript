@@ -72,7 +72,7 @@ export default new NativeFunction({
 
         if (typeof rowIndex !== "number") {
             return this.successJSON(m?.components.map((x) =>
-                isV2 ? x.data : (x as ActionRow<MessageActionRowComponent>).components
+                isV2 ? x : (x as ActionRow<MessageActionRowComponent>).components
             ))
         }
 

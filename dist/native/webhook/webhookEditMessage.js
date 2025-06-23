@@ -35,6 +35,7 @@ exports.default = new structures_1.NativeFunction({
         const web = new discord_js_1.WebhookClient({ url });
         ctx.container.content = content || undefined;
         ctx.container.edit = true;
+        ctx.container.withComponents = true;
         return this.success(!!(await ctx.container.send(web, undefined, msg)));
     },
 });
