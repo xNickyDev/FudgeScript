@@ -1,6 +1,6 @@
 import { ButtonBuilder, ButtonStyle, createComponentBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { findComponent } from "../../functions/components"
+import { buildComponent, findComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editButtonOf",
@@ -68,7 +68,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => createComponentBuilder(x.toJSON()))
+        const components = m.components.map(x => buildComponent(ctx, x))
         const btn = findComponent(components, oldId)
         console.log(btn)
 
