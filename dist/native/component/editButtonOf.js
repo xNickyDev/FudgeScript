@@ -71,7 +71,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
         const components = m.components.map(x => (0, components_1.buildComponent)(x));
         console.log("Builders", components);
-        const btn = (0, components_1.findComponent)(components, oldId);
+        const btn = (0, components_1.findButton)(components, oldId);
         console.log("Component", btn);
         if (!(btn instanceof discord_js_1.ButtonBuilder))
             return this.success();

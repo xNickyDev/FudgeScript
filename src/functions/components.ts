@@ -3,6 +3,7 @@ import {
     AnyComponentBuilder,
     ButtonBuilder,
     ChannelSelectMenuBuilder,
+    ComponentBuilder,
     ComponentType,
     ContainerBuilder,
     ContainerComponentBuilder,
@@ -70,27 +71,51 @@ export function buildComponent(comp: any, ctx?: Context) {
 }
 
 /**
- * Flattens all message components.
+ * Flattens all button components.
  * @param comps The components to flatten.
  * @returns 
  */
-function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
+function flattenButtons(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
         console.log(x)
         if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [buildComponent(x.accessory.toJSON())]
-        if (x instanceof ContainerBuilder) return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())))
+        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
+        if (x instanceof ContainerBuilder) return flattenButtons(x.components.map((x) => buildComponent(x.toJSON())))
         return []
-    })
+    }).filter((x) => x instanceof ButtonBuilder)
 }
 
 /**
- * Finds a message component.
+ * Finds a button component.
  * @param comps The components to search through.
- * @param id The custom ID of the message component to find.
+ * @param id The custom ID of the button to find.
+ * @returns
  */
-export function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
-    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
+export function findButton(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
+    return flattenButtons(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
+}
+
+/**
+ * Flattens all select menu components.
+ * @param comps The components to flatten.
+ * @returns 
+ */
+function flattenSelectMenus(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
+    return comps.flatMap((x) => {
+        if (x instanceof ActionRowBuilder) return x.components
+        if (x instanceof ContainerBuilder) return flattenSelectMenus(x.components.map((x) => buildComponent(x.toJSON())))
+        return []
+    }).filter((x) => !!x && !(x instanceof ButtonBuilder))
+}
+
+/**
+ * Finds a select menu component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the select menu to find.
+ * @returns
+ */
+export function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
+    return flattenSelectMenus(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
 }
 
 /**

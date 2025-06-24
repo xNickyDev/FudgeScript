@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.findComponent = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -53,31 +53,56 @@ function buildComponent(comp, ctx) {
 }
 exports.buildComponent = buildComponent;
 /**
- * Flattens all message components.
+ * Flattens all button components.
  * @param comps The components to flatten.
  * @returns
  */
-function flattenComponents(comps) {
+function flattenButtons(comps) {
     return comps.flatMap((x) => {
         console.log(x);
         if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
         if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
-            return [buildComponent(x.accessory.toJSON())];
+            return [x.accessory];
         if (x instanceof discord_js_1.ContainerBuilder)
-            return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())));
+            return flattenButtons(x.components.map((x) => buildComponent(x.toJSON())));
         return [];
-    });
+    }).filter((x) => x instanceof discord_js_1.ButtonBuilder);
 }
 /**
- * Finds a message component.
+ * Finds a button component.
  * @param comps The components to search through.
- * @param id The custom ID of the message component to find.
+ * @param id The custom ID of the button to find.
+ * @returns
  */
-function findComponent(comps, id) {
-    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
+function findButton(comps, id) {
+    return flattenButtons(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
 }
-exports.findComponent = findComponent;
+exports.findButton = findButton;
+/**
+ * Flattens all select menu components.
+ * @param comps The components to flatten.
+ * @returns
+ */
+function flattenSelectMenus(comps) {
+    return comps.flatMap((x) => {
+        if (x instanceof discord_js_1.ActionRowBuilder)
+            return x.components;
+        if (x instanceof discord_js_1.ContainerBuilder)
+            return flattenSelectMenus(x.components.map((x) => buildComponent(x.toJSON())));
+        return [];
+    }).filter((x) => !!x && !(x instanceof discord_js_1.ButtonBuilder));
+}
+/**
+ * Finds a select menu component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the select menu to find.
+ * @returns
+ */
+function findSelectMenu(comps, id) {
+    return flattenSelectMenus(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
+}
+exports.findSelectMenu = findSelectMenu;
 /**
  * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.

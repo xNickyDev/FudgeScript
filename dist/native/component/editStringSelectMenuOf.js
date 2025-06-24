@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const components_1 = require("../../functions/components");
 exports.default = new structures_1.NativeFunction({
     name: "$editStringSelectMenuOf",
     version: "1.5.0",
@@ -65,24 +66,21 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max]) {
-        const components = m.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        for (let i = 0, len = components.length; i < len; i++) {
-            const comp = components[i];
-            const menu = comp.components[0];
-            if (menu instanceof discord_js_1.StringSelectMenuBuilder && menu.data.custom_id === old) {
-                menu.setCustomId(id);
-                if (placeholder)
-                    menu.setPlaceholder(placeholder);
-                if (typeof disabled === "boolean")
-                    menu.setDisabled(disabled);
-                if (typeof min === "number")
-                    menu.setMinValues(min);
-                if (typeof max === "number")
-                    menu.setMaxValues(max);
-                break;
-            }
-        }
-        return this.success(!!(await m.edit({ components: components }).catch(ctx.noop)));
+        const components = m.components.map(x => (0, components_1.buildComponent)(x));
+        const menu = (0, components_1.findSelectMenu)(components, old);
+        console.log("Component", menu);
+        if (!(menu instanceof discord_js_1.StringSelectMenuBuilder))
+            return this.success();
+        menu.setCustomId(id);
+        if (placeholder)
+            menu.setPlaceholder(placeholder);
+        if (typeof disabled === "boolean")
+            menu.setDisabled(disabled);
+        if (typeof min === "number")
+            menu.setMinValues(min);
+        if (typeof max === "number")
+            menu.setMaxValues(max);
+        return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=editStringSelectMenuOf.js.map

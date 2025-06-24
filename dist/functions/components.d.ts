@@ -21,11 +21,19 @@ export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectM
  */
 export declare function buildComponent(comp: any, ctx?: Context): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
 /**
- * Finds a message component.
+ * Finds a button component.
  * @param comps The components to search through.
- * @param id The custom ID of the message component to find.
+ * @param id The custom ID of the button to find.
+ * @returns
  */
-export declare function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string): AnyComponentBuilder | undefined;
+export declare function findButton(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string): AnyComponentBuilder | undefined;
+/**
+ * Finds a select menu component.
+ * @param comps The components to search through.
+ * @param id The custom ID of the select menu to find.
+ * @returns
+ */
+export declare function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string): AnyComponentBuilder | undefined;
 /**
  * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
  * @param ctx The current context.

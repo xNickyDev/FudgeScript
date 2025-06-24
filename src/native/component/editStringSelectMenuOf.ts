@@ -1,5 +1,6 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, MessageActionRowComponent, StringSelectMenuBuilder } from "discord.js"
+import { StringSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { buildComponent, findSelectMenu } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editStringSelectMenuOf",
@@ -64,25 +65,21 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max]) {
-        const components = m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>))
+        const components = m.components.map(x => buildComponent(x))
+        const menu = findSelectMenu(components, old)
+        console.log("Component", menu)
 
-        for (let i = 0, len = components.length;i < len;i++) {
-            const comp = components[i]
-            const menu = comp.components[0]
-            if (menu instanceof StringSelectMenuBuilder && menu.data.custom_id === old) {
-                menu.setCustomId(id)
-                
-                if (placeholder) menu.setPlaceholder(placeholder)
-                if (typeof disabled === "boolean") menu.setDisabled(disabled)
-                if (typeof min === "number") menu.setMinValues(min)
-                if (typeof max === "number") menu.setMaxValues(max)
+        if (!(menu instanceof StringSelectMenuBuilder)) return this.success()
 
-                break
-            }
-        }
+        menu.setCustomId(id)
+
+        if (placeholder) menu.setPlaceholder(placeholder)
+        if (typeof disabled === "boolean") menu.setDisabled(disabled)
+        if (typeof min === "number") menu.setMinValues(min)
+        if (typeof max === "number") menu.setMaxValues(max)
 
         return this.success(
-            !!(await m.edit({ components: components as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })
