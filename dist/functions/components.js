@@ -41,13 +41,13 @@ function buildActionRow(comp) {
 exports.buildActionRow = buildActionRow;
 /**
  * Builds a top level component.
- * @param ctx The current context.
  * @param comp The component data.
+ * @param ctx The current context, if any.
  * @returns
  */
-function buildComponent(ctx, comp) {
+function buildComponent(comp, ctx) {
     const type = comp.type;
-    if (isTopLevel(type, false))
+    if (ctx && isTopLevel(type, false))
         ctx.container.isComponentsV2 = true;
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
@@ -61,10 +61,10 @@ function flattenComponents(comps) {
     return comps.flatMap((x) => {
         if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
-        if (x instanceof discord_js_1.SectionBuilder)
+        if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
             return [x.accessory];
         if (x instanceof discord_js_1.ContainerBuilder)
-            return flattenComponents(x.components);
+            return flattenComponents(x.components.map((x) => buildComponent(x)));
         return [];
     });
 }

@@ -15,11 +15,11 @@ export declare function isTopLevel(type: ComponentType, actionRow?: boolean): bo
 export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectMenuBuilder | UserSelectMenuBuilder | ChannelSelectMenuBuilder | RoleSelectMenuBuilder | MentionableSelectMenuBuilder;
 /**
  * Builds a top level component.
- * @param ctx The current context.
  * @param comp The component data.
+ * @param ctx The current context, if any.
  * @returns
  */
-export declare function buildComponent(ctx: Context, comp: any): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
+export declare function buildComponent(comp: any, ctx?: Context): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
 /**
  * Finds a message component.
  * @param comps The components to search through.

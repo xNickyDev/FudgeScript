@@ -26,7 +26,7 @@ export default new NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, msg]) {
-        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => buildComponent(ctx, x)) ?? []
+        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => buildComponent(x, ctx)) ?? []
         return this.success()
     },
 })

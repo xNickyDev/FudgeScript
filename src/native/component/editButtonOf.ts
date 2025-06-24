@@ -68,7 +68,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => buildComponent(ctx, x))
+        const components = m.components.map(x => buildComponent(x))
         console.log("Builders", components)
         const btn = findComponent(components, oldId)
 

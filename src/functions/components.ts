@@ -59,13 +59,13 @@ export function buildActionRow(comp: any) {
 
 /**
  * Builds a top level component.
- * @param ctx The current context.
  * @param comp The component data.
+ * @param ctx The current context, if any.
  * @returns 
  */
-export function buildComponent(ctx: Context, comp: any) {
+export function buildComponent(comp: any, ctx?: Context) {
     const type = comp.type as ComponentType
-    if (isTopLevel(type, false)) ctx.container.isComponentsV2 = true
+    if (ctx && isTopLevel(type, false)) ctx.container.isComponentsV2 = true
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp)
 }
 
@@ -77,8 +77,8 @@ export function buildComponent(ctx: Context, comp: any) {
 function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
         if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof SectionBuilder) return [x.accessory]
-        if (x instanceof ContainerBuilder) return flattenComponents(x.components)
+        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
+        if (x instanceof ContainerBuilder) return flattenComponents(x.components.map((x) => buildComponent(x)))
         return []
     })
 }

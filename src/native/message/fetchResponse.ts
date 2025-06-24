@@ -30,7 +30,7 @@ export default new NativeFunction({
         if (msg) {
             ctx.container.content = msg.content
             ctx.container.embeds.push(...msg.embeds.map(x => EmbedBuilder.from(x)))
-            ctx.container.components.push(...msg.components.map(x => buildComponent(ctx, x)))
+            ctx.container.components.push(...msg.components.map(x => buildComponent(x, ctx)))
             ctx.container.files.push(...msg.attachments.map(x => new AttachmentBuilder(x.url, { name: x.name })))
             ctx.container.stickers.push(...msg.stickers.map(x => x.id))
         }

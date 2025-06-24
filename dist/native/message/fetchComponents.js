@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: false,
     execute(ctx, [, msg]) {
-        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => (0, components_1.buildComponent)(ctx, x)) ?? [];
+        ctx.container.components = (msg ?? ctx.message)?.components.map((x) => (0, components_1.buildComponent)(x, ctx)) ?? [];
         return this.success();
     },
 });

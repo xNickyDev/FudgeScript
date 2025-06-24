@@ -31,7 +31,7 @@ exports.default = new structures_1.NativeFunction({
         if (msg) {
             ctx.container.content = msg.content;
             ctx.container.embeds.push(...msg.embeds.map(x => discord_js_1.EmbedBuilder.from(x)));
-            ctx.container.components.push(...msg.components.map(x => (0, components_1.buildComponent)(ctx, x)));
+            ctx.container.components.push(...msg.components.map(x => (0, components_1.buildComponent)(x, ctx)));
             ctx.container.files.push(...msg.attachments.map(x => new discord_js_1.AttachmentBuilder(x.url, { name: x.name })));
             ctx.container.stickers.push(...msg.stickers.map(x => x.id));
         }
