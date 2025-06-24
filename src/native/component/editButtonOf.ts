@@ -70,7 +70,6 @@ export default new NativeFunction({
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
         const components = m.components.map(x => buildComponent(ctx, x))
         const btn = findComponent(components, oldId)
-        console.log(btn)
 
         if (!(btn instanceof ButtonBuilder)) return this.success()
 

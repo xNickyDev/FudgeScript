@@ -59,12 +59,18 @@ exports.buildComponent = buildComponent;
  */
 function flattenComponents(comps) {
     return comps.flatMap((x) => {
-        if (x instanceof discord_js_1.ActionRowBuilder)
+        if (x instanceof discord_js_1.ActionRowBuilder) {
+            console.log("ActionRowBuilder", x.components);
             return x.components;
-        if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
+        }
+        if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder) {
+            console.log("SectionBuilder", x.accessory);
             return [x.accessory];
-        if (x instanceof discord_js_1.ContainerBuilder)
+        }
+        if (x instanceof discord_js_1.ContainerBuilder) {
+            console.log("ContainerBuilder", flattenComponents(x.components));
             return flattenComponents(x.components);
+        }
         return [];
     });
 }
@@ -74,9 +80,7 @@ function flattenComponents(comps) {
  * @param id The custom ID of the message component to find.
  */
 function findComponent(comps, id) {
-    const flatten = flattenComponents(comps);
-    console.log(flatten);
-    return flatten.find((x) => "custom_id" in x.data && x.data.custom_id === id);
+    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
 }
 exports.findComponent = findComponent;
 /**

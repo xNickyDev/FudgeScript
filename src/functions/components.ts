@@ -76,9 +76,18 @@ export function buildComponent(ctx: Context, comp: any) {
  */
 function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
-        if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
-        if (x instanceof ContainerBuilder) return flattenComponents(x.components)
+        if (x instanceof ActionRowBuilder) {
+            console.log("ActionRowBuilder", x.components)
+            return x.components
+        }
+        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) {
+            console.log("SectionBuilder", x.accessory)
+            return [x.accessory]
+        }
+        if (x instanceof ContainerBuilder) {
+            console.log("ContainerBuilder", flattenComponents(x.components))
+            return flattenComponents(x.components)
+        }
         return []
     })
 }
@@ -89,9 +98,7 @@ function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBui
  * @param id The custom ID of the message component to find.
  */
 export function findComponent(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
-    const flatten = flattenComponents(comps)
-    console.log(flatten)
-    return flatten.find((x) => "custom_id" in x.data && x.data.custom_id === id)
+    return flattenComponents(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
 }
 
 /**
