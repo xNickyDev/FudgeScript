@@ -59,18 +59,12 @@ exports.buildComponent = buildComponent;
  */
 function flattenComponents(comps) {
     return comps.flatMap((x) => {
-        if (x instanceof discord_js_1.ActionRowBuilder) {
-            console.log("ActionRowBuilder", x.components);
+        if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
-        }
-        if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder) {
-            console.log("SectionBuilder", x.accessory);
+        if (x instanceof discord_js_1.SectionBuilder)
             return [x.accessory];
-        }
-        if (x instanceof discord_js_1.ContainerBuilder) {
-            console.log("ContainerBuilder", flattenComponents(x.components));
+        if (x instanceof discord_js_1.ContainerBuilder)
             return flattenComponents(x.components);
-        }
         return [];
     });
 }
