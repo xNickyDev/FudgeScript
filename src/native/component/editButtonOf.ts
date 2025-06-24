@@ -1,4 +1,4 @@
-import { ButtonBuilder, ButtonStyle, createComponentBuilder } from "discord.js"
+import { ButtonBuilder, ButtonStyle } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent, findComponent } from "../../functions/components"
 
@@ -69,6 +69,7 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
         const components = m.components.map(x => buildComponent(ctx, x))
+        console.log("Builders", components)
         const btn = findComponent(components, oldId)
 
         if (!(btn instanceof ButtonBuilder)) return this.success()
