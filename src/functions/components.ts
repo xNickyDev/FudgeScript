@@ -76,8 +76,9 @@ export function buildComponent(comp: any, ctx?: Context) {
  */
 function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
+        console.log(x)
         if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
+        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [buildComponent(x.accessory.toJSON())]
         if (x instanceof ContainerBuilder) return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())))
         return []
     })

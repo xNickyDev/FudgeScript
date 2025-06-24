@@ -59,10 +59,11 @@ exports.buildComponent = buildComponent;
  */
 function flattenComponents(comps) {
     return comps.flatMap((x) => {
+        console.log(x);
         if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
         if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
-            return [x.accessory];
+            return [buildComponent(x.accessory.toJSON())];
         if (x instanceof discord_js_1.ContainerBuilder)
             return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())));
         return [];
