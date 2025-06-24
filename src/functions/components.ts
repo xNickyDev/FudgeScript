@@ -78,7 +78,7 @@ function flattenComponents(comps: Array<ContainerBuilder | ContainerComponentBui
     return comps.flatMap((x) => {
         if (x instanceof ActionRowBuilder) return x.components
         if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
-        if (x instanceof ContainerBuilder) return flattenComponents(x.components.map((x) => buildComponent(x)))
+        if (x instanceof ContainerBuilder) return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())))
         return []
     })
 }

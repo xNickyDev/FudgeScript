@@ -64,7 +64,7 @@ function flattenComponents(comps) {
         if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
             return [x.accessory];
         if (x instanceof discord_js_1.ContainerBuilder)
-            return flattenComponents(x.components.map((x) => buildComponent(x)));
+            return flattenComponents(x.components.map((x) => buildComponent(x.toJSON())));
         return [];
     });
 }
