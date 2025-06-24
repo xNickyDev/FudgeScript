@@ -103,7 +103,7 @@ export function findButton(comps: Array<ContainerBuilder | ContainerComponentBui
 function flattenSelectMenus(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
         if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof ContainerBuilder) return flattenSelectMenus(x.components.map((x) => buildComponent(x.toJSON())))
+        if (x instanceof ContainerBuilder) x.components.flatMap((c) => c instanceof ActionRowBuilder ? c.components : [])
         return []
     }).filter((x) => !!x && !(x instanceof ButtonBuilder))
 }

@@ -89,7 +89,7 @@ function flattenSelectMenus(comps) {
         if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
         if (x instanceof discord_js_1.ContainerBuilder)
-            return flattenSelectMenus(x.components.map((x) => buildComponent(x.toJSON())));
+            x.components.flatMap((c) => c instanceof discord_js_1.ActionRowBuilder ? c.components : []);
         return [];
     }).filter((x) => !!x && !(x instanceof discord_js_1.ButtonBuilder));
 }
