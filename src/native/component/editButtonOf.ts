@@ -71,6 +71,7 @@ export default new NativeFunction({
         const components = m.components.map(x => buildComponent(x))
         console.log("Builders", components)
         const btn = findComponent(components, oldId)
+        console.log("Component", btn)
 
         if (!(btn instanceof ButtonBuilder)) return this.success()
 

@@ -72,6 +72,7 @@ exports.default = new structures_1.NativeFunction({
         const components = m.components.map(x => (0, components_1.buildComponent)(x));
         console.log("Builders", components);
         const btn = (0, components_1.findComponent)(components, oldId);
+        console.log("Component", btn);
         if (!(btn instanceof discord_js_1.ButtonBuilder))
             return this.success();
         btn.setDisabled(disabled || btn.data.disabled)
