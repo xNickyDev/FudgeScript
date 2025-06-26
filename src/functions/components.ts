@@ -80,7 +80,7 @@ function flattenButtons(comps: Array<ContainerBuilder | ContainerComponentBuilde
         console.log(x)
         if (x instanceof ActionRowBuilder) return x.components
         if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
-        if (x instanceof ContainerBuilder) return flattenButtons(x.components.map((x) => buildComponent(x.toJSON())))
+        if (x instanceof ContainerBuilder) return flattenButtons(x.components)
         return []
     }).filter((x) => x instanceof ButtonBuilder)
 }
@@ -103,7 +103,7 @@ export function findButton(comps: Array<ContainerBuilder | ContainerComponentBui
 function flattenSelectMenus(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
     return comps.flatMap((x) => {
         if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof ContainerBuilder) x.components.flatMap((c) => c instanceof ActionRowBuilder ? c.components : [])
+        if (x instanceof ContainerBuilder) flattenSelectMenus(x.components)
         return []
     }).filter((x) => !!x && !(x instanceof ButtonBuilder))
 }

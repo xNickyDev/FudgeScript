@@ -65,7 +65,7 @@ function flattenButtons(comps) {
         if (x instanceof discord_js_1.SectionBuilder && x.accessory instanceof discord_js_1.ButtonBuilder)
             return [x.accessory];
         if (x instanceof discord_js_1.ContainerBuilder)
-            return flattenButtons(x.components.map((x) => buildComponent(x.toJSON())));
+            return flattenButtons(x.components);
         return [];
     }).filter((x) => x instanceof discord_js_1.ButtonBuilder);
 }
@@ -89,7 +89,7 @@ function flattenSelectMenus(comps) {
         if (x instanceof discord_js_1.ActionRowBuilder)
             return x.components;
         if (x instanceof discord_js_1.ContainerBuilder)
-            x.components.flatMap((c) => c instanceof discord_js_1.ActionRowBuilder ? c.components : []);
+            flattenSelectMenus(x.components);
         return [];
     }).filter((x) => !!x && !(x instanceof discord_js_1.ButtonBuilder));
 }
