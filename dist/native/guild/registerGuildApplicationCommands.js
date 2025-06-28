@@ -25,20 +25,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [g, cmds]) {
         g ??= ctx.guild;
-        if (!cmds || cmds.length === 0) {
-            return this.success(!!(await ctx.client.applicationCommands.registerGuild(g)?.catch(ctx.noop)));
-        }
-        cmds = Array.isArray(cmds) ? cmds : [cmds];
-        const commands = await g.commands.fetch().catch(ctx.noop);
-        let success = false;
-        for (const cmd of cmds) {
-            const command = commands?.find(c => c.name === cmd || c.id === cmd);
-            if (command) {
-                const appCmd = command.toJSON();
-                success = !!(await g.commands.create(appCmd).catch(ctx.noop));
-            }
-        }
-        return this.success(success);
+        return this.success(!!(await ctx.client.applicationCommands.registerGuild(g, cmds)?.catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=registerGuildApplicationCommands.js.map

@@ -43,10 +43,10 @@ export declare class ApplicationCommandManager {
     private loadOne;
     private validate;
     resolve(value: ApplicationCommand | IApplicationCommandData, path: string | null): ApplicationCommand;
-    toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[];
+    toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0], cmds?: string[]): ApplicationCommandDataResolvable[];
     registerGlobal(): Promise<Collection<string, import("discord.js").ApplicationCommand<{
         guild: import("discord.js").GuildResolvable;
     }>>> | undefined;
-    registerGuild(g: Guild): Promise<Collection<string, import("discord.js").ApplicationCommand<{}>>> | undefined;
+    registerGuild(g: Guild, cmds?: string[]): Promise<Collection<string, import("discord.js").ApplicationCommand<{}>>> | undefined;
 }
 //# sourceMappingURL=ApplicationCommandManager.d.ts.map

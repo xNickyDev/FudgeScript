@@ -171,7 +171,7 @@ class ApplicationCommandManager {
         this.validate(v, path);
         return v;
     }
-    toJSON(type) {
+    toJSON(type, cmds) {
         const arr = new Array();
         // Helper function to read config.json
         const readConfig = (folderPath) => {
@@ -189,6 +189,8 @@ class ApplicationCommandManager {
         for (const [commandName, value] of this.commands) {
             if (value instanceof ApplicationCommand_1.ApplicationCommand) {
                 if (!value.mustRegisterAs(type))
+                    continue;
+                if (cmds?.length && !cmds.includes(value.name))
                     continue;
                 const folderPath = (0, path_1.join)(this.path, commandName);
                 const config = readConfig(folderPath);
@@ -230,6 +232,8 @@ class ApplicationCommandManager {
                             for (const [lastName, command] of values) {
                                 if (!command.mustRegisterAs(type))
                                     continue;
+                                if (cmds?.length && !cmds.includes(command.name))
+                                    continue;
                                 const commandData = command.toJSON();
                                 raw.options.push({
                                     ...commandData,
@@ -245,6 +249,8 @@ class ApplicationCommandManager {
                     }
                     else {
                         if (!values.mustRegisterAs(type))
+                            continue;
+                        if (cmds?.length && !cmds.includes(values.name))
                             continue;
                         const subFolderPath = (0, path_1.join)(folderPath, nextName);
                         const subConfig = readConfig(subFolderPath);
@@ -275,11 +281,11 @@ class ApplicationCommandManager {
         this.client.events.load(EventManager_1.NativeEventName, discord_js_1.Events.InteractionCreate);
         return this.client.application.commands.set(this.toJSON(RegistrationType.Global));
     }
-    registerGuild(g) {
+    registerGuild(g, cmds) {
         if (!this.commands.size)
             return;
         this.client.events.load(EventManager_1.NativeEventName, discord_js_1.Events.InteractionCreate);
-        return g.commands.set(this.toJSON(RegistrationType.Guild));
+        return g.commands.set(this.toJSON(RegistrationType.Guild, cmds));
     }
 }
 exports.ApplicationCommandManager = ApplicationCommandManager;

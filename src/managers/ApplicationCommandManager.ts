@@ -223,7 +223,7 @@ export class ApplicationCommandManager {
         return v
     }
     
-    toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0]): ApplicationCommandDataResolvable[] {
+    toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0], cmds?: string[]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()
 
         // Helper function to read config.json
@@ -242,6 +242,7 @@ export class ApplicationCommandManager {
         for (const [commandName, value] of this.commands) {
             if (value instanceof ApplicationCommand) {
                 if (!value.mustRegisterAs(type)) continue
+                if (cmds?.length && !cmds.includes(value.name)) continue
 
                 const folderPath = join(this.path, commandName)
                 const config = readConfig(folderPath)
@@ -289,6 +290,7 @@ export class ApplicationCommandManager {
 
                             for (const [lastName, command] of values) {
                                 if (!command.mustRegisterAs(type)) continue
+                                if (cmds?.length && !cmds.includes(command.name)) continue
 
                                 const commandData = command.toJSON();
                                 (raw as APIApplicationCommandOption & { options: APIApplicationCommandSubcommandOption[] }).options.push({
@@ -305,6 +307,7 @@ export class ApplicationCommandManager {
                         }
                     } else {
                         if (!values.mustRegisterAs(type)) continue
+                        if (cmds?.length && !cmds.includes(values.name)) continue
 
                         const subFolderPath = join(folderPath, nextName)
                         const subConfig = readConfig(subFolderPath)
@@ -340,9 +343,9 @@ export class ApplicationCommandManager {
         return this.client.application.commands.set(this.toJSON(RegistrationType.Global))
     }
 
-    public registerGuild(g: Guild) {
+    public registerGuild(g: Guild, cmds?: string[]) {
         if (!this.commands.size) return
         this.client.events.load(NativeEventName, Events.InteractionCreate)
-        return g.commands.set(this.toJSON(RegistrationType.Guild))
+        return g.commands.set(this.toJSON(RegistrationType.Guild, cmds))
     }
 }
