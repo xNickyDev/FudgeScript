@@ -18,6 +18,6 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     execute(ctx, [expr]) {
-        return this.success(MathRegex.test(expr))
+        return this.success(!MathRegex.test(expr))
     },
 })

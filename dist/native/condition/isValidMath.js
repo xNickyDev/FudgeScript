@@ -4,6 +4,7 @@ const structures_1 = require("../../structures");
 const math_1 = require("../math/math");
 exports.default = new structures_1.NativeFunction({
     name: "$isValidMath",
+    version: "2.4.0",
     description: "Checks whether given math expression is valid",
     brackets: true,
     unwrap: true,
@@ -18,7 +19,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     execute(ctx, [expr]) {
-        return this.success(math_1.MathRegex.test(expr));
+        return this.success(!math_1.MathRegex.test(expr));
     },
 });
 //# sourceMappingURL=isValidMath.js.map
