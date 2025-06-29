@@ -62,7 +62,7 @@ function disableButtons(comp, index) {
     }
     else if (comp instanceof discord_js_1.ActionRowBuilder) {
         comp.components.forEach((x, i) => {
-            if (!Number.isFinite(index) || i === index)
+            if (index === undefined || i === index)
                 disableButtons(x);
         });
     }

@@ -79,7 +79,7 @@ export function disableButtons(comp: ComponentBuilder, index?: number) {
         comp.setDisabled(true)
     } else if (comp instanceof ActionRowBuilder) {
         comp.components.forEach((x, i) => {
-            if (!Number.isFinite(index) || i === index) disableButtons(x)
+            if (index === undefined || i === index) disableButtons(x)
         })
     } else if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) {
         comp.accessory.setDisabled(true)
