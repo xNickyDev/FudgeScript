@@ -43,7 +43,7 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "property",
-            description: "The property to pull",
+            description: "The first property to pull",
             rest: false,
             type: structures_1.ArgType.Enum,
             enum: component_1.ComponentProperty,
@@ -61,24 +61,39 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "property",
+            description: "The second property to pull",
+            rest: false,
+            type: structures_1.ArgType.Enum,
+            enum: component_1.ComponentProperty,
+        },
     ],
     output: [
         structures_1.ArgType.Json,
         structures_1.ArgType.Unknown
     ],
-    execute(ctx, [, m, rowIndex, compIndex1, prop, sep, compIndex2]) {
+    execute(ctx, [, m, rowIndex, compIndex1, prop1, sep, compIndex2, prop2]) {
         m ??= ctx.message;
         let isV2 = m.flags.has(discord_js_1.MessageFlags.IsComponentsV2);
         if (typeof rowIndex !== "number") {
-            return this.successJSON(m?.components.map((x) => isV2 ? x : x.components));
+            return this.successJSON(m?.components.map((x) => isV2 ? x.toJSON() : x.components));
         }
         const row = m.components[rowIndex];
         const comps = "components" in row ? row.components : undefined;
         const comp = (typeof compIndex1 === "number" && comps ? comps[compIndex1] : undefined);
-        if (prop === null) {
-            return this.successJSON(comp?.data ?? (isV2 ? row.data : comps?.map((x) => x.data)));
+        if (prop1 === null) {
+            return this.successJSON(comp?.toJSON() ?? (isV2 ? row.toJSON() : comps?.map((x) => x.toJSON())));
         }
-        return this.success(component_1.ComponentProperties[prop](comp, sep));
+        if (prop1 !== component_1.ComponentProperty.components) {
+            return this.success(component_1.ComponentProperties[prop1](comp, sep));
+        }
+        const comps2 = comp && "components" in comp ? comp.components : undefined;
+        const comp2 = comps2?.[compIndex2];
+        if (prop2 === null) {
+            return this.successJSON(comp2?.data ?? comps2);
+        }
+        return this.success(component_1.ComponentProperties[prop2](comp2, sep));
     },
 });
 //# sourceMappingURL=getComponents.js.map
