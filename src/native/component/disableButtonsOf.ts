@@ -1,5 +1,6 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildComponent, disableButtons } from "../../functions/components"
+import { buildComponent } from "../../functions/components"
+import { ActionRowBuilder, ButtonBuilder, ContainerBuilder, SectionBuilder } from "discord.js"
 
 export default new NativeFunction({
     name: "$disableButtonsOf",
@@ -35,10 +36,23 @@ export default new NativeFunction({
     async execute(ctx, [, msg, index]) {
         const components = msg.components.map(x => buildComponent(x))
 
-        components.forEach((comp, i) => {
-            if (!Number.isFinite(index) || i === index) disableButtons(comp)
+        const disableButton = (comp: any) => {
+            if (comp instanceof ButtonBuilder) return comp.setDisabled(true)
+            return comp
+        }
+
+        const processComponent = (comp: any): any => {
+            if (comp instanceof ActionRowBuilder) return comp.components.map(disableButton)
+            else if (comp instanceof SectionBuilder) return disableButton(comp.accessory)
+            else if (comp instanceof ContainerBuilder) return comp.components.map(processComponent)
+            else return comp
+        }
+
+        const comps = components.map((comp: any, i: number) => {
+            if (Number.isFinite(index) && i !== index) return comp
+            return processComponent(comp)
         })
 
-        return this.success(!!(await msg.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)))
+        return this.success(!!(await msg.edit({ components: comps.map((x) => x.toJSON()) }).catch(ctx.noop)))
     },
 })

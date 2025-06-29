@@ -1,4 +1,4 @@
-import { disableButtons } from "../../functions/components"
+import { ActionRowBuilder, ButtonBuilder, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -21,7 +21,17 @@ export default new NativeFunction({
         const data = ctx.container.components
         const components = Number.isFinite(index) ? new Array(data[index]) : data
 
-        components.forEach(disableButtons)
+        const disableButton = (btn: any) => {
+            if (btn instanceof ButtonBuilder) btn.setDisabled(true)
+        }
+
+        const processComponent = (comp: any) => {
+            if (comp instanceof ActionRowBuilder) comp.components.forEach(disableButton)
+            else if (comp instanceof SectionBuilder) disableButton(comp.accessory)
+            else if (comp instanceof ContainerBuilder) comp.components.forEach(processComponent)
+        }
+
+        components.forEach(processComponent)
         return this.success()
     },
 })
