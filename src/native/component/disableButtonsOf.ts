@@ -35,7 +35,9 @@ export default new NativeFunction({
     async execute(ctx, [, msg, index]) {
         const components = msg.components.map(x => buildComponent(x))
 
-        components.forEach((comp) => disableButtons(comp, index || undefined))
+        components.forEach((comp, i) => {
+            if (!Number.isFinite(index) || i === index) disableButtons(comp)
+        })
 
         return this.success(!!(await msg.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)))
     },

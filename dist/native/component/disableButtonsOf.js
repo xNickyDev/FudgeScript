@@ -35,7 +35,10 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, msg, index]) {
         const components = msg.components.map(x => (0, components_1.buildComponent)(x));
-        components.forEach((comp) => (0, components_1.disableButtons)(comp, index || undefined));
+        components.forEach((comp, i) => {
+            if (!Number.isFinite(index) || i === index)
+                (0, components_1.disableButtons)(comp);
+        });
         return this.success(!!(await msg.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });

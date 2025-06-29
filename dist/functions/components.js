@@ -56,15 +56,12 @@ exports.buildComponent = buildComponent;
  * Disables all button components.
  * @param comp The component builders.
  */
-function disableButtons(comp, index) {
+function disableButtons(comp) {
     if (comp instanceof discord_js_1.ButtonBuilder) {
         comp.setDisabled(true);
     }
     else if (comp instanceof discord_js_1.ActionRowBuilder) {
-        comp.components.forEach((x, i) => {
-            if (index === undefined || i === index)
-                disableButtons(x);
-        });
+        comp.components.forEach(disableButtons);
     }
     else if (comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder) {
         comp.accessory.setDisabled(true);
