@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.disableButtons = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -52,6 +52,28 @@ function buildComponent(comp, ctx) {
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
 exports.buildComponent = buildComponent;
+/**
+ * Disables all button components.
+ * @param comp The component builders.
+ */
+function disableButtons(comp, index) {
+    if (comp instanceof discord_js_1.ButtonBuilder) {
+        comp.setDisabled(true);
+    }
+    else if (comp instanceof discord_js_1.ActionRowBuilder) {
+        comp.components.forEach((x, i) => {
+            if (!Number.isFinite(index) || i === index)
+                disableButtons(x);
+        });
+    }
+    else if (comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder) {
+        comp.accessory.setDisabled(true);
+    }
+    else if (comp instanceof discord_js_1.ContainerBuilder) {
+        comp.components.forEach(disableButtons);
+    }
+}
+exports.disableButtons = disableButtons;
 /**
  * Flattens all button components.
  * @param comps The components to flatten.

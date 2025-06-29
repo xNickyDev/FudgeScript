@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
+const components_1 = require("../../functions/components");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$disableButtons",
@@ -21,16 +21,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [index]) {
         const data = ctx.container.components;
         const components = Number.isFinite(index) ? new Array(data[index]) : data;
-        for (let i = 0, len = components.length; i < len; i++) {
-            const row = components[i];
-            if (!("components" in row))
-                continue;
-            const actionRow = new discord_js_1.ActionRowBuilder();
-            row?.components.forEach(component => {
-                if (component instanceof discord_js_1.ButtonBuilder)
-                    actionRow.addComponents(component.setDisabled(true));
-            });
-        }
+        components.forEach(components_1.disableButtons);
         return this.success();
     },
 });

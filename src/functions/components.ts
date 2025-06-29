@@ -71,6 +71,24 @@ export function buildComponent(comp: any, ctx?: Context) {
 }
 
 /**
+ * Disables all button components.
+ * @param comp The component builders.
+ */
+export function disableButtons(comp: ComponentBuilder, index?: number) {
+    if (comp instanceof ButtonBuilder) {
+        comp.setDisabled(true)
+    } else if (comp instanceof ActionRowBuilder) {
+        comp.components.forEach((x, i) => {
+            if (!Number.isFinite(index) || i === index) disableButtons(x)
+        })
+    } else if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) {
+        comp.accessory.setDisabled(true)
+    } else if (comp instanceof ContainerBuilder) {
+        comp.components.forEach(disableButtons)
+    }
+}
+
+/**
  * Flattens all button components.
  * @param comps The components to flatten.
  * @returns 

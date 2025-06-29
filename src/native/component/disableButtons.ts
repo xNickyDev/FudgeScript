@@ -1,4 +1,4 @@
-import { ButtonBuilder, ActionRowBuilder } from "discord.js"
+import { disableButtons } from "../../functions/components"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -21,15 +21,7 @@ export default new NativeFunction({
         const data = ctx.container.components
         const components = Number.isFinite(index) ? new Array(data[index]) : data
 
-        for (let i = 0, len = components.length; i < len; i++) {
-            const row = components[i]
-            if (!("components" in row)) continue
-            const actionRow = new ActionRowBuilder()
-            row?.components.forEach(component => {
-                if (component instanceof ButtonBuilder) actionRow.addComponents(component.setDisabled(true))
-            })
-        }
-
+        components.forEach(disableButtons)
         return this.success()
     },
 })

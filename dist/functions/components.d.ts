@@ -1,4 +1,4 @@
-import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
 import { Context } from "../structures";
 /**
  * Checks whether the specified component type is a top level component.
@@ -20,6 +20,11 @@ export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectM
  * @returns
  */
 export declare function buildComponent(comp: any, ctx?: Context): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
+/**
+ * Disables all button components.
+ * @param comp The component builders.
+ */
+export declare function disableButtons(comp: ComponentBuilder, index?: number): void;
 /**
  * Finds a button component.
  * @param comps The components to search through.
