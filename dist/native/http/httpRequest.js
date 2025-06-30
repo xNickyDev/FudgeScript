@@ -59,7 +59,7 @@ exports.default = new NativeFunction_1.NativeFunction({
                     method,
                     body: ctx.http.body ?? ctx.http.form,
                     signal: controller.signal
-                }),
+                }).catch(ctx.noop),
                 promise
             ]);
             ms = performance.now() - ms;

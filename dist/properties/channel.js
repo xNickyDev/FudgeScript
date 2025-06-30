@@ -15,6 +15,16 @@ var ChannelProperty;
     ChannelProperty["members"] = "members";
     ChannelProperty["name"] = "name";
     ChannelProperty["timestamp"] = "timestamp";
+    ChannelProperty["flags"] = "flags";
+    ChannelProperty["url"] = "url";
+    ChannelProperty["position"] = "position";
+    ChannelProperty["rawPosition"] = "rawPosition";
+    ChannelProperty["guildID"] = "guildID";
+    ChannelProperty["parentID"] = "parentID";
+    ChannelProperty["nsfw"] = "nsfw";
+    ChannelProperty["availableTags"] = "availableTags";
+    ChannelProperty["appliedTags"] = "appliedTags";
+    ChannelProperty["slowmode"] = "slowmode";
 })(ChannelProperty || (exports.ChannelProperty = ChannelProperty = {}));
 exports.ChannelProperties = (0, defineProperties_1.default)({
     bitrate: (i) => (i?.isVoiceBased() ? i.bitrate : undefined),
@@ -28,5 +38,15 @@ exports.ChannelProperties = (0, defineProperties_1.default)({
         : undefined,
     topic: (i) => (i && "topic" in i ? i.topic : undefined),
     type: (i) => discord_js_1.ChannelType[i?.type],
+    flags: (i, sep) => i?.flags?.toArray().join(sep ?? ", "),
+    position: (i) => (i && "position" in i ? i.position : undefined),
+    rawPosition: (i) => (i && "rawPosition" in i ? i.rawPosition : undefined),
+    url: (i) => i?.url,
+    guildID: (i) => (i && "guildId" in i ? i.guildId : undefined),
+    parentID: (i) => (i && "parentId" in i ? i.parentId : undefined),
+    nsfw: (i) => (i && "nsfw" in i ? i.nsfw : undefined),
+    availableTags: (i, sep) => (i && "availableTags" in i ? i.availableTags.map((x) => x.id).join(sep ?? ", ") : undefined),
+    appliedTags: (i, sep) => (i && "appliedTags" in i ? i.appliedTags.join(sep ?? ", ") : undefined),
+    slowmode: (i) => (i && "rateLimitPerUser" in i ? i.rateLimitPerUser : undefined),
 });
 //# sourceMappingURL=channel.js.map

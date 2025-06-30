@@ -61,7 +61,7 @@ export default new NativeFunction({
                     method,
                     body: ctx.http.body ?? ctx.http.form,
                     signal: controller.signal
-                }),
+                }).catch(ctx.noop),
                 promise
             ]) as Response
             ms = performance.now() - ms
