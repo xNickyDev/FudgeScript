@@ -1,4 +1,4 @@
-import { UserSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, ContainerBuilder, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -89,6 +89,8 @@ export default new NativeFunction({
                     if (typeof min === "number") menu.setMinValues(min)
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (users.length) menu.setDefaultUsers(users.filter(Boolean))
+                    
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
                     
                     break outer
                 }

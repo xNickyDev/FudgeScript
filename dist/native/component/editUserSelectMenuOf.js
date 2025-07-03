@@ -92,6 +92,8 @@ exports.default = new structures_1.NativeFunction({
                         menu.setMaxValues(max);
                     if (users.length)
                         menu.setDefaultUsers(users.filter(Boolean));
+                    if (comp instanceof discord_js_1.ContainerBuilder)
+                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder(menu.toJSON()));
                     break outer;
                 }
             }
