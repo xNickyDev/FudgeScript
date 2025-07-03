@@ -75,7 +75,7 @@ exports.default = new structures_1.NativeFunction({
         const components = m.components.map((x) => (0, components_1.buildComponent)(x));
         outer: for (let i = 0, len = components.length; i < len; i++) {
             const comp = components[i];
-            const comps = "components" in comp ? comp.components.map((x) => (0, components_1.buildComponent)(x)) : undefined;
+            const comps = "components" in comp ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON())) : undefined;
             if (!comps)
                 continue;
             for (let n = 0, len = comps.length; n < len; n++) {
