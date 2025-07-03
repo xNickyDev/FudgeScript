@@ -75,13 +75,15 @@ export default new NativeFunction({
 
         outer:
         for (let i = 0, len = components.length;i < len;i++) {
-            const comp = components[i] // Container
-            const comps = "components" in comp ? comp.components : undefined // Components IN Container (ActionRowBuilder[])
+            const comp = components[i]
+            const comps = "components" in comp ? comp.components : undefined
             if (!comps) continue
 
             for (let n = 0, len = comps.length;n < len;n++) {
-                const row = comps[n] // ActionRowBuilder
-                const menu = row instanceof ActionRowBuilder ? row.components[0] : row // Component
+                const row = comps[n]
+                const menu = row instanceof ActionRowBuilder ? row.components[0] : row
+                console.log("Row", row)
+                console.log("Menu", menu)
 
                 if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
                     console.log(menu)
@@ -97,7 +99,7 @@ export default new NativeFunction({
                 }
             }
         }
-        console.log(components)
+
         return this.success(
             !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))
         )
