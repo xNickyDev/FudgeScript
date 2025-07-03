@@ -74,12 +74,13 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, users]) {
         const components = m.components.map((x) => (0, components_1.buildComponent)(x));
         outer: for (let i = 0, len = components.length; i < len; i++) {
-            const comp = components[i];
-            const comps = "components" in comp ? comp.components : undefined;
+            const comp = components[i]; // Container
+            const comps = "components" in comp ? comp.components : undefined; // Components IN Container (ActionRowBuilder[])
             if (!comps)
                 continue;
             for (let n = 0, len = comps.length; n < len; n++) {
-                const menu = comps[n];
+                const row = comps[n]; // ActionRowBuilder
+                const menu = row instanceof discord_js_1.ActionRowBuilder ? row.components[0] : row; // Component
                 if (menu instanceof discord_js_1.UserSelectMenuBuilder && menu.data.custom_id === old) {
                     console.log(menu);
                     menu.setCustomId(id);
@@ -93,10 +94,6 @@ exports.default = new structures_1.NativeFunction({
                         menu.setMaxValues(max);
                     if (users.length)
                         menu.setDefaultUsers(users.filter(Boolean));
-                    if (comp instanceof discord_js_1.ContainerBuilder) {
-                        const log = comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder(menu.toJSON()));
-                        console.log(log);
-                    }
                     break outer;
                 }
             }

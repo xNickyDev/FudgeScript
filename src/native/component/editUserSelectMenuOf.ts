@@ -75,12 +75,14 @@ export default new NativeFunction({
 
         outer:
         for (let i = 0, len = components.length;i < len;i++) {
-            const comp = components[i]
-            const comps = "components" in comp ? comp.components : undefined
+            const comp = components[i] // Container
+            const comps = "components" in comp ? comp.components : undefined // Components IN Container (ActionRowBuilder[])
             if (!comps) continue
 
             for (let n = 0, len = comps.length;n < len;n++) {
-                const menu = comps[n]
+                const row = comps[n] // ActionRowBuilder
+                const menu = row instanceof ActionRowBuilder ? row.components[0] : row // Component
+
                 if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
                     console.log(menu)
                     menu.setCustomId(id)
@@ -90,11 +92,6 @@ export default new NativeFunction({
                     if (typeof min === "number") menu.setMinValues(min)
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (users.length) menu.setDefaultUsers(users.filter(Boolean))
-                    
-                    if (comp instanceof ContainerBuilder) {
-                        const log = comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
-                        console.log(log)
-                    }
                     
                     break outer
                 }
