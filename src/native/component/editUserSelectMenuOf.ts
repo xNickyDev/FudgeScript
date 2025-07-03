@@ -73,19 +73,25 @@ export default new NativeFunction({
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, users]) {
         const components = m.components.map((x) => buildComponent(x))
 
+        outer:
         for (let i = 0, len = components.length;i < len;i++) {
             const comp = components[i]
-            const menu = "components" in comp ? comp.components[0] : undefined
-            if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
-                menu.setCustomId(id)
-                
-                if (placeholder) menu.setPlaceholder(placeholder)
-                if (typeof disabled === "boolean") menu.setDisabled(disabled)
-                if (typeof min === "number") menu.setMinValues(min)
-                if (typeof max === "number") menu.setMaxValues(max)
-                if (users.length) menu.setDefaultUsers(users.filter(x => x))
+            const comps = "components" in comp ? comp.components : undefined
+            if (!comps) continue
 
-                break
+            for (let i = 0, len = comps.length;i < len;i++) {
+                const menu = comps[i]
+                if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
+                    menu.setCustomId(id)
+                    
+                    if (placeholder) menu.setPlaceholder(placeholder)
+                    if (typeof disabled === "boolean") menu.setDisabled(disabled)
+                    if (typeof min === "number") menu.setMinValues(min)
+                    if (typeof max === "number") menu.setMaxValues(max)
+                    if (users.length) menu.setDefaultUsers(users.filter(x => x))
+                    
+                    break outer
+                }
             }
         }
 
