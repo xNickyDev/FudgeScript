@@ -1,5 +1,6 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, MessageActionRowComponent, RoleSelectMenuBuilder } from "discord.js"
+import { RoleSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editRoleSelectMenuOf",
@@ -70,11 +71,12 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, roles]) {
-        const components = m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>))
+        const components = m.components.map(x => buildComponent(x))
 
         for (let i = 0, len = components.length;i < len;i++) {
             const comp = components[i]
-            const menu = comp.components[0]
+            const menu = "components" in comp ? comp.components[0] : undefined
+            if (!menu) continue
             if (menu instanceof RoleSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id)
                 
@@ -82,14 +84,14 @@ export default new NativeFunction({
                 if (typeof disabled === "boolean") menu.setDisabled(disabled)
                 if (typeof min === "number") menu.setMinValues(min)
                 if (typeof max === "number") menu.setMaxValues(max)
-                if (roles.length) menu.setDefaultRoles(roles.filter(x => x))
+                if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
 
                 break
             }
         }
 
         return this.success(
-            !!(await m.edit({ components: components as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })

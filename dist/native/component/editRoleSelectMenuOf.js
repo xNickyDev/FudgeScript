@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const components_1 = require("../../functions/components");
 exports.default = new structures_1.NativeFunction({
     name: "$editRoleSelectMenuOf",
     version: "2.2.0",
@@ -71,10 +72,12 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, roles]) {
-        const components = m.components.map(x => discord_js_1.ActionRowBuilder.from(x));
+        const components = m.components.map(x => (0, components_1.buildComponent)(x));
         for (let i = 0, len = components.length; i < len; i++) {
             const comp = components[i];
-            const menu = comp.components[0];
+            const menu = "components" in comp ? comp.components[0] : undefined;
+            if (!menu)
+                continue;
             if (menu instanceof discord_js_1.RoleSelectMenuBuilder && menu.data.custom_id === old) {
                 menu.setCustomId(id);
                 if (placeholder)
@@ -86,11 +89,11 @@ exports.default = new structures_1.NativeFunction({
                 if (typeof max === "number")
                     menu.setMaxValues(max);
                 if (roles.length)
-                    menu.setDefaultRoles(roles.filter(x => x));
+                    menu.setDefaultRoles(roles.filter(Boolean));
                 break;
             }
         }
-        return this.success(!!(await m.edit({ components: components }).catch(ctx.noop)));
+        return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=editRoleSelectMenuOf.js.map

@@ -79,8 +79,8 @@ export default new NativeFunction({
             const comps = "components" in comp ? comp.components : undefined
             if (!comps) continue
 
-            for (let i = 0, len = comps.length;i < len;i++) {
-                const menu = comps[i]
+            for (let n = 0, len = comps.length;n < len;n++) {
+                const menu = comps[n]
                 if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
                     menu.setCustomId(id)
                     
@@ -88,7 +88,7 @@ export default new NativeFunction({
                     if (typeof disabled === "boolean") menu.setDisabled(disabled)
                     if (typeof min === "number") menu.setMinValues(min)
                     if (typeof max === "number") menu.setMaxValues(max)
-                    if (users.length) menu.setDefaultUsers(users.filter(x => x))
+                    if (users.length) menu.setDefaultUsers(users.filter(Boolean))
                     
                     break outer
                 }

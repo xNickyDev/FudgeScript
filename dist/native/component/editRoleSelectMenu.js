@@ -55,24 +55,27 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [old, id, placeholder, disabled, min, max, roles]) {
-        for (let i = 0, len = ctx.container.components.length; i < len; i++) {
+        outer: for (let i = 0, len = ctx.container.components.length; i < len; i++) {
             const comp = ctx.container.components[i];
-            if (!(comp instanceof discord_js_1.ActionRow))
+            const comps = "components" in comp ? comp.components : undefined;
+            if (!comps)
                 continue;
-            const menu = comp.components[0];
-            if (menu instanceof discord_js_1.RoleSelectMenuBuilder && menu.data.custom_id === old) {
-                menu.setCustomId(id);
-                if (placeholder)
-                    menu.setPlaceholder(placeholder);
-                if (typeof disabled === "boolean")
-                    menu.setDisabled(disabled);
-                if (typeof min === "number")
-                    menu.setMinValues(min);
-                if (typeof max === "number")
-                    menu.setMaxValues(max);
-                if (roles.length)
-                    menu.setDefaultRoles(roles.filter(x => x));
-                break;
+            for (let n = 0, len = comps.length; n < len; n++) {
+                const menu = comps[n];
+                if (menu instanceof discord_js_1.RoleSelectMenuBuilder && menu.data.custom_id === old) {
+                    menu.setCustomId(id);
+                    if (placeholder)
+                        menu.setPlaceholder(placeholder);
+                    if (typeof disabled === "boolean")
+                        menu.setDisabled(disabled);
+                    if (typeof min === "number")
+                        menu.setMinValues(min);
+                    if (typeof max === "number")
+                        menu.setMaxValues(max);
+                    if (roles.length)
+                        menu.setDefaultRoles(roles.filter(Boolean));
+                    break outer;
+                }
             }
         }
         return this.success();

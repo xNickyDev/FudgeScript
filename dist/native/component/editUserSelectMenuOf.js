@@ -78,8 +78,8 @@ exports.default = new structures_1.NativeFunction({
             const comps = "components" in comp ? comp.components : undefined;
             if (!comps)
                 continue;
-            for (let i = 0, len = comps.length; i < len; i++) {
-                const menu = comps[i];
+            for (let n = 0, len = comps.length; n < len; n++) {
+                const menu = comps[n];
                 if (menu instanceof discord_js_1.UserSelectMenuBuilder && menu.data.custom_id === old) {
                     menu.setCustomId(id);
                     if (placeholder)
@@ -91,7 +91,7 @@ exports.default = new structures_1.NativeFunction({
                     if (typeof max === "number")
                         menu.setMaxValues(max);
                     if (users.length)
-                        menu.setDefaultUsers(users.filter(x => x));
+                        menu.setDefaultUsers(users.filter(Boolean));
                     break outer;
                 }
             }
