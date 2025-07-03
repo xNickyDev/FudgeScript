@@ -81,6 +81,7 @@ exports.default = new structures_1.NativeFunction({
             for (let n = 0, len = comps.length; n < len; n++) {
                 const menu = comps[n];
                 if (menu instanceof discord_js_1.UserSelectMenuBuilder && menu.data.custom_id === old) {
+                    console.log(menu);
                     menu.setCustomId(id);
                     if (placeholder)
                         menu.setPlaceholder(placeholder);
@@ -92,12 +93,15 @@ exports.default = new structures_1.NativeFunction({
                         menu.setMaxValues(max);
                     if (users.length)
                         menu.setDefaultUsers(users.filter(Boolean));
-                    if (comp instanceof discord_js_1.ContainerBuilder)
-                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder(menu.toJSON()));
+                    if (comp instanceof discord_js_1.ContainerBuilder) {
+                        const log = comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder(menu.toJSON()));
+                        console.log(log);
+                    }
                     break outer;
                 }
             }
         }
+        console.log(components);
         return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });

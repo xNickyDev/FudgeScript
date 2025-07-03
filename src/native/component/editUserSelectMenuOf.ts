@@ -82,6 +82,7 @@ export default new NativeFunction({
             for (let n = 0, len = comps.length;n < len;n++) {
                 const menu = comps[n]
                 if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
+                    console.log(menu)
                     menu.setCustomId(id)
                     
                     if (placeholder) menu.setPlaceholder(placeholder)
@@ -90,13 +91,16 @@ export default new NativeFunction({
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (users.length) menu.setDefaultUsers(users.filter(Boolean))
                     
-                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
+                    if (comp instanceof ContainerBuilder) {
+                        const log = comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
+                        console.log(log)
+                    }
                     
                     break outer
                 }
             }
         }
-
+        console.log(components)
         return this.success(
             !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))
         )
