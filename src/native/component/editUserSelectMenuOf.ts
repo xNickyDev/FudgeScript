@@ -76,7 +76,7 @@ export default new NativeFunction({
         outer:
         for (let i = 0, len = components.length;i < len;i++) {
             const comp = components[i]
-            const comps = "components" in comp ? comp.components : undefined
+            const comps = "components" in comp ? comp.components.map((x) => buildComponent(x)) : undefined
             if (!comps) continue
 
             for (let n = 0, len = comps.length;n < len;n++) {
