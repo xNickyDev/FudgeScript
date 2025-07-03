@@ -88,7 +88,7 @@ export default new NativeFunction({
         const comp = (typeof compIndex1 === "number" && comps ? comps[compIndex1] : undefined)
 
         if (prop1 === null) {
-            return this.successJSON(comp?.toJSON() ?? (isV2 ? row.toJSON() : comps?.map((x) => x.toJSON())))
+            return this.successJSON(comp?.data ?? (isV2 ? row : comps?.map((x) => x.data)))
         }
 
         if (prop1 !== ComponentProperty.components) {
