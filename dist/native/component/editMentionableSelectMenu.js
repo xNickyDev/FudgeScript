@@ -50,7 +50,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [old, id, placeholder, disabled, min, max]) {
-        outer: for (let i = 0, len = ctx.container.components.length; i < len; i++) {
+        for (let i = 0, len = ctx.container.components.length; i < len; i++) {
             const comp = ctx.container.components[i];
             const comps = comp instanceof discord_js_1.ContainerBuilder
                 ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
@@ -72,7 +72,7 @@ exports.default = new structures_1.NativeFunction({
                         menu.setMaxValues(max);
                     if (comp instanceof discord_js_1.ContainerBuilder)
                         comp.spliceComponents(n, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
-                    break outer;
+                    return this.success();
                 }
             }
         }

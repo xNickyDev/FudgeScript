@@ -55,7 +55,6 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [old, id, placeholder, disabled, min, max, users]) {
-        outer:
         for (let i = 0, len = ctx.container.components.length;i < len;i++) {
             const comp = ctx.container.components[i]
             const comps = comp instanceof ContainerBuilder
@@ -78,7 +77,7 @@ export default new NativeFunction({
                     
                     if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
                     
-                    break outer
+                    return this.success()
                 }
             }
         }
