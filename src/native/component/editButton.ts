@@ -69,7 +69,7 @@ export default new NativeFunction({
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
                     : row instanceof SectionBuilder
                         ? row.accessory
-                        : undefined
+                        : row
 
                 if (btn instanceof ButtonBuilder) {
                     btn.setLabel(label)

@@ -70,7 +70,7 @@ exports.default = new structures_1.NativeFunction({
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
                     : row instanceof discord_js_1.SectionBuilder
                         ? row.accessory
-                        : undefined;
+                        : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
                     btn.setLabel(label)
                         .setStyle(style);
