@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ContainerBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, ComponentAssertions, ContainerBuilder, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -76,9 +76,11 @@ export default new NativeFunction({
         outer:
         for (let i = 0, len = components.length;i < len;i++) {
             const comp = components[i]
-            const comps = "components" in comp ? comp.components.map((x) => buildComponent(x.toJSON())) : undefined
+            const comps = comp instanceof ContainerBuilder
+                ? comp.components.map((x) => buildComponent(x))
+                : ("components" in comp ? comp.components : undefined)
             if (!comps) continue
-
+            
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
                 const menu = row instanceof ActionRowBuilder ? row.components[0] : row
@@ -94,6 +96,8 @@ export default new NativeFunction({
                     if (typeof min === "number") menu.setMinValues(min)
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (users.length) menu.setDefaultUsers(users.filter(Boolean))
+                    
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
                     
                     break outer
                 }
