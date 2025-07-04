@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildComponent } from "../../functions/components"
+import { buildActionRow, buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editButton",
@@ -59,7 +59,7 @@ export default new NativeFunction({
                 ? comp instanceof ContainerBuilder
                     ? comp.components.map((x) => buildComponent(x.toJSON()))
                     : comp instanceof SectionBuilder
-                        ? new Array(comp.accessory)
+                        ? new Array(buildActionRow(comp.accessory?.toJSON()))
                         : comp.components
                 : undefined
             console.log("comps", comps)
@@ -71,7 +71,7 @@ export default new NativeFunction({
                 const btn = row instanceof ActionRowBuilder
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
                     : row instanceof SectionBuilder
-                        ? row.accessory
+                        ? buildActionRow(row.accessory?.toJSON())
                         : row
                 console.log("btn", btn)
 
