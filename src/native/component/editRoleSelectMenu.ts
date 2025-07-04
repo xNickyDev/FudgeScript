@@ -1,5 +1,6 @@
 import { RoleSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { findSelectMenu } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editRoleSelectMenu",
@@ -54,26 +55,16 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [old, id, placeholder, disabled, min, max, roles]) {
-        outer:
-        for (let i = 0, len = ctx.container.components.length;i < len;i++) {
-            const comp = ctx.container.components[i]
-            const comps = "components" in comp ? comp.components : undefined
-            if (!comps) continue
+        const menu = findSelectMenu(ctx.container.components, old)
 
-            for (let n = 0, len = comps.length;n < len;n++) {
-                const menu = comps[n]
-                if (menu instanceof RoleSelectMenuBuilder && menu.data.custom_id === old) {
-                    menu.setCustomId(id)
-                    
-                    if (placeholder) menu.setPlaceholder(placeholder)
-                    if (typeof disabled === "boolean") menu.setDisabled(disabled)
-                    if (typeof min === "number") menu.setMinValues(min)
-                    if (typeof max === "number") menu.setMaxValues(max)
-                    if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
-                    
-                    break outer
-                }
-            }
+        if (menu instanceof RoleSelectMenuBuilder) {
+            menu.setCustomId(id)
+            
+            if (placeholder) menu.setPlaceholder(placeholder)
+            if (typeof disabled === "boolean") menu.setDisabled(disabled)
+            if (typeof min === "number") menu.setMinValues(min)
+            if (typeof max === "number") menu.setMaxValues(max)
+            if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
         }
 
         return this.success()

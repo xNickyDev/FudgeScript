@@ -84,11 +84,8 @@ export default new NativeFunction({
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
                 const menu = row instanceof ActionRowBuilder ? row.components[0] : row
-                console.log("Row", row)
-                console.log("Menu", menu)
 
                 if (menu instanceof UserSelectMenuBuilder && menu.data.custom_id === old) {
-                    console.log(menu)
                     menu.setCustomId(id)
                     
                     if (placeholder) menu.setPlaceholder(placeholder)
