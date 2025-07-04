@@ -1,6 +1,6 @@
-import { RoleSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, ContainerBuilder, RoleSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { findSelectMenu } from "../../functions/components"
+import { buildComponent, findSelectMenu } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editRoleSelectMenu",
@@ -55,16 +55,32 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [old, id, placeholder, disabled, min, max, roles]) {
-        const menu = findSelectMenu(ctx.container.components, old)
-
-        if (menu instanceof RoleSelectMenuBuilder) {
-            menu.setCustomId(id)
+        outer:
+        for (let i = 0, len = ctx.container.components.length;i < len;i++) {
+            const comp = ctx.container.components[i]
+            const comps = comp instanceof ContainerBuilder
+                ? comp.components.map((x) => buildComponent(x.toJSON()))
+                : ("components" in comp ? comp.components : undefined)
+            if (!comps) continue
             
-            if (placeholder) menu.setPlaceholder(placeholder)
-            if (typeof disabled === "boolean") menu.setDisabled(disabled)
-            if (typeof min === "number") menu.setMinValues(min)
-            if (typeof max === "number") menu.setMaxValues(max)
-            if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
+            for (let n = 0, len = comps.length;n < len;n++) {
+                const row = comps[n]
+                const menu = row instanceof ActionRowBuilder ? row.components[0] : row
+
+                if (menu instanceof RoleSelectMenuBuilder && menu.data.custom_id === old) {
+                    menu.setCustomId(id)
+                    
+                    if (placeholder) menu.setPlaceholder(placeholder)
+                    if (typeof disabled === "boolean") menu.setDisabled(disabled)
+                    if (typeof min === "number") menu.setMinValues(min)
+                    if (typeof max === "number") menu.setMaxValues(max)
+                    if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
+                    
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder().addComponents(menu))
+                    
+                    break outer
+                }
+            }
         }
 
         return this.success()
