@@ -58,8 +58,8 @@ exports.default = new structures_1.NativeFunction({
             const comps = "components" in comp
                 ? comp instanceof discord_js_1.ContainerBuilder
                     ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
-                    : comp instanceof discord_js_1.SectionBuilder
-                        ? new Array((0, components_1.buildActionRow)(comp.accessory))
+                    : comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder
+                        ? new Array(new discord_js_1.ButtonBuilder(comp.accessory.toJSON()))
                         : comp.components
                 : undefined;
             if (!comps)
@@ -68,8 +68,8 @@ exports.default = new structures_1.NativeFunction({
                 const row = comps[n];
                 const btn = row instanceof discord_js_1.ActionRowBuilder
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
-                    : row instanceof discord_js_1.SectionBuilder
-                        ? (0, components_1.buildActionRow)(row.accessory)
+                    : row instanceof discord_js_1.SectionBuilder && row.accessory instanceof discord_js_1.ButtonBuilder
+                        ? new discord_js_1.ButtonBuilder(row.accessory.toJSON())
                         : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
                     btn.setLabel(label)
