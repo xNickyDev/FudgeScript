@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ComponentAssertions, ContainerBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, ContainerBuilder, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -77,7 +77,7 @@ export default new NativeFunction({
         for (let i = 0, len = components.length;i < len;i++) {
             const comp = components[i]
             const comps = comp instanceof ContainerBuilder
-                ? comp.components.map((x) => buildComponent(x))
+                ? comp.components.map((x) => buildComponent(x.toJSON()))
                 : ("components" in comp ? comp.components : undefined)
             if (!comps) continue
             

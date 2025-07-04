@@ -76,7 +76,7 @@ exports.default = new structures_1.NativeFunction({
         outer: for (let i = 0, len = components.length; i < len; i++) {
             const comp = components[i];
             const comps = comp instanceof discord_js_1.ContainerBuilder
-                ? comp.components.map((x) => (0, components_1.buildComponent)(x))
+                ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
                 : ("components" in comp ? comp.components : undefined);
             if (!comps)
                 continue;
