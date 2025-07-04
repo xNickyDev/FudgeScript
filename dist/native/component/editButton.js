@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const components_1 = require("../../functions/components");
 exports.default = new structures_1.NativeFunction({
     name: "$editButton",
     version: "1.0.7",
@@ -52,30 +53,33 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [oldId, id, label, style, emoji, disabled]) {
-        const rowIndex = ctx.container.components.findIndex((x) => (x instanceof discord_js_1.ActionRowBuilder || x instanceof discord_js_1.ContainerBuilder)
-            ? x.components.some((x) => "custom_id" in x.data && x.data.custom_id === oldId)
-            : false);
-        if (rowIndex === -1)
-            return this.success();
-        // @ts-ignore
-        const btn = ctx.container.components[rowIndex].components.find(
-        // @ts-ignore
-        (x) => "custom_id" in x.data && x.data.custom_id === oldId);
-        if (!btn)
-            return this.success();
-        // @ts-ignore
-        btn.setCustomId(id || btn.data.custom_id)
-            .setDisabled(disabled || false)
-            .setStyle(style || btn.data.style)
-            // @ts-ignore
-            .setLabel(label || btn.data.label || "");
-        // @ts-ignore
-        if (style === discord_js_1.ButtonStyle.Link)
-            btn.setURL(id || btn.data.custom_id);
-        else if (style === discord_js_1.ButtonStyle.Premium)
-            btn.setSKUId(id);
-        if (emoji)
-            btn.setEmoji(emoji);
+        for (let i = 0, len = ctx.container.components.length; i < len; i++) {
+            const comp = ctx.container.components[i];
+            const comps = comp instanceof discord_js_1.ContainerBuilder
+                ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
+                : ("components" in comp ? comp.components : undefined);
+            if (!comps)
+                continue;
+            for (let n = 0, len = comps.length; n < len; n++) {
+                const row = comps[n];
+                const btn = row instanceof discord_js_1.ActionRowBuilder ? row.components[n] : row;
+                if (btn instanceof discord_js_1.ButtonBuilder && "custom_id" in btn.data && btn.data.custom_id === oldId) {
+                    btn.setLabel(label)
+                        .setStyle(style);
+                    if (emoji)
+                        btn.setEmoji(emoji);
+                    if (typeof disabled === "boolean")
+                        btn.setDisabled(disabled);
+                    if (style === discord_js_1.ButtonStyle.Link)
+                        btn.setURL(id);
+                    else if (style === discord_js_1.ButtonStyle.Premium)
+                        btn.setSKUId(id);
+                    else
+                        btn.setCustomId(id);
+                    return this.success();
+                }
+            }
+        }
         return this.success();
     },
 });
