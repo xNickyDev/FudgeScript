@@ -88,7 +88,7 @@ exports.default = new structures_1.NativeFunction({
                     if (typeof max === "number")
                         menu.setMaxValues(max);
                     if (comp instanceof discord_js_1.ContainerBuilder)
-                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
+                        comp.spliceComponents(n, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
                     break outer;
                 }
             }

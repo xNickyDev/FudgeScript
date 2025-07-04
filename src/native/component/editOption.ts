@@ -58,7 +58,7 @@ export default new NativeFunction({
                 ? comp.components.map((x) => buildComponent(x.toJSON()))
                 : ("components" in comp ? comp.components : undefined)
             if (!comps) continue
-            
+
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
                 const menu = row instanceof ActionRowBuilder ? row.components[0] : row
@@ -67,13 +67,15 @@ export default new NativeFunction({
                     const index = menu.options.findIndex(x => x.data.label === old)
                     if (index !== -1) {
                         const option = menu.options[index]
-                        
+
                         option.setLabel(name)
                         if (value) option.setValue(value)
                         if (emoji) option.setEmoji(parseEmoji(emoji)!)
                         if (desc) option.setDescription(desc)
                         if (typeof def === "boolean") option.setDefault(def)
-                        
+
+                        if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
+
                         break outer
                     }
                 }

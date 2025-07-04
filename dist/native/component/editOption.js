@@ -75,6 +75,8 @@ exports.default = new structures_1.NativeFunction({
                             option.setDescription(desc);
                         if (typeof def === "boolean")
                             option.setDefault(def);
+                        if (comp instanceof discord_js_1.ContainerBuilder)
+                            comp.spliceComponents(n, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
                         break outer;
                     }
                 }
