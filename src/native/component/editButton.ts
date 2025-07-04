@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, ContainerComponentBuilder, SectionBuilder } from "discord.js"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -66,12 +66,12 @@ export default new NativeFunction({
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
                 const btn = row instanceof ActionRowBuilder
-                    ? row.components[n]
+                    ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
                     : row instanceof SectionBuilder
                         ? row.accessory
                         : undefined
 
-                if (btn instanceof ButtonBuilder && "custom_id" in btn.data && btn.data.custom_id === oldId) {
+                if (btn instanceof ButtonBuilder) {
                     btn.setLabel(label)
                         .setStyle(style)
 
@@ -83,8 +83,13 @@ export default new NativeFunction({
                     else btn.setCustomId(id)
 
                     if (comp instanceof ContainerBuilder) {
-                        const insert = row instanceof SectionBuilder ? row.setButtonAccessory(btn) : row as ContainerComponentBuilder
-                        comp.spliceComponents(n, 1, insert)
+                        const insert = row instanceof ActionRowBuilder
+                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
+                            : row instanceof SectionBuilder
+                                ? row.setButtonAccessory(btn)
+                                : undefined
+
+                        if (insert) comp.spliceComponents(n, 1, insert)
                     } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
 
                     return this.success()
