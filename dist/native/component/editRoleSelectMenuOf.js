@@ -73,19 +73,33 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, old, id, placeholder, disabled, min, max, roles]) {
         const components = m.components.map((x) => (0, components_1.buildComponent)(x));
-        const menu = (0, components_1.findSelectMenu)(components, old);
-        if (menu instanceof discord_js_1.RoleSelectMenuBuilder) {
-            menu.setCustomId(id);
-            if (placeholder)
-                menu.setPlaceholder(placeholder);
-            if (typeof disabled === "boolean")
-                menu.setDisabled(disabled);
-            if (typeof min === "number")
-                menu.setMinValues(min);
-            if (typeof max === "number")
-                menu.setMaxValues(max);
-            if (roles.length)
-                menu.setDefaultRoles(roles.filter(Boolean));
+        outer: for (let i = 0, len = components.length; i < len; i++) {
+            const comp = components[i];
+            const comps = comp instanceof discord_js_1.ContainerBuilder
+                ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
+                : ("components" in comp ? comp.components : undefined);
+            if (!comps)
+                continue;
+            for (let n = 0, len = comps.length; n < len; n++) {
+                const row = comps[n];
+                const menu = row instanceof discord_js_1.ActionRowBuilder ? row.components[0] : row;
+                if (menu instanceof discord_js_1.RoleSelectMenuBuilder && menu.data.custom_id === old) {
+                    menu.setCustomId(id);
+                    if (placeholder)
+                        menu.setPlaceholder(placeholder);
+                    if (typeof disabled === "boolean")
+                        menu.setDisabled(disabled);
+                    if (typeof min === "number")
+                        menu.setMinValues(min);
+                    if (typeof max === "number")
+                        menu.setMaxValues(max);
+                    if (roles.length)
+                        menu.setDefaultRoles(roles.filter(Boolean));
+                    if (comp instanceof discord_js_1.ContainerBuilder)
+                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
+                    break outer;
+                }
+            }
         }
         return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
