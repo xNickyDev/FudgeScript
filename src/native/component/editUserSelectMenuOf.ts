@@ -97,7 +97,7 @@ export default new NativeFunction({
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (users.length) menu.setDefaultUsers(users.filter(Boolean))
                     
-                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder(menu.toJSON()))
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(i, 1, new ActionRowBuilder().addComponents(menu))
                     
                     break outer
                 }

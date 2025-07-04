@@ -99,7 +99,7 @@ exports.default = new structures_1.NativeFunction({
                     if (users.length)
                         menu.setDefaultUsers(users.filter(Boolean));
                     if (comp instanceof discord_js_1.ContainerBuilder)
-                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder(menu.toJSON()));
+                        comp.spliceComponents(i, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
                     break outer;
                 }
             }
