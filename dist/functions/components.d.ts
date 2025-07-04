@@ -12,7 +12,7 @@ export declare function isTopLevel(type: ComponentType, actionRow?: boolean): bo
  * @param comp The component data.
  * @returns
  */
-export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectMenuBuilder | UserSelectMenuBuilder | ChannelSelectMenuBuilder | RoleSelectMenuBuilder | MentionableSelectMenuBuilder;
+export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectMenuBuilder | UserSelectMenuBuilder | ChannelSelectMenuBuilder | RoleSelectMenuBuilder | MentionableSelectMenuBuilder | undefined;
 /**
  * Builds a top level component.
  * @param comp The component data.

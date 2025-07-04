@@ -57,7 +57,7 @@ export default new NativeFunction({
             const comps = "components" in comp
                 ? comp instanceof ContainerBuilder
                     ? comp.components.map((x) => buildComponent(x.toJSON()))
-                    : comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder
+                    : comp instanceof SectionBuilder
                         ? new Array(buildActionRow(comp.accessory))
                         : comp.components
                 : undefined
@@ -67,7 +67,7 @@ export default new NativeFunction({
                 const row = comps[n]
                 const btn = row instanceof ActionRowBuilder
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
-                    : row instanceof SectionBuilder && row.accessory instanceof ButtonBuilder
+                    : row instanceof SectionBuilder
                         ? buildActionRow(row.accessory)
                         : row
 
