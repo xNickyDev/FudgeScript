@@ -55,22 +55,26 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [oldId, id, label, style, emoji, disabled]) {
         for (let i = 0, len = ctx.container.components.length; i < len; i++) {
             const comp = ctx.container.components[i];
+            console.log("comp", comp);
             const comps = "components" in comp
                 ? comp instanceof discord_js_1.ContainerBuilder
                     ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
-                    : comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder
-                        ? new Array(new discord_js_1.ButtonBuilder(comp.accessory.toJSON()))
+                    : comp instanceof discord_js_1.SectionBuilder
+                        ? new Array(comp.accessory)
                         : comp.components
                 : undefined;
+            console.log("comps", comps);
             if (!comps)
                 continue;
             for (let n = 0, len = comps.length; n < len; n++) {
                 const row = comps[n];
+                console.log("row", row);
                 const btn = row instanceof discord_js_1.ActionRowBuilder
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
-                    : row instanceof discord_js_1.SectionBuilder && row.accessory instanceof discord_js_1.ButtonBuilder
-                        ? new discord_js_1.ButtonBuilder(row.accessory.toJSON())
+                    : row instanceof discord_js_1.SectionBuilder
+                        ? row.accessory
                         : row;
+                console.log("btn", btn);
                 if (btn instanceof discord_js_1.ButtonBuilder) {
                     btn.setLabel(label)
                         .setStyle(style);
@@ -90,6 +94,7 @@ exports.default = new structures_1.NativeFunction({
                             : row instanceof discord_js_1.SectionBuilder
                                 ? row.setButtonAccessory(btn)
                                 : undefined;
+                        console.log("insert", insert);
                         if (insert)
                             comp.spliceComponents(n, 1, insert);
                     }
