@@ -1,4 +1,4 @@
-import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, MessageActionRowComponentBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
 import { Context } from "../structures";
 /**
  * Checks whether the specified component type is a top level component.
@@ -20,6 +20,12 @@ export declare function buildActionRow(comp: any): ButtonBuilder | StringSelectM
  * @returns
  */
 export declare function buildComponent(comp: any, ctx?: Context): ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>;
+/**
+ * Gets all components.
+ * @param comp The component builders.
+ * @returns
+ */
+export declare function getComponents(comp: ContainerBuilder | ContainerComponentBuilder | MessageActionRowComponentBuilder): import("@discordjs/builders").ChannelSelectMenuBuilder | import("@discordjs/builders").MentionableSelectMenuBuilder | import("@discordjs/builders").RoleSelectMenuBuilder | import("@discordjs/builders").SelectMenuBuilder | import("@discordjs/builders").UserSelectMenuBuilder | MessageActionRowComponentBuilder[] | ButtonBuilder | (ContainerBuilder | FileBuilder | MediaGalleryBuilder | SectionBuilder | SeparatorBuilder | TextDisplayBuilder | ActionRowBuilder<AnyComponentBuilder>)[] | undefined;
 /**
  * Disables all button components.
  * @param comp The component builders.

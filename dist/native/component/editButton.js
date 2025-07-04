@@ -55,14 +55,22 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [oldId, id, label, style, emoji, disabled]) {
         for (let i = 0, len = ctx.container.components.length; i < len; i++) {
             const comp = ctx.container.components[i];
-            const comps = comp instanceof discord_js_1.ContainerBuilder
-                ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
-                : ("components" in comp ? comp.components : undefined);
+            const comps = "components" in comp
+                ? comp instanceof discord_js_1.ContainerBuilder
+                    ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
+                    : comp instanceof discord_js_1.SectionBuilder
+                        ? new Array(comp.accessory)
+                        : comp.components
+                : undefined;
             if (!comps)
                 continue;
             for (let n = 0, len = comps.length; n < len; n++) {
                 const row = comps[n];
-                const btn = row instanceof discord_js_1.ActionRowBuilder ? row.components[n] : row;
+                const btn = row instanceof discord_js_1.ActionRowBuilder
+                    ? row.components[n]
+                    : row instanceof discord_js_1.SectionBuilder
+                        ? row.accessory
+                        : undefined;
                 if (btn instanceof discord_js_1.ButtonBuilder && "custom_id" in btn.data && btn.data.custom_id === oldId) {
                     btn.setLabel(label)
                         .setStyle(style);
@@ -76,6 +84,12 @@ exports.default = new structures_1.NativeFunction({
                         btn.setSKUId(id);
                     else
                         btn.setCustomId(id);
+                    if (comp instanceof discord_js_1.ContainerBuilder) {
+                        const insert = row instanceof discord_js_1.SectionBuilder ? row.setButtonAccessory(btn) : row;
+                        comp.spliceComponents(n, 1, insert);
+                    }
+                    else if (comp instanceof discord_js_1.SectionBuilder)
+                        comp.setButtonAccessory(btn);
                     return this.success();
                 }
             }

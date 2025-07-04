@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder } from "discord.js"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, ContainerComponentBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -54,14 +54,22 @@ export default new NativeFunction({
     execute(ctx, [oldId, id, label, style, emoji, disabled]) {
        for (let i = 0, len = ctx.container.components.length;i < len;i++) {
             const comp = ctx.container.components[i]
-            const comps = comp instanceof ContainerBuilder
-                ? comp.components.map((x) => buildComponent(x.toJSON()))
-                : ("components" in comp ? comp.components : undefined)
+            const comps = "components" in comp
+                ? comp instanceof ContainerBuilder
+                    ? comp.components.map((x) => buildComponent(x.toJSON()))
+                    : comp instanceof SectionBuilder
+                        ? new Array(comp.accessory)
+                        : comp.components
+                : undefined
             if (!comps) continue
 
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
-                const btn = row instanceof ActionRowBuilder ? row.components[n] : row
+                const btn = row instanceof ActionRowBuilder
+                    ? row.components[n]
+                    : row instanceof SectionBuilder
+                        ? row.accessory
+                        : undefined
 
                 if (btn instanceof ButtonBuilder && "custom_id" in btn.data && btn.data.custom_id === oldId) {
                     btn.setLabel(label)
@@ -73,6 +81,11 @@ export default new NativeFunction({
                     if (style === ButtonStyle.Link) btn.setURL(id)
                     else if (style === ButtonStyle.Premium) btn.setSKUId(id)
                     else btn.setCustomId(id)
+
+                    if (comp instanceof ContainerBuilder) {
+                        const insert = row instanceof SectionBuilder ? row.setButtonAccessory(btn) : row as ContainerComponentBuilder
+                        comp.spliceComponents(n, 1, insert)
+                    } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
 
                     return this.success()
                 }

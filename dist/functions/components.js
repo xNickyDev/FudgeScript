@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.disableButtons = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.disableButtons = exports.getComponents = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -52,6 +52,23 @@ function buildComponent(comp, ctx) {
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
 exports.buildComponent = buildComponent;
+/**
+ * Gets all components.
+ * @param comp The component builders.
+ * @returns
+ */
+function getComponents(comp) {
+    if (comp instanceof discord_js_1.ButtonBuilder || comp instanceof discord_js_1.BaseSelectMenuBuilder)
+        return comp;
+    if (comp instanceof discord_js_1.ActionRowBuilder)
+        return comp.components;
+    if (comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder)
+        return new Array(comp.accessory);
+    if (comp instanceof discord_js_1.ContainerBuilder)
+        return comp.components.map((x) => buildComponent(x.toJSON()));
+    return;
+}
+exports.getComponents = getComponents;
 /**
  * Disables all button components.
  * @param comp The component builders.

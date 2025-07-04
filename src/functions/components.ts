@@ -1,20 +1,22 @@
 import {
     ActionRowBuilder,
     AnyComponentBuilder,
+    BaseSelectMenuBuilder,
     ButtonBuilder,
     ChannelSelectMenuBuilder,
-    ComponentBuilder,
     ComponentType,
     ContainerBuilder,
     ContainerComponentBuilder,
     FileBuilder,
     MediaGalleryBuilder,
     MentionableSelectMenuBuilder,
+    MessageActionRowComponentBuilder,
     RoleSelectMenuBuilder,
     SectionBuilder,
     SeparatorBuilder,
     StringSelectMenuBuilder,
     TextDisplayBuilder,
+    ThumbnailBuilder,
     UserSelectMenuBuilder
 } from "discord.js"
 import { Context } from "../structures"
@@ -68,6 +70,19 @@ export function buildComponent(comp: any, ctx?: Context) {
     const type = comp.type as ComponentType
     if (ctx && isTopLevel(type, false)) ctx.container.isComponentsV2 = true
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp)
+}
+
+/**
+ * Gets all components.
+ * @param comp The component builders.
+ * @returns 
+ */
+export function getComponents(comp: ContainerBuilder | ContainerComponentBuilder | MessageActionRowComponentBuilder) {
+    if (comp instanceof ButtonBuilder || comp instanceof BaseSelectMenuBuilder) return comp
+    if (comp instanceof ActionRowBuilder) return comp.components as MessageActionRowComponentBuilder[]
+    if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) return new Array(comp.accessory)
+    if (comp instanceof ContainerBuilder) return comp.components.map((x) => buildComponent(x.toJSON()))
+    return
 }
 
 /**
