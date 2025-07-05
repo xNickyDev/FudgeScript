@@ -54,7 +54,6 @@ export default new NativeFunction({
     execute(ctx, [oldId, id, label, style, emoji, disabled]) {
        for (let i = 0, len = ctx.container.components.length;i < len;i++) {
             const comp = ctx.container.components[i]
-            console.log("comp", comp)
             const comps = "components" in comp
                 ? comp instanceof ContainerBuilder
                     ? comp.components.map((x) => buildComponent(x.toJSON()))
@@ -62,18 +61,15 @@ export default new NativeFunction({
                         ? new Array(buildActionRow(comp.accessory?.toJSON()))
                         : comp.components
                 : undefined
-            console.log("comps", comps)
             if (!comps) continue
 
             for (let n = 0, len = comps.length;n < len;n++) {
                 const row = comps[n]
-                console.log("row", row)
                 const btn = row instanceof ActionRowBuilder
                     ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
                     : row instanceof SectionBuilder
                         ? buildActionRow(row.accessory?.toJSON())
                         : row
-                console.log("btn", btn)
 
                 if (btn instanceof ButtonBuilder) {
                     btn.setLabel(label)
@@ -92,7 +88,6 @@ export default new NativeFunction({
                             : row instanceof SectionBuilder
                                 ? row.setButtonAccessory(btn)
                                 : undefined
-                        console.log("insert", insert)
 
                         if (insert) comp.spliceComponents(n, 1, insert)
                     } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)

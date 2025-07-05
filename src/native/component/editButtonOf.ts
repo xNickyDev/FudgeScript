@@ -1,6 +1,6 @@
-import { ButtonBuilder, ButtonStyle } from "discord.js"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildComponent, findButton } from "../../functions/components"
+import { buildActionRow, buildComponent, findButton } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editButtonOf",
@@ -68,25 +68,53 @@ export default new NativeFunction({
     ],
     output: ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => buildComponent(x))
-        console.log("Builders", components)
-        const btn = findButton(components, oldId)
-        console.log("Component", btn)
+        const components = m.components.map((x) => buildComponent(x))
 
-        if (!(btn instanceof ButtonBuilder)) return this.success()
+        outer:
+        for (let i = 0, len = components.length;i < len;i++) {
+            const comp = components[i]
+            const comps = "components" in comp
+                ? comp instanceof ContainerBuilder
+                    ? comp.components.map((x) => buildComponent(x.toJSON()))
+                    : comp instanceof SectionBuilder
+                        ? new Array(buildActionRow(comp.accessory?.toJSON()))
+                        : comp.components
+                : undefined
+            if (!comps) continue
 
-        btn.setDisabled(disabled || btn.data.disabled!)
-            .setStyle(style || btn.data.style!)
-            // @ts-ignore
-            .setLabel(label || btn.data.label || "")
+            for (let n = 0, len = comps.length;n < len;n++) {
+                const row = comps[n]
+                const btn = row instanceof ActionRowBuilder
+                    ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
+                    : row instanceof SectionBuilder
+                        ? buildActionRow(row.accessory?.toJSON())
+                        : row
 
-        // @ts-ignore
-        if (style === ButtonStyle.Link) btn.setURL(id || btn.data.custom_id)
-        else if (style === ButtonStyle.Premium) btn.setSKUId(id)
-        // @ts-ignore
-        else btn.setCustomId(id || btn.data.custom_id)
+                if (btn instanceof ButtonBuilder) {
+                    btn.setLabel(label)
+                        .setStyle(style)
 
-        if (emoji) btn.setEmoji(emoji)
+                    if (emoji) btn.setEmoji(emoji)
+                    if (typeof disabled === "boolean") btn.setDisabled(disabled)
+
+                    if (style === ButtonStyle.Link) btn.setURL(id)
+                    else if (style === ButtonStyle.Premium) btn.setSKUId(id)
+                    else btn.setCustomId(id)
+
+                    if (comp instanceof ContainerBuilder) {
+                        const insert = row instanceof ActionRowBuilder
+                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
+                            : row instanceof SectionBuilder
+                                ? row.setButtonAccessory(btn)
+                                : undefined
+
+                        if (insert) comp.spliceComponents(n, 1, insert)
+                    } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
+
+                    break outer
+                }
+            }
+        }
 
         return this.success(
             !!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop))

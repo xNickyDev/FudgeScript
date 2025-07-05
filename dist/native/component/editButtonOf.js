@@ -69,26 +69,53 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, oldId, id, label, style, emoji, disabled]) {
-        const components = m.components.map(x => (0, components_1.buildComponent)(x));
-        console.log("Builders", components);
-        const btn = (0, components_1.findButton)(components, oldId);
-        console.log("Component", btn);
-        if (!(btn instanceof discord_js_1.ButtonBuilder))
-            return this.success();
-        btn.setDisabled(disabled || btn.data.disabled)
-            .setStyle(style || btn.data.style)
-            // @ts-ignore
-            .setLabel(label || btn.data.label || "");
-        // @ts-ignore
-        if (style === discord_js_1.ButtonStyle.Link)
-            btn.setURL(id || btn.data.custom_id);
-        else if (style === discord_js_1.ButtonStyle.Premium)
-            btn.setSKUId(id);
-        // @ts-ignore
-        else
-            btn.setCustomId(id || btn.data.custom_id);
-        if (emoji)
-            btn.setEmoji(emoji);
+        const components = m.components.map((x) => (0, components_1.buildComponent)(x));
+        outer: for (let i = 0, len = components.length; i < len; i++) {
+            const comp = components[i];
+            const comps = "components" in comp
+                ? comp instanceof discord_js_1.ContainerBuilder
+                    ? comp.components.map((x) => (0, components_1.buildComponent)(x.toJSON()))
+                    : comp instanceof discord_js_1.SectionBuilder
+                        ? new Array((0, components_1.buildActionRow)(comp.accessory?.toJSON()))
+                        : comp.components
+                : undefined;
+            if (!comps)
+                continue;
+            for (let n = 0, len = comps.length; n < len; n++) {
+                const row = comps[n];
+                const btn = row instanceof discord_js_1.ActionRowBuilder
+                    ? row.components.find((x) => "custom_id" in x.data && x.data.custom_id === oldId)
+                    : row instanceof discord_js_1.SectionBuilder
+                        ? (0, components_1.buildActionRow)(row.accessory?.toJSON())
+                        : row;
+                if (btn instanceof discord_js_1.ButtonBuilder) {
+                    btn.setLabel(label)
+                        .setStyle(style);
+                    if (emoji)
+                        btn.setEmoji(emoji);
+                    if (typeof disabled === "boolean")
+                        btn.setDisabled(disabled);
+                    if (style === discord_js_1.ButtonStyle.Link)
+                        btn.setURL(id);
+                    else if (style === discord_js_1.ButtonStyle.Premium)
+                        btn.setSKUId(id);
+                    else
+                        btn.setCustomId(id);
+                    if (comp instanceof discord_js_1.ContainerBuilder) {
+                        const insert = row instanceof discord_js_1.ActionRowBuilder
+                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
+                            : row instanceof discord_js_1.SectionBuilder
+                                ? row.setButtonAccessory(btn)
+                                : undefined;
+                        if (insert)
+                            comp.spliceComponents(n, 1, insert);
+                    }
+                    else if (comp instanceof discord_js_1.SectionBuilder)
+                        comp.setButtonAccessory(btn);
+                    break outer;
+                }
+            }
+        }
         return this.success(!!(await m.edit({ components: components.map((x) => x.toJSON()) }).catch(ctx.noop)));
     },
 });
