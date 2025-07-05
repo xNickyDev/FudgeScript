@@ -85,17 +85,8 @@ exports.default = new structures_1.NativeFunction({
                         btn.setSKUId(id);
                     else
                         btn.setCustomId(id);
-                    if (comp instanceof discord_js_1.ContainerBuilder) {
-                        const insert = row instanceof discord_js_1.SectionBuilder
-                            ? row.setButtonAccessory(btn)
-                            : row instanceof discord_js_1.ActionRowBuilder
-                                ? row
-                                : undefined;
-                        if (row instanceof discord_js_1.ActionRowBuilder || row instanceof discord_js_1.SectionBuilder)
-                            comp.spliceComponents(n, 1, row);
-                    }
-                    else if (comp instanceof discord_js_1.SectionBuilder)
-                        comp.setButtonAccessory(btn);
+                    if (comp instanceof discord_js_1.ContainerBuilder)
+                        comp.spliceComponents(n, 1, row);
                     return this.success();
                 }
             }

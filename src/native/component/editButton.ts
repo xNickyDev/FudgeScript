@@ -83,15 +83,7 @@ export default new NativeFunction({
                     else if (style === ButtonStyle.Premium) btn.setSKUId(id)
                     else btn.setCustomId(id)
 
-                    if (comp instanceof ContainerBuilder) {
-                        const insert = row instanceof SectionBuilder
-                            ? row.setButtonAccessory(btn)
-                            : row instanceof ActionRowBuilder
-                                ? row
-                                : undefined
-
-                        if (row instanceof ActionRowBuilder || row instanceof SectionBuilder) comp.spliceComponents(n, 1, row)
-                    } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, row as ActionRowBuilder | SectionBuilder)
 
                     return this.success()
                 }
