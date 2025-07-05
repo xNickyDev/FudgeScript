@@ -103,13 +103,8 @@ export default new NativeFunction({
                     else btn.setCustomId(id)
 
                     if (comp instanceof ContainerBuilder) {
-                        const insert = row instanceof ActionRowBuilder
-                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
-                            : row instanceof SectionBuilder
-                                ? row.setButtonAccessory(btn)
-                                : undefined
-
-                        if (insert) comp.spliceComponents(n, 1, insert)
+                        const insert = row instanceof SectionBuilder ? row.setButtonAccessory(btn) : row
+                        comp.spliceComponents(n, 1, insert as ActionRowBuilder | SectionBuilder)
                     } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
 
                     break outer

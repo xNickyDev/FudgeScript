@@ -73,7 +73,7 @@ export default new NativeFunction({
                         if (desc) option.setDescription(desc)
                         if (typeof def === "boolean") option.setDefault(def)
 
-                        if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
+                        if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, row as ActionRowBuilder)
 
                         return this.success()
                     }

@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ContainerBuilder, RoleSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildComponent, findSelectMenu } from "../../functions/components"
+import { buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editRoleSelectMenu",
@@ -75,7 +75,7 @@ export default new NativeFunction({
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (roles.length) menu.setDefaultRoles(roles.filter(Boolean))
                     
-                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, row as ActionRowBuilder)
                     
                     return this.success()
                 }

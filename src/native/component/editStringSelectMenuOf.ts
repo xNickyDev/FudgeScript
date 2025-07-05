@@ -87,7 +87,7 @@ export default new NativeFunction({
                     if (typeof min === "number") menu.setMinValues(min)
                     if (typeof max === "number") menu.setMaxValues(max)
                     
-                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, row as ActionRowBuilder)
                     
                     break outer
                 }

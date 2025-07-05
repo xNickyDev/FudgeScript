@@ -103,13 +103,8 @@ exports.default = new structures_1.NativeFunction({
                     else
                         btn.setCustomId(id);
                     if (comp instanceof discord_js_1.ContainerBuilder) {
-                        const insert = row instanceof discord_js_1.ActionRowBuilder
-                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
-                            : row instanceof discord_js_1.SectionBuilder
-                                ? row.setButtonAccessory(btn)
-                                : undefined;
-                        if (insert)
-                            comp.spliceComponents(n, 1, insert);
+                        const insert = row instanceof discord_js_1.SectionBuilder ? row.setButtonAccessory(btn) : row;
+                        comp.spliceComponents(n, 1, insert);
                     }
                     else if (comp instanceof discord_js_1.SectionBuilder)
                         comp.setButtonAccessory(btn);
