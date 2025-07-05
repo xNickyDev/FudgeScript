@@ -89,7 +89,8 @@ exports.default = new structures_1.NativeFunction({
                         ? (0, components_1.buildActionRow)(row.accessory?.toJSON())
                         : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
-                    btn.setLabel(label)
+                    // @ts-ignore
+                    btn.setLabel(label || btn.data.label)
                         .setStyle(style);
                     if (emoji)
                         btn.setEmoji(emoji);

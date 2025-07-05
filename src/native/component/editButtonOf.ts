@@ -91,7 +91,8 @@ export default new NativeFunction({
                         : row
 
                 if (btn instanceof ButtonBuilder) {
-                    btn.setLabel(label)
+                    // @ts-ignore
+                    btn.setLabel(label || btn.data.label)
                         .setStyle(style)
 
                     if (emoji) btn.setEmoji(emoji)

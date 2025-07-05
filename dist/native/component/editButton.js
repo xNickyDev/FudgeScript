@@ -72,7 +72,8 @@ exports.default = new structures_1.NativeFunction({
                         ? (0, components_1.buildActionRow)(row.accessory?.toJSON())
                         : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
-                    btn.setLabel(label)
+                    // @ts-ignore
+                    btn.setLabel(label || btn.data.label)
                         .setStyle(style);
                     if (emoji)
                         btn.setEmoji(emoji);
@@ -86,7 +87,7 @@ exports.default = new structures_1.NativeFunction({
                         btn.setCustomId(id);
                     if (comp instanceof discord_js_1.ContainerBuilder) {
                         const insert = row instanceof discord_js_1.ActionRowBuilder
-                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
+                            ? row
                             : row instanceof discord_js_1.SectionBuilder
                                 ? row.setButtonAccessory(btn)
                                 : undefined;

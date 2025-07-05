@@ -72,7 +72,8 @@ export default new NativeFunction({
                         : row
 
                 if (btn instanceof ButtonBuilder) {
-                    btn.setLabel(label)
+                    // @ts-ignore
+                    btn.setLabel(label || btn.data.label)
                         .setStyle(style)
 
                     if (emoji) btn.setEmoji(emoji)
@@ -84,7 +85,7 @@ export default new NativeFunction({
 
                     if (comp instanceof ContainerBuilder) {
                         const insert = row instanceof ActionRowBuilder
-                            ? row.setComponents(row.components.splice(row.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === oldId), 1, btn))
+                            ? row
                             : row instanceof SectionBuilder
                                 ? row.setButtonAccessory(btn)
                                 : undefined
