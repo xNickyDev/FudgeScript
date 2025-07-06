@@ -145,16 +145,14 @@ export class Context {
     executionTimestamp!: number
     http: Partial<IHttpOptions> = {}
     automodRule: Partial<IAutomodRuleOptions> = {}
+    component: Partial<IComponentOptions> = {}
     onboarding: Partial<IOnboardingOptions> = {}
     scheduledEvent: Partial<IScheduledEventOptions> = {}
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
 
-    component: Partial<IComponentOptions> = {}
-
     localFunctions: Map<string, ILocalFunctionData> = new Map()
-    suppressErrors: boolean = false
 
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}

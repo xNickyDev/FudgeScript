@@ -69,6 +69,11 @@ export interface IRunnable {
     disableConsoleErrors?: boolean
 
     /**
+     * Whether to suppress forge errors from being thrown
+     */
+    suppressErrors?: boolean
+
+    /**
      * Extras data
      */
     extras?: unknown
@@ -140,7 +145,7 @@ export class Interpreter {
                     args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value
                 }
             } catch (err: unknown) {
-                if (err instanceof Error)
+                if (err instanceof Error && !runtime.suppressErrors)
                     Logger.error(err)
                 else if (err instanceof Return) {
                     if (err.return)

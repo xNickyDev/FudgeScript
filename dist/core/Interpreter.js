@@ -36,7 +36,7 @@ class Interpreter {
                 }
             }
             catch (err) {
-                if (err instanceof Error)
+                if (err instanceof Error && !runtime.suppressErrors)
                     structures_1.Logger.error(err);
                 else if (err instanceof structures_1.Return) {
                     if (err.return)

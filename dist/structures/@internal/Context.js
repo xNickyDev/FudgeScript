@@ -41,14 +41,13 @@ class Context {
     executionTimestamp;
     http = {};
     automodRule = {};
+    component = {};
     onboarding = {};
     scheduledEvent = {};
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;
-    component = {};
     localFunctions = new Map();
-    suppressErrors = false;
     #keywords = {};
     #environment = {};
     container;

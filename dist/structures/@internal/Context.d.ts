@@ -96,14 +96,13 @@ export declare class Context {
     executionTimestamp: number;
     http: Partial<IHttpOptions>;
     automodRule: Partial<IAutomodRuleOptions>;
+    component: Partial<IComponentOptions>;
     onboarding: Partial<IOnboardingOptions>;
     scheduledEvent: Partial<IScheduledEventOptions>;
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;
-    component: Partial<IComponentOptions>;
     localFunctions: Map<string, ILocalFunctionData>;
-    suppressErrors: boolean;
     container: Container;
     constructor(runtime: IRunnable);
     get client(): import("../..").ForgeClient;

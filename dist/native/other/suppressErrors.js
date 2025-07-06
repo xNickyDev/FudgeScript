@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NativeFunction_1 = require("../../structures/@internal/NativeFunction");
 exports.default = new NativeFunction_1.NativeFunction({
     name: "$suppressErrors",
-    version: "2.3.0",
-    description: "Suppresses all function errors for a command",
+    description: "Suppresses all forge errors for a command",
     unwrap: false,
     brackets: false,
     args: [
@@ -17,9 +16,9 @@ exports.default = new NativeFunction_1.NativeFunction({
         },
     ],
     execute(ctx) {
+        ctx.runtime.suppressErrors = true;
         // not implemented
         const code = this.data.fields[0];
-        ctx.suppressErrors = true;
         return this.success();
     },
 });

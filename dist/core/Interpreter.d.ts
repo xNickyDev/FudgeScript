@@ -58,6 +58,10 @@ export interface IRunnable {
      */
     disableConsoleErrors?: boolean;
     /**
+     * Whether to suppress forge errors from being thrown
+     */
+    suppressErrors?: boolean;
+    /**
      * Extras data
      */
     extras?: unknown;
