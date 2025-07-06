@@ -32,11 +32,11 @@ class Interpreter {
                 for (let i = 0, len = runtime.data.functions.length; i < len; i++) {
                     const fn = runtime.data.functions[i];
                     const rt = await fn.execute(ctx);
-                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value;
+                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt) && !ctx.runtime.suppressErrors) ? ctx["error"]() : rt.value;
                 }
             }
             catch (err) {
-                if (err instanceof Error && !ctx.runtime.suppressErrors)
+                if (err instanceof Error)
                     structures_1.Logger.error(err);
                 else if (err instanceof structures_1.Return) {
                     if (err.return)
