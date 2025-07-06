@@ -42,6 +42,9 @@ class Interpreter {
                     if (err.return)
                         return err.value;
                 }
+                else if (ctx.runtime.suppressErrors) {
+                    return "";
+                }
                 return null;
             }
             content = runtime.data.resolve(args);

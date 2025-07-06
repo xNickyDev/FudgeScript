@@ -150,6 +150,8 @@ export class Interpreter {
                 else if (err instanceof Return) {
                     if (err.return)
                         return err.value as string
+                } else if (ctx.runtime.suppressErrors) {
+                    return ""
                 }
 
                 return null
