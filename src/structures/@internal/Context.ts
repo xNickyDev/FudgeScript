@@ -304,7 +304,7 @@ export class Context {
     }
 
     public handleNotSuccess(fn: CompiledFunction, rt: Return) {
-        if (fn.data.silent || this.suppressErrors)
+        if (fn.data.silent || fn.data.suppress || this.runtime.suppressErrors)
             return false
         else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)

@@ -171,7 +171,7 @@ class Context {
         return this.container.send(this.obj, content);
     }
     handleNotSuccess(fn, rt) {
-        if (fn.data.silent || this.suppressErrors)
+        if (fn.data.silent || fn.data.suppress || this.runtime.suppressErrors)
             return false;
         else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return_1.Return(Return_1.ReturnType.Return, rt.value);
