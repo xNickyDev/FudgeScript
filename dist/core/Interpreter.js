@@ -32,7 +32,8 @@ class Interpreter {
                 for (let i = 0, len = runtime.data.functions.length; i < len; i++) {
                     const fn = runtime.data.functions[i];
                     const rt = await fn.execute(ctx);
-                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value;
+                    const err = !ctx.handleNotSuccess(fn, rt);
+                    args[i] = (err && ctx.runtime.suppressErrors) ? "" : (!rt.success && err) ? ctx["error"]() : rt.value;
                 }
             }
             catch (err) {
@@ -41,9 +42,6 @@ class Interpreter {
                 else if (err instanceof structures_1.Return) {
                     if (err.return)
                         return err.value;
-                }
-                else if (ctx.runtime.suppressErrors) {
-                    return "";
                 }
                 return null;
             }
