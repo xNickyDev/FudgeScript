@@ -145,7 +145,7 @@ export class Interpreter {
                     args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value
                 }
             } catch (err: unknown) {
-                if (err instanceof Error && !runtime.suppressErrors)
+                if (err instanceof Error && !ctx.runtime.suppressErrors)
                     Logger.error(err)
                 else if (err instanceof Return) {
                     if (err.return)

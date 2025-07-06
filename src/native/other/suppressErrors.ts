@@ -18,9 +18,6 @@ export default new NativeFunction({
     ],
     execute(ctx) {
         ctx.runtime.suppressErrors = true
-        // not implemented
-        const code = this.data.fields![0] as IExtendedCompiledFunctionField
-
         return this.success()
     },
 })
