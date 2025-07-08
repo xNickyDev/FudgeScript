@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$findSound",
+    version: "2.4.0",
     description: "Finds a sound of a guild",
     brackets: true,
     unwrap: true,
