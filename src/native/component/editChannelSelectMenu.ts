@@ -75,7 +75,7 @@ export default new NativeFunction({
                     if (typeof max === "number") menu.setMaxValues(max)
                     if (channels.length) menu.setDefaultChannels(channels.filter(Boolean))
                     
-                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, row as ActionRowBuilder)
+                    if (comp instanceof ContainerBuilder) comp.spliceComponents(n, 1, new ActionRowBuilder().addComponents(menu))
                     
                     return this.success()
                 }

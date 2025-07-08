@@ -71,7 +71,7 @@ exports.default = new structures_1.NativeFunction({
                     if (typeof max === "number")
                         menu.setMaxValues(max);
                     if (comp instanceof discord_js_1.ContainerBuilder)
-                        comp.spliceComponents(n, 1, row);
+                        comp.spliceComponents(n, 1, new discord_js_1.ActionRowBuilder().addComponents(menu));
                     return this.success();
                 }
             }

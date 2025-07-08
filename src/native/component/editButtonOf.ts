@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import { buildActionRow, buildComponent, findButton } from "../../functions/components"
+import { buildActionRow, buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$editButtonOf",
@@ -103,8 +103,8 @@ export default new NativeFunction({
                     else btn.setCustomId(id)
 
                     if (comp instanceof ContainerBuilder) {
-                        const insert = row instanceof SectionBuilder ? row.setButtonAccessory(btn) : row
-                        comp.spliceComponents(n, 1, insert as ActionRowBuilder | SectionBuilder)
+                        const insert = row instanceof SectionBuilder ? row.setButtonAccessory(btn) : row as ActionRowBuilder
+                        comp.spliceComponents(n, 1, insert)
                     } else if (comp instanceof SectionBuilder) comp.setButtonAccessory(btn)
 
                     break outer
