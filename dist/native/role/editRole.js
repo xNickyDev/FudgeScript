@@ -62,16 +62,17 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
-        return this.success(!!(await role
-            .edit({
+        const edit = await role.edit({
             color: color || undefined,
             hoist: hoist || undefined,
             icon: icon || undefined,
             mentionable: mentionable || undefined,
             name: name || undefined,
             permissions: perms || undefined,
-        })
-            .catch(ctx.noop)));
+            reason: ctx.reason,
+        }).catch(ctx.noop);
+        ctx.clearAuditLogReason();
+        return this.success(!!edit);
     },
 });
 //# sourceMappingURL=editRole.js.map

@@ -24,6 +24,6 @@ export default new NativeFunction({
     execute: async function(ctx, [format]) {
         format ??= BasicTimeFormat.Numeric
         const hour = new Date().toLocaleString("en-US", { hour: format, hour12: false, timeZone: ctx.timezone, calendar: ctx.calendar })
-        return this.success(format === BasicTimeFormat.Numeric ? parseInt(hour, 10).toString() : hour)
+        return this.success(format === BasicTimeFormat.Numeric ? hour.padStart(2, "0") : hour)
     }
 })

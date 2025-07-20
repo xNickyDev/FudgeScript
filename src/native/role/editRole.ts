@@ -1,4 +1,3 @@
-import noop from "../../functions/noop"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { ColorResolvable } from "discord.js"
 
@@ -63,17 +62,17 @@ export default new NativeFunction({
     ],
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
-        return this.success(
-            !!(await role
-                .edit({
-                    color: (color as ColorResolvable) || undefined,
-                    hoist: hoist || undefined,
-                    icon: icon || undefined,
-                    mentionable: mentionable || undefined,
-                    name: name || undefined,
-                    permissions: perms || undefined,
-                })
-                .catch(ctx.noop))
-        )
+        const edit = await role.edit({
+            color: (color as ColorResolvable) || undefined,
+            hoist: hoist || undefined,
+            icon: icon || undefined,
+            mentionable: mentionable || undefined,
+            name: name || undefined,
+            permissions: perms || undefined,
+            reason: ctx.reason,
+        }).catch(ctx.noop)
+
+        ctx.clearAuditLogReason()
+        return this.success(!!edit)
     },
 })

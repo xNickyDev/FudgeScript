@@ -151,6 +151,7 @@ export class Context {
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
+    reason?: string
 
     localFunctions: Map<string, ILocalFunctionData> = new Map()
 
@@ -329,6 +330,10 @@ export class Context {
 
     public clearScheduledEventOptions() {
         this.scheduledEvent = {}
+    }
+
+    public clearAuditLogReason() {
+        delete this.reason
     }
 
     public setEnvironmentKey(name: string, value: unknown) {

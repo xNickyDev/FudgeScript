@@ -1,5 +1,4 @@
 import { ColorResolvable, PermissionFlagsBits, PermissionsString } from "discord.js"
-import noop from "../../functions/noop"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -72,6 +71,7 @@ export default new NativeFunction({
                 name,
                 permissions: (perms as PermissionsString[]) || [],
                 position: pos || undefined,
+                reason: ctx.reason,
             })
             .catch(ctx.noop)
         return this.success(created ? created.id : undefined)

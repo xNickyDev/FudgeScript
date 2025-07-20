@@ -1,4 +1,4 @@
-import { bold, codeBlock } from "discord.js"
+import { codeBlock } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 import { MarkdownEscapeRegex } from "./inlineCode"
 

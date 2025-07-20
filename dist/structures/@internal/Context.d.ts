@@ -102,6 +102,7 @@ export declare class Context {
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;
+    reason?: string;
     localFunctions: Map<string, ILocalFunctionData>;
     container: Container;
     constructor(runtime: IRunnable);
@@ -130,6 +131,7 @@ export declare class Context {
     clearHttpOptions(): void;
     clearAutomodRuleOptions(): void;
     clearScheduledEventOptions(): void;
+    clearAuditLogReason(): void;
     setEnvironmentKey(name: string, value: unknown): unknown;
     traverseDeleteEnvironmentKey(...keys: string[]): boolean | any[];
     traverseAddEnvironmentKey(value: unknown, ...keys: string[]): boolean;

@@ -47,6 +47,7 @@ class Context {
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;
+    reason;
     localFunctions = new Map();
     #keywords = {};
     #environment = {};
@@ -195,6 +196,9 @@ class Context {
     }
     clearScheduledEventOptions() {
         this.scheduledEvent = {};
+    }
+    clearAuditLogReason() {
+        delete this.reason;
     }
     setEnvironmentKey(name, value) {
         return (this.#environment[name] = value);
