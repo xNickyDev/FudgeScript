@@ -20,8 +20,7 @@ export default new NativeFunction({
             description: "The member to get its inviter",
             rest: false,
             required: true,
-            type: ArgType.Member,
-            pointer: 0
+            type: ArgType.User,
         },
     ],
     output: ArgType.User,

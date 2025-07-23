@@ -21,8 +21,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The member to get its inviter",
             rest: false,
             required: true,
-            type: structures_1.ArgType.Member,
-            pointer: 0
+            type: structures_1.ArgType.User,
         },
     ],
     output: structures_1.ArgType.User,

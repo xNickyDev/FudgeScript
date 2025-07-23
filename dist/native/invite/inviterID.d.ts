@@ -10,8 +10,7 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.Member;
-    pointer: number;
+    type: ArgType.User;
 }], true>;
 export default _default;
 //# sourceMappingURL=inviterID.d.ts.map
