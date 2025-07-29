@@ -1,1 +1,1 @@
-{"functions":"native","events":"handlers/events"}
+{"functions":"src/native","events":"src/handlers/events"}
