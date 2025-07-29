@@ -76,9 +76,13 @@ export default async function(functionsAbsolutePath: string, mainCategoryName?: 
 
     const dir = join(__dirname, "..")
     writeFileSync(join(metaOutPath, "paths.json"), JSON.stringify({
-        functions: "src/" + relative(dir, functionsAbsolutePath),
-        ...(eventsAbsolutePath && { events: "src/" + relative(dir, eventsAbsolutePath) })
+        functions: relative(dir, functionsAbsolutePath),
+        ...(eventsAbsolutePath && { events: relative(dir, eventsAbsolutePath) })
     }), "utf-8")
+
+    console.log("dir:", dir)
+    console.log("functionsAbsolutePath:", functionsAbsolutePath)
+    console.log("eventsAbsolutePath:", eventsAbsolutePath)
 
     const v = require(cwd() + "/package.json").version
 
