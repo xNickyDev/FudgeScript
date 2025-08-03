@@ -92,7 +92,7 @@ export default new NativeFunction({
         }
 
         if (prop1 !== ComponentProperty.components) {
-            return this.success(ComponentProperties[prop1](comp, sep))
+            return this.success(ComponentProperties[prop1](comp ?? row, sep))
         }
 
         const comps2 = comp && "components" in comp ? comp.components : undefined

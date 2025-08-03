@@ -86,7 +86,7 @@ exports.default = new structures_1.NativeFunction({
             return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps?.map((x) => x.data)));
         }
         if (prop1 !== component_1.ComponentProperty.components) {
-            return this.success(component_1.ComponentProperties[prop1](comp, sep));
+            return this.success(component_1.ComponentProperties[prop1](comp ?? row, sep));
         }
         const comps2 = comp && "components" in comp ? comp.components : undefined;
         const comp2 = comps2?.[compIndex2];
