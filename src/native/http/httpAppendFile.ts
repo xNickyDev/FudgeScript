@@ -23,7 +23,7 @@ export default new NativeFunction({
         }
     ],
     execute(ctx, [ key, file ]) {
-        ctx.http.form?.append(key, new Blob([file.attachment as Buffer]), file.name!)
-        return this.success()        
+        ctx.http.form?.append(key, new Blob([new Uint8Array(file.attachment as Buffer)]), file.name!)
+        return this.success()
     },
 })

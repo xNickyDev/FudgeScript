@@ -16,7 +16,7 @@ export declare enum ComponentProperty {
     optionDescriptions = "optionDescriptions",
     optionValues = "optionValues",
     content = "content",
-    color = "color",
+    accentColor = "accentColor",
     spoiler = "spoiler",
     divider = "divider",
     spacing = "spacing",

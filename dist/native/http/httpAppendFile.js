@@ -24,7 +24,7 @@ exports.default = new structures_1.NativeFunction({
         }
     ],
     execute(ctx, [key, file]) {
-        ctx.http.form?.append(key, new Blob([file.attachment]), file.name);
+        ctx.http.form?.append(key, new Blob([new Uint8Array(file.attachment)]), file.name);
         return this.success();
     },
 });

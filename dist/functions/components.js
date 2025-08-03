@@ -36,7 +36,7 @@ exports.isTopLevel = isTopLevel;
  */
 function buildActionRow(comp) {
     const type = comp.type;
-    return (type in MessageComponentBuilders ? new MessageComponentBuilders[type](comp.toJSON?.() ?? comp) : undefined);
+    return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
 exports.buildActionRow = buildActionRow;
 /**

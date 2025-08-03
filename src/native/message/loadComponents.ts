@@ -1,6 +1,6 @@
 import { ArgType, NativeFunction } from "../../structures"
-import { isTopLevel } from "../../functions/components"
-import { ActionRowBuilder, ComponentType, createComponentBuilder } from "discord.js"
+import { buildActionRow, buildComponent, isTopLevel } from "../../functions/components"
+import { ActionRowBuilder, ComponentType } from "discord.js"
 
 export default new NativeFunction({
     name: "$loadComponents",
@@ -12,20 +12,20 @@ export default new NativeFunction({
     args: [
         {
             name: "component data",
+            description: "The components object or array of objects to load",
             type: ArgType.Json,
             rest: false,
             required: true,
-            description: "The components object or array of objects to load",
         },
     ],
     execute(ctx, [json]) {
         const components = Array.isArray(json)
             ? Array.isArray(json[0])
-                ? json.map((row) => new ActionRowBuilder().addComponents(row?.map((comp: any) => createComponentBuilder(comp))))
+                ? json.map((row) => new ActionRowBuilder().addComponents(row?.map((comp: any) => buildActionRow(comp))))
                 : isTopLevel(json[0]?.type as ComponentType)
-                    ? json.map((comp) => createComponentBuilder(comp))
-                    : new Array(new ActionRowBuilder().addComponents(json?.map((comp) => createComponentBuilder(comp))))
-            : new Array(isTopLevel(json?.type as ComponentType) ? createComponentBuilder(json as any) : new ActionRowBuilder().addComponents(createComponentBuilder(json as any)))
+                    ? json.map((comp) => buildComponent(comp, ctx))
+                    : new Array(new ActionRowBuilder().addComponents(json?.map((comp) => buildActionRow(comp))))
+            : new Array(isTopLevel(json?.type as ComponentType) ? buildComponent(json as any, ctx) : new ActionRowBuilder().addComponents(buildActionRow(json as any)))
 
         ctx.container.components.push(...components)
 

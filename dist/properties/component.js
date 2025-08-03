@@ -24,7 +24,7 @@ var ComponentProperty;
     ComponentProperty["optionDescriptions"] = "optionDescriptions";
     ComponentProperty["optionValues"] = "optionValues";
     ComponentProperty["content"] = "content";
-    ComponentProperty["color"] = "color";
+    ComponentProperty["accentColor"] = "accentColor";
     ComponentProperty["spoiler"] = "spoiler";
     ComponentProperty["divider"] = "divider";
     ComponentProperty["spacing"] = "spacing";
@@ -54,7 +54,7 @@ exports.ComponentProperties = (0, defineProperties_1.default)({
     optionValues: (i, sep) => (i && "options" in i ? i.options.map((x) => x.value).join(sep ?? ", ") : null),
     options: (i) => (i && "options" in i ? JSON.stringify(i.options, undefined, 4) : null),
     content: (i) => (i && "content" in i ? i.content : null),
-    color: (i) => (i && "hexAccentColor" in i ? i.hexAccentColor : null),
+    accentColor: (i) => (i && "hexAccentColor" in i ? i.hexAccentColor : null),
     spoiler: (i) => (i && "spoiler" in i ? i.spoiler : null),
     divider: (i) => (i && "divider" in i ? i.divider : null),
     spacing: (i) => (i && "spacing" in i ? discord_js_1.SeparatorSpacingSize[i.spacing] : null),

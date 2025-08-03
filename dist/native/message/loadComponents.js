@@ -13,20 +13,20 @@ exports.default = new structures_1.NativeFunction({
     args: [
         {
             name: "component data",
+            description: "The components object or array of objects to load",
             type: structures_1.ArgType.Json,
             rest: false,
             required: true,
-            description: "The components object or array of objects to load",
         },
     ],
     execute(ctx, [json]) {
         const components = Array.isArray(json)
             ? Array.isArray(json[0])
-                ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row?.map((comp) => (0, discord_js_1.createComponentBuilder)(comp))))
+                ? json.map((row) => new discord_js_1.ActionRowBuilder().addComponents(row?.map((comp) => (0, components_1.buildActionRow)(comp))))
                 : (0, components_1.isTopLevel)(json[0]?.type)
-                    ? json.map((comp) => (0, discord_js_1.createComponentBuilder)(comp))
-                    : new Array(new discord_js_1.ActionRowBuilder().addComponents(json?.map((comp) => (0, discord_js_1.createComponentBuilder)(comp))))
-            : new Array((0, components_1.isTopLevel)(json?.type) ? (0, discord_js_1.createComponentBuilder)(json) : new discord_js_1.ActionRowBuilder().addComponents((0, discord_js_1.createComponentBuilder)(json)));
+                    ? json.map((comp) => (0, components_1.buildComponent)(comp, ctx))
+                    : new Array(new discord_js_1.ActionRowBuilder().addComponents(json?.map((comp) => (0, components_1.buildActionRow)(comp))))
+            : new Array((0, components_1.isTopLevel)(json?.type) ? (0, components_1.buildComponent)(json, ctx) : new discord_js_1.ActionRowBuilder().addComponents((0, components_1.buildActionRow)(json)));
         ctx.container.components.push(...components);
         return this.success();
     },

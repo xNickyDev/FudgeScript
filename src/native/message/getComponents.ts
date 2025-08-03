@@ -85,10 +85,10 @@ export default new NativeFunction({
 
         const row = m.components[rowIndex]
         const comps = "components" in row ? row.components : undefined
-        const comp = (typeof compIndex1 === "number" && comps ? comps[compIndex1] : undefined)
+        const comp = (typeof compIndex1 === "number" && comps) ? comps[compIndex1] : undefined
 
         if (prop1 === null) {
-            return this.successJSON(comp?.data ?? (isV2 ? row : comps?.map((x) => x.data)))
+            return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps?.map((x) => x.data)))
         }
 
         if (prop1 !== ComponentProperty.components) {

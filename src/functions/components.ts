@@ -57,7 +57,7 @@ export function isTopLevel(type: ComponentType, actionRow: boolean = true) {
  */
 export function buildActionRow(comp: any) {
     const type = comp.type as ComponentType
-    return (type in MessageComponentBuilders ? new MessageComponentBuilders[type](comp.toJSON?.() ?? comp) : undefined)
+    return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp)
 }
 
 /**
