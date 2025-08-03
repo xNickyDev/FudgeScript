@@ -23,6 +23,8 @@ export declare enum ComponentProperty {
     items = "items",
     itemUrls = "itemUrls",
     fileUrl = "fileUrl",
+    thumbnailUrl = "thumbnailUrl",
+    accessory = "accessory",
     components = "components"
 }
 export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, ContainerComponent | MessageActionRowComponent | ComponentInContainer>;
