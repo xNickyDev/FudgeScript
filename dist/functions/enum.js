@@ -6,7 +6,7 @@ function enumToArray(x) {
 }
 exports.enumToArray = enumToArray;
 function resolveNumericEnum(x, value) {
-    return typeof (value) === "string" ? x[value] : x;
+    return typeof (value) === "string" ? x[value] : value;
 }
 exports.resolveNumericEnum = resolveNumericEnum;
 //# sourceMappingURL=enum.js.map

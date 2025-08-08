@@ -5,5 +5,5 @@ export function enumToArray(x: EnumLike) {
 }
 
 export function resolveNumericEnum(x: EnumLike, value: string | number) {
-    return typeof(value) === "string" ? x[value as keyof typeof x] : x
+    return typeof(value) === "string" ? x[value as keyof typeof x] : value
 }
