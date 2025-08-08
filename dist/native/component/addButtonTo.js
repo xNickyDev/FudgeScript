@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const components_1 = require("../../functions/components");
+const enum_1 = require("../../functions/enum");
 exports.default = new structures_1.NativeFunction({
     name: "$addButtonTo",
     version: "1.5.0",
@@ -62,16 +63,17 @@ exports.default = new structures_1.NativeFunction({
     ],
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [, m, id, label, style, emoji, disabled]) {
+        style = (0, enum_1.resolveNumericEnum)(discord_js_1.ButtonStyle, style);
         const btn = new discord_js_1.ButtonBuilder()
             .setDisabled(disabled || false)
             .setStyle(style);
-        if (style == discord_js_1.ButtonStyle.Link)
+        if (style === discord_js_1.ButtonStyle.Link)
             btn.setURL(id);
-        else if (style == discord_js_1.ButtonStyle.Premium)
+        else if (style === discord_js_1.ButtonStyle.Premium)
             btn.setSKUId(id);
         else
             btn.setCustomId(id);
-        if (style != discord_js_1.ButtonStyle.Premium) {
+        if (style !== discord_js_1.ButtonStyle.Premium) {
             btn.setLabel(label);
             if (emoji)
                 btn.setEmoji(emoji);

@@ -1,4 +1,4 @@
-import { ActionRowBuilder, createComponentBuilder } from "discord.js"
+import { ActionRowBuilder } from "discord.js"
 import { ArgType, Container, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 import { buildComponent } from "../../functions/components"
 
@@ -29,7 +29,7 @@ export default new NativeFunction({
         },
         {
             name: "components",
-            description: "Components for this row",
+            description: "The components for this row",
             rest: false,
             required: true,
             type: ArgType.String

@@ -29,7 +29,7 @@ exports.default = new structures_1.NativeFunction({
         },
         {
             name: "components",
-            description: "Components for this row",
+            description: "The components for this row",
             rest: false,
             required: true,
             type: structures_1.ArgType.String
