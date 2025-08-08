@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageActionRowComponent } from "discord.js"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, createComponentBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -64,20 +64,21 @@ export default new NativeFunction({
             .setDisabled(disabled || false)
             .setStyle(style)
 
-        if (style === ButtonStyle.Link) btn.setURL(id)
-        else if (style === ButtonStyle.Premium) btn.setSKUId(id)
+        if (style == ButtonStyle.Link) btn.setURL(id)
+        else if (style == ButtonStyle.Premium) btn.setSKUId(id)
         else btn.setCustomId(id)
 
-        if (style !== ButtonStyle.Premium) {
+        if (style != ButtonStyle.Premium) {
             btn.setLabel(label)
             if (emoji) btn.setEmoji(emoji)
         }
 
-        const components = m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>))
-        components.at(-1)?.addComponents(btn)
+        const components = m.components.map(x => createComponentBuilder(x.toJSON()))
+        const comp = components.at(-1)
+        if (comp instanceof ActionRowBuilder) comp.addComponents(btn)
 
         return this.success(
-            !!(await m.edit({ components: components as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: components.map(x => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })

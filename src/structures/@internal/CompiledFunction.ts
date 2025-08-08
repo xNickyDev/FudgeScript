@@ -282,8 +282,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     private resolveEnum(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        const value = arg.enum![str]
-        return isNaN(value) ? value : Number(value)
+        return arg.enum![str]
     }
 
     private resolveBoolean(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {

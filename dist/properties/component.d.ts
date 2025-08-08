@@ -23,7 +23,6 @@ export declare enum ComponentProperty {
     items = "items",
     itemUrls = "itemUrls",
     fileUrl = "fileUrl",
-    thumbnailUrl = "thumbnailUrl",
     accessory = "accessory",
     components = "components"
 }

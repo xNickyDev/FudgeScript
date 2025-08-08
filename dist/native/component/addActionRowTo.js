@@ -49,11 +49,11 @@ exports.default = new structures_1.NativeFunction({
             return rt;
         const [, m, keep] = args;
         const code = this.data.fields[2];
-        const rows = keep ? m.components.map(x => discord_js_1.ActionRowBuilder.from(x)) : new Array();
+        const comps = keep ? m.components.map(x => (0, discord_js_1.createComponentBuilder)(x.toJSON())) : new Array();
         const oldContainer = ctx.runtime.container;
         const newContainer = new structures_1.Container();
-        // Add our new rows
-        newContainer.components = rows;
+        // Add our new comps
+        newContainer.components = comps;
         // Use new container
         ctx.container = newContainer;
         const codeExec = await this["resolveCode"](ctx, code);
@@ -61,8 +61,8 @@ exports.default = new structures_1.NativeFunction({
         ctx.container = oldContainer;
         if (!this["isValidReturnType"](codeExec))
             return codeExec;
-        // Since rows is a reference, we do not need to retrieve from container.
-        return this.success(!!(await m.edit({ components: rows }).catch(ctx.noop)));
+        // Since comps is a reference, we do not need to retrieve from container.
+        return this.success(!!(await m.edit({ components: comps.map(x => x.toJSON()) }).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=addActionRowTo.js.map

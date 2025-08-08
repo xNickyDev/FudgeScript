@@ -48,13 +48,13 @@ exports.default = new structures_1.NativeFunction({
         const btn = new discord_js_1.ButtonBuilder()
             .setDisabled(disabled || false)
             .setStyle(style);
-        if (style === discord_js_1.ButtonStyle.Link)
+        if (style == discord_js_1.ButtonStyle.Link)
             btn.setURL(id);
-        else if (style === discord_js_1.ButtonStyle.Premium)
+        else if (style == discord_js_1.ButtonStyle.Premium)
             btn.setSKUId(id);
         else
             btn.setCustomId(id);
-        if (style !== discord_js_1.ButtonStyle.Premium) {
+        if (style != discord_js_1.ButtonStyle.Premium) {
             btn.setLabel(label);
             if (emoji)
                 btn.setEmoji(emoji);

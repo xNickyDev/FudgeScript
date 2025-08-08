@@ -224,8 +224,7 @@ class CompiledFunction {
         }
     }
     resolveEnum(ctx, arg, str, ref) {
-        const value = arg.enum[str];
-        return isNaN(value) ? value : Number(value);
+        return arg.enum[str];
     }
     resolveBoolean(ctx, arg, str, ref) {
         return str === "true" ? true : str === "false" ? false : undefined;

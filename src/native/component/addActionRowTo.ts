@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, MessageActionRowComponent } from "discord.js"
+import { ActionRowBuilder, createComponentBuilder } from "discord.js"
 import { ArgType, Container, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -49,13 +49,13 @@ export default new NativeFunction({
         const [, m, keep ] = args
         const code = this.data.fields![2] as IExtendedCompiledFunctionField
 
-        const rows = keep ? m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>)) : new Array<ActionRowBuilder>()
+        const comps = keep ? m.components.map(x => createComponentBuilder(x.toJSON())) : new Array<ActionRowBuilder>()
 
         const oldContainer = ctx.runtime.container
         const newContainer = new Container()
         
-        // Add our new rows
-        newContainer.components = rows
+        // Add our new comps
+        newContainer.components = comps
 
         // Use new container
         ctx.container = newContainer
@@ -67,9 +67,9 @@ export default new NativeFunction({
 
         if (!this["isValidReturnType"](codeExec)) return codeExec
 
-        // Since rows is a reference, we do not need to retrieve from container.
+        // Since comps is a reference, we do not need to retrieve from container.
         return this.success(
-            !!(await m.edit({ components: rows as ActionRowBuilder<ButtonBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: comps.map(x => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })
