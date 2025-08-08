@@ -1,5 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, createComponentBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
+import { buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$addButtonTo",
@@ -73,7 +74,7 @@ export default new NativeFunction({
             if (emoji) btn.setEmoji(emoji)
         }
 
-        const components = m.components.map(x => createComponentBuilder(x.toJSON()))
+        const components = m.components.map(x => buildComponent(x))
         const comp = components.at(-1)
         if (comp instanceof ActionRowBuilder) comp.addComponents(btn)
 

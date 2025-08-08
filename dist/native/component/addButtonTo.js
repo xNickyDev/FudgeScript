@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
+const components_1 = require("../../functions/components");
 exports.default = new structures_1.NativeFunction({
     name: "$addButtonTo",
     version: "1.5.0",
@@ -75,7 +76,7 @@ exports.default = new structures_1.NativeFunction({
             if (emoji)
                 btn.setEmoji(emoji);
         }
-        const components = m.components.map(x => (0, discord_js_1.createComponentBuilder)(x.toJSON()));
+        const components = m.components.map(x => (0, components_1.buildComponent)(x));
         const comp = components.at(-1);
         if (comp instanceof discord_js_1.ActionRowBuilder)
             comp.addComponents(btn);
