@@ -119,12 +119,14 @@ export class Interpreter {
             if (runtime.command && !ctx.client.canRespondToBots(runtime.command) && ctx.user?.bot) return null
 
             if (runtime.command?.data.guildOnly && !ctx.guild) return null
-            else if (runtime.command?.data.authorOnly && ctx.interaction && (ctx.user?.id !== ctx.interaction.user.id)) return null
-            else if (runtime.client.options.restrictions !== undefined) {
+            else if (runtime.command?.data.authorOnly && ctx.interaction) {
+                const authorID = ctx.user?.id
+                if (authorID && (authorID !== ctx.interaction.user.id)) return null
+            } else if (runtime.client.options.restrictions !== undefined) {
                 const { guildIDs, userIDs } = runtime.client.options.restrictions
                 const guildID = ctx.guild?.id
                 const authorID = ctx.user?.id
-    
+
                 if (userIDs?.length && authorID && !userIDs.includes(authorID)) return null
                 else if (guildIDs?.length && guildID && !guildIDs.includes(guildID)) return null
             }
