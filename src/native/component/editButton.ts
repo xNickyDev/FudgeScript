@@ -1,6 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, SectionBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 import { buildActionRow, buildComponent } from "../../functions/components"
+import { resolveNumericEnum } from "../../functions/enum"
 
 export default new NativeFunction({
     name: "$editButton",
@@ -72,6 +73,7 @@ export default new NativeFunction({
                         : row
 
                 if (btn instanceof ButtonBuilder) {
+                    style = resolveNumericEnum(ButtonStyle, style)
                     // @ts-ignore
                     btn.setLabel(label || btn.data.label)
                         .setStyle(style)

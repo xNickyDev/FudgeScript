@@ -51,11 +51,11 @@ export default new NativeFunction({
             .setDisabled(disabled || false)
             .setStyle(style)
 
-        if (style == ButtonStyle.Link) btn.setURL(id)
-        else if (style == ButtonStyle.Premium) btn.setSKUId(id)
+        if (style === ButtonStyle.Link) btn.setURL(id)
+        else if (style === ButtonStyle.Premium) btn.setSKUId(id)
         else btn.setCustomId(id)
 
-        if (style != ButtonStyle.Premium) {
+        if (style !== ButtonStyle.Premium) {
             btn.setLabel(label)
             if (emoji) btn.setEmoji(emoji)
         }

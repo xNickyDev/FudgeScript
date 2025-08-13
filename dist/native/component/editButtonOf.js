@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 const components_1 = require("../../functions/components");
+const enum_1 = require("../../functions/enum");
 exports.default = new structures_1.NativeFunction({
     name: "$editButtonOf",
     version: "1.5.0",
@@ -89,6 +90,7 @@ exports.default = new structures_1.NativeFunction({
                         ? (0, components_1.buildActionRow)(row.accessory?.toJSON())
                         : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
+                    style = (0, enum_1.resolveNumericEnum)(discord_js_1.ButtonStyle, style);
                     // @ts-ignore
                     btn.setLabel(label || btn.data.label)
                         .setStyle(style);

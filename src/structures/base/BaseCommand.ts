@@ -20,6 +20,7 @@ export interface IBaseCommand<T> {
     type: T
     code: string
     guildOnly?: boolean
+    authorOnly?: boolean
     unprefixed?: boolean
     aliases?: string[]
     allowedInteractionTypes?: CommandInteractionTypes[]
