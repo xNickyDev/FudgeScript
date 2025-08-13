@@ -9,6 +9,7 @@ class Interpreter {
         if (runtime.client !== null) {
             if (runtime.command && !ctx.client.canRespondToBots(runtime.command) && ctx.user?.bot)
                 return null;
+            console.log(ctx.interaction, ctx.user?.id, ctx.interaction?.user.id);
             if (runtime.command?.data.guildOnly && !ctx.guild)
                 return null;
             else if (runtime.command?.data.authorOnly && ctx.interaction) {
