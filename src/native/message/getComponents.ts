@@ -91,14 +91,16 @@ export default new NativeFunction({
             return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps))
         }
 
+        const comp1 = comp ?? row
+
         if (prop1 !== ComponentProperty.components && prop1 !== ComponentProperty.accessory) {
-            return this.success(ComponentProperties[prop1](comp ?? row, sep))
+            return this.success(ComponentProperties[prop1](comp1, sep))
         }
 
-        const comps2 = (prop1 === ComponentProperty.accessory && comp && "accessory" in comp)
-            ? comp.accessory
-            : comp && "components" in comp
-                ? comp.components
+        const comps2 = (prop1 === ComponentProperty.accessory && comp1 && "accessory" in comp1)
+            ? comp1.accessory
+            : comp1 && "components" in comp1
+                ? comp1.components
                 : undefined
         const comp2 = (!Array.isArray(comps2) ? comps2 : typeof compIndex2 === "number" ? comps2?.[compIndex2] : undefined)
 
