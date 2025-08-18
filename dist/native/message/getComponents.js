@@ -82,7 +82,7 @@ exports.default = new structures_1.NativeFunction({
         const row = m.components[rowIndex];
         const comps = "components" in row ? row.components : undefined;
         const comp = (typeof compIndex1 === "number" ? comps?.[compIndex1] : undefined);
-        if (prop1 === null) {
+        if (!prop1) {
             return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps));
         }
         const comp1 = comp ?? row;
@@ -95,7 +95,7 @@ exports.default = new structures_1.NativeFunction({
                 ? comp1.components
                 : undefined;
         const comp2 = (!Array.isArray(comps2) ? comps2 : typeof compIndex2 === "number" ? comps2?.[compIndex2] : undefined);
-        if (prop2 === null) {
+        if (!prop2) {
             return this.successJSON(comp2?.data ?? comps2);
         }
         return this.success(component_1.ComponentProperties[prop2](comp2, sep));

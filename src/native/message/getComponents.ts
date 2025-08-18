@@ -87,7 +87,7 @@ export default new NativeFunction({
         const comps = "components" in row ? row.components : undefined
         const comp = (typeof compIndex1 === "number" ? comps?.[compIndex1] : undefined)
 
-        if (prop1 === null) {
+        if (!prop1) {
             return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps))
         }
 
@@ -104,7 +104,7 @@ export default new NativeFunction({
                 : undefined
         const comp2 = (!Array.isArray(comps2) ? comps2 : typeof compIndex2 === "number" ? comps2?.[compIndex2] : undefined)
 
-        if (prop2 === null) {
+        if (!prop2) {
             return this.successJSON(comp2?.data ?? comps2)
         }
 
