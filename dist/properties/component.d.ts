@@ -1,4 +1,4 @@
-import { ComponentInContainer, ContainerComponent, MessageActionRowComponent } from "discord.js";
+import { ComponentInContainer, ContainerComponent, MessageActionRowComponent, ThumbnailComponent } from "discord.js";
 export declare enum ComponentProperty {
     id = "id",
     type = "type",
@@ -24,7 +24,8 @@ export declare enum ComponentProperty {
     itemUrls = "itemUrls",
     fileUrl = "fileUrl",
     accessory = "accessory",
-    components = "components"
+    components = "components",
+    thumbnailUrl = "thumbnailUrl"
 }
-export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, ContainerComponent | MessageActionRowComponent | ComponentInContainer>;
+export declare const ComponentProperties: import("../functions/defineProperties").Properties<typeof ComponentProperty, ContainerComponent | MessageActionRowComponent | ThumbnailComponent | ComponentInContainer>;
 //# sourceMappingURL=component.d.ts.map

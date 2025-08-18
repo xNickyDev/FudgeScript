@@ -83,13 +83,17 @@ exports.default = new structures_1.NativeFunction({
         const comps = "components" in row ? row.components : undefined;
         const comp = (typeof compIndex1 === "number" ? comps?.[compIndex1] : undefined);
         if (prop1 === null) {
-            return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps?.map((x) => x.data)));
+            return this.successJSON((isV2 ? comp : comp?.data) ?? (isV2 ? row : comps));
         }
-        if (prop1 !== component_1.ComponentProperty.components) {
+        if (prop1 !== component_1.ComponentProperty.components && prop1 !== component_1.ComponentProperty.accessory) {
             return this.success(component_1.ComponentProperties[prop1](comp ?? row, sep));
         }
-        const comps2 = comp && "components" in comp ? comp.components : undefined;
-        const comp2 = (typeof compIndex2 === "number" ? comps2?.[compIndex2] : undefined);
+        const comps2 = (prop1 === component_1.ComponentProperty.accessory && comp && "accessory" in comp)
+            ? comp.accessory
+            : comp && "components" in comp
+                ? comp.components
+                : undefined;
+        const comp2 = (!Array.isArray(comps2) ? comps2 : typeof compIndex2 === "number" ? comps2?.[compIndex2] : undefined);
         if (prop2 === null) {
             return this.successJSON(comp2?.data ?? comps2);
         }

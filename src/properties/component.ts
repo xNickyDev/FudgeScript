@@ -5,7 +5,7 @@ import {
     ContainerComponent,
     MessageActionRowComponent,
     SeparatorSpacingSize,
-    ThumbnailBuilder,
+    ThumbnailComponent,
 } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
@@ -35,9 +35,10 @@ export enum ComponentProperty {
     fileUrl = "fileUrl",
     accessory = "accessory",
     components = "components",
+    thumbnailUrl = "thumbnailUrl",
 }
 
-export const ComponentProperties = defineProperties<typeof ComponentProperty, MessageActionRowComponent | ComponentInContainer | ContainerComponent>({
+export const ComponentProperties = defineProperties<typeof ComponentProperty, MessageActionRowComponent | ComponentInContainer | ContainerComponent | ThumbnailComponent>({
     id: (i) => i?.id,
     type: (i) => ComponentType[i?.type!],
     customID: (i) => (i && "customId" in i ? i.customId : null),
@@ -69,4 +70,5 @@ export const ComponentProperties = defineProperties<typeof ComponentProperty, Me
     fileUrl: (i) => (i && "file" in i ? i.file.url : null),
     accessory: (i) => (i && "accessory" in i ? JSON.stringify(i.accessory, undefined, 4) : null),
     components: (i) => (i && "components" in i ? JSON.stringify(i.components, undefined, 4) : null),
+    thumbnailUrl: (i) => (i instanceof ThumbnailComponent ? i.media.url : null),
 })

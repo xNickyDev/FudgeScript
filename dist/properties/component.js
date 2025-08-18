@@ -33,6 +33,7 @@ var ComponentProperty;
     ComponentProperty["fileUrl"] = "fileUrl";
     ComponentProperty["accessory"] = "accessory";
     ComponentProperty["components"] = "components";
+    ComponentProperty["thumbnailUrl"] = "thumbnailUrl";
 })(ComponentProperty || (exports.ComponentProperty = ComponentProperty = {}));
 exports.ComponentProperties = (0, defineProperties_1.default)({
     id: (i) => i?.id,
@@ -64,5 +65,6 @@ exports.ComponentProperties = (0, defineProperties_1.default)({
     fileUrl: (i) => (i && "file" in i ? i.file.url : null),
     accessory: (i) => (i && "accessory" in i ? JSON.stringify(i.accessory, undefined, 4) : null),
     components: (i) => (i && "components" in i ? JSON.stringify(i.components, undefined, 4) : null),
+    thumbnailUrl: (i) => (i instanceof discord_js_1.ThumbnailComponent ? i.media.url : null),
 });
 //# sourceMappingURL=component.js.map
