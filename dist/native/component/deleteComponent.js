@@ -20,7 +20,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [id]) {
         const row = ctx.container.actionRow;
         const n = row?.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === id);
-        if (n && n !== -1) {
+        if (n != -1) {
             if (row?.components.length === 1)
                 delete ctx.container.actionRow;
             else
