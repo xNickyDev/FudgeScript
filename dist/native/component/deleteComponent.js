@@ -18,6 +18,14 @@ exports.default = new structures_1.NativeFunction({
     ],
     unwrap: true,
     execute(ctx, [id]) {
+        const row = ctx.container.actionRow;
+        const n = row?.components.findIndex((x) => "custom_id" in x.data && x.data.custom_id === id);
+        if (n && n !== -1) {
+            if (row?.components.length === 1)
+                delete ctx.container.actionRow;
+            else
+                ctx.container.actionRow?.components.splice(n, 1);
+        }
         for (let i = 0, len = ctx.container.components.length; i < len; i++) {
             const comp = ctx.container.components[i];
             if (!(comp instanceof discord_js_1.ActionRowBuilder))

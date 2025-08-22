@@ -9,6 +9,7 @@ export default new NativeFunction({
     unwrap: false,
     execute(ctx) {
         const components = ctx.container.components
+        ctx.container.actionRow?.components.forEach((x) => x.setDisabled(true))
 
         for (let comp of components) {
             if (!(comp instanceof ActionRowBuilder)) continue

@@ -10,6 +10,7 @@ exports.default = new structures_1.NativeFunction({
     unwrap: false,
     execute(ctx) {
         const components = ctx.container.components;
+        ctx.container.actionRow?.components.forEach((x) => x.setDisabled(true));
         for (let comp of components) {
             if (!(comp instanceof discord_js_1.ActionRowBuilder))
                 continue;
