@@ -51,7 +51,7 @@ export default new NativeFunction({
         const menu = new MentionableSelectMenuBuilder()
             .setDisabled(disabled || false)
             .setCustomId(id)
-            .setDefaultValues(defaults.map(x => {
+            .setDefaultValues(defaults.filter(Boolean).map(x => {
                 return {
                     id: x.id,
                     type: x instanceof User ? SelectMenuDefaultValueType.User : SelectMenuDefaultValueType.Role

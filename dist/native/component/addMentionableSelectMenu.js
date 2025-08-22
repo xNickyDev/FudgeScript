@@ -52,7 +52,7 @@ exports.default = new structures_1.NativeFunction({
         const menu = new discord_js_1.MentionableSelectMenuBuilder()
             .setDisabled(disabled || false)
             .setCustomId(id)
-            .setDefaultValues(defaults.map(x => {
+            .setDefaultValues(defaults.filter(Boolean).map(x => {
             return {
                 id: x.id,
                 type: x instanceof discord_js_1.User ? discord_js_1.SelectMenuDefaultValueType.User : discord_js_1.SelectMenuDefaultValueType.Role
