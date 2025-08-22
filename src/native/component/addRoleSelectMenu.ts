@@ -50,7 +50,7 @@ export default new NativeFunction({
     execute(ctx, [ id, placeholder, min, max, disabled, roles ]) {
         const menu = new RoleSelectMenuBuilder()
             .setDefaultRoles(roles)
-            .setDisabled(disabled ?? false)
+            .setDisabled(disabled || false)
             .setCustomId(id)
             
         if (placeholder)

@@ -50,7 +50,7 @@ export default new NativeFunction({
     execute(ctx, [ id, placeholder, min, max, disabled, users ]) {
         const menu = new UserSelectMenuBuilder()
             .setDefaultUsers(users)
-            .setDisabled(disabled ?? false)
+            .setDisabled(disabled || false)
             .setCustomId(id)
             
         if (placeholder)

@@ -65,9 +65,9 @@ exports.default = new structures_1.NativeFunction({
             menu.setMinValues(min);
         if (max !== null)
             menu.setMaxValues(max);
-        const components = m.components.map(x => discord_js_1.ActionRowBuilder.from(x));
-        components.at(-1)?.addComponents(menu);
-        return this.success(!!(await m.edit({ components: components }).catch(ctx.noop)));
+        const components = m.components.map(x => (0, discord_js_1.createComponentBuilder)(x.toJSON()));
+        components.push(new discord_js_1.ActionRowBuilder().addComponents(menu));
+        return this.success(!!(await m.edit({ components: components.map(x => x.toJSON()) }).catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=addStringSelectMenuTo.js.map

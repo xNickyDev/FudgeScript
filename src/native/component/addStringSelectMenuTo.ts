@@ -1,4 +1,4 @@
-import { ActionRow, ActionRowBuilder, MessageActionRowComponent, StringSelectMenuBuilder } from "discord.js"
+import { ActionRowBuilder, createComponentBuilder, StringSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -63,11 +63,11 @@ export default new NativeFunction({
         if (min !== null) menu.setMinValues(min)
         if (max !== null) menu.setMaxValues(max)
 
-        const components = m.components.map(x => ActionRowBuilder.from(x as ActionRow<MessageActionRowComponent>))
-        components.at(-1)?.addComponents(menu)
+        const components = m.components.map(x => createComponentBuilder(x.toJSON()))
+        components.push(new ActionRowBuilder().addComponents(menu))
 
         return this.success(
-            !!(await m.edit({ components: components as ActionRowBuilder<StringSelectMenuBuilder>[] }).catch(ctx.noop))
+            !!(await m.edit({ components: components.map(x => x.toJSON()) }).catch(ctx.noop))
         )
     },
 })

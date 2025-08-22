@@ -49,7 +49,7 @@ export default new NativeFunction({
     execute(ctx, [ id, placeholder, min, max, disabled, channels ]) {
         const menu = new ChannelSelectMenuBuilder()
             .setDefaultChannels(channels)
-            .setDisabled(disabled ?? false)
+            .setDisabled(disabled || false)
             .setCustomId(id)
             
         if (placeholder)

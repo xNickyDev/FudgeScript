@@ -43,7 +43,7 @@ export default new NativeFunction({
     ],
     execute(ctx, [ id, placeholder, min, max, disabled ]) {
         const menu = new MentionableSelectMenuBuilder()
-            .setDisabled(disabled ?? false)
+            .setDisabled(disabled || false)
             .setCustomId(id)
             
         if (placeholder)
