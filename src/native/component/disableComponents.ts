@@ -11,13 +11,9 @@ export default new NativeFunction({
         const components = ctx.container.components
 
         for (let comp of components) {
-            if (!("components" in comp)) continue
-
-            if (comp instanceof ActionRowBuilder) {
-                comp.setComponents(comp.components.map((x: MessageActionRowComponentBuilder) => x.setDisabled(true)))
-            } else if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) {
-                comp.setButtonAccessory(comp.accessory.setDisabled(true))
-            }
+            if (!(comp instanceof ActionRowBuilder)) continue
+            const actionRow = new ActionRowBuilder()
+            comp?.components.forEach((x) => actionRow.addComponents(x.setDisabled(true)))
         }
 
         return this.success()

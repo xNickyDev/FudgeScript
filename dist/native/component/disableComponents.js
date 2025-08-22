@@ -11,14 +11,10 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx) {
         const components = ctx.container.components;
         for (let comp of components) {
-            if (!("components" in comp))
+            if (!(comp instanceof discord_js_1.ActionRowBuilder))
                 continue;
-            if (comp instanceof discord_js_1.ActionRowBuilder) {
-                comp.setComponents(comp.components.map((x) => x.setDisabled(true)));
-            }
-            else if (comp instanceof discord_js_1.SectionBuilder && comp.accessory instanceof discord_js_1.ButtonBuilder) {
-                comp.setButtonAccessory(comp.accessory.setDisabled(true));
-            }
+            const actionRow = new discord_js_1.ActionRowBuilder();
+            comp?.components.forEach((x) => actionRow.addComponents(x.setDisabled(true)));
         }
         return this.success();
     },
