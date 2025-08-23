@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 const DiscordEventHandler_1 = require("../../structures/extended/DiscordEventHandler");
 const InviteTracker_1 = require("../../structures/trackers/InviteTracker");
 exports.default = new DiscordEventHandler_1.DiscordEventHandler({
-    name: "ready",
+    name: "clientReady",
     version: "1.0.1",
     description: "This event is fired when the bot becomes ready",
     deprecated: true,
@@ -20,14 +20,16 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
                     obj: {},
                 });
             }
+            if (commands.some(x => x.type === "ready")) {
+                structures_1.Logger.deprecated(`The "ready" event is deprecated and will be removed with the next major release of discord.js, please use "clientReady" instead.`);
+            }
         }
         else {
             structures_1.Logger.info(`Ready on client ${this.user.displayName}`);
         }
-        structures_1.Logger.deprecated(`The "ready" event is deprecated and will be removed with the next major release of discord.js, please use "clientReady" instead.`);
         if (this.options.trackers?.invites) {
             await InviteTracker_1.InviteTracker.cacheAll(this);
         }
     },
 });
-//# sourceMappingURL=ready.js.map
+//# sourceMappingURL=clientReady.js.map

@@ -4,7 +4,7 @@ import { DiscordEventHandler } from "../../structures/extended/DiscordEventHandl
 import { InviteTracker } from "../../structures/trackers/InviteTracker"
 
 export default new DiscordEventHandler({
-    name: "ready",
+    name: "clientReady",
     version: "1.0.1",
     description: "This event is fired when the bot becomes ready",
     deprecated: true,
@@ -19,13 +19,15 @@ export default new DiscordEventHandler({
                     obj: {},
                 })
             }
+
+            if (commands.some(x => x.type === "ready")) {
+                Logger.deprecated(
+                    `The "ready" event is deprecated and will be removed with the next major release of discord.js, please use "clientReady" instead.`
+                )
+            }
         } else {
             Logger.info(`Ready on client ${this.user.displayName}`)
         }
-
-        Logger.deprecated(
-            `The "ready" event is deprecated and will be removed with the next major release of discord.js, please use "clientReady" instead.`
-        )
 
         if (this.options.trackers?.invites) {
             await InviteTracker.cacheAll(this)
