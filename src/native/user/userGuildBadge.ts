@@ -32,7 +32,7 @@ export default new NativeFunction({
     execute(ctx, [user, size, ext]) {
         return this.success((user ?? ctx.user)?.guildTagBadgeURL({
             extension: (ext as ImageExtension) || undefined,
-            size: (size as ImageSize) || 2048,
+            size: (size as ImageSize) || undefined,
         }))
     },
 })

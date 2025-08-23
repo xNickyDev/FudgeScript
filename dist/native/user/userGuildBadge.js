@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$userGuildBadge",
+    version: "2.5.0",
     description: "Returns the primary guild tag badge of a user",
     unwrap: true,
     brackets: false,
@@ -31,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [user, size, ext]) {
         return this.success((user ?? ctx.user)?.guildTagBadgeURL({
             extension: ext || undefined,
-            size: size || 2048,
+            size: size || undefined,
         }));
     },
 });
