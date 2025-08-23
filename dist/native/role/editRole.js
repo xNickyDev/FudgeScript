@@ -63,7 +63,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
         const edit = await role.edit({
-            color: color || undefined,
+            colors: !color ? undefined : { primaryColor: color },
             hoist: hoist || undefined,
             icon: icon || undefined,
             mentionable: mentionable || undefined,

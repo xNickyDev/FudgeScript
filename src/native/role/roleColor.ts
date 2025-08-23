@@ -1,4 +1,11 @@
+import { int2hex } from "../../functions/hex"
 import { ArgType, NativeFunction, Return } from "../../structures"
+
+export enum RoleColor {
+    Primary = "primaryColor",
+    Secondary = "secondaryColor",
+    Tertiary = "tertiaryColor"
+}
 
 export default new NativeFunction({
     name: "$roleColor",
@@ -23,8 +30,17 @@ export default new NativeFunction({
             pointer: 0,
             required: true,
         },
+        {
+            name: "color",
+            description: "The role color to return",
+            rest: false,
+            type: ArgType.Enum,
+            enum: RoleColor
+        },
     ],
-    execute(ctx, [, role]) {
-        return this.success((role ?? ctx.role)?.hexColor)
+    execute(ctx, [, role, color]) {
+        color ??= RoleColor.Primary
+        const int = (role ?? ctx.role)?.colors[color]
+        return this.success(int ? int2hex(int) : null)
     },
 })

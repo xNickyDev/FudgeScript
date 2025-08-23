@@ -10,6 +10,7 @@ export interface IEvent<Events, T extends keyof Events> {
     listener: (this: ForgeClient, ...args: AssertArgs<Events[T]>) => Promise<void> | void
     version?: string
     intents?: GatewayIntentsString[]
+    deprecated?: boolean
 }
 
 export type CustomEvents = {

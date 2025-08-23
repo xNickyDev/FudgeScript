@@ -8,8 +8,9 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
     name: "ready",
     version: "1.0.1",
     description: "This event is fired when the bot becomes ready",
+    deprecated: true,
     listener: async function () {
-        const commands = this.commands.get("ready");
+        const commands = [...(this.commands.get("ready"), this.commands.get("clientReady"))];
         if (commands.length) {
             for (const command of commands) {
                 core_1.Interpreter.run({
@@ -23,6 +24,7 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
         else {
             structures_1.Logger.info(`Ready on client ${this.user.displayName}`);
         }
+        structures_1.Logger.deprecated(`The "ready" event is deprecated and will be removed with the next major release of discord.js, please use "clientReady" instead.`);
         if (this.options.trackers?.invites) {
             await InviteTracker_1.InviteTracker.cacheAll(this);
         }

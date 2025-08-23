@@ -63,7 +63,7 @@ export default new NativeFunction({
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
         const edit = await role.edit({
-            color: (color as ColorResolvable) || undefined,
+            colors: !color ? undefined : { primaryColor: color as ColorResolvable },
             hoist: hoist || undefined,
             icon: icon || undefined,
             mentionable: mentionable || undefined,
