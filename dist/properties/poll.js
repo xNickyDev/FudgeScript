@@ -12,6 +12,7 @@ var PollProperty;
     PollProperty["layoutType"] = "layoutType";
     PollProperty["answers"] = "answers";
     PollProperty["answerCount"] = "answerCount";
+    PollProperty["totalVotes"] = "totalVotes";
     PollProperty["expiresTimestamp"] = "expiresTimestamp";
     PollProperty["allowMultiselect"] = "allowMultiselect";
     PollProperty["resultsFinalized"] = "resultsFinalized";
@@ -21,6 +22,7 @@ exports.PollProperties = (0, defineProperties_1.default)({
     layoutType: (i) => discord_js_1.PollLayoutType[i?.layoutType],
     answers: (i) => JSON.stringify(i?.answers, undefined, 4),
     answerCount: (i) => i?.answers.size,
+    totalVotes: (i) => i?.answers.reduce((n, x) => n + x.voteCount, 0) ?? 0,
     expiresTimestamp: (i) => i?.expiresTimestamp,
     allowMultiselect: (i) => i?.allowMultiselect,
     resultsFinalized: (i) => i?.resultsFinalized,

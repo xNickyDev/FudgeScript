@@ -4,6 +4,7 @@ export declare enum PollProperty {
     layoutType = "layoutType",
     answers = "answers",
     answerCount = "answerCount",
+    totalVotes = "totalVotes",
     expiresTimestamp = "expiresTimestamp",
     allowMultiselect = "allowMultiselect",
     resultsFinalized = "resultsFinalized"
