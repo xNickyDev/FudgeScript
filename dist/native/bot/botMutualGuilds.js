@@ -24,9 +24,12 @@ exports.default = new structures_1.NativeFunction({
     ],
     brackets: false,
     output: structures_1.ArgType.String,
-    execute(ctx, [user, sep]) {
+    async execute(ctx, [user, sep]) {
         user ??= ctx.user;
-        return this.success(ctx.client.guilds.cache.filter(async (x) => (await x.members.fetch().catch(ctx.noop))?.has(user.id)).map(guild => guild.id).join(sep || ", "));
+        return this.success(ctx.client.guilds.cache
+            .filter(async (x) => await x.members.fetch(user).then(() => true).catch(() => false))
+            .map(guild => guild.id)
+            .join(sep || ", "));
     },
 });
 //# sourceMappingURL=botMutualGuilds.js.map
