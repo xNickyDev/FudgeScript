@@ -6,7 +6,9 @@ export default new NativeFunction({
     description: "Disables all role mentions",
     unwrap: false,
     execute(ctx) {
-        ctx.container.allowedMentions.roles = []
+        const mentions = ctx.container.allowedMentions
+        mentions.parse = mentions.parse?.filter((x) => x !== "roles")
+        mentions.roles = []
         return this.success()
     },
 })

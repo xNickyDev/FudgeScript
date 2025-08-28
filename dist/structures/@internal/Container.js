@@ -29,7 +29,7 @@ class Container {
     withComponents = false;
     modal;
     choices = new Array();
-    allowedMentions = {};
+    allowedMentions = { parse: ["everyone", "roles", "users"] };
     avatarURL;
     username;
     poll;

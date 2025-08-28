@@ -29,14 +29,21 @@ exports.default = new structures_1.NativeFunction({
             description: "The emoji for the tag",
             rest: false,
             type: structures_1.ArgType.String,
+        },
+        {
+            name: "moderated",
+            description: "Whether the tag can only be applied by mods",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
         }
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [channel, name, emoji]) {
+    async execute(ctx, [channel, name, emoji, mod]) {
         const forum = channel;
         const tag = {
             name,
             emoji: (0, parseSingleEmoji_1.parseSingleEmoji)(ctx, emoji),
+            moderated: mod || undefined
         };
         return this.success(!!(await forum.setAvailableTags([...forum.availableTags, tag]).catch(ctx.noop)));
     },

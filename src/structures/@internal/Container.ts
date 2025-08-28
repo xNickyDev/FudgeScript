@@ -83,7 +83,7 @@ export class Container {
     public withComponents = false
     public modal?: ModalBuilder
     public choices = new Array<ApplicationCommandOptionChoiceData<string | number>>()
-    public allowedMentions: MessageMentionOptions = {}
+    public allowedMentions: MessageMentionOptions = { parse: ["everyone", "roles", "users"] }
     public avatarURL?: string
     public username?: string
     public poll?: PollData
