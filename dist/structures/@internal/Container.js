@@ -36,7 +36,7 @@ class Container {
     withComponents = false;
     modal;
     choices = new Array();
-    allowedMentions = defaultMentions;
+    allowedMentions = { ...defaultMentions };
     avatarURL;
     username;
     poll;
@@ -152,7 +152,7 @@ class Container {
         this.inside.length = 0;
         this.embeds.length = 0;
         this.files.length = 0;
-        this.allowedMentions = defaultMentions;
+        this.allowedMentions = { ...defaultMentions };
     }
     getOptions(content) {
         if (this.actionRow)

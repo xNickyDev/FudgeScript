@@ -91,7 +91,7 @@ export class Container {
     public withComponents = false
     public modal?: ModalBuilder
     public choices = new Array<ApplicationCommandOptionChoiceData<string | number>>()
-    public allowedMentions: MessageMentionOptions = defaultMentions
+    public allowedMentions: MessageMentionOptions = { ...defaultMentions }
     public avatarURL?: string
     public username?: string
     public poll?: PollData
@@ -215,7 +215,7 @@ export class Container {
         this.embeds.length = 0
         this.files.length = 0
 
-        this.allowedMentions = defaultMentions
+        this.allowedMentions = { ...defaultMentions }
     }
 
     public getOptions<T>(content?: string): T {
