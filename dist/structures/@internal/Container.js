@@ -8,6 +8,13 @@ exports.Container = void 0;
 const discord_js_1 = require("discord.js");
 const noop_1 = __importDefault(require("../../functions/noop"));
 const discord_js_2 = require("discord.js");
+const defaultMentions = {
+    parse: [
+        "everyone",
+        "roles",
+        "users"
+    ]
+};
 class Container {
     content;
     embeds = new Array();
@@ -29,7 +36,7 @@ class Container {
     withComponents = false;
     modal;
     choices = new Array();
-    allowedMentions = { parse: ["everyone", "roles", "users"] };
+    allowedMentions = defaultMentions;
     avatarURL;
     username;
     poll;
@@ -145,7 +152,7 @@ class Container {
         this.inside.length = 0;
         this.embeds.length = 0;
         this.files.length = 0;
-        this.allowedMentions = {};
+        this.allowedMentions = defaultMentions;
     }
     getOptions(content) {
         if (this.actionRow)

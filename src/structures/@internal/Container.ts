@@ -42,6 +42,14 @@ import {
 import noop from "../../functions/noop"
 import { MessageFlags } from "discord.js"
 
+const defaultMentions: MessageMentionOptions = {
+    parse: [
+        "everyone",
+        "roles",
+        "users"
+    ]
+}
+
 export type Sendable =
     | {}
     | Sticker
@@ -83,7 +91,7 @@ export class Container {
     public withComponents = false
     public modal?: ModalBuilder
     public choices = new Array<ApplicationCommandOptionChoiceData<string | number>>()
-    public allowedMentions: MessageMentionOptions = { parse: ["everyone", "roles", "users"] }
+    public allowedMentions: MessageMentionOptions = defaultMentions
     public avatarURL?: string
     public username?: string
     public poll?: PollData
@@ -207,7 +215,7 @@ export class Container {
         this.embeds.length = 0
         this.files.length = 0
 
-        this.allowedMentions = {}
+        this.allowedMentions = defaultMentions
     }
 
     public getOptions<T>(content?: string): T {
