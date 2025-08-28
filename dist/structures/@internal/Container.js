@@ -111,7 +111,7 @@ class Container {
     }
     unparseMention(type) {
         this.allowedMentions.parse ??= ["everyone", "roles", "users"];
-        return this.allowedMentions.parse.filter((x) => x !== type);
+        return (this.allowedMentions.parse = this.allowedMentions.parse.filter((x) => x !== type));
     }
     /**
      * Checks if current context is inside a component builder function.

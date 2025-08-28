@@ -170,7 +170,7 @@ export class Container {
 
     public unparseMention(type: MessageMentionTypes) {
         this.allowedMentions.parse ??= ["everyone", "roles", "users"]
-        return this.allowedMentions.parse.filter((x) => x !== type)
+        return (this.allowedMentions.parse = this.allowedMentions.parse.filter((x) => x !== type))
     }
 
     /**
