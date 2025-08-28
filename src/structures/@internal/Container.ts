@@ -24,6 +24,7 @@ import {
     Message,
     MessageActionRowComponentBuilder,
     MessageMentionOptions,
+    MessageMentionTypes,
     MessageReaction,
     MessageReplyOptions,
     ModalBuilder,
@@ -41,14 +42,6 @@ import {
 } from "discord.js"
 import noop from "../../functions/noop"
 import { MessageFlags } from "discord.js"
-
-const defaultMentions: MessageMentionOptions = {
-    parse: [
-        "everyone",
-        "roles",
-        "users"
-    ]
-}
 
 export type Sendable =
     | {}
@@ -91,7 +84,7 @@ export class Container {
     public withComponents = false
     public modal?: ModalBuilder
     public choices = new Array<ApplicationCommandOptionChoiceData<string | number>>()
-    public allowedMentions: MessageMentionOptions = { ...defaultMentions }
+    public allowedMentions: MessageMentionOptions = {}
     public avatarURL?: string
     public username?: string
     public poll?: PollData
@@ -175,6 +168,11 @@ export class Container {
         return (this.embeds[index] ??= new EmbedBuilder())
     }
 
+    public unparseMention(type: MessageMentionTypes) {
+        this.allowedMentions.parse ??= ["everyone", "roles", "users"]
+        return this.allowedMentions.parse.filter((x) => x !== type)
+    }
+
     /**
      * Checks if current context is inside a component builder function.
      * @param type The type of the component to check for.
@@ -215,7 +213,7 @@ export class Container {
         this.embeds.length = 0
         this.files.length = 0
 
-        this.allowedMentions = { ...defaultMentions }
+        this.allowedMentions = {}
     }
 
     public getOptions<T>(content?: string): T {

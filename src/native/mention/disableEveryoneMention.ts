@@ -7,8 +7,7 @@ export default new NativeFunction({
     aliases: ["$disableEveryoneMentions"],
     unwrap: false,
     execute(ctx) {
-        const mentions = ctx.container.allowedMentions
-        mentions.parse = mentions.parse?.filter((x) => x !== "everyone")
+        ctx.container.unparseMention("everyone")
         return this.success()
     },
 })

@@ -6,9 +6,8 @@ export default new NativeFunction({
     description: "Disables all user mentions",
     unwrap: false,
     execute(ctx) {
-        const mentions = ctx.container.allowedMentions
-        mentions.parse = mentions.parse?.filter((x) => x !== "users")
-        mentions.users = []
+        ctx.container.unparseMention("users")
+        ctx.container.allowedMentions.users = []
         return this.success()
     },
 })
