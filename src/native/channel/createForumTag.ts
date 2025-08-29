@@ -5,7 +5,7 @@ import { parseSingleEmoji } from "../../functions/parseSingleEmoji"
 export default new NativeFunction({
     name: "$createForumTag",
     version: "2.5.0",
-    description: "Creates a forum tag, returns bool",
+    description: "Creates a forum tag, returns tag id",
     unwrap: true,
     brackets: true,
     args: [
@@ -37,7 +37,7 @@ export default new NativeFunction({
             type: ArgType.Boolean,
         }
     ],
-    output: ArgType.Boolean,
+    output: ArgType.ForumTag,
     async execute(ctx, [ channel, name, emoji, mod ]) {
         const forum = channel as ThreadOnlyChannel
 
@@ -47,6 +47,6 @@ export default new NativeFunction({
             moderated: mod || undefined
         } as GuildForumTagData
 
-        return this.success(!!(await forum.setAvailableTags([...forum.availableTags, tag]).catch(ctx.noop)))
+        return this.success((await forum.setAvailableTags([...forum.availableTags, tag]).catch(ctx.noop))?.availableTags.at(-1)?.id)
     },
 })
