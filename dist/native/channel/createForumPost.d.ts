@@ -23,7 +23,8 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: true;
     required: true;
-    type: ArgType.String;
+    type: ArgType.ForumTag;
+    pointer: number;
 }], true>;
 export default _default;
 //# sourceMappingURL=createForumPost.d.ts.map

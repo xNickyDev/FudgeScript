@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$createForumPost",
@@ -14,7 +13,7 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             required: true,
             type: structures_1.ArgType.Channel,
-            check: (i) => i.type === discord_js_1.ChannelType.GuildForum,
+            check: (i) => i.isThreadOnly(),
             description: "The channel to create a post on",
         },
         {
@@ -35,7 +34,8 @@ exports.default = new structures_1.NativeFunction({
             description: "The tags for the post",
             rest: true,
             required: true,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.ForumTag,
+            pointer: 0
         },
     ],
     brackets: true,
@@ -44,9 +44,10 @@ exports.default = new structures_1.NativeFunction({
         ctx.container.content = desc || undefined;
         const t = await forum.threads
             .create({
-            appliedTags: tags,
+            appliedTags: tags.map(x => x.id),
             name: title,
             message: ctx.container.getOptions(),
+            reason: ctx.reason
         })
             .catch(ctx.noop);
         ctx.container.reset();
