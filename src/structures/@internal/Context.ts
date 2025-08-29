@@ -151,12 +151,13 @@ export class Context {
     welcomeScreenChannels?: WelcomeChannelData[]
     timezone: string = "UTC"
     calendar?: CalendarType
-    reason?: string
 
     localFunctions: Map<string, ILocalFunctionData> = new Map()
 
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}
+
+    private _reason?: string
 
     public container: Container
 
@@ -174,6 +175,16 @@ export class Context {
     public set obj(o: Sendable) {
         this.runtime.obj = o
         this.clearCache()
+    }
+
+    public set reason(str: string | undefined) {
+        this._reason = str
+    }
+
+    public get reason() {
+        const str = this._reason
+        this._reason = undefined
+        return str
     }
 
     public get cmd() {

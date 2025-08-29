@@ -2,7 +2,7 @@ import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$setAuditLogReason",
-    version: "2.4.0",
+    version: "2.5.0",
     description: "Sets the reason for audit log entries",
     brackets: true,
     unwrap: true,
