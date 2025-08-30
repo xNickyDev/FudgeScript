@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
-    name: "$botTeamIcon",
-    version: "2.4.0",
-    description: "Returns the client's team icon",
+    name: "$botCover",
+    description: "Returns the client's cover image",
     aliases: [
-        "$clientTeamIcon"
+        "$clientCover"
     ],
     unwrap: true,
     brackets: false,
@@ -26,14 +24,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.URL,
-    async execute(ctx, [size, ext]) {
-        if (!ctx.client.application.owner)
-            await ctx.client.application.fetch().catch(ctx.noop);
-        const owner = ctx.client.application.owner;
-        return this.success(owner instanceof discord_js_1.Team ? owner.iconURL({
+    execute(ctx, [size, ext]) {
+        return this.success(ctx.client.application.coverURL({
             extension: ext || undefined,
             size: size || 2048,
-        }) : null);
+        }));
     },
 });
-//# sourceMappingURL=botTeamIcon.js.map
+//# sourceMappingURL=botCover.js.map

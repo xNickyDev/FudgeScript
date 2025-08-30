@@ -2,11 +2,11 @@ import { ImageExtension, ImageSize, Team } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$botTeamIcon",
-    version: "2.4.0",
-    description: "Returns the client's team icon",
+    name: "$botCover",
+    version: "2.5.0",
+    description: "Returns the client's cover image",
     aliases: [
-        "$clientTeamIcon"
+        "$clientCover"
     ],
     unwrap: true,
     brackets: false,
@@ -25,12 +25,10 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.URL,
-    async execute(ctx, [size, ext]) {
-        if (!ctx.client.application.owner) await ctx.client.application.fetch().catch(ctx.noop)
-        const owner = ctx.client.application.owner
-        return this.success(owner instanceof Team ? owner.iconURL({
+    execute(ctx, [size, ext]) {
+        return this.success(ctx.client.application.coverURL({
             extension: (ext as ImageExtension) || undefined,
             size: (size as ImageSize) || 2048,
-        }) : null)
+        }))
     },
 })
