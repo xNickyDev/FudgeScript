@@ -1,11 +1,9 @@
-import { BaseChannel, ChannelType, ForumChannel, ThreadChannel } from "discord.js"
+import { BaseChannel, ThreadChannel } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
 
 export default new NativeFunction({
-    name: "$addForumTags",
+    name: "$addPostTags",
     version: "1.5.0",
-    aliases: ["$addPostTags"],
     description: "Adds tags to a forum post, returns bool",
     unwrap: true,
     output: ArgType.Boolean,
@@ -35,7 +33,6 @@ export default new NativeFunction({
     brackets: true,
     async execute(ctx, [ channel, reason, tags ]) {
         const post = channel as ThreadChannel
-
-        return this.success(!!(await post.setAppliedTags(tags, reason || undefined).catch(ctx.noop)))
+        return this.success(!!(await post.setAppliedTags([...post.appliedTags, ...tags], reason || ctx.reason).catch(ctx.noop)))
     },
 })
