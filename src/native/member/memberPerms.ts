@@ -32,9 +32,16 @@ export default new NativeFunction({
             required: false,
             rest: false,
         },
+        {
+            name: "return int",
+            description: "Whether to return the perms as bitfield int",
+            type: ArgType.Boolean,
+            rest: false,
+        },
     ],
-    execute(ctx, [, user, sep]) {
+    execute(ctx, [, user, sep, int]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member
-        return this.success(new PermissionsBitField(member?.permissions).toArray().join(sep || ", "))
+        const perms = new PermissionsBitField(member?.permissions)
+        return this.success(int ? perms.bitfield : perms.toArray().join(sep ?? ", "))
     },
 })

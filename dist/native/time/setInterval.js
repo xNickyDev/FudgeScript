@@ -37,7 +37,7 @@ exports.default = new structures_1.NativeFunction({
         if (!this["isValidReturnType"](name))
             return name;
         const data = setInterval(async () => {
-            await this["resolveCode"](ctx, code);
+            await this["resolveCode"](ctx.clone(), code);
         }, time.value);
         if (name.value)
             ctx.client.intervals.set(name.value, data);

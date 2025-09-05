@@ -36,9 +36,16 @@ exports.default = new structures_1.NativeFunction({
             required: false,
             rest: false,
         },
+        {
+            name: "return int",
+            description: "Whether to return the perms as bitfield int",
+            type: structures_1.ArgType.Boolean,
+            rest: false,
+        },
     ],
-    execute(ctx, [, role, sep]) {
-        return this.success((role ?? ctx.role)?.permissions.toArray().join(sep || ", "));
+    execute(ctx, [, role, sep, int]) {
+        const perms = (role ?? ctx.role)?.permissions;
+        return this.success(int ? perms?.bitfield : perms?.toArray().join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=rolePerms.js.map

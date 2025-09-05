@@ -36,10 +36,17 @@ exports.default = new structures_1.NativeFunction({
             required: false,
             rest: false,
         },
+        {
+            name: "return int",
+            description: "Whether to return the perms as bitfield int",
+            type: structures_1.ArgType.Boolean,
+            rest: false,
+        },
     ],
-    execute(ctx, [, user, sep]) {
+    execute(ctx, [, user, sep, int]) {
         const member = user ?? ctx.member ?? ctx.interaction?.member;
-        return this.success(new discord_js_1.PermissionsBitField(member?.permissions).toArray().join(sep || ", "));
+        const perms = new discord_js_1.PermissionsBitField(member?.permissions);
+        return this.success(int ? perms.bitfield : perms.toArray().join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=memberPerms.js.map
