@@ -41,8 +41,8 @@ export default new NativeFunction({
         if ("threads" in chan) {
             const threads = chan.threads as ThreadManager
             
-            if (archived) threads.fetchArchived({ type: type || undefined, fetchAll: true }).catch(ctx.noop)
-            else threads.fetchActive().catch(ctx.noop)
+            if (archived) await threads.fetchArchived({ type: type || undefined, fetchAll: true }).catch(ctx.noop)
+            else await threads.fetchActive().catch(ctx.noop)
         }
 
         return this.success()

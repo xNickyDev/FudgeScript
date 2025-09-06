@@ -9,6 +9,7 @@ var ThreadType;
 })(ThreadType || (exports.ThreadType = ThreadType = {}));
 exports.default = new structures_1.NativeFunction({
     name: "$fetchThreads",
+    version: "2.5.0",
     description: "Caches all threads of a channel",
     brackets: false,
     unwrap: true,
@@ -40,9 +41,9 @@ exports.default = new structures_1.NativeFunction({
         if ("threads" in chan) {
             const threads = chan.threads;
             if (archived)
-                threads.fetchArchived({ type: type || undefined, fetchAll: true }).catch(ctx.noop);
+                await threads.fetchArchived({ type: type || undefined, fetchAll: true }).catch(ctx.noop);
             else
-                threads.fetchActive().catch(ctx.noop);
+                await threads.fetchActive().catch(ctx.noop);
         }
         return this.success();
     },
