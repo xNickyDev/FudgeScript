@@ -1,6 +1,9 @@
 import { BaseChannel } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
-import { ThreadType } from "./channelThreadIDs";
+export declare enum ThreadType {
+    Public = "public",
+    Private = "private"
+}
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
@@ -12,13 +15,13 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    type: ArgType.Enum;
-    enum: typeof ThreadType;
+    type: ArgType.Boolean;
 }, {
     name: string;
     description: string;
     rest: false;
-    type: ArgType.String;
+    type: ArgType.Enum;
+    enum: typeof ThreadType;
 }], true>;
 export default _default;
-//# sourceMappingURL=channelArchivedThreadIDs.d.ts.map
+//# sourceMappingURL=fetchThreads.d.ts.map
