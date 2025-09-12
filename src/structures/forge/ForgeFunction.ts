@@ -71,7 +71,7 @@ export class ForgeFunction {
     }
 
     async call(ctx: Context, args: string[]) {
-        this.compiled ??= Compiler.compile(this.data.code, this.data.path)
+        this.compiled ??= Compiler.compile(this.data.code, this.data.path, ctx.hasSuppressedErrors())
 
         const params = Array.isArray(this.data.params) ? this.data.params : []
         const required = params.filter(param => typeof param === "string" || param.required !== false)

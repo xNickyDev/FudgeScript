@@ -30,6 +30,7 @@ exports.Conditions = {
 class Compiler {
     path;
     code;
+    suppressErrors;
     static Syntax = {
         Open: "[",
         Close: "]",
@@ -51,9 +52,10 @@ class Compiler {
     index = 0;
     outputFunctions = new Array();
     outputCode = "";
-    constructor(path, code) {
+    constructor(path, code, suppressErrors) {
         this.path = path;
         this.code = code;
+        this.suppressErrors = suppressErrors;
         if (code) {
             this.matches = Array.from(code.matchAll(Compiler.Regex)).map((x) => ({
                 index: x.index,
@@ -293,6 +295,8 @@ class Compiler {
             this.error(`Function ${fn} is not registered.`));
     }
     error(str) {
+        if (this.suppressErrors)
+            return;
         const { line, column } = this.locate(this.index);
         throw new ForgeError_1.ForgeError(null, ForgeError_1.ErrorType.CompilerError, str, line, column, this.path ?? "index file");
     }
@@ -351,8 +355,8 @@ class Compiler {
             .sort((x, y) => y.length - x.length)
             .join("|")})`, "gim");
     }
-    static compile(code, path) {
-        const result = new this(path, code).compile();
+    static compile(code, path, suppressErrors) {
+        const result = new this(path, code, suppressErrors).compile();
         return {
             ...result,
             functions: result.functions.map((x) => new CompiledFunction_1.CompiledFunction(x)),

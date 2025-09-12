@@ -1,4 +1,3 @@
-import { inspect } from "util"
 import { CompiledFunction } from "../structures/@internal/CompiledFunction"
 import { ErrorType, ForgeError } from "../structures/forge/ForgeError"
 import { Collection } from "discord.js"
@@ -142,7 +141,8 @@ export class Compiler {
 
     private constructor(
         private readonly path?: null | string,
-        private readonly code?: string
+        private readonly code?: string,
+        private readonly suppressErrors?: boolean
     ) {
         if (code) {
             this.matches = Array.from(code.matchAll(Compiler.Regex)).map((x) => ({
@@ -426,7 +426,8 @@ export class Compiler {
         )
     }
 
-    private error(str: string): never {
+    private error(str: string): never | void {
+        if (this.suppressErrors) return
         const { line, column } = this.locate(this.index)
         throw new ForgeError(null, ErrorType.CompilerError, str, line, column, this.path ?? "index file")
     }
@@ -507,8 +508,8 @@ export class Compiler {
         )
     }
 
-    public static compile(code?: string, path?: string | null): IExtendedCompilationResult {
-        const result = new this(path, code).compile()
+    public static compile(code?: string, path?: string | null, suppressErrors?: boolean): IExtendedCompilationResult {
+        const result = new this(path, code, suppressErrors).compile()
         return {
             ...result,
             functions: result.functions.map((x) => new CompiledFunction(x)),

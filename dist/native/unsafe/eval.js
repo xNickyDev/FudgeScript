@@ -29,7 +29,7 @@ exports.default = new structures_1.NativeFunction({
         try {
             const result = await core_1.Interpreter.run({
                 ...ctx.runtime,
-                data: core_1.Compiler.compile(code),
+                data: core_1.Compiler.compile(code, undefined, ctx.hasSuppressedErrors()),
                 doNotSend: !send,
             });
             return result === null ? this.stop() : this.success(send ? undefined : result);

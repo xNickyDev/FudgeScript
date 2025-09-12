@@ -28,7 +28,7 @@ export default new NativeFunction({
         try {
             const result = await Interpreter.run({
                 ...ctx.runtime,
-                data: Compiler.compile(code),
+                data: Compiler.compile(code, undefined, ctx.hasSuppressedErrors()),
                 doNotSend: !send,
             })
 
