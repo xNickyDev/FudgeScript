@@ -38,6 +38,9 @@ class BaseCommand {
     hasDisabledConsoleErrors(client) {
         return this.data.disableConsoleErrors || (this.data.disableConsoleErrors === undefined && client.options.disableConsoleErrors);
     }
+    hasSuppressedErrors(client) {
+        return this.data.suppressErrors || (this.data.suppressErrors === undefined && client.options.suppressErrors);
+    }
     matchesInteractionType(i) {
         return (!this.data.name ||
             ("customId" in i &&

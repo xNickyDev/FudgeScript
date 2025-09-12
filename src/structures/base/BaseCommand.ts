@@ -25,6 +25,7 @@ export interface IBaseCommand<T> {
     allowedInteractionTypes?: CommandInteractionTypes[]
     allowBots?: boolean
     disableConsoleErrors?: boolean
+    suppressErrors?: boolean
     [x: PropertyKey]: unknown
 
     /**
@@ -82,6 +83,10 @@ export class BaseCommand<T> {
 
     public hasDisabledConsoleErrors(client: ForgeClient) {
         return this.data.disableConsoleErrors || (this.data.disableConsoleErrors === undefined && client.options.disableConsoleErrors)
+    }
+
+    public hasSuppressedErrors(client: ForgeClient) {
+        return this.data.suppressErrors || (this.data.suppressErrors === undefined && client.options.suppressErrors)
     }
 
     public matchesInteractionType(i: Interaction) {

@@ -31,7 +31,7 @@ class Interpreter {
                     const fn = runtime.data.functions[i];
                     const rt = await fn.execute(ctx);
                     const err = !ctx.handleNotSuccess(fn, rt);
-                    args[i] = (err && ctx.runtime.suppressErrors) ? "" : (!rt.success && err) ? ctx["error"]() : rt.value;
+                    args[i] = (err && ctx.hasSuppressedErrors()) ? "" : (!rt.success && err) ? ctx["error"]() : rt.value;
                 }
             }
             catch (err) {

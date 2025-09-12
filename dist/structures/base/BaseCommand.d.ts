@@ -14,6 +14,7 @@ export interface IBaseCommand<T> {
     allowedInteractionTypes?: CommandInteractionTypes[];
     allowBots?: boolean;
     disableConsoleErrors?: boolean;
+    suppressErrors?: boolean;
     [x: PropertyKey]: unknown;
     /**
      * @private Do not define
@@ -39,6 +40,7 @@ export declare class BaseCommand<T> {
     get name(): string | undefined;
     get type(): T;
     hasDisabledConsoleErrors(client: ForgeClient): boolean | undefined;
+    hasSuppressedErrors(client: ForgeClient): boolean | undefined;
     matchesInteractionType(i: Interaction): boolean;
 }
 //# sourceMappingURL=BaseCommand.d.ts.map

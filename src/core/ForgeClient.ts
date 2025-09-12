@@ -89,6 +89,7 @@ export interface IRawForgeClientOptions extends ClientOptions {
     useInviteSystem?: boolean
 
     disableConsoleErrors?: boolean
+    suppressErrors?: boolean
 
     /**
      * This will connect the client to Discord with the mobile status

@@ -180,7 +180,7 @@ class Context {
         return this.container.send(this.obj, content);
     }
     handleNotSuccess(fn, rt) {
-        if (fn.data.silent || this.runtime.suppressErrors) {
+        if (fn.data.silent || this.hasSuppressedErrors()) {
             return false;
         }
         else if (rt.return && this.runtime.allowTopLevelReturn) {
@@ -294,6 +294,9 @@ class Context {
     }
     hasDisabledConsoleErrors() {
         return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client));
+    }
+    hasSuppressedErrors() {
+        return this.runtime.suppressErrors || (this.runtime.suppressErrors === undefined && this.cmd?.hasSuppressedErrors(this.client));
     }
     getInstance(key, type) {
         if (this.hasInstance(key, type))

@@ -163,6 +163,7 @@ export declare class Context {
     };
     get<T>(key: PropertyKey): T;
     hasDisabledConsoleErrors(): boolean | undefined;
+    hasSuppressedErrors(): boolean | undefined;
     getInstance<K extends string, T extends ClassType>(key: K, type: T): (this & { [P in keyof {
         bro: boolean;
     } as K]: ClassInstance<T>; })[K] | null;

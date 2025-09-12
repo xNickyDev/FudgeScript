@@ -316,7 +316,7 @@ export class Context {
     }
 
     public handleNotSuccess(fn: CompiledFunction, rt: Return) {
-        if (fn.data.silent || this.runtime.suppressErrors) {
+        if (fn.data.silent || this.hasSuppressedErrors()) {
             return false
         } else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)
@@ -454,6 +454,10 @@ export class Context {
 
     public hasDisabledConsoleErrors() {
         return this.runtime.disableConsoleErrors || (this.runtime.disableConsoleErrors === undefined && this.cmd?.hasDisabledConsoleErrors(this.client))
+    }
+
+    public hasSuppressedErrors() {
+        return this.runtime.suppressErrors || (this.runtime.suppressErrors === undefined && this.cmd?.hasSuppressedErrors(this.client))
     }
 
     public getInstance<K extends string, T extends ClassType>(key: K, type: T) {
