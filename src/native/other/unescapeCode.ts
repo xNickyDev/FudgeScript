@@ -1,4 +1,4 @@
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$unescapeCode",
@@ -21,7 +21,7 @@ export default new NativeFunction({
     ],
     output: ArgType.Unknown,
     async execute(ctx) {
-        const resolved = await this["resolveUnhandledArg"](ctx, 0)
-        return this.unsafeSuccess(Array.isArray(resolved.value) ? resolved.value.slice().join("\\;") : resolved.value)
+        const code = this.data.fields![0] as IExtendedCompiledFunctionField
+        return await this["resolveCode"](ctx, code)
     },
 })
