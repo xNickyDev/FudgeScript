@@ -6,7 +6,7 @@ import {
     Partials,
     DefaultWebSocketManagerOptions,
     Message,
-    Collection,
+    Options,
 } from "discord.js"
 import { IExtendedCompilationResult, Compiler } from "."
 import {
@@ -144,6 +144,10 @@ export class ForgeClient extends Client<true> {
                 Partials.ThreadMember,
                 Partials.User,
             ],
+            makeCache: Options.cacheWithLimits({
+                ...Options.DefaultMakeCacheSettings,
+                ApplicationEmojiManager: {}
+            }),
             ...options,
         })
 

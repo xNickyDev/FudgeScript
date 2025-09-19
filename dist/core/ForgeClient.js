@@ -31,6 +31,10 @@ class ForgeClient extends discord_js_1.Client {
                 discord_js_1.Partials.ThreadMember,
                 discord_js_1.Partials.User,
             ],
+            makeCache: discord_js_1.Options.cacheWithLimits({
+                ...discord_js_1.Options.DefaultMakeCacheSettings,
+                ApplicationEmojiManager: {}
+            }),
             ...options,
         });
         this.#init(options);

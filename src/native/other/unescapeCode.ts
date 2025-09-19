@@ -22,6 +22,11 @@ export default new NativeFunction({
     output: ArgType.Unknown,
     async execute(ctx) {
         const code = this.data.fields![0] as IExtendedCompiledFunctionField
-        return await this["resolveCode"](ctx, code)
+        const resolved = await this["resolveCode"](ctx, code)
+        if (!resolved.success) return resolved
+        
+        const value = resolved.value as string
+        
+        return this.success(value.split(";"))
     },
 })
