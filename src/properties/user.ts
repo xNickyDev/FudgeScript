@@ -1,4 +1,4 @@
-import { Channel, ChannelType, Collection, GuildMember, User } from "discord.js"
+import { User } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum UserProperty {

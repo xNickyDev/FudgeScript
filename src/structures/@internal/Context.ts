@@ -25,6 +25,7 @@ import {
     SectionBuilder,
     SoundboardSound,
     Sticker,
+    Subscription,
     User,
     VoiceBasedChannel,
     WelcomeChannelData,
@@ -134,6 +135,7 @@ export interface IContextCache {
     automod: AutoModerationActionExecution | null
     sticker: Sticker | null
     sound: SoundboardSound | null
+    subscription: Subscription | null
 }
 
 export class Context {
@@ -211,6 +213,10 @@ export class Context {
         return this.#cache.entitlement ??= this.obj instanceof Entitlement ? this.obj : null
     }
 
+    public get subscription() {
+        return this.#cache.subscription ??= this.obj instanceof Subscription ? this.obj : null
+    }
+
     public get member() {
         return (this.#cache.member ??=
             this.obj instanceof GuildMember
@@ -221,7 +227,7 @@ export class Context {
     }
 
     public get emoji() {
-        return (this.#cache.emoji ??= this.obj instanceof GuildEmoji ? this.obj : null)
+        return (this.#cache.emoji ??= this.obj instanceof Emoji ? this.obj : null)
     }
 
     public get sticker() {

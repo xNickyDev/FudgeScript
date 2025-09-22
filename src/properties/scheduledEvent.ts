@@ -1,6 +1,6 @@
 import { GuildScheduledEventEntityType, GuildScheduledEventPrivacyLevel, GuildScheduledEventStatus } from "discord.js"
 import defineProperties from "../functions/defineProperties"
-import { IStates, States } from "../core"
+import { IStates } from "../core"
 
 export enum ScheduledEventProperty {
     id = "id",

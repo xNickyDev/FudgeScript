@@ -1,4 +1,4 @@
-import { Message, MessageType, Role } from "discord.js"
+import { Role } from "discord.js"
 import defineProperties from "../functions/defineProperties"
 
 export enum RoleProperty {
