@@ -3,7 +3,7 @@ import { Context } from "../structures";
 /**
  * Checks whether the specified component type is a top level component.
  * @param type The component type.
- * @param actionRow Whether to include action rows when checking. Defaults to true.
+ * @param actionRow Whether to include action rows when checking. Defaults to `true`.
  * @returns
  */
 export declare function isTopLevel(type: ComponentType, actionRow?: boolean): boolean;
@@ -46,9 +46,10 @@ export declare function findButton(comps: Array<ContainerBuilder | ContainerComp
  */
 export declare function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string): AnyComponentBuilder | undefined;
 /**
- * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
+ * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
+ * @param cv2 Whether to set the ComponentsV2 flag. Defaults to `true`.
  * @returns
  */
-export declare function addActionRow(ctx: Context): void;
+export declare function addActionRow(ctx: Context, cv2?: boolean): void;
 //# sourceMappingURL=components.d.ts.map

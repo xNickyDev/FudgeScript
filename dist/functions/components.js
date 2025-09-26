@@ -22,7 +22,7 @@ const TopLevelComponentBuilders = {
 /**
  * Checks whether the specified component type is a top level component.
  * @param type The component type.
- * @param actionRow Whether to include action rows when checking. Defaults to true.
+ * @param actionRow Whether to include action rows when checking. Defaults to `true`.
  * @returns
  */
 function isTopLevel(type, actionRow = true) {
@@ -140,12 +140,14 @@ function findSelectMenu(comps, id) {
 }
 exports.findSelectMenu = findSelectMenu;
 /**
- * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
+ * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
+ * @param cv2 Whether to set the ComponentsV2 flag. Defaults to `true`.
  * @returns
  */
-function addActionRow(ctx) {
-    ctx.container.isComponentsV2 = true;
+function addActionRow(ctx, cv2 = true) {
+    if (cv2)
+        ctx.container.isComponentsV2 = true;
     const row = ctx.container.actionRow;
     if (!row)
         return;

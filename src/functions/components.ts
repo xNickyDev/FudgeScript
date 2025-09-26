@@ -16,7 +16,6 @@ import {
     SeparatorBuilder,
     StringSelectMenuBuilder,
     TextDisplayBuilder,
-    ThumbnailBuilder,
     UserSelectMenuBuilder
 } from "discord.js"
 import { Context } from "../structures"
@@ -43,7 +42,7 @@ const TopLevelComponentBuilders = {
 /**
  * Checks whether the specified component type is a top level component.
  * @param type The component type.
- * @param actionRow Whether to include action rows when checking. Defaults to true.
+ * @param actionRow Whether to include action rows when checking. Defaults to `true`.
  * @returns 
  */
 export function isTopLevel(type: ComponentType, actionRow: boolean = true) {
@@ -150,12 +149,13 @@ export function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponen
 }
 
 /**
- * Adds an action row. This is only needed inside ComponentsV2 functions and should never be used outside this context.
+ * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
+ * @param cv2 Whether to set the ComponentsV2 flag. Defaults to `true`.
  * @returns 
  */
-export function addActionRow(ctx: Context) {
-    ctx.container.isComponentsV2 = true
+export function addActionRow(ctx: Context, cv2: boolean = true) {
+    if (cv2) ctx.container.isComponentsV2 = true
 
     const row = ctx.container.actionRow
     if (!row) return
