@@ -1,6 +1,6 @@
-import { ActionRowBuilder, createComponentBuilder } from "discord.js"
+import { ActionRowBuilder } from "discord.js"
 import { ArgType, Container, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
-import { addActionRow } from "../../functions/components"
+import { addActionRow, buildComponent } from "../../functions/components"
 
 export default new NativeFunction({
     name: "$addActionRowTo",
@@ -50,7 +50,7 @@ export default new NativeFunction({
         const [, m, keep ] = args
         const code = this.data.fields![2] as IExtendedCompiledFunctionField
 
-        const comps = keep ? m.components.map(x => createComponentBuilder(x.toJSON())) : new Array<ActionRowBuilder>()
+        const comps = keep ? m.components.map(x => buildComponent(x)) : new Array<ActionRowBuilder>()
 
         const oldContainer = ctx.runtime.container
         const newContainer = new Container()
