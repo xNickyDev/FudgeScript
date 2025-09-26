@@ -51,7 +51,6 @@ exports.default = new structures_1.NativeFunction({
         const [, m, keep] = args;
         const code = this.data.fields[2];
         const comps = keep ? m.components.map(x => (0, discord_js_1.createComponentBuilder)(x.toJSON())) : new Array();
-        (0, components_1.addActionRow)(ctx, false);
         const oldContainer = ctx.runtime.container;
         const newContainer = new structures_1.Container();
         // Add our new comps
@@ -59,6 +58,7 @@ exports.default = new structures_1.NativeFunction({
         // Use new container
         ctx.container = newContainer;
         const codeExec = await this["resolveCode"](ctx, code);
+        (0, components_1.addActionRow)(ctx, false);
         // Return the container
         ctx.container = oldContainer;
         if (!this["isValidReturnType"](codeExec))

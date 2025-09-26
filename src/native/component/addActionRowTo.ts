@@ -52,7 +52,6 @@ export default new NativeFunction({
 
         const comps = keep ? m.components.map(x => createComponentBuilder(x.toJSON())) : new Array<ActionRowBuilder>()
 
-        addActionRow(ctx, false)
         const oldContainer = ctx.runtime.container
         const newContainer = new Container()
 
@@ -63,6 +62,7 @@ export default new NativeFunction({
         ctx.container = newContainer
 
         const codeExec = await this["resolveCode"](ctx, code)
+        addActionRow(ctx, false)
 
         // Return the container
         ctx.container = oldContainer!
