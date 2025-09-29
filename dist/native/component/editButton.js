@@ -30,14 +30,12 @@ exports.default = new structures_1.NativeFunction({
             description: "The button label",
             rest: false,
             type: structures_1.ArgType.String,
-            required: true,
         },
         {
             name: "style",
             description: "The style for this button",
             enum: discord_js_1.ButtonStyle,
             type: structures_1.ArgType.Enum,
-            required: true,
             rest: false,
         },
         {
@@ -73,10 +71,11 @@ exports.default = new structures_1.NativeFunction({
                         ? (0, components_1.buildActionRow)(row.accessory?.toJSON())
                         : row;
                 if (btn instanceof discord_js_1.ButtonBuilder) {
-                    style = (0, enum_1.resolveNumericEnum)(discord_js_1.ButtonStyle, style);
-                    // @ts-ignore
-                    btn.setLabel(label || btn.data.label)
-                        .setStyle(style);
+                    style = (style ? (0, enum_1.resolveNumericEnum)(discord_js_1.ButtonStyle, style) : btn.data.style);
+                    if (label)
+                        btn.setLabel(label);
+                    if (style)
+                        btn.setStyle(style);
                     if (emoji)
                         btn.setEmoji(emoji);
                     if (typeof disabled === "boolean")

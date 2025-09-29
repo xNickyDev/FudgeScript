@@ -44,14 +44,12 @@ export default new NativeFunction({
             description: "The button label",
             rest: false,
             type: ArgType.String,
-            required: true,
         },
         {
             name: "style",
             description: "The style for this button",
             enum: ButtonStyle,
             type: ArgType.Enum,
-            required: true,
             rest: false,
         },
         {
@@ -92,11 +90,10 @@ export default new NativeFunction({
                         : row
 
                 if (btn instanceof ButtonBuilder) {
-                    style = resolveNumericEnum(ButtonStyle, style)
-                    // @ts-ignore
-                    btn.setLabel(label || btn.data.label)
-                        .setStyle(style)
-
+                    style = (style ? resolveNumericEnum(ButtonStyle, style) : btn.data.style)
+                    
+                    if (label) btn.setLabel(label)
+                    if (style) btn.setStyle(style)
                     if (emoji) btn.setEmoji(emoji)
                     if (typeof disabled === "boolean") btn.setDisabled(disabled)
 
