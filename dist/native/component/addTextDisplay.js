@@ -18,7 +18,7 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    execute(ctx, [content]) {
+    async execute(ctx, [content]) {
         (0, components_1.addActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         const text = new discord_js_1.TextDisplayBuilder().setContent(content);

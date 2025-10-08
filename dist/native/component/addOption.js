@@ -44,7 +44,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [name, desc, value, emoji, def]) {
-        const menu = ctx.container.actionRow?.components[0];
+        const menu = ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0];
         const data = {
             label: name,
             description: desc || undefined,

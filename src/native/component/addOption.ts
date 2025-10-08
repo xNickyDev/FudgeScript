@@ -43,7 +43,7 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [name, desc, value, emoji, def]) {
-        const menu = ctx.container.actionRow?.components[0]
+        const menu = ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0]
 
         const data: APISelectMenuOption = {
             label: name,
