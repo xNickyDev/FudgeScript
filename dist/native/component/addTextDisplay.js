@@ -22,10 +22,10 @@ exports.default = new structures_1.NativeFunction({
         (0, components_1.addActionRow)(ctx);
         const comp = ctx.container.components.at(-1);
         const text = new discord_js_1.TextDisplayBuilder().setContent(content);
-        if (ctx.container.isInside(discord_js_1.ComponentType.Section))
+        if (ctx.container.modal)
+            ctx.container.modal.addTextDisplayComponents(text);
+        else if (ctx.container.isInside(discord_js_1.ComponentType.Section))
             ctx.component.section?.addTextDisplayComponents(text);
-        else if (ctx.container.isInside(discord_js_1.ComponentType.Label))
-            ctx.container.modal?.addTextDisplayComponents(text);
         else if (comp instanceof discord_js_1.ContainerBuilder && ctx.container.isInside(discord_js_1.ComponentType.Container))
             comp.addTextDisplayComponents(text);
         else
