@@ -49,7 +49,10 @@ exports.default = new structures_1.NativeFunction({
             menu.setMinValues(min);
         if (max != null)
             menu.setMaxValues(max);
-        ctx.container.actionRow?.addComponents(menu);
+        if (ctx.container.isInside(discord_js_1.ComponentType.Label))
+            ctx.component.label?.setStringSelectMenuComponent(menu);
+        else
+            ctx.container.actionRow?.addComponents(menu);
         return this.success();
     },
 });

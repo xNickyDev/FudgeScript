@@ -26,7 +26,6 @@ export default new NativeFunction({
             name: "description",
             description: "The description of the scheduled event",
             rest: false,
-            required: true,
             type: ArgType.String,
         },
         {

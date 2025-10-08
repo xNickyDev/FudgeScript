@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChannelResolvable, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildOnboardingPromptOptionData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, MediaGalleryBuilder, Message, MessageReaction, Role, SectionBuilder, SoundboardSound, Sticker, Subscription, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
+import { AnySelectMenuInteraction, AutoModerationActionExecution, AutoModerationActionOptions, AutoModerationTriggerMetadataOptions, BaseChannel, ChannelResolvable, ChatInputCommandInteraction, ContextMenuCommandInteraction, Emoji, Entitlement, Guild, GuildMember, GuildOnboardingPromptData, GuildOnboardingPromptOptionData, GuildScheduledEventEntityMetadataOptions, GuildScheduledEventRecurrenceRuleOptions, Interaction, LabelBuilder, MediaGalleryBuilder, Message, MessageReaction, Role, SectionBuilder, SoundboardSound, Sticker, Subscription, User, VoiceBasedChannel, WelcomeChannelData } from "discord.js";
 import { CompiledFunction, IExtendedCompiledFunctionField } from "./CompiledFunction";
 import { Container, Sendable } from "./Container";
 import { IArg, UnwrapArgs } from "./NativeFunction";
@@ -48,6 +48,7 @@ export interface ILocalFunctionData {
 export interface IComponentOptions {
     section: SectionBuilder;
     gallery: MediaGalleryBuilder;
+    label: LabelBuilder;
 }
 export declare enum CalendarType {
     Buddhist = "buddhist",

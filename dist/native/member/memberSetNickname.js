@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const noop_1 = __importDefault(require("../../functions/noop"));
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$memberSetNickname",
@@ -35,8 +31,11 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
     ],
-    async execute(ctx, [, m, nick]) {
-        return this.success(!!(await m.setNickname(nick).catch(noop_1.default || null)));
+    async execute(ctx, [g, m, nick]) {
+        const edit = m.id === ctx.client.application.id
+            ? g.members.editMe({ nick, reason: ctx.reason })
+            : m.setNickname(nick, ctx.reason);
+        return this.success(!!(await edit.catch(ctx.noop)));
     },
 });
 //# sourceMappingURL=memberSetNickname.js.map

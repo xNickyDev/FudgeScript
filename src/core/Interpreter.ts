@@ -11,6 +11,7 @@ import {
     Invite,
     Message,
     PartialMessage,
+    PartialPollAnswer,
     PartialSoundboardSound,
     PollAnswer,
     Presence,
@@ -39,7 +40,7 @@ export interface IStates {
     audit: GuildAuditLogsEntry
     channel: Channel
     guild: Guild
-    poll: PollAnswer
+    poll: PollAnswer | PartialPollAnswer
     entitlement: Entitlement
     ban: GuildBan
     scheduledEvent: GuildScheduledEvent

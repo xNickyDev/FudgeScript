@@ -23,6 +23,7 @@ export default new NativeFunction({
         const text = new TextDisplayBuilder().setContent(content)
 
         if (ctx.container.isInside(ComponentType.Section)) ctx.component.section?.addTextDisplayComponents(text)
+        else if (ctx.container.isInside(ComponentType.Label)) ctx.container.modal?.addTextDisplayComponents(text)
         else if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container)) 
             comp.addTextDisplayComponents(text)
         else ctx.container.components.push(text)

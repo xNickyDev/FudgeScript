@@ -11,13 +11,13 @@ import {
     Emoji,
     Entitlement,
     Guild,
-    GuildEmoji,
     GuildMember,
     GuildOnboardingPromptData,
     GuildOnboardingPromptOptionData,
     GuildScheduledEventEntityMetadataOptions,
     GuildScheduledEventRecurrenceRuleOptions,
     Interaction,
+    LabelBuilder,
     MediaGalleryBuilder,
     Message,
     MessageReaction,
@@ -92,6 +92,7 @@ export interface ILocalFunctionData {
 export interface IComponentOptions {
     section: SectionBuilder
     gallery: MediaGalleryBuilder
+    label: LabelBuilder
 }
 
 export enum CalendarType {

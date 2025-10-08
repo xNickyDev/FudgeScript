@@ -1,4 +1,4 @@
-import { ActionRowBuilder, TextInputBuilder, TextInputStyle } from "discord.js"
+import { ComponentType, LabelBuilder, TextInputBuilder, TextInputStyle } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -17,7 +17,7 @@ export default new NativeFunction({
         },
         {
             name: "name",
-            description: "The field name",
+            description: "The field name, will be overwritten when used inside a label",
             rest: false,
             required: true,
             type: ArgType.String,
@@ -60,10 +60,9 @@ export default new NativeFunction({
             type: ArgType.Number,
         },
     ],
-    execute(ctx, [id, label, type, required, placeholder, value, min, max]) {
+    execute(ctx, [id, name, type, required, placeholder, value, min, max]) {
         const field = new TextInputBuilder()
             .setCustomId(id)
-            .setLabel(label)
             .setStyle(type || TextInputStyle.Paragraph)
             .setRequired(required || false)
 
@@ -72,7 +71,8 @@ export default new NativeFunction({
         if (min) field.setMinLength(min)
         if (max) field.setMaxLength(max)
 
-        ctx.container.modal?.addComponents(new ActionRowBuilder<TextInputBuilder>().addComponents(field))
+        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setTextInputComponent(field)
+        else ctx.container.modal?.addLabelComponents(new LabelBuilder().setLabel(name).setTextInputComponent(field))
 
         return this.success()
     },
