@@ -36,6 +36,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx) {
+        if (!ctx.interaction) return this.success()
         ctx.container.inside.push(ComponentType.Label)
 
         const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 2, 3)

@@ -1,4 +1,3 @@
-import { isNumber } from "lodash"
 import array from "../../functions/array"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
