@@ -32,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     async execute(ctx, [g, m, nick]) {
-        const edit = m.id === ctx.client.application.id
+        const edit = m.id === ctx.client.user.id
             ? g.members.editMe({ nick, reason: ctx.reason })
             : m.setNickname(nick, ctx.reason);
         return this.success(!!(await edit.catch(ctx.noop)));

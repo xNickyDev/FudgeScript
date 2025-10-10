@@ -1,4 +1,4 @@
-import { RoleSelectMenuBuilder } from "discord.js"
+import { ComponentType, RoleSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -51,16 +51,16 @@ export default new NativeFunction({
         const menu = new RoleSelectMenuBuilder()
             .setDefaultRoles(roles)
             .setDisabled(disabled || false)
+            .setRequired(ctx.component.required)
             .setCustomId(id)
-            
-        if (placeholder)
-            menu.setPlaceholder(placeholder)
-        if (min)
-            menu.setMinValues(min)
-        if (max)
-            menu.setMaxValues(max)
-        
-        ctx.container.actionRow?.addComponents(menu)
+
+        if (placeholder) menu.setPlaceholder(placeholder)
+        if (min) menu.setMinValues(min)
+        if (max) menu.setMaxValues(max)
+
+        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setRoleSelectMenuComponent(menu)
+        else ctx.container.actionRow?.addComponents(menu)
+
         return this.success()
     }
 })

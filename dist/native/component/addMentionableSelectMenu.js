@@ -51,6 +51,7 @@ exports.default = new structures_1.NativeFunction({
     execute(ctx, [id, placeholder, min, max, disabled, defaults]) {
         const menu = new discord_js_1.MentionableSelectMenuBuilder()
             .setDisabled(disabled || false)
+            .setRequired(ctx.component.required)
             .setCustomId(id)
             .setDefaultValues(defaults.filter(Boolean).map(x => {
             return {
@@ -64,7 +65,10 @@ exports.default = new structures_1.NativeFunction({
             menu.setMinValues(min);
         if (max)
             menu.setMaxValues(max);
-        ctx.container.actionRow?.addComponents(menu);
+        if (ctx.container.isInside(discord_js_1.ComponentType.Label))
+            ctx.component.label?.setMentionableSelectMenuComponent(menu);
+        else
+            ctx.container.actionRow?.addComponents(menu);
         return this.success();
     }
 });

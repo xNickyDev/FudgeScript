@@ -16,6 +16,11 @@ declare const _default: NativeFunction<[{
     rest: false;
     required: true;
     type: ArgType.String;
+}, {
+    name: string;
+    description: string;
+    rest: false;
+    type: ArgType.Boolean;
 }], false>;
 export default _default;
 //# sourceMappingURL=addLabel.d.ts.map

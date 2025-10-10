@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setBotGuildBio",
+    version: "2.6.0",
     description: "Sets the bio description of the bot on a guild",
     brackets: true,
     unwrap: true,

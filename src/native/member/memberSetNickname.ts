@@ -31,7 +31,7 @@ export default new NativeFunction({
         },
     ],
     async execute(ctx, [g, m, nick]) {
-        const edit = m.id === ctx.client.application.id
+        const edit = m.id === ctx.client.user.id
             ? g.members.editMe({ nick, reason: ctx.reason })
             : m.setNickname(nick, ctx.reason)
 

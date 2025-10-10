@@ -28,18 +28,25 @@ export default new NativeFunction({
             required: true,
             type: ArgType.String,
         },
+        {
+            name: "required",
+            description: "Whether this label component is required",
+            rest: false,
+            type: ArgType.Boolean,
+        },
     ],
     async execute(ctx) {
         ctx.container.inside.push(ComponentType.Label)
 
-        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1)
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1, 3)
         if (!this["isValidReturnType"](rt)) return rt
-        const [ name, desc ] = args
+        const [ name, desc, required ] = args
 
         const label = new LabelBuilder().setLabel(name)
         if (desc) label.setDescription(desc)
-        
+
         ctx.component.label = label
+        ctx.component.required = required || false
 
         const code = this.data.fields![2] as IExtendedCompiledFunctionField
         const resolved = await this["resolveCode"](ctx, code)
@@ -47,7 +54,7 @@ export default new NativeFunction({
 
         ctx.container.modal?.addLabelComponents(ctx.component.label)
 
-        delete ctx.component.label
+        ctx.component = {}
         ctx.container.inside.pop()
         return this.success()
     },
