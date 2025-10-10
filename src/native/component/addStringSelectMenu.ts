@@ -39,9 +39,18 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this menu is required inside modals",
+            rest: false,
+            type: ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, placeholder, disabled, min, max]) {
-        const menu = new StringSelectMenuBuilder().setCustomId(id).setDisabled(disabled || false)
+    execute(ctx, [id, placeholder, disabled, min, max, required]) {
+        const menu = new StringSelectMenuBuilder()
+            .setCustomId(id)
+            .setDisabled(disabled || false)
+            .setRequired(required || false)
 
         if (placeholder) menu.setPlaceholder(placeholder)
         if (min != null) menu.setMinValues(min)

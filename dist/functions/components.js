@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.findSelectMenu = exports.findButton = exports.disableButtons = exports.getComponents = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.addActionRow = exports.getLastComponent = exports.findSelectMenu = exports.findButton = exports.disableButtons = exports.getComponents = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -139,6 +139,15 @@ function findSelectMenu(comps, id) {
     return flattenSelectMenus(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id);
 }
 exports.findSelectMenu = findSelectMenu;
+/**
+ * Gets the last component of the current label or action row.
+ * @param ctx The current context.
+ * @returns
+ */
+function getLastComponent(ctx) {
+    return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0]);
+}
+exports.getLastComponent = getLastComponent;
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.

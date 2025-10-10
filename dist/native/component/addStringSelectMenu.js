@@ -40,9 +40,18 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this menu is required inside modals",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, placeholder, disabled, min, max]) {
-        const menu = new discord_js_1.StringSelectMenuBuilder().setCustomId(id).setDisabled(disabled || false);
+    execute(ctx, [id, placeholder, disabled, min, max, required]) {
+        const menu = new discord_js_1.StringSelectMenuBuilder()
+            .setCustomId(id)
+            .setDisabled(disabled || false)
+            .setRequired(required || false);
         if (placeholder)
             menu.setPlaceholder(placeholder);
         if (min != null)

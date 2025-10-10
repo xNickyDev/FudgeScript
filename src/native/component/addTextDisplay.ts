@@ -17,7 +17,7 @@ export default new NativeFunction({
             type: ArgType.String,
         },
     ],
-    async execute(ctx, [content]) {
+    execute(ctx, [content]) {
         addActionRow(ctx)
         const comp = ctx.container.components.at(-1)
         const text = new TextDisplayBuilder().setContent(content)

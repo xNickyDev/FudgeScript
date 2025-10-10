@@ -16,6 +16,7 @@ import {
     SeparatorBuilder,
     StringSelectMenuBuilder,
     TextDisplayBuilder,
+    TextInputBuilder,
     UserSelectMenuBuilder
 } from "discord.js"
 import { Context } from "../structures"
@@ -146,6 +147,15 @@ function flattenSelectMenus(comps: Array<ContainerBuilder | ContainerComponentBu
  */
 export function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
     return flattenSelectMenus(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
+}
+
+/**
+ * Gets the last component of the current label or action row.
+ * @param ctx The current context.
+ * @returns 
+ */
+export function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | TextInputBuilder | undefined {
+    return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0])
 }
 
 /**

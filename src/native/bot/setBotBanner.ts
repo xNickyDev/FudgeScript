@@ -1,5 +1,3 @@
-import { ChatInputCommandInteraction } from "discord.js"
-import noop from "../../functions/noop"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
