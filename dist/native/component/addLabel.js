@@ -17,16 +17,16 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
         {
-            name: "description",
-            description: "The description for the label",
-            rest: false,
-            type: structures_1.ArgType.String,
-        },
-        {
             name: "component",
             description: "The component to attach to the label",
             rest: false,
             required: true,
+            type: structures_1.ArgType.String,
+        },
+        {
+            name: "description",
+            description: "The description for the label",
+            rest: false,
             type: structures_1.ArgType.String,
         },
         {
@@ -38,7 +38,7 @@ exports.default = new structures_1.NativeFunction({
     ],
     async execute(ctx) {
         ctx.container.inside.push(discord_js_1.ComponentType.Label);
-        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1, 3);
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 2, 3);
         if (!this["isValidReturnType"](rt))
             return rt;
         const [name, desc, required] = args;
@@ -47,7 +47,7 @@ exports.default = new structures_1.NativeFunction({
             label.setDescription(desc);
         ctx.component.label = label;
         ctx.component.required = required || false;
-        const code = this.data.fields[2];
+        const code = this.data.fields[1];
         const resolved = await this["resolveCode"](ctx, code);
         if (!this["isValidReturnType"](resolved))
             return resolved;

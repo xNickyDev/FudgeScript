@@ -16,16 +16,16 @@ export default new NativeFunction({
             type: ArgType.String,
         },
         {
-            name: "description",
-            description: "The description for the label",
-            rest: false,
-            type: ArgType.String,
-        },
-        {
             name: "component",
             description: "The component to attach to the label",
             rest: false,
             required: true,
+            type: ArgType.String,
+        },
+        {
+            name: "description",
+            description: "The description for the label",
+            rest: false,
             type: ArgType.String,
         },
         {
@@ -38,7 +38,7 @@ export default new NativeFunction({
     async execute(ctx) {
         ctx.container.inside.push(ComponentType.Label)
 
-        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1, 3)
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 2, 3)
         if (!this["isValidReturnType"](rt)) return rt
         const [ name, desc, required ] = args
 
@@ -48,7 +48,7 @@ export default new NativeFunction({
         ctx.component.label = label
         ctx.component.required = required || false
 
-        const code = this.data.fields![2] as IExtendedCompiledFunctionField
+        const code = this.data.fields![1] as IExtendedCompiledFunctionField
         const resolved = await this["resolveCode"](ctx, code)
         if (!this["isValidReturnType"](resolved)) return resolved
 
