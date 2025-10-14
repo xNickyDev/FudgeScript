@@ -1,4 +1,3 @@
-import { GuildScheduledEventEntityType } from "discord.js";
 import { ArgType, NativeFunction } from "../../structures";
 declare const _default: NativeFunction<[{
     name: string;
@@ -11,7 +10,8 @@ declare const _default: NativeFunction<[{
     description: string;
     rest: false;
     required: true;
-    type: ArgType.String;
+    type: ArgType.ScheduledEvent;
+    pointer: number;
 }, {
     name: string;
     description: string;
@@ -21,14 +21,11 @@ declare const _default: NativeFunction<[{
     name: string;
     description: string;
     rest: false;
-    required: true;
-    type: ArgType.Enum;
-    enum: typeof GuildScheduledEventEntityType;
+    type: ArgType.String;
 }, {
     name: string;
     description: string;
     rest: false;
-    required: true;
     type: ArgType.Date;
 }, {
     name: string;
@@ -42,4 +39,4 @@ declare const _default: NativeFunction<[{
     type: ArgType.URL;
 }], true>;
 export default _default;
-//# sourceMappingURL=createScheduledEvent.d.ts.map
+//# sourceMappingURL=editScheduledEvent.d.ts.map

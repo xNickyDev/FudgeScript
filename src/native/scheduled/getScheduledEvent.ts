@@ -3,7 +3,7 @@ import { ScheduledEventProperties, ScheduledEventProperty } from "../../properti
 
 export default new NativeFunction({
     name: "$getScheduledEvent",
-    version: "2.3.0",
+    version: "2.6.0",
     description: "Returns a scheduled event of a guild",
     unwrap: true,
     brackets: false,

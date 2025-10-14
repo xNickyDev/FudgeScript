@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$createScheduledEvent",
-    version: "2.3.0",
+    version: "2.6.0",
     description: "Creates a new scheduled event on a guild, returns event id",
     unwrap: true,
     brackets: true,
@@ -55,16 +55,10 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.URL,
         },
-        {
-            name: "reason",
-            description: "The reason for this action",
-            rest: false,
-            type: ArgType.String,
-        },
         
     ],
     output: ArgType.ScheduledEvent,
-    async execute(ctx, [guild, name, desc, type, start, end, cover, reason]) {
+    async execute(ctx, [guild, name, desc, type, start, end, cover]) {
         const event = await guild.scheduledEvents.create({
             name,
             entityType: type,
@@ -76,7 +70,7 @@ export default new NativeFunction({
             channel: ctx.scheduledEvent.channel,
             entityMetadata: ctx.scheduledEvent.entityMetadata,
             recurrenceRule: ctx.scheduledEvent.recurrenceRule as GuildScheduledEventRecurrenceRuleOptions,
-            reason: reason || undefined
+            reason: ctx.reason
         }).catch(ctx.noop)
 
         ctx.clearScheduledEventOptions()

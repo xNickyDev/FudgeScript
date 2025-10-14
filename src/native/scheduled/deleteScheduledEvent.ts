@@ -2,7 +2,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$deleteScheduledEvent",
-    version: "2.3.0",
+    version: "2.6.0",
     description: "Deletes a scheduled event from a guild, returns bool",
     unwrap: true,
     brackets: true,
@@ -16,7 +16,7 @@ export default new NativeFunction({
         },
         {
             name: "event ID",
-            description: "The id of the scheduled event to delete",
+            description: "The scheduled event to delete",
             rest: false,
             required: true,
             type: ArgType.ScheduledEvent,

@@ -3,7 +3,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setScheduledEventChannel",
-    version: "2.3.0",
+    version: "2.6.0",
     description: "Sets a channel for the current scheduled event",
     unwrap: true,
     brackets: true,

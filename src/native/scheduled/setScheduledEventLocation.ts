@@ -2,7 +2,7 @@ import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
     name: "$setScheduledEventLocation",
-    version: "2.3.0",
+    version: "2.6.0",
     description: "Sets a location for the current scheduled event",
     unwrap: true,
     brackets: true,
