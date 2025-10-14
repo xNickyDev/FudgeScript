@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$editScheduledEvent",
+    version: "2.6.0",
     description: "Edits an existing scheduled event on a guild, returns bool",
     unwrap: true,
     brackets: true,
@@ -35,6 +37,13 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.String,
         },
         {
+            name: "type",
+            description: "The new entity type for the scheduled event",
+            rest: false,
+            type: structures_1.ArgType.Enum,
+            enum: discord_js_1.GuildScheduledEventEntityType,
+        },
+        {
             name: "start",
             description: "The new start time for the scheduled event",
             rest: false,
@@ -54,10 +63,11 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [, event, name, desc, start, end, cover]) {
+    async execute(ctx, [, event, name, desc, type, start, end, cover]) {
         const edit = await event.edit({
             name: name || undefined,
             description: desc || undefined,
+            entityType: type || undefined,
             scheduledStartTime: start || undefined,
             scheduledEndTime: end || undefined,
             image: cover || undefined,

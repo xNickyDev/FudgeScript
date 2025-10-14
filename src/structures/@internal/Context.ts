@@ -93,7 +93,7 @@ export interface IComponentOptions {
     section: SectionBuilder
     gallery: MediaGalleryBuilder
     label: LabelBuilder
-    required: boolean
+    required?: boolean
 }
 
 export enum CalendarType {

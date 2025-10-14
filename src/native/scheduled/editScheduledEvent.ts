@@ -1,3 +1,4 @@
+import { GuildScheduledEventEntityType } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
@@ -35,6 +36,13 @@ export default new NativeFunction({
             type: ArgType.String,
         },
         {
+            name: "type",
+            description: "The new entity type for the scheduled event",
+            rest: false,
+            type: ArgType.Enum,
+            enum: GuildScheduledEventEntityType,
+        },
+        {
             name: "start",
             description: "The new start time for the scheduled event",
             rest: false,
@@ -55,10 +63,11 @@ export default new NativeFunction({
         
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [, event, name, desc, start, end, cover]) {
+    async execute(ctx, [, event, name, desc, type, start, end, cover]) {
         const edit = await event.edit({
             name: name || undefined,
             description: desc || undefined,
+            entityType: type || undefined,
             scheduledStartTime: start || undefined,
             scheduledEndTime: end || undefined,
             image: cover || undefined,

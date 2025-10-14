@@ -28,7 +28,7 @@ export default new NativeFunction({
         try {
             await event.delete()
         } catch (error) {
-            ctx.noop(error as any)
+            ctx.noop(error)
             return this.success(false)
         }
 
