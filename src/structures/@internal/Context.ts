@@ -248,6 +248,15 @@ export class Context {
         return (this.#cache.reaction ??= this.obj instanceof MessageReaction ? this.obj : null)
     }
 
+    public get interaction() {
+        return (this.#cache.interaction ??=
+            "interaction" in this.obj
+                ? this.obj.interaction as Interaction
+                : this.obj instanceof BaseInteraction
+                    ? this.obj as Interaction
+                    : null)
+    }
+
     public get message() {
         return (this.#cache.message ??=
             "message" in this.obj && this.obj.message
@@ -255,10 +264,6 @@ export class Context {
                 : this.obj instanceof Message
                     ? this.obj
                     : null)
-    }
-
-    public get interaction() {
-        return (this.#cache.interaction ??= this.obj instanceof BaseInteraction ? this.obj as Interaction : null)
     }
 
     public get user() {

@@ -113,16 +113,17 @@ export class Container {
             res = this.edit && messageID ? obj.editMessage(messageID, options) : obj.send(options)
         } else if (obj instanceof Message) {
             res = this.edit ? obj.edit(options) : (obj.channel as TextChannel).send(options)
-        } else if (obj instanceof BaseInteraction) {
-            if (obj.isRepliable()) {
-                if (this.modal && !obj.replied && "showModal" in obj) {
-                    res = obj.showModal(this.modal)
+        } else if (obj instanceof BaseInteraction || ("interaction" in obj && obj.interaction instanceof BaseInteraction)) {
+            const int = "interaction" in obj ? obj.interaction as BaseInteraction : obj
+            if (int.isRepliable()) {
+                if (this.modal && !int.replied && "showModal" in int) {
+                    res = int.showModal(this.modal)
                 } else {
                     res =
-                        obj[
+                        int[
                             (this.followUp
                                 ? "followUp"
-                                : obj.deferred || obj.replied
+                                : int.deferred || int.replied
                                 ? "editReply"
                                 : this.update
                                 ? "update"

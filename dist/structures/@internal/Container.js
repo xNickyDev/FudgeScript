@@ -55,16 +55,17 @@ class Container {
         else if (obj instanceof discord_js_1.Message) {
             res = this.edit ? obj.edit(options) : obj.channel.send(options);
         }
-        else if (obj instanceof discord_js_1.BaseInteraction) {
-            if (obj.isRepliable()) {
-                if (this.modal && !obj.replied && "showModal" in obj) {
-                    res = obj.showModal(this.modal);
+        else if (obj instanceof discord_js_1.BaseInteraction || ("interaction" in obj && obj.interaction instanceof discord_js_1.BaseInteraction)) {
+            const int = "interaction" in obj ? obj.interaction : obj;
+            if (int.isRepliable()) {
+                if (this.modal && !int.replied && "showModal" in int) {
+                    res = int.showModal(this.modal);
                 }
                 else {
                     res =
-                        obj[(this.followUp
+                        int[(this.followUp
                             ? "followUp"
-                            : obj.deferred || obj.replied
+                            : int.deferred || int.replied
                                 ? "editReply"
                                 : this.update
                                     ? "update"

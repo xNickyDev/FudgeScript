@@ -126,8 +126,8 @@ export declare class Context {
     get role(): Role | null;
     get sound(): SoundboardSound | null;
     get reaction(): MessageReaction | null;
-    get message(): Message<any> | null;
     get interaction(): Interaction | null;
+    get message(): Message<any> | null;
     get user(): User | null;
     get guild(): Guild | null;
     get channel(): BaseChannel | import("discord.js").CategoryChannel | import("discord.js").NewsChannel | import("discord.js").StageChannel | import("discord.js").TextChannel | import("discord.js").PublicThreadChannel<boolean> | import("discord.js").PrivateThreadChannel | import("discord.js").VoiceChannel | import("discord.js").ForumChannel | import("discord.js").MediaChannel | null;

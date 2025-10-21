@@ -120,6 +120,14 @@ class Context {
     get reaction() {
         return (this.#cache.reaction ??= this.obj instanceof discord_js_1.MessageReaction ? this.obj : null);
     }
+    get interaction() {
+        return (this.#cache.interaction ??=
+            "interaction" in this.obj
+                ? this.obj.interaction
+                : this.obj instanceof discord_js_1.BaseInteraction
+                    ? this.obj
+                    : null);
+    }
     get message() {
         return (this.#cache.message ??=
             "message" in this.obj && this.obj.message
@@ -127,9 +135,6 @@ class Context {
                 : this.obj instanceof discord_js_1.Message
                     ? this.obj
                     : null);
-    }
-    get interaction() {
-        return (this.#cache.interaction ??= this.obj instanceof discord_js_1.BaseInteraction ? this.obj : null);
     }
     get user() {
         return (this.#cache.user ??=
