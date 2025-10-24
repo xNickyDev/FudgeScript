@@ -32,7 +32,7 @@ export default new NativeFunction({
                 ? field.value
                 : "values" in field
                     ? field.values.join(sep ?? ", ")
-                    : ctx.interaction.fields.getUploadedFiles(id)?.map((x) => x.url).join(sep ?? ", ")
+                    : ctx.interaction.fields.getUploadedFiles(id)?.map((x) => x.proxyURL).join(sep ?? ", ")
         )
     },
 })
