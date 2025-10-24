@@ -26,12 +26,13 @@ export default new NativeFunction({
         if (!ctx.interaction?.isModalSubmit()) return this.success()
         const field = ctx.interaction.fields.getField(id)
 
+        // temp workaround
         return this.success(
             "value" in field
                 ? field.value
-                : "files" in field
-                    ? field.files.map((x) => x.url).join(sep ?? ", ")
-                    : field.values.join(sep ?? ", ")
+                : "values" in field
+                    ? field.values.join(sep ?? ", ")
+                    : ctx.interaction.fields.getUploadedFiles(id)?.map((x) => x.url).join(sep ?? ", ")
         )
     },
 })
