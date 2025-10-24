@@ -154,7 +154,7 @@ export function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponen
  * @param ctx The current context.
  * @returns 
  */
-export function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | TextInputBuilder | undefined {
+export function getLastComponent(ctx: Context) {
     return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0])
 }
 

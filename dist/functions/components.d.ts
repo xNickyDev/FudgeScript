@@ -1,4 +1,4 @@
-import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, MessageActionRowComponentBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, TextInputBuilder, UserSelectMenuBuilder } from "discord.js";
+import { ActionRowBuilder, AnyComponentBuilder, ButtonBuilder, ChannelSelectMenuBuilder, ComponentType, ContainerBuilder, ContainerComponentBuilder, FileBuilder, MediaGalleryBuilder, MentionableSelectMenuBuilder, MessageActionRowComponentBuilder, RoleSelectMenuBuilder, SectionBuilder, SeparatorBuilder, StringSelectMenuBuilder, TextDisplayBuilder, UserSelectMenuBuilder } from "discord.js";
 import { Context } from "../structures";
 /**
  * Checks whether the specified component type is a top level component.
@@ -50,7 +50,7 @@ export declare function findSelectMenu(comps: Array<ContainerBuilder | Container
  * @param ctx The current context.
  * @returns
  */
-export declare function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | TextInputBuilder | undefined;
+export declare function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | import("@discordjs/builders").TextInputBuilder | import("@discordjs/builders").FileUploadBuilder | undefined;
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
