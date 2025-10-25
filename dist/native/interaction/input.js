@@ -23,18 +23,17 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.String,
-    execute(ctx, [id, sep]) {
+    async execute(ctx, [id, sep]) {
         if (!ctx.interaction?.isModalSubmit())
             return this.success();
         const field = ctx.interaction.fields.getField(id);
-        const files = ctx.interaction.fields.getUploadedFiles(id, true);
-        console.log(files, files.map((x) => x.url));
         // temp workaround
+        const files = ctx.interaction.fields.getUploadedFiles(id)?.map((x) => x.url);
         return this.success("value" in field
             ? field.value
             : "values" in field
                 ? field.values.join(sep ?? ", ")
-                : files.map((x) => x.url).join(sep ?? ", "));
+                : files?.join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=input.js.map
