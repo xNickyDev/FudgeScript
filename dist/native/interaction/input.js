@@ -28,13 +28,13 @@ exports.default = new structures_1.NativeFunction({
             return this.success();
         const field = ctx.interaction.fields.getField(id);
         const files = ctx.interaction.fields.getUploadedFiles(id, true);
-        console.log(files, files.map((x) => x.name));
+        console.log(files, files.map((x) => x.url));
         // temp workaround
         return this.success("value" in field
             ? field.value
             : "values" in field
                 ? field.values.join(sep ?? ", ")
-                : ctx.interaction.fields.getUploadedFiles(id, true)?.map((x) => x.url).join(sep ?? ", "));
+                : files.map((x) => x.url).join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=input.js.map

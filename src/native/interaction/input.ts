@@ -27,7 +27,7 @@ export default new NativeFunction({
         const field = ctx.interaction.fields.getField(id)
 
         const files = ctx.interaction.fields.getUploadedFiles(id, true)
-        console.log(files, files.map((x) => x.name))
+        console.log(files, files.map((x) => x.url))
 
         // temp workaround
         return this.success(
@@ -35,7 +35,7 @@ export default new NativeFunction({
                 ? field.value
                 : "values" in field
                     ? field.values.join(sep ?? ", ")
-                    : ctx.interaction.fields.getUploadedFiles(id, true)?.map((x) => x.url).join(sep ?? ", ")
+                    : files.map((x) => x.url).join(sep ?? ", ")
         )
     },
 })
