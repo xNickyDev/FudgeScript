@@ -32,7 +32,7 @@ exports.default = new structures_1.NativeFunction({
             ? field.value
             : "values" in field
                 ? field.values.join(sep ?? ", ")
-                : ctx.interaction.fields.getUploadedFiles(id)?.map((x) => x.proxyURL).join(sep ?? ", "));
+                : field.files.map((x) => x.url).join(sep ?? ", "));
     },
 });
 //# sourceMappingURL=input.js.map
