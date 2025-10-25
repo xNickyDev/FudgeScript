@@ -26,7 +26,8 @@ export default new NativeFunction({
         if (!ctx.interaction?.isModalSubmit()) return this.success()
         const field = ctx.interaction.fields.getField(id)
 
-        console.log(ctx.interaction.fields.getUploadedFiles(id), ctx.interaction.fields.getUploadedFiles(id, true))
+        const files = ctx.interaction.fields.getUploadedFiles(id, true)
+        console.log(files, files.map((x) => x.name))
 
         // temp workaround
         return this.success(
