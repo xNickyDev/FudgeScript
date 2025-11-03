@@ -9,7 +9,7 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     args: [
         {
-            name: "id",
+            name: "webhook ID",
             description: "The webhook id",
             rest: false,
             type: structures_1.ArgType.Webhook,
@@ -17,7 +17,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     output: structures_1.ArgType.Boolean,
-    async execute(ctx, [web]) {
+    execute(ctx, [web]) {
         return this.success(web.isIncoming());
     },
 });

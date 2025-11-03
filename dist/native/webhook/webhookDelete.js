@@ -9,15 +9,15 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     args: [
         {
-            name: "id",
-            description: "The webhook id",
+            name: "webhook ID",
+            description: "The webhook to delete",
             rest: false,
             type: structures_1.ArgType.Webhook,
             required: true,
         },
     ],
     async execute(ctx, [web]) {
-        await web.delete().catch(ctx.noop);
+        await web.delete(ctx.reason).catch(ctx.noop);
         return this.success();
     },
 });

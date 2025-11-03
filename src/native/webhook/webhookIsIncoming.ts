@@ -8,7 +8,7 @@ export default new NativeFunction({
     unwrap: true,
     args: [
         {
-            name: "id",
+            name: "webhook ID",
             description: "The webhook id",
             rest: false,
             type: ArgType.Webhook,
@@ -16,7 +16,7 @@ export default new NativeFunction({
         },
     ],
     output: ArgType.Boolean,
-    async execute(ctx, [web]) {
+    execute(ctx, [web]) {
         return this.success(web.isIncoming())
     },
 })

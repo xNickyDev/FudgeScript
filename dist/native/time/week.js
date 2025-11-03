@@ -12,7 +12,11 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     output: structures_1.ArgType.Number,
     execute: async function (ctx) {
-        return this.success(getWeekOfMonth(new Date(new Date().toLocaleString("en-US", { timeZone: ctx.timezone, calendar: ctx.calendar }))));
+        const first = new Date().toLocaleString("en-US", { timeZone: ctx.timezone, calendar: ctx.calendar });
+        const second = new Date(first);
+        const third = getWeekOfMonth(second);
+        console.log(first, second, third);
+        return this.success(third);
     }
 });
 //# sourceMappingURL=week.js.map

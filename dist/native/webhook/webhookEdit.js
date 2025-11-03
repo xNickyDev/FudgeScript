@@ -10,8 +10,8 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     args: [
         {
-            name: "id",
-            description: "The webhook id",
+            name: "webhook ID",
+            description: "The webhook to edit",
             rest: false,
             type: structures_1.ArgType.Webhook,
             required: true,

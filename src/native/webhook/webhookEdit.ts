@@ -1,5 +1,4 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
 
 export default new NativeFunction({
     name: "$webhookEdit",
@@ -10,8 +9,8 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     args: [
         {
-            name: "id",
-            description: "The webhook id",
+            name: "webhook ID",
+            description: "The webhook to edit",
             rest: false,
             type: ArgType.Webhook,
             required: true,

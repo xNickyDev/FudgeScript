@@ -1,5 +1,4 @@
 import { ArgType, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
 
 export default new NativeFunction({
     name: "$webhookDelete",
@@ -9,15 +8,15 @@ export default new NativeFunction({
     unwrap: true,
     args: [
         {
-            name: "id",
-            description: "The webhook id",
+            name: "webhook ID",
+            description: "The webhook to delete",
             rest: false,
             type: ArgType.Webhook,
             required: true,
         },
     ],
     async execute(ctx, [web]) {
-        await web.delete().catch(ctx.noop)
+        await web.delete(ctx.reason).catch(ctx.noop)
         return this.success()
     },
 })
