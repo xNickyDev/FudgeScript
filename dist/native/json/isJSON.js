@@ -4,10 +4,10 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$isJSON",
     version: "1.4.0",
+    description: "Checks whether given JSON is valid",
     aliases: [
         "$isValidJSON"
     ],
-    description: "Checks whether given json is valid",
     unwrap: true,
     brackets: true,
     args: [

@@ -3,10 +3,10 @@ import { ArgType, NativeFunction } from "../../structures"
 export default new NativeFunction({
     name: "$isJSON",
     version: "1.4.0",
+    description: "Checks whether given JSON is valid",
     aliases: [
         "$isValidJSON"
     ],
-    description: "Checks whether given json is valid",
     unwrap: true,
     brackets: true,
     args: [

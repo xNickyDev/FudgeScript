@@ -1,7 +1,4 @@
-import { stringify } from "querystring"
 import { ArgType, NativeFunction } from "../../structures/@internal/NativeFunction"
-import { Return } from "../../structures/@internal/Return"
-import { allowedNodeEnvironmentFlags } from "process"
 
 export default new NativeFunction({
     name: "$jsonStringify",
