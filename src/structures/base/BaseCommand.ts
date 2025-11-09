@@ -1,4 +1,4 @@
-import { ClientEvents, Interaction } from "discord.js"
+import { Interaction } from "discord.js"
 import { Context, ExtendedEvents } from ".."
 import { IExtendedCompilationResult, Compiler, ForgeClient } from "../../core"
 import { ForgeError, ErrorType } from "../forge/ForgeError"
@@ -20,6 +20,7 @@ export interface IBaseCommand<T> {
     type: T
     code: string
     guildOnly?: boolean
+    authorOnly?: boolean
     unprefixed?: boolean
     aliases?: string[]
     allowedInteractionTypes?: CommandInteractionTypes[]
@@ -91,10 +92,14 @@ export class BaseCommand<T> {
 
     public matchesInteractionType(i: Interaction) {
         return (
-            !this.data.name ||
-            (
+            !this.data.name || (
                 "customId" in i && 
                 this.data.name === i.customId
+            )
+        ) && (
+            !this.data.authorOnly || (
+                !!i.authorizingIntegrationOwners[1] && 
+                i.user.id === i.authorizingIntegrationOwners[1]
             )
         ) && (
             !this.data.allowedInteractionTypes?.length || (
