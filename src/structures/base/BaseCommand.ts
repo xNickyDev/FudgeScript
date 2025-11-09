@@ -98,7 +98,7 @@ export class BaseCommand<T> {
             )
         ) && (
             !this.data.authorOnly || (
-                !!i.authorizingIntegrationOwners[1] && 
+                !i.authorizingIntegrationOwners[1] || 
                 i.user.id === i.authorizingIntegrationOwners[1]
             )
         ) && (

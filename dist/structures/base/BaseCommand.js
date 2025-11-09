@@ -43,7 +43,7 @@ class BaseCommand {
     }
     matchesInteractionType(i) {
         return (!this.data.name || ("customId" in i &&
-            this.data.name === i.customId)) && (!this.data.authorOnly || (!!i.authorizingIntegrationOwners[1] &&
+            this.data.name === i.customId)) && (!this.data.authorOnly || (!i.authorizingIntegrationOwners[1] ||
             i.user.id === i.authorizingIntegrationOwners[1])) && (!this.data.allowedInteractionTypes?.length || (this.data.allowedInteractionTypes.some(type => (type === "slashCommand" && i.isChatInputCommand()) ||
             (type === "button" && i.isButton()) ||
             (type === "selectMenu" && i.isAnySelectMenu()) ||
