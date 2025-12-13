@@ -7,7 +7,7 @@ export default new NativeFunction({
     aliases: ["$disableEveryoneMentions"],
     unwrap: false,
     execute(ctx) {
-        ctx.container.unparseMention("everyone")
+        ctx.container.unparseMentions("everyone")
         return this.success()
     },
 })
