@@ -165,7 +165,11 @@ export class Interpreter {
                 for (let i = 0, len = runtime.data.functions.length; i < len; i++) {
                     const fn = runtime.data.functions[i]
                     const rt = await fn.execute(ctx)
-                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt)) ? ctx["error"]() : rt.value
+                    args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt))
+                        ? (fn.data.silent || !ctx.hasSuppressedErrors())
+                            ? ctx["error"]()
+                            : null
+                        : rt.value
                 }
             } catch (err: unknown) {
                 if (err instanceof Error)

@@ -312,8 +312,6 @@ class Context {
         return null;
     }
     error() {
-        if (this.hasSuppressedErrors())
-            return;
         throw null;
     }
     get getExtension() {

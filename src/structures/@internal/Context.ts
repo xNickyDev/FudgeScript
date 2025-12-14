@@ -480,7 +480,6 @@ export class Context {
     }
 
     private error() {
-        if (this.hasSuppressedErrors()) return
         throw null
     }
 
