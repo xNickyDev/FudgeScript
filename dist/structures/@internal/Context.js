@@ -191,6 +191,9 @@ class Context {
         if (fn.data.silent) {
             return false;
         }
+        else if (this.hasSuppressedErrors()) {
+            return true;
+        }
         else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return_1.Return(Return_1.ReturnType.Return, rt.value);
         }
