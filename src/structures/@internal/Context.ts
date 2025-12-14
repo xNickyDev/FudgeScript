@@ -329,7 +329,7 @@ export class Context {
     }
 
     public handleNotSuccess(fn: CompiledFunction, rt: Return) {
-        if (fn.data.silent || this.hasSuppressedErrors()) {
+        if (fn.data.silent) {
             return false
         } else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)

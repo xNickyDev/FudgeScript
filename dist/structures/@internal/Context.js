@@ -188,7 +188,7 @@ class Context {
         return this.container.send(this.obj, content);
     }
     handleNotSuccess(fn, rt) {
-        if (fn.data.silent || this.hasSuppressedErrors()) {
+        if (fn.data.silent) {
             return false;
         }
         else if (rt.return && this.runtime.allowTopLevelReturn) {
