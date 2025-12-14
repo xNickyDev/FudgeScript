@@ -168,7 +168,7 @@ export class Interpreter {
                     args[i] = (!rt.success && !ctx.handleNotSuccess(fn, rt))
                         ? (fn.data.silent || !ctx.hasSuppressedErrors())
                             ? ctx["error"]()
-                            : null
+                            : ""
                         : rt.value
                 }
             } catch (err: unknown) {
