@@ -329,10 +329,8 @@ export class Context {
     }
 
     public handleNotSuccess(fn: CompiledFunction, rt: Return) {
-        if (fn.data.silent) {
+        if (fn.data.silent || this.hasSuppressedErrors()) {
             return false
-        } else if (this.hasSuppressedErrors()) {
-            return true
         } else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return(ReturnType.Return, rt.value as string)
         } else if (rt.return || rt.break || rt.continue) {
@@ -482,6 +480,7 @@ export class Context {
     }
 
     private error() {
+        if (this.hasSuppressedErrors()) return
         throw null
     }
 

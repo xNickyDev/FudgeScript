@@ -188,11 +188,8 @@ class Context {
         return this.container.send(this.obj, content);
     }
     handleNotSuccess(fn, rt) {
-        if (fn.data.silent) {
+        if (fn.data.silent || this.hasSuppressedErrors()) {
             return false;
-        }
-        else if (this.hasSuppressedErrors()) {
-            return true;
         }
         else if (rt.return && this.runtime.allowTopLevelReturn) {
             throw new Return_1.Return(Return_1.ReturnType.Return, rt.value);
@@ -315,6 +312,8 @@ class Context {
         return null;
     }
     error() {
+        if (this.hasSuppressedErrors())
+            return;
         throw null;
     }
     get getExtension() {
