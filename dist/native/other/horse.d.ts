@@ -4,13 +4,14 @@ declare const _default: NativeFunction<[{
     rest: false;
     description: string;
     type: ArgType.String;
-    required: true;
+    default: string;
+    required: false;
 }, {
     name: string;
     rest: false;
     description: string;
     type: ArgType.Color;
-    required: true;
+    required: false;
 }], true>;
 export default _default;
 //# sourceMappingURL=horse.d.ts.map
