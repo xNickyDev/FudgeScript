@@ -62,7 +62,7 @@ export interface IArg<Type extends ArgType = ArgType, Required extends boolean =
     /**
      * The default value for this argument. Not all types support this property.
      */
-    default?: string;
+    default?: unknown;
     /**
      * Defaults to `false`.
      */

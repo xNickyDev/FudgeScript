@@ -7,6 +7,13 @@ export default new NativeFunction({
     unwrap: true,
     args: [
         {
+            name: "color",
+            rest: false,
+            description: "The color of the horse",
+            type: ArgType.Color,
+            required: false,
+        },
+        {
             name: "name",
             rest: false,
             description: "The name of the horse",
@@ -14,17 +21,10 @@ export default new NativeFunction({
             default: "Amadeus",
             required: false,
         },
-        {
-            name: "color",
-            rest: false,
-            description: "The color of the horse",
-            type: ArgType.Color,
-            required: false,
-        },
     ],
     brackets: false,
     output: ArgType.Emoji,
-    execute(ctx, [name, color]) {
+    execute(ctx, [color, name]) {
         const horses = ["🐴","🐎","🎠","🏇"]
         return this.success(name + horses[Math.floor(Math.random() * horses.length)])
     },

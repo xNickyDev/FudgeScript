@@ -99,7 +99,7 @@ export interface IArg<
     /**
      * The default value for this argument. Not all types support this property.
      */
-    default?: string
+    default?: unknown
 
     /**
      * Defaults to `false`.
