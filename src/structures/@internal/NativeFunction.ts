@@ -97,12 +97,17 @@ export interface IArg<
     check?: (i: GetArgType<Type, Enum>) => boolean
 
     /**
-     * Defaults to false
+     * The default value for this argument. Not all types support this property.
+     */
+    default?: string
+
+    /**
+     * Defaults to `false`.
      */
     required?: Required
 
     /**
-     * Whether this argument is an array of values
+     * Whether this argument is an array of values.
      */
     rest: Rest
 }
@@ -114,9 +119,13 @@ export type NativeFunctionExecutor<T extends [...IArg[]], Unwrap extends boolean
 export interface INativeFunction<T extends [...IArg[]], Unwrap extends boolean = boolean> {
     name: `$${string}`
     description: string
-    examples?: string[]
     experimental?: boolean
     deprecated?: boolean
+
+    /**
+     * @deprecated
+     */
+    examples?: string[]
 
     /**
      * Resolves all arguments and are passed through execute params.
@@ -131,12 +140,12 @@ export interface INativeFunction<T extends [...IArg[]], Unwrap extends boolean =
     version?: string
 
     /**
-     * Aliases this function has
+     * Aliases this function has.
      */
     aliases?: `$${string}`[]
 
     /**
-     * If undefined, function has no brackets
+     * If undefined, function has no brackets.
      *
      * If false, function can have brackets.
      *

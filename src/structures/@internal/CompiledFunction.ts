@@ -498,7 +498,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
         const strValue = `${value}`
 
         if (!arg.required && !value) {
-            return this.unsafeSuccess(value ?? null)
+            return this.unsafeSuccess(value ?? arg.default ?? null)
         }
 
         if (field !== undefined) {
@@ -515,7 +515,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
 
         if (arg.check !== undefined && !arg.check(value)) return this.argTypeRejection(arg, strValue)
 
-        return this.unsafeSuccess(value ?? null)
+        return this.unsafeSuccess(value ?? arg.default ?? null)
     }
 
     public get hasFields() {

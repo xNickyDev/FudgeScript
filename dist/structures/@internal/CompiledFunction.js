@@ -406,7 +406,7 @@ class CompiledFunction {
     async resolveArg(ctx, arg, field, value, ref) {
         const strValue = `${value}`;
         if (!arg.required && !value) {
-            return this.unsafeSuccess(value ?? null);
+            return this.unsafeSuccess(value ?? arg.default ?? null);
         }
         if (field !== undefined) {
             field.resolveArg ??= this[CompiledFunction.toResolveArgString(arg.type)].bind(this);
@@ -421,7 +421,7 @@ class CompiledFunction {
         }
         if (arg.check !== undefined && !arg.check(value))
             return this.argTypeRejection(arg, strValue);
-        return this.unsafeSuccess(value ?? null);
+        return this.unsafeSuccess(value ?? arg.default ?? null);
     }
     get hasFields() {
         return this.data.fields !== null;
