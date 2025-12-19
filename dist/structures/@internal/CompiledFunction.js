@@ -410,7 +410,7 @@ class CompiledFunction {
         }
         if (field !== undefined) {
             field.resolveArg ??= this[CompiledFunction.toResolveArgString(arg.type)].bind(this);
-            value = field.resolveArg?.(ctx, arg, strValue, ref);
+            value = field.resolveArg?.(ctx, arg, `${value ?? arg.default}`, ref);
             if (value instanceof Promise)
                 value = await value;
         }
