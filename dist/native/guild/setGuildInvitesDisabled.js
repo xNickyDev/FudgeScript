@@ -27,7 +27,7 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [guild, ms]) {
         return this.success((await guild.setIncidentActions({
             invitesDisabledUntil: ms ? Date.now() + ms : null,
-            dmsDisabledUntil: undefined
+            dmsDisabledUntil: guild.incidentsData?.dmsDisabledUntil
         }).catch(() => false)) !== false);
     },
 });
