@@ -25,7 +25,8 @@ export default new NativeFunction({
     output: ArgType.Boolean,
     async execute(ctx, [guild, ms]) {
         return this.success((await guild.setIncidentActions({
-            invitesDisabledUntil: ms ? Date.now() + ms : null
+            invitesDisabledUntil: ms ? Date.now() + ms : null,
+            dmsDisabledUntil: undefined
         }).catch(() => false)) !== false)
     },
 })

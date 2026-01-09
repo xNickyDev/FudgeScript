@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$setGuildInvitesDisabled",
+    version: "2.6.0",
     description: "Sets the guild's invites disabled for a specific duration, returns bool",
     aliases: ["$setServerInvitesDisabled"],
     unwrap: true,
@@ -25,7 +26,8 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.Boolean,
     async execute(ctx, [guild, ms]) {
         return this.success((await guild.setIncidentActions({
-            invitesDisabledUntil: ms ? Date.now() + ms : null
+            invitesDisabledUntil: ms ? Date.now() + ms : null,
+            dmsDisabledUntil: undefined
         }).catch(() => false)) !== false);
     },
 });
