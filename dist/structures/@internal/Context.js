@@ -47,7 +47,7 @@ class Context {
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;
-    localFunctions = new Map();
+    #localFunctions = new Map();
     #keywords = {};
     #environment = {};
     _reason;
@@ -59,6 +59,8 @@ class Context {
             this.#environment = runtime.environment;
         if (runtime.keywords)
             this.#keywords = runtime.keywords;
+        if (runtime.localFunctions)
+            this.#localFunctions = runtime.localFunctions;
         this.container = runtime.container ??= new Container_1.Container();
     }
     get client() {
@@ -275,6 +277,15 @@ class Context {
     hasKeyword(name) {
         return name in this.#keywords;
     }
+    getLocalFunction(name) {
+        return this.#localFunctions.get(name);
+    }
+    deleteLocalFunction(name) {
+        return this.#localFunctions.delete(name);
+    }
+    setLocalFunction(name, data) {
+        return this.#localFunctions.set(name, data);
+    }
     clearKeywords() {
         this.#keywords = {};
     }
@@ -321,13 +332,14 @@ class Context {
         return new Context({ ...this.runtime });
     }
     /**
-     * Clones keywords and environment vars
+     * Clones keywords, environment vars, and local functions
      * @returns
      */
     clone(props, syncVars = false) {
         const empty = this.cloneEmpty();
         empty.#keywords = syncVars ? this.#keywords : { ...this.#keywords };
         empty.#environment = syncVars ? this.#environment : { ...this.#environment };
+        empty.#localFunctions = syncVars ? this.#localFunctions : { ...this.#localFunctions };
         if (props) {
             const keys = Object.keys(props);
             for (let i = 0, len = keys.length; i < len; i++) {
@@ -336,6 +348,12 @@ class Context {
             }
         }
         return empty;
+    }
+    cloneRuntime() {
+        this.runtime.keywords = this.#keywords;
+        this.runtime.environment = this.#environment;
+        this.runtime.localFunctions = this.#localFunctions;
+        return this.runtime;
     }
     clearCache() {
         this.#cache = {};

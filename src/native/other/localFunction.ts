@@ -39,7 +39,7 @@ export default new NativeFunction({
         const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 2)
         if (!this["isValidReturnType"](rt)) return rt
 
-        ctx.localFunctions.set(name.value as string, { 
+        ctx.setLocalFunction(name.value as string, { 
             code,
             args: args[0]
         })

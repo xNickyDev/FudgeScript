@@ -25,9 +25,9 @@ export default new NativeFunction({
     ],
     output: ArgType.Unknown,
     async execute(ctx, [name, args]) {
-        const func = ctx.localFunctions.get(name)
+        const func = ctx.getLocalFunction(name)
         if (!func) return this.error(ErrorType.UnknownXName, "local function", name)
-        
+
         if (args.length < func.args.length)
             return this.error(
                 ErrorType.Custom,

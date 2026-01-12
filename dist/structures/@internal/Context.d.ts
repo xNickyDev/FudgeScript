@@ -105,7 +105,6 @@ export declare class Context {
     welcomeScreenChannels?: WelcomeChannelData[];
     timezone: string;
     calendar?: CalendarType;
-    localFunctions: Map<string, ILocalFunctionData>;
     private _reason?;
     container: Container;
     constructor(runtime: IRunnable);
@@ -148,6 +147,9 @@ export declare class Context {
     deleteKeyword(name: string): boolean;
     setKeyword(name: string, value: unknown): unknown;
     hasKeyword(name: string): boolean;
+    getLocalFunction(name: string): ILocalFunctionData | undefined;
+    deleteLocalFunction(name: string): boolean;
+    setLocalFunction(name: string, data: ILocalFunctionData): Map<string, ILocalFunctionData>;
     clearKeywords(): void;
     clearEnvironment(): void;
     isSelectMenu(): this is this & {
@@ -178,10 +180,11 @@ export declare class Context {
     };
     cloneEmpty(): Context;
     /**
-     * Clones keywords and environment vars
+     * Clones keywords, environment vars, and local functions
      * @returns
      */
     clone(props?: Partial<IRunnable>, syncVars?: boolean): Context;
+    cloneRuntime(): IRunnable;
     private clearCache;
     get noop(): (...args: any[]) => void;
 }

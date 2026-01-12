@@ -37,7 +37,7 @@ exports.default = new structures_1.NativeFunction({
         if (!this["isValidReturnType"](name))
             return name;
         const data = setTimeout(async () => {
-            await this["resolveCode"](ctx.clone(undefined, true), code);
+            await this["resolveCode"](ctx.clone(ctx.cloneRuntime()), code);
             if (name.value)
                 ctx.client.timeouts.delete(name.value);
         }, time.value);

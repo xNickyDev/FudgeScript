@@ -37,7 +37,7 @@ export default new NativeFunction({
         if (!this["isValidReturnType"](name)) return name
 
         const data = setInterval(async () => {
-            await this["resolveCode"](ctx.clone(undefined, true), code)
+            await this["resolveCode"](ctx.clone(ctx.cloneRuntime()), code)
         }, time.value as number)
 
         if (name.value) ctx.client.intervals.set(name.value as string, data)
