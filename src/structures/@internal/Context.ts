@@ -156,9 +156,9 @@ export class Context {
     timezone: string = "UTC"
     calendar?: CalendarType
 
-    #localFunctions: Map<string, ILocalFunctionData> = new Map()
     #keywords: Record<string, unknown> = {}
     #environment: Record<string, unknown> = {}
+    #localFunctions: Record<string, ILocalFunctionData> = {}
 
     private _reason?: string
 
@@ -433,15 +433,15 @@ export class Context {
     }
 
     public getLocalFunction(name: string) {
-        return this.#localFunctions.get(name)
+        return this.#localFunctions[name]
     }
 
     public deleteLocalFunction(name: string) {
-        return this.#localFunctions.delete(name)
+        return delete this.#localFunctions[name]
     }
 
     public setLocalFunction(name: string, data: ILocalFunctionData) {
-        return this.#localFunctions.set(name, data)
+        return (this.#localFunctions[name] = data)
     }
 
     public clearKeywords() {

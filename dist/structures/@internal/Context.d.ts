@@ -147,9 +147,9 @@ export declare class Context {
     deleteKeyword(name: string): boolean;
     setKeyword(name: string, value: unknown): unknown;
     hasKeyword(name: string): boolean;
-    getLocalFunction(name: string): ILocalFunctionData | undefined;
+    getLocalFunction(name: string): ILocalFunctionData;
     deleteLocalFunction(name: string): boolean;
-    setLocalFunction(name: string, data: ILocalFunctionData): Map<string, ILocalFunctionData>;
+    setLocalFunction(name: string, data: ILocalFunctionData): ILocalFunctionData;
     clearKeywords(): void;
     clearEnvironment(): void;
     isSelectMenu(): this is this & {

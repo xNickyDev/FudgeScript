@@ -126,7 +126,7 @@ export interface IRunnable {
     /**
      * The already existing local functions
      */
-    localFunctions?: Map<string, ILocalFunctionData>
+    localFunctions?: Record<string, ILocalFunctionData>
 
     /**
      * The args used in the message command

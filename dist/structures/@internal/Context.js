@@ -47,9 +47,9 @@ class Context {
     welcomeScreenChannels;
     timezone = "UTC";
     calendar;
-    #localFunctions = new Map();
     #keywords = {};
     #environment = {};
+    #localFunctions = {};
     _reason;
     container;
     // eslint-disable-next-line no-unused-vars
@@ -278,13 +278,13 @@ class Context {
         return name in this.#keywords;
     }
     getLocalFunction(name) {
-        return this.#localFunctions.get(name);
+        return this.#localFunctions[name];
     }
     deleteLocalFunction(name) {
-        return this.#localFunctions.delete(name);
+        return delete this.#localFunctions[name];
     }
     setLocalFunction(name, data) {
-        return this.#localFunctions.set(name, data);
+        return (this.#localFunctions[name] = data);
     }
     clearKeywords() {
         this.#keywords = {};
