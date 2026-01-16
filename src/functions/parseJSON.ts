@@ -3,9 +3,9 @@ export const JSONEndRegex = /^[\]}]/
 export const JSONNumberRegex = /^\d+$/
 
 export default function parseJSON(str: unknown) {
-    if (typeof str !== "string")
+    if (typeof str !== "string" || str === "null")
         return str
-    
+
     try {
         return JSONNumberRegex.test(str) ? str : JSON.parse(str)
     } catch (error) {

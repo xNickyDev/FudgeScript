@@ -5,7 +5,7 @@ exports.JSONStartRegex = /^[[{]/;
 exports.JSONEndRegex = /^[\]}]/;
 exports.JSONNumberRegex = /^\d+$/;
 function parseJSON(str) {
-    if (typeof str !== "string")
+    if (typeof str !== "string" || str === "null")
         return str;
     try {
         return exports.JSONNumberRegex.test(str) ? str : JSON.parse(str);
