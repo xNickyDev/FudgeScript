@@ -253,7 +253,7 @@ class CompiledFunction {
         return ctx.client.application.entitlements.cache.get(str);
     }
     resolveJson(ctx, arg, str, ref) {
-        return (0, parseJSON_1.default)(str);
+        return (0, parseJSON_1.default)(str, false);
     }
     resolveUser(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
