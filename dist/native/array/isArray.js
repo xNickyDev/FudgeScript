@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$isArray",
+    version: "2.7.0",
     description: "Checks whether given array is valid",
     aliases: ["$isValidArray"],
     unwrap: true,
@@ -13,7 +14,7 @@ exports.default = new structures_1.NativeFunction({
             description: "The array to check for",
             rest: false,
             required: true,
-            type: structures_1.ArgType.String
+            type: structures_1.ArgType.Json,
         }
     ],
     output: structures_1.ArgType.Boolean,

@@ -13,7 +13,7 @@ export default new NativeFunction({
             description: "The array to check for",
             rest: false,
             required: true,
-            type: ArgType.String
+            type: ArgType.Json,
         }
     ],
     output: ArgType.Boolean,
