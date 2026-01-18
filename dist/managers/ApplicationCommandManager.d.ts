@@ -10,8 +10,9 @@ export interface IApplicationCommandData {
     data: SlashCommandBuilder | ContextMenuCommandBuilder | RESTPostAPIApplicationCommandsJSONBody;
     code: string;
     type?: RegistrationType;
-    default_member_permissions?: PermissionsString[];
     independent?: boolean;
+    defaultMemberPermissions?: PermissionsString[];
+    guildIDs?: string[];
     path?: string | null;
 }
 export declare class ApplicationCommandManager {
@@ -20,8 +21,8 @@ export declare class ApplicationCommandManager {
      * If:
      * - value is app command = slash command
      * - value is collection:
-     *  - value is slash command = subcommands
-     *  - value is collection = group with subcommands
+     *   - value is slash command = subcommands
+     *   - value is collection = group with subcommands
      */
     private commands;
     private path;

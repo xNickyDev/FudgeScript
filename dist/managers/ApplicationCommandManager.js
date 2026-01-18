@@ -20,8 +20,8 @@ class ApplicationCommandManager {
      * If:
      * - value is app command = slash command
      * - value is collection:
-     *  - value is slash command = subcommands
-     *  - value is collection = group with subcommands
+     *   - value is slash command = subcommands
+     *   - value is collection = group with subcommands
      */
     commands = new discord_js_1.Collection();
     path;
@@ -198,7 +198,7 @@ class ApplicationCommandManager {
                     ...value.options.data,
                     ...(config ? config : {}),
                 };
-                const permissions = value.options.default_member_permissions;
+                const permissions = value.options.defaultMemberPermissions;
                 if (!("default_member_permissions" in commandData) && permissions) {
                     commandData.default_member_permissions = new discord_js_1.PermissionsBitField(permissions).bitfield.toString();
                 }
@@ -255,7 +255,7 @@ class ApplicationCommandManager {
                         const subFolderPath = (0, path_1.join)(folderPath, nextName);
                         const subConfig = readConfig(subFolderPath);
                         const raw = values.toJSON();
-                        const permissions = values.options.default_member_permissions;
+                        const permissions = values.options.defaultMemberPermissions;
                         if (!("default_member_permissions" in raw) && permissions) {
                             raw.default_member_permissions = new discord_js_1.PermissionsBitField(permissions).bitfield.toString();
                         }

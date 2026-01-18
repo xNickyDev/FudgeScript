@@ -41,8 +41,9 @@ export interface IApplicationCommandData {
         | RESTPostAPIApplicationCommandsJSONBody
     code: string
     type?: RegistrationType
-    default_member_permissions?: PermissionsString[]
     independent?: boolean
+    defaultMemberPermissions?: PermissionsString[]
+    guildIDs?: string[]
     path?: string | null
 }
 
@@ -51,8 +52,8 @@ export class ApplicationCommandManager {
      * If:
      * - value is app command = slash command
      * - value is collection:
-     *  - value is slash command = subcommands
-     *  - value is collection = group with subcommands
+     *   - value is slash command = subcommands
+     *   - value is collection = group with subcommands
      */
     private commands = new Collection<
         string,
@@ -222,8 +223,8 @@ export class ApplicationCommandManager {
         this.validate(v, path)
         return v
     }
-    
-    toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0], cmds?: string[]): ApplicationCommandDataResolvable[] {
+
+    public toJSON(type: Parameters<ApplicationCommand["mustRegisterAs"]>[0], cmds?: string[]): ApplicationCommandDataResolvable[] {
         const arr = new Array<ApplicationCommandDataResolvable>()
 
         // Helper function to read config.json
@@ -252,7 +253,7 @@ export class ApplicationCommandManager {
                     ...(config ? config : {}),
                 }
 
-                const permissions = value.options.default_member_permissions
+                const permissions = value.options.defaultMemberPermissions
                 if (!("default_member_permissions" in commandData) && permissions) {
                     commandData.default_member_permissions = new PermissionsBitField(permissions).bitfield.toString()
                 }
@@ -313,7 +314,7 @@ export class ApplicationCommandManager {
                         const subConfig = readConfig(subFolderPath)
 
                         const raw = values.toJSON()
-                        const permissions = values.options.default_member_permissions
+                        const permissions = values.options.defaultMemberPermissions
                         if (!("default_member_permissions" in raw) && permissions) {
                             raw.default_member_permissions = new PermissionsBitField(permissions).bitfield.toString()
                         }
