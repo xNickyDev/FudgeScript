@@ -7,6 +7,7 @@ const isTrue_1 = __importDefault(require("../../functions/isTrue"));
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$arrayFind",
+    version: "2.7.0",
     description: "Finds the value of a first found element in the array",
     unwrap: false,
     brackets: true,
