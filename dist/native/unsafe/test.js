@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const structures_1 = require("../../structures");
-const customImport_1 = require("../../functions/customImport");
 exports.default = new structures_1.NativeFunction({
     name: "$test",
     version: "1.4.0",
@@ -9,11 +8,29 @@ exports.default = new structures_1.NativeFunction({
     unwrap: true,
     brackets: true,
     args: [
-        structures_1.Arg.requiredString("test")
+        {
+            name: "string",
+            description: "The string to test",
+            rest: false,
+            type: structures_1.ArgType.String,
+            check: (i) => i.length > 2
+        },
+        {
+            name: "number",
+            description: "The number to test",
+            rest: false,
+            type: structures_1.ArgType.Number,
+            check: (i) => i >= 0
+        },
+        {
+            name: "guild ID",
+            description: "The guild to test",
+            rest: false,
+            type: structures_1.ArgType.Guild,
+            check: (i) => i.verified
+        }
     ],
-    async execute(ctx, args) {
-        const imported = await (0, customImport_1.customImport)(args[0]);
-        console.log(imported);
+    async execute(ctx) {
         return this.success();
     },
 });

@@ -1,6 +1,5 @@
-import { MessageType } from "discord.js"
-import { Arg, NativeFunction } from "../../structures"
-import { customImport } from "../../functions/customImport"
+import { Guild } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$test",
@@ -9,11 +8,29 @@ export default new NativeFunction({
     unwrap: true,
     brackets: true,
     args: [
-        Arg.requiredString("test")
+        {
+            name: "string",
+            description: "The string to test",
+            rest: false,
+            type: ArgType.String,
+            check: (i: string) => i.length > 2
+        },
+        {
+            name: "number",
+            description: "The number to test",
+            rest: false,
+            type: ArgType.Number,
+            check: (i: number) => i >= 0
+        },
+        {
+            name: "guild ID",
+            description: "The guild to test",
+            rest: false,
+            type: ArgType.Guild,
+            check: (i: Guild) => i.verified
+        }
     ],
-    async execute(ctx, args) {
-        const imported = await customImport(args[0])
-        console.log(imported)
+    async execute(ctx) {
         return this.success()
     },
 })
