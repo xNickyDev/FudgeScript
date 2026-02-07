@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$sendSoundboardSound",
+    version: "2.7.0",
     description: "Sends a sound to a voice channel",
     brackets: true,
     unwrap: true,
