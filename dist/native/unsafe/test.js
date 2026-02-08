@@ -13,24 +13,18 @@ exports.default = new structures_1.NativeFunction({
             description: "The string to test",
             rest: false,
             type: structures_1.ArgType.String,
-            check: (i) => i.length > 2
+            default: "Hello World"
         },
         {
             name: "number",
             description: "The number to test",
             rest: false,
             type: structures_1.ArgType.Number,
-            check: (i) => i >= 0
+            default: 5
         },
-        {
-            name: "guild ID",
-            description: "The guild to test",
-            rest: false,
-            type: structures_1.ArgType.Guild,
-            check: (i) => i.verified
-        }
     ],
-    async execute(ctx) {
+    async execute(ctx, [string, number]) {
+        console.log("String:", string, "Number:", number);
         return this.success();
     },
 });

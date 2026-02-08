@@ -208,7 +208,7 @@ class ApplicationCommandManager {
                 const folderPath = (0, path_1.join)(this.path, commandName);
                 const config = readConfig(folderPath);
                 const json = {
-                    ...config,
+                    ...config, // Apply config data if available
                     name: commandName,
                     description: config?.description || "none",
                     type: discord_js_1.ApplicationCommandType.ChatInput,
@@ -220,7 +220,7 @@ class ApplicationCommandManager {
                         const subConfig = readConfig(subFolderPath);
                         // Apply only for subcommand groups
                         const raw = {
-                            ...subConfig,
+                            ...subConfig, // Apply subcommand group config data
                             name: nextName,
                             description: subConfig?.description || "none",
                             type: discord_js_1.ApplicationCommandOptionType.SubcommandGroup,
@@ -262,7 +262,7 @@ class ApplicationCommandManager {
                         // Add subcommand if available
                         json.options.push({
                             ...raw,
-                            ...subConfig,
+                            ...subConfig, // Apply subcommand config data
                             type: discord_js_1.ApplicationCommandOptionType.Subcommand,
                         });
                     }

@@ -50,7 +50,7 @@ export declare function findSelectMenu(comps: Array<ContainerBuilder | Container
  * @param ctx The current context.
  * @returns
  */
-export declare function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | import("@discordjs/builders").TextInputBuilder | import("@discordjs/builders").FileUploadBuilder | undefined;
+export declare function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | import("@discordjs/builders").TextInputBuilder | import("discord.js").FileUploadBuilder | undefined;
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.

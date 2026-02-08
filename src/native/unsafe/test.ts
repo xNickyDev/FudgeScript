@@ -1,4 +1,3 @@
-import { Guild } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -13,24 +12,18 @@ export default new NativeFunction({
             description: "The string to test",
             rest: false,
             type: ArgType.String,
-            check: (i: string) => i.length > 2
+            default: "Hello World"
         },
         {
             name: "number",
             description: "The number to test",
             rest: false,
             type: ArgType.Number,
-            check: (i: number) => i >= 0
+            default: 5
         },
-        {
-            name: "guild ID",
-            description: "The guild to test",
-            rest: false,
-            type: ArgType.Guild,
-            check: (i: Guild) => i.verified
-        }
     ],
-    async execute(ctx) {
+    async execute(ctx, [string, number]) {
+        console.log("String:", string, "Number:", number)
         return this.success()
     },
 })
