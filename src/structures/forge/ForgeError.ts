@@ -1,5 +1,4 @@
 import { CompiledFunction } from "../@internal/CompiledFunction"
-import { Logger } from "../@internal/Logger"
 import { CustomEventEmitter } from "../extended/CustomEventHandler"
 
 export type GetErrorArgs<T extends string> = T extends `${infer L}$${infer R}` ? [unknown, ...GetErrorArgs<R>] : []
@@ -26,8 +25,6 @@ export interface IForgeError {
     index?: number
 }
 
-let inHandler = false
-
 export class ForgeError<T extends ErrorType = ErrorType> extends Error {
     public static readonly Regex = /\$(\d+)/g
 
@@ -43,22 +40,7 @@ export class ForgeError<T extends ErrorType = ErrorType> extends Error {
             index: fn?.data.index
         }
         
-        if (inHandler) {
-            Logger.warn("ForgeError suppressed inside forgeError handler to avoid recursion:", message)
-            return
-        }
-
-        inHandler = true
-        
-        setTimeout(() => {
-            try {
-                CustomEventEmitter.emit("forgeError", error)
-            } catch (err) {
-                Logger.error("[ForgeError] Error in forgeError handler", err)
-            } finally {
-                inHandler = false
-            }
-        }, 0)
+        CustomEventEmitter.emit("forgeError", error)
     }
 
     public static make(fn: CompiledFunction | null, type: ErrorType, ...args: unknown[]) {

@@ -1,6 +1,5 @@
-import { BaseChannel, TextBasedChannel, TextChannel } from "discord.js"
-import { ArgType, IExtendedCompiledFunctionConditionField, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
+import { BaseChannel, TextChannel } from "discord.js"
+import { ArgType, IExtendedCompiledFunctionConditionField, NativeFunction } from "../../structures"
 import isTrue from "../../functions/isTrue"
 
 export default new NativeFunction({
@@ -42,11 +41,12 @@ export default new NativeFunction({
             description: "The max time to wait for a message"
         }
     ],
-    async execute(ctx): Promise<Return> {
+    async execute(ctx) {
         const filter = this.data.fields![2] as IExtendedCompiledFunctionConditionField
         const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1, 3)
         if (!this["isValidReturnType"](rt)) return rt
         const [ channel, varName, time ] = args
+
         const msg = await (channel as TextChannel).awaitMessages({
             errors: [ "time" ],
             max: 1,

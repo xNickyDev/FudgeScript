@@ -16,7 +16,7 @@ exports.default = new CustomEventHandler_1.CustomEventHandler({
                     data: command.compiled.code,
                     obj: {},
                     extras: err,
-                });
+                }).catch(() => undefined);
             }
         }
     },

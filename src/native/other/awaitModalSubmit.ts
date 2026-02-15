@@ -1,7 +1,4 @@
-import { BaseChannel, TextBasedChannel } from "discord.js"
-import { ArgType, IExtendedCompiledFunctionConditionField, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
-import noop from "../../functions/noop"
-import isTrue from "../../functions/isTrue"
+import { ArgType, IExtendedCompiledFunctionField, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$awaitModalSubmit",
@@ -33,7 +30,7 @@ export default new NativeFunction({
             description: "The max time to wait for a component"
         }
     ],
-    async execute(ctx): Promise<Return> {
+    async execute(ctx) {
         if (!ctx.interaction || !("awaitModalSubmit" in ctx.interaction))
             return this.success(false)
 

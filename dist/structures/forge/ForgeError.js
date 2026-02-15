@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForgeError = exports.ErrorType = void 0;
-const Logger_1 = require("../@internal/Logger");
 const CustomEventHandler_1 = require("../extended/CustomEventHandler");
 var ErrorType;
 (function (ErrorType) {
@@ -17,7 +16,6 @@ var ErrorType;
     ErrorType["RequiredExtension"] = "Extension $1 requires the next extension: $2 loaded to work";
     ErrorType["CompilerError"] = "$1 at $2:$3 ($4)";
 })(ErrorType || (exports.ErrorType = ErrorType = {}));
-let inHandler = false;
 class ForgeError extends Error {
     static Regex = /\$(\d+)/g;
     constructor(fn, type, ...args) {
@@ -30,22 +28,7 @@ class ForgeError extends Error {
             function: fn?.data.name,
             index: fn?.data.index
         };
-        if (inHandler) {
-            Logger_1.Logger.warn("ForgeError suppressed inside forgeError handler to avoid recursion:", message);
-            return;
-        }
-        inHandler = true;
-        setTimeout(() => {
-            try {
-                CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
-            }
-            catch (err) {
-                Logger_1.Logger.error("[ForgeError] Error in forgeError handler", err);
-            }
-            finally {
-                inHandler = false;
-            }
-        }, 0);
+        CustomEventHandler_1.CustomEventEmitter.emit("forgeError", error);
     }
     static make(fn, type, ...args) {
         const res = type.replace(this.Regex, (match) => `**\`${`${args[Number(match.slice(1)) - 1]}`.replaceAll("\\", "\\\\").replaceAll("`", "\\`")}\`**`);

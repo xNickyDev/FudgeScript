@@ -7,6 +7,7 @@ const structures_1 = require("../../structures");
 const isTrue_1 = __importDefault(require("../../functions/isTrue"));
 exports.default = new structures_1.NativeFunction({
     name: "$arrayFilter",
+    version: "2.7.0",
     description: "Filters through every element of the array and loads the results to another array",
     unwrap: false,
     brackets: true,
