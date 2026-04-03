@@ -25,7 +25,7 @@ export default new NativeFunction({
     async execute(ctx) {
         if (!ctx.interaction) return this.success()
 
-        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 2, 3)
+        const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 1)
         if (!this["isValidReturnType"](rt)) return rt
         const [ name, desc ] = args
 
