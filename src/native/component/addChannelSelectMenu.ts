@@ -1,4 +1,4 @@
-import { ChannelSelectMenuBuilder, ComponentType } from "discord.js"
+import { ChannelSelectMenuBuilder, LabelBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -40,24 +40,24 @@ export default new NativeFunction({
             type: ArgType.Boolean
         },
         {
-            name: "default channels",
-            rest: true,
-            type: ArgType.String,
-            description: "The default selected channels to use"
-        }
+            name: "required",
+            description: "Whether this menu is required inside a modal",
+            rest: false,
+            type: ArgType.Boolean,
+        },
     ],
-    execute(ctx, [ id, placeholder, min, max, disabled, channels ]) {
+    execute(ctx, [ id, placeholder, min, max, disabled, required ]) {
+        const comp = ctx.container.modal?.components.at(-1)
         const menu = new ChannelSelectMenuBuilder()
-            .setDefaultChannels(channels)
             .setDisabled(disabled || false)
-            .setRequired(ctx.component.required)
+            .setRequired(required || false)
             .setCustomId(id)
 
         if (placeholder) menu.setPlaceholder(placeholder)
         if (min) menu.setMinValues(min)
         if (max) menu.setMaxValues(max)
 
-        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setChannelSelectMenuComponent(menu)
+        if (comp instanceof LabelBuilder) comp.setChannelSelectMenuComponent(menu)
         else ctx.container.actionRow?.addComponents(menu)
 
         return this.success()

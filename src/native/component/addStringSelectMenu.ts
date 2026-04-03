@@ -1,10 +1,10 @@
-import { ComponentType, StringSelectMenuBuilder } from "discord.js"
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { LabelBuilder, StringSelectMenuBuilder } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addStringSelectMenu",
     version: "1.0.0",
-    description: "Adds a string select menu",
+    description: "Creates a string select menu",
     unwrap: true,
     brackets: true,
     args: [
@@ -39,18 +39,25 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this menu is required inside a modal",
+            rest: false,
+            type: ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, placeholder, disabled, min, max]) {
+    execute(ctx, [id, placeholder, disabled, min, max, required]) {
+        const comp = ctx.container.modal?.components.at(-1)
         const menu = new StringSelectMenuBuilder()
             .setCustomId(id)
             .setDisabled(disabled || false)
-            .setRequired(ctx.component.required)
+            .setRequired(required || false)
 
         if (placeholder) menu.setPlaceholder(placeholder)
-        if (min != null) menu.setMinValues(min)
-        if (max != null) menu.setMaxValues(max)
+        if (min) menu.setMinValues(min)
+        if (max) menu.setMaxValues(max)
 
-        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setStringSelectMenuComponent(menu)
+        if (comp instanceof LabelBuilder) comp.setStringSelectMenuComponent(menu)
         else ctx.container.actionRow?.addComponents(menu)
 
         return this.success()

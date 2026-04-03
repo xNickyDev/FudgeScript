@@ -1,0 +1,35 @@
+import { LabelBuilder, RadioGroupBuilder } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
+
+export default new NativeFunction({
+    name: "$addRadioGroup",
+    version: "2.7.0",
+    description: "Adds a new radio group component to the newest modal label",
+    unwrap: true,
+    brackets: true,
+    args: [
+        {
+            name: "custom ID",
+            description: "The custom id for this field",
+            rest: false,
+            required: true,
+            type: ArgType.String,
+        },
+        {
+            name: "required",
+            description: "Whether selecting an option is required",
+            rest: false,
+            type: ArgType.Boolean,
+        },
+    ],
+    execute(ctx, [id, required]) {
+        const comp = ctx.container.modal?.components.at(-1)
+        const field = new RadioGroupBuilder()
+            .setCustomId(id)
+            .setRequired(required || false)
+
+        if (comp instanceof LabelBuilder) comp.setRadioGroupComponent(field)
+
+        return this.success()
+    },
+})

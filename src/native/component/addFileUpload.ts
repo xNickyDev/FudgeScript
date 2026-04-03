@@ -1,10 +1,10 @@
-import { FileUploadBuilder } from "discord.js"
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { FileUploadBuilder, LabelBuilder } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addFileUpload",
     version: "2.6.0",
-    description: "Adds a new file upload component to the modal",
+    description: "Adds a new file upload component to the newest modal label",
     unwrap: true,
     brackets: true,
     args: [
@@ -27,16 +27,23 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this field is required",
+            rest: false,
+            type: ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, min, max]) {
+    execute(ctx, [id, min, max, required]) {
+        const comp = ctx.container.modal?.components.at(-1)
         const field = new FileUploadBuilder()
             .setCustomId(id)
-            .setRequired(ctx.component.required)
+            .setRequired(required || false)
 
         if (min) field.setMinValues(min)
         if (max) field.setMaxValues(max)
 
-        ctx.component.label?.setFileUploadComponent(field)
+        if (comp instanceof LabelBuilder) comp.setFileUploadComponent(field)
 
         return this.success()
     },

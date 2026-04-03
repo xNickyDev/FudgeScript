@@ -51,7 +51,7 @@
   "dependencies": {
     "@iamtraction/google-translate": "^2.0.1",
     "chalk": "^4.1.2",
-    "discord.js": "^14.24.1",
+    "discord.js": "^14.26.0",
     "ms-utility": "^3.3.0",
     "tiny-typed-emitter": "^2.1.0",
     "undici": "^5.23.0"

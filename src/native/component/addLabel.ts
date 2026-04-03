@@ -1,5 +1,5 @@
-import { ComponentType, LabelBuilder } from "discord.js"
-import { ArgType, IExtendedCompiledFunctionField, NativeFunction, Return } from "../../structures"
+import { LabelBuilder } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addLabel",
@@ -16,47 +16,24 @@ export default new NativeFunction({
             type: ArgType.String,
         },
         {
-            name: "component",
-            description: "The component to attach to the label",
-            rest: false,
-            required: true,
-            type: ArgType.String,
-        },
-        {
             name: "description",
             description: "The description for the label",
             rest: false,
             type: ArgType.String,
         },
-        {
-            name: "required",
-            description: "Whether this label component is required",
-            rest: false,
-            type: ArgType.Boolean,
-        },
     ],
     async execute(ctx) {
         if (!ctx.interaction) return this.success()
-        ctx.container.inside.push(ComponentType.Label)
 
         const { args, return: rt } = await this["resolveMultipleArgs"](ctx, 0, 2, 3)
         if (!this["isValidReturnType"](rt)) return rt
-        const [ name, desc, required ] = args
+        const [ name, desc ] = args
 
         const label = new LabelBuilder().setLabel(name)
         if (desc) label.setDescription(desc)
 
-        ctx.component.label = label
-        ctx.component.required = required || false
+        ctx.container.modal?.addLabelComponents(label)
 
-        const code = this.data.fields![1] as IExtendedCompiledFunctionField
-        const resolved = await this["resolveCode"](ctx, code)
-        if (!this["isValidReturnType"](resolved)) return resolved
-
-        ctx.container.modal?.addLabelComponents(ctx.component.label)
-
-        ctx.component = {}
-        ctx.container.inside.pop()
         return this.success()
     },
 })

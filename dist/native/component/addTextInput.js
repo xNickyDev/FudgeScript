@@ -62,6 +62,7 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, name, type, required, placeholder, value, min, max]) {
+        const comp = ctx.container.modal?.components.at(-1);
         const field = new discord_js_1.TextInputBuilder()
             .setCustomId(id)
             .setStyle(type || discord_js_1.TextInputStyle.Paragraph)
@@ -74,8 +75,8 @@ exports.default = new structures_1.NativeFunction({
             field.setMinLength(min);
         if (max)
             field.setMaxLength(max);
-        if (ctx.container.isInside(discord_js_1.ComponentType.Label))
-            ctx.component.label?.setTextInputComponent(field);
+        if (comp instanceof discord_js_1.LabelBuilder && !comp.data.component)
+            comp.setTextInputComponent(field);
         else
             ctx.container.modal?.addLabelComponents(new discord_js_1.LabelBuilder().setLabel(name).setTextInputComponent(field));
         return this.success();

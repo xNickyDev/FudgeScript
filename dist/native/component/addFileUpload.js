@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addFileUpload",
     version: "2.6.0",
-    description: "Adds a new file upload component to the modal",
+    description: "Adds a new file upload component to the newest modal label",
     unwrap: true,
     brackets: true,
     args: [
@@ -28,16 +28,24 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this field is required",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, min, max]) {
+    execute(ctx, [id, min, max, required]) {
+        const comp = ctx.container.modal?.components.at(-1);
         const field = new discord_js_1.FileUploadBuilder()
             .setCustomId(id)
-            .setRequired(ctx.component.required);
+            .setRequired(required || false);
         if (min)
             field.setMinValues(min);
         if (max)
             field.setMaxValues(max);
-        ctx.component.label?.setFileUploadComponent(field);
+        if (comp instanceof discord_js_1.LabelBuilder)
+            comp.setFileUploadComponent(field);
         return this.success();
     },
 });

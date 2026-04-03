@@ -2,7 +2,7 @@ import { MediaGalleryItemBuilder } from "discord.js"
 import { ArgType, NativeFunction, Return } from "../../structures"
 
 export default new NativeFunction({
-    name: "$addItem",
+    name: "$addMediaItem",
     version: "2.4.0",
     description: "Adds a new media gallery item",
     unwrap: true,

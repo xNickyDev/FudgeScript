@@ -8,6 +8,7 @@ const isTrue_1 = __importDefault(require("../../functions/isTrue"));
 // NEEDS REWRITE, NOT FINISHED
 exports.default = new structures_1.NativeFunction({
     name: "$awaitReaction",
+    version: "2.7.0",
     description: "Awaits a reaction on a message, returns emoji or nothing if no valid response",
     unwrap: false,
     output: structures_1.ArgType.Message,

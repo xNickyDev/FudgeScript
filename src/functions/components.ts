@@ -1,16 +1,17 @@
 import {
     ActionRowBuilder,
-    AnyComponentBuilder,
-    BaseSelectMenuBuilder,
     ButtonBuilder,
     ChannelSelectMenuBuilder,
+    CheckboxBuilder,
+    CheckboxGroupBuilder,
     ComponentType,
     ContainerBuilder,
-    ContainerComponentBuilder,
     FileBuilder,
+    FileUploadBuilder,
     MediaGalleryBuilder,
     MentionableSelectMenuBuilder,
     MessageActionRowComponentBuilder,
+    RadioGroupBuilder,
     RoleSelectMenuBuilder,
     SectionBuilder,
     SeparatorBuilder,
@@ -56,7 +57,7 @@ export function isTopLevel(type: ComponentType, actionRow: boolean = true) {
  * @returns 
  */
 export function buildActionRow(comp: any) {
-    const type = comp.type as ComponentType
+    const type = comp?.type as ComponentType
     return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp)
 }
 
@@ -73,95 +74,19 @@ export function buildComponent(comp: any, ctx?: Context) {
 }
 
 /**
- * Gets all components.
- * @param comp The component builders.
- * @returns 
- */
-export function getComponents(comp: ContainerBuilder | ContainerComponentBuilder | MessageActionRowComponentBuilder) {
-    if (comp instanceof ButtonBuilder || comp instanceof BaseSelectMenuBuilder) return comp
-    if (comp instanceof ActionRowBuilder) return comp.components as MessageActionRowComponentBuilder[]
-    if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) return new Array(comp.accessory)
-    if (comp instanceof ContainerBuilder) return comp.components.map((x) => buildComponent(x.toJSON()))
-    return
-}
-
-/**
- * Disables all button components.
- * @param comp The component builders.
- */
-export function disableButtons(comp: any) {
-    if (comp instanceof ButtonBuilder) {
-        comp.setDisabled(true)
-    } else if (comp instanceof ActionRowBuilder) {
-        comp.components.forEach(disableButtons)
-    } else if (comp instanceof SectionBuilder && comp.accessory instanceof ButtonBuilder) {
-        comp.accessory.setDisabled(true)
-    } else if (comp instanceof ContainerBuilder) {
-        comp.components.forEach(disableButtons)
-    }
-}
-
-/**
- * Flattens all button components.
- * @param comps The components to flatten.
- * @returns 
- */
-function flattenButtons(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
-    return comps.flatMap((x) => {
-        console.log(x)
-        if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof SectionBuilder && x.accessory instanceof ButtonBuilder) return [x.accessory]
-        if (x instanceof ContainerBuilder) return flattenButtons(x.components)
-        return []
-    }).filter((x) => x instanceof ButtonBuilder)
-}
-
-/**
- * Finds a button component.
- * @param comps The components to search through.
- * @param id The custom ID of the button to find.
- * @returns
- */
-export function findButton(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
-    return flattenButtons(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
-}
-
-/**
- * Flattens all select menu components.
- * @param comps The components to flatten.
- * @returns 
- */
-function flattenSelectMenus(comps: Array<ContainerBuilder | ContainerComponentBuilder>): AnyComponentBuilder[] {
-    return comps.flatMap((x) => {
-        if (x instanceof ActionRowBuilder) return x.components
-        if (x instanceof ContainerBuilder) flattenSelectMenus(x.components.map((c) => buildComponent(c.toJSON())))
-        return []
-    }).filter((x) => !!x && !(x instanceof ButtonBuilder))
-}
-
-/**
- * Finds a select menu component.
- * @param comps The components to search through.
- * @param id The custom ID of the select menu to find.
- * @returns
- */
-export function findSelectMenu(comps: Array<ContainerBuilder | ContainerComponentBuilder>, id: string) {
-    return flattenSelectMenus(comps).find((x) => "custom_id" in x.data && x.data.custom_id === id)
-}
-
-/**
  * Gets the last component of the current label or action row.
  * @param ctx The current context.
  * @returns 
  */
-export function getLastComponent(ctx: Context) {
-    return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0])
+export function getLastComponent(ctx: Context): TextInputBuilder | MessageActionRowComponentBuilder | CheckboxBuilder | CheckboxGroupBuilder | FileUploadBuilder | RadioGroupBuilder | undefined {
+    const data = ctx.container.modal?.components.at(-1)?.data
+    return (data && "component" in data ? data.component : undefined) ?? ctx.container.actionRow?.components[0]
 }
 
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
- * @param cv2 Whether to set the ComponentsV2 flag. Defaults to `true`.
+ * @param cv2 Whether to set the IsComponentsV2 flag. Defaults to `true`.
  * @returns 
  */
 export function addActionRow(ctx: Context, cv2: boolean = true) {
@@ -172,7 +97,7 @@ export function addActionRow(ctx: Context, cv2: boolean = true) {
 
     const comp = ctx.container.components.at(-1)
 
-    if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container)) 
+    if (comp instanceof ContainerBuilder && ctx.container.isInside(ComponentType.Container))
         comp.addActionRowComponents(row)
     else ctx.container.components.push(row)
 

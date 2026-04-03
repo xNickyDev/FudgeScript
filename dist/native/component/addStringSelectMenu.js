@@ -5,7 +5,7 @@ const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addStringSelectMenu",
     version: "1.0.0",
-    description: "Adds a string select menu",
+    description: "Creates a string select menu",
     unwrap: true,
     brackets: true,
     args: [
@@ -40,20 +40,27 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Number,
         },
+        {
+            name: "required",
+            description: "Whether this menu is required inside a modal",
+            rest: false,
+            type: structures_1.ArgType.Boolean,
+        },
     ],
-    execute(ctx, [id, placeholder, disabled, min, max]) {
+    execute(ctx, [id, placeholder, disabled, min, max, required]) {
+        const comp = ctx.container.modal?.components.at(-1);
         const menu = new discord_js_1.StringSelectMenuBuilder()
             .setCustomId(id)
             .setDisabled(disabled || false)
-            .setRequired(ctx.component.required);
+            .setRequired(required || false);
         if (placeholder)
             menu.setPlaceholder(placeholder);
-        if (min != null)
+        if (min)
             menu.setMinValues(min);
-        if (max != null)
+        if (max)
             menu.setMaxValues(max);
-        if (ctx.container.isInside(discord_js_1.ComponentType.Label))
-            ctx.component.label?.setStringSelectMenuComponent(menu);
+        if (comp instanceof discord_js_1.LabelBuilder)
+            comp.setStringSelectMenuComponent(menu);
         else
             ctx.container.actionRow?.addComponents(menu);
         return this.success();
