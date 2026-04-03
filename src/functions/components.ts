@@ -78,9 +78,8 @@ export function buildComponent(comp: any, ctx?: Context) {
  * @param ctx The current context.
  * @returns 
  */
-export function getLastComponent(ctx: Context): TextInputBuilder | MessageActionRowComponentBuilder | CheckboxBuilder | CheckboxGroupBuilder | FileUploadBuilder | RadioGroupBuilder | undefined {
-    const data = ctx.container.modal?.components.at(-1)?.data
-    return (data && "component" in data ? data.component : undefined) ?? ctx.container.actionRow?.components[0]
+export function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | TextInputBuilder | CheckboxBuilder | CheckboxGroupBuilder | FileUploadBuilder | RadioGroupBuilder | undefined {
+    return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0])
 }
 
 /**

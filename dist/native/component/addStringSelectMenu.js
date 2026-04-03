@@ -48,7 +48,6 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, placeholder, disabled, min, max, required]) {
-        const comp = ctx.container.modal?.components.at(-1);
         const menu = new discord_js_1.StringSelectMenuBuilder()
             .setCustomId(id)
             .setDisabled(disabled || false)
@@ -59,8 +58,8 @@ exports.default = new structures_1.NativeFunction({
             menu.setMinValues(min);
         if (max)
             menu.setMaxValues(max);
-        if (comp instanceof discord_js_1.LabelBuilder)
-            comp.setStringSelectMenuComponent(menu);
+        if (ctx.container.isInside(discord_js_1.ComponentType.Label))
+            ctx.component.label?.setStringSelectMenuComponent(menu);
         else
             ctx.container.actionRow?.addComponents(menu);
         return this.success();

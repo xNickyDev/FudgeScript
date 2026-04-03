@@ -1,4 +1,4 @@
-import { FileUploadBuilder, LabelBuilder } from "discord.js"
+import { FileUploadBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -35,7 +35,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [id, min, max, required]) {
-        const comp = ctx.container.modal?.components.at(-1)
         const field = new FileUploadBuilder()
             .setCustomId(id)
             .setRequired(required || false)
@@ -43,7 +42,7 @@ export default new NativeFunction({
         if (min) field.setMinValues(min)
         if (max) field.setMaxValues(max)
 
-        if (comp instanceof LabelBuilder) comp.setFileUploadComponent(field)
+        ctx.component.label?.setFileUploadComponent(field)
 
         return this.success()
     },

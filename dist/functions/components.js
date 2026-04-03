@@ -58,8 +58,7 @@ exports.buildComponent = buildComponent;
  * @returns
  */
 function getLastComponent(ctx) {
-    const data = ctx.container.modal?.components.at(-1)?.data;
-    return (data && "component" in data ? data.component : undefined) ?? ctx.container.actionRow?.components[0];
+    return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0]);
 }
 exports.getLastComponent = getLastComponent;
 /**

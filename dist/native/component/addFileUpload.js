@@ -36,7 +36,6 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, min, max, required]) {
-        const comp = ctx.container.modal?.components.at(-1);
         const field = new discord_js_1.FileUploadBuilder()
             .setCustomId(id)
             .setRequired(required || false);
@@ -44,8 +43,7 @@ exports.default = new structures_1.NativeFunction({
             field.setMinValues(min);
         if (max)
             field.setMaxValues(max);
-        if (comp instanceof discord_js_1.LabelBuilder)
-            comp.setFileUploadComponent(field);
+        ctx.component.label?.setFileUploadComponent(field);
         return this.success();
     },
 });

@@ -1,4 +1,4 @@
-import { CheckboxBuilder, LabelBuilder } from "discord.js"
+import { CheckboxBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -23,12 +23,10 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [id, def]) {
-        const comp = ctx.container.modal?.components.at(-1)
-        const field = new CheckboxBuilder()
-            .setCustomId(id)
-            .setDefault(def || false)
+        const field = new CheckboxBuilder().setCustomId(id)
+        if (typeof def === "boolean") field.setDefault(def)
 
-        if (comp instanceof LabelBuilder) comp.setCheckboxComponent(field)
+        ctx.component.label?.setCheckboxComponent(field)
 
         return this.success()
     },

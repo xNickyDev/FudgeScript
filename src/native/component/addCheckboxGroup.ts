@@ -1,4 +1,4 @@
-import { CheckboxGroupBuilder, LabelBuilder } from "discord.js"
+import { CheckboxGroupBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -35,7 +35,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [id, min, max, required]) {
-        const comp = ctx.container.modal?.components.at(-1)
         const field = new CheckboxGroupBuilder()
             .setCustomId(id)
             .setRequired(required || false)
@@ -43,7 +42,7 @@ export default new NativeFunction({
         if (min) field.setMinValues(min)
         if (max) field.setMaxValues(max)
 
-        if (comp instanceof LabelBuilder) comp.setCheckboxGroupComponent(field)
+        ctx.component.label?.setCheckboxGroupComponent(field)
 
         return this.success()
     },

@@ -1,4 +1,4 @@
-import { LabelBuilder, TextInputBuilder, TextInputStyle } from "discord.js"
+import { ComponentType, LabelBuilder, TextInputBuilder, TextInputStyle } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -61,7 +61,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [id, name, type, required, placeholder, value, min, max]) {
-        const comp = ctx.container.modal?.components.at(-1)
         const field = new TextInputBuilder()
             .setCustomId(id)
             .setStyle(type || TextInputStyle.Paragraph)
@@ -72,7 +71,7 @@ export default new NativeFunction({
         if (min) field.setMinLength(min)
         if (max) field.setMaxLength(max)
 
-        if (comp instanceof LabelBuilder && !comp.data.component) comp.setTextInputComponent(field)
+        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setTextInputComponent(field)
         else ctx.container.modal?.addLabelComponents(new LabelBuilder().setLabel(name).setTextInputComponent(field))
 
         return this.success()

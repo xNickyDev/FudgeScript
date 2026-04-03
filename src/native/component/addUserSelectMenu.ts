@@ -1,4 +1,4 @@
-import { LabelBuilder, UserSelectMenuBuilder } from "discord.js"
+import { ComponentType, UserSelectMenuBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -48,7 +48,6 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [ id, placeholder, min, max, disabled, required ]) {
-        const comp = ctx.container.modal?.components.at(-1)
         const menu = new UserSelectMenuBuilder()
             .setDisabled(disabled || false)
             .setRequired(required || false)
@@ -58,7 +57,7 @@ export default new NativeFunction({
         if (min) menu.setMinValues(min)
         if (max) menu.setMaxValues(max)
 
-        if (comp instanceof LabelBuilder) comp.setUserSelectMenuComponent(menu)
+        if (ctx.container.isInside(ComponentType.Label)) ctx.component.label?.setUserSelectMenuComponent(menu)
         else ctx.container.actionRow?.addComponents(menu)
 
         return this.success()

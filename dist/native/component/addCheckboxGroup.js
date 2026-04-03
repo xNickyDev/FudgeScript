@@ -35,7 +35,6 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, min, max, required]) {
-        const comp = ctx.container.modal?.components.at(-1);
         const field = new discord_js_1.CheckboxGroupBuilder()
             .setCustomId(id)
             .setRequired(required || false);
@@ -43,8 +42,7 @@ exports.default = new structures_1.NativeFunction({
             field.setMinValues(min);
         if (max)
             field.setMaxValues(max);
-        if (comp instanceof discord_js_1.LabelBuilder)
-            comp.setCheckboxGroupComponent(field);
+        ctx.component.label?.setCheckboxGroupComponent(field);
         return this.success();
     },
 });

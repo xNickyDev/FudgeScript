@@ -1,4 +1,4 @@
-import { LabelBuilder, RadioGroupBuilder } from "discord.js"
+import { RadioGroupBuilder } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -23,12 +23,11 @@ export default new NativeFunction({
         },
     ],
     execute(ctx, [id, required]) {
-        const comp = ctx.container.modal?.components.at(-1)
         const field = new RadioGroupBuilder()
             .setCustomId(id)
             .setRequired(required || false)
 
-        if (comp instanceof LabelBuilder) comp.setRadioGroupComponent(field)
+        ctx.component.label?.setRadioGroupComponent(field)
 
         return this.success()
     },

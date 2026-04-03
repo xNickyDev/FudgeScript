@@ -25,7 +25,7 @@ export declare function buildComponent(comp: any, ctx?: Context): ContainerBuild
  * @param ctx The current context.
  * @returns
  */
-export declare function getLastComponent(ctx: Context): TextInputBuilder | MessageActionRowComponentBuilder | CheckboxBuilder | CheckboxGroupBuilder | FileUploadBuilder | RadioGroupBuilder | undefined;
+export declare function getLastComponent(ctx: Context): MessageActionRowComponentBuilder | TextInputBuilder | CheckboxBuilder | CheckboxGroupBuilder | FileUploadBuilder | RadioGroupBuilder | undefined;
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.

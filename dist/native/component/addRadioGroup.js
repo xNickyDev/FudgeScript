@@ -4,7 +4,6 @@ const discord_js_1 = require("discord.js");
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$addRadioGroup",
-    version: "2.7.0",
     description: "Adds a new radio group component to the newest modal label",
     unwrap: true,
     brackets: true,
@@ -24,12 +23,10 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, required]) {
-        const comp = ctx.container.modal?.components.at(-1);
         const field = new discord_js_1.RadioGroupBuilder()
             .setCustomId(id)
             .setRequired(required || false);
-        if (comp instanceof discord_js_1.LabelBuilder)
-            comp.setRadioGroupComponent(field);
+        ctx.component.label?.setRadioGroupComponent(field);
         return this.success();
     },
 });

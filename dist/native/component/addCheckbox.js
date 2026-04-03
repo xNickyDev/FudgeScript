@@ -23,12 +23,10 @@ exports.default = new structures_1.NativeFunction({
         },
     ],
     execute(ctx, [id, def]) {
-        const comp = ctx.container.modal?.components.at(-1);
-        const field = new discord_js_1.CheckboxBuilder()
-            .setCustomId(id)
-            .setDefault(def || false);
-        if (comp instanceof discord_js_1.LabelBuilder)
-            comp.setCheckboxComponent(field);
+        const field = new discord_js_1.CheckboxBuilder().setCustomId(id);
+        if (typeof def === "boolean")
+            field.setDefault(def);
+        ctx.component.label?.setCheckboxComponent(field);
         return this.success();
     },
 });
