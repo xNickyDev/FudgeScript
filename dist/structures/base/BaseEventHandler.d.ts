@@ -19,7 +19,7 @@ export type ExtendedEvents = ClientEvents & CustomEvents;
 export declare class BaseEventHandler<Events = Record<string, unknown[]>, T extends keyof Events = keyof Events> {
     readonly data: IEvent<Events, T>;
     constructor(data: IEvent<Events, T>);
-    get listener(): (this: ForgeClient, ...args: AssertArgs<Events[T]>) => void | Promise<void>;
+    get listener(): (this: ForgeClient, ...args: AssertArgs<Events[T]>) => Promise<void> | void;
     get description(): string;
     get name(): T;
     register(client: ForgeClient): void;

@@ -28,7 +28,6 @@ class BaseCommandManager extends tiny_typed_emitter_1.TypedEmitter {
         }
         for (const p of this.paths) {
             for (const file of (0, recursiveReaddirSync_1.default)(p).filter((x) => x.endsWith(".js") || x.endsWith)) {
-                // eslint-disable-next-line no-undef
                 const path = (0, path_1.join)((0, process_1.cwd)(), file);
                 delete require.cache[require.resolve(path)];
             }
@@ -40,7 +39,6 @@ class BaseCommandManager extends tiny_typed_emitter_1.TypedEmitter {
         if (!this.paths.includes(path))
             this.paths.push(path);
         for (const file of (0, recursiveReaddirSync_1.default)(path).filter((x) => x.endsWith(".js") || x.endsWith(".fs"))) {
-            // eslint-disable-next-line no-undef
             const path = (0, path_1.join)((0, process_1.cwd)(), file);
             const req = core_1.FileReader.read(file, path);
             if (!req)

@@ -37,7 +37,7 @@ import { Return, ReturnType } from "./Return"
 import { IRunnable } from "../../core/Interpreter"
 import { ForgeError } from "../forge/ForgeError"
 import { Logger } from "./Logger"
-import { FormData, Headers } from "undici"
+import { FormData } from "undici"
 import contextNoop from "../../functions/contextNoop"
 
 export type ExpectCallback<T extends [...IArg[]], Unwrap extends boolean> = (

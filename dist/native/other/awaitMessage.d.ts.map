@@ -1,1 +1,1 @@
-{"version":3,"file":"awaitMessage.d.ts","sourceRoot":"","sources":["../../../src/native/other/awaitMessage.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAe,MAAM,YAAY,CAAA;AACrD,OAAO,EAAE,OAAO,EAA2C,cAAc,EAAE,MAAM,kBAAkB,CAAA;;;;;;;eAiB5E,WAAW;;;;;;;;;;;;;;;;;;;;;AAdlC,wBA4DE"}
+{"version":3,"file":"awaitMessage.d.ts","sourceRoot":"","sources":["../../../src/native/other/awaitMessage.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,WAAW,EAAE,MAAM,YAAY,CAAA;AACrD,OAAO,EAAE,OAAO,EAA2C,cAAc,EAAE,MAAM,kBAAkB,CAAA;;;;;;;eAiB5E,WAAW;;;;;;;;;;;;;;;;;;;;;AAdlC,wBA4DE"}

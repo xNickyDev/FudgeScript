@@ -1,6 +1,6 @@
 import { ForgeClient } from "../core"
 import { config } from "dotenv"
-import { ActivityType, ApplicationCommandType, Events } from "discord.js"
+import { Events } from "discord.js"
 import { LogPriority } from "../structures/@internal/Logger"
 import { MyExtension } from "./ext"
 config()
@@ -68,7 +68,7 @@ client.commands.add({
 
 client.commands.add({
     type: "interactionCreate",
-    allowedInteractionTypes: [ "modal" ],
+    allowedInteractionTypes: ["modal"],
     code: `
     $log[hello $channelID | $messageID]
     $editButtonOf[$channelID;$messageID;yes;;;Danger;;true]
@@ -87,7 +87,7 @@ client.commands.add({
 
 client.commands.add({
     type: "interactionCreate",
-    allowedInteractionTypes: [ "button" ],
+    allowedInteractionTypes: ["button"],
     code: `
     $modal[yes;owa]
     $addTextInput[owa;owa;Short;true]
@@ -150,5 +150,4 @@ client.commands.add({
     `,
 })
 
-// eslint-disable-next-line no-undef
 client.login(process.env.TOKEN)

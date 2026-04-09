@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addActionRow = exports.getLastComponent = exports.buildComponent = exports.buildActionRow = exports.isTopLevel = void 0;
+exports.isTopLevel = isTopLevel;
+exports.buildActionRow = buildActionRow;
+exports.buildComponent = buildComponent;
+exports.getLastComponent = getLastComponent;
+exports.addActionRow = addActionRow;
 const discord_js_1 = require("discord.js");
 const MessageComponentBuilders = {
     [discord_js_1.ComponentType.Button]: discord_js_1.ButtonBuilder,
@@ -28,7 +32,6 @@ const TopLevelComponentBuilders = {
 function isTopLevel(type, actionRow = true) {
     return (type in TopLevelComponentBuilders) && (actionRow || type !== discord_js_1.ComponentType.ActionRow);
 }
-exports.isTopLevel = isTopLevel;
 /**
  * Builds a message component for action rows.
  * @param comp The component data.
@@ -38,7 +41,6 @@ function buildActionRow(comp) {
     const type = comp?.type;
     return new MessageComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
-exports.buildActionRow = buildActionRow;
 /**
  * Builds a top level component.
  * @param comp The component data.
@@ -51,7 +53,6 @@ function buildComponent(comp, ctx) {
         ctx.container.isComponentsV2 = true;
     return new TopLevelComponentBuilders[type](comp.toJSON?.() ?? comp);
 }
-exports.buildComponent = buildComponent;
 /**
  * Gets the last component of the current label or action row.
  * @param ctx The current context.
@@ -60,7 +61,6 @@ exports.buildComponent = buildComponent;
 function getLastComponent(ctx) {
     return (ctx.component.label?.data.component ?? ctx.container.actionRow?.components[0]);
 }
-exports.getLastComponent = getLastComponent;
 /**
  * Adds an action row to the components. This is mostly needed inside ComponentsV2 functions.
  * @param ctx The current context.
@@ -80,5 +80,4 @@ function addActionRow(ctx, cv2 = true) {
         ctx.container.components.push(row);
     delete ctx.container.actionRow;
 }
-exports.addActionRow = addActionRow;
 //# sourceMappingURL=components.js.map

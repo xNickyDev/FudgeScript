@@ -1,6 +1,5 @@
 import { Worker } from "worker_threads"
 import { ForgeClient, IRunnable } from "../core"
-import { once } from "events"
 import { Logger } from "../structures/@internal/Logger"
 import { spawn } from "../functions/thread"
 
@@ -29,10 +28,10 @@ export class ThreadManager {
 
     private readonly queue = new Map<number, IThreadTask>()
     private readonly executing = new Map<number, IThreadTask>()
-    
+
     private increment = 0
 
-    public constructor(private readonly client: ForgeClient) {}
+    public constructor(private readonly client: ForgeClient) { }
 
     public async run(ctx: IThreadContext) {
         return new Promise<string | null>(resolve => {
@@ -50,7 +49,7 @@ export class ThreadManager {
     }
 
     private async execute() {
-        for (const [, task ] of this.queue) {
+        for (const [, task] of this.queue) {
             const worker = await this.getAvailableWorker()
             if (worker === null) {
                 return
@@ -59,7 +58,7 @@ export class ThreadManager {
             this.setBusyWorker(worker!)
             this.queue.delete(task.id)
             this.executing.set(task.id, task)
-            
+
             worker!.postMessage({
                 ...task.context,
                 taskId: task.id
@@ -88,7 +87,6 @@ export class ThreadManager {
     private async getAvailableWorker(): Promise<Worker | undefined> {
         if (this.available.size !== 0) return this.available.values().next().value
         if (this.workerCount >= this.maxWorkerCount) return undefined
-        // eslint-disable-next-line no-undef
         const worker = await spawn("thread")
         worker.on("error", this.onWorkerError.bind(this, worker))
         worker.on("message", this.onWorkerMessage.bind(this, worker))

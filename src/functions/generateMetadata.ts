@@ -60,7 +60,18 @@ function getOutputValues(fn: INativeFunction<IArg[]>, txt: string, enums: Record
     return arr
 }
 
-export default async function(functionsAbsolutePath: string, mainCategoryName?: string, eventName?: string, warnOnNoOutput = false, expose?: Record<string, EnumLike>, eventsAbsolutePath?: string, translate: Array<string | Locale> = []) {
+export default async function(
+    functionsAbsolutePath: string,
+    mainCategoryName?: string,
+    eventName?: string,
+    warnOnNoOutput = false,
+    expose?: Record<string, EnumLike>,
+    eventsAbsolutePath?: string,
+    /**
+     * @deprecated This parameter is no longer being used.
+     */
+    translate: Array<string | Locale> = []
+) {
     let total = 0
     const enums: Record<string, string[]> = {}
 
@@ -163,6 +174,7 @@ export default async function(functionsAbsolutePath: string, mainCategoryName?: 
         writeFileSync(join(metaOutPath, "events.json"), JSON.stringify(EventManager.toJSON(eventName)))
     }
 
+    /* Deprecated.
     if (translate.length) {
         Logger.info("Now translating data, hold tight...")
         await translateData({
@@ -170,5 +182,5 @@ export default async function(functionsAbsolutePath: string, mainCategoryName?: 
             events: eventName ? Object.values(EventManager["Loaded"]![eventName]!).map(x => x.data as unknown as IEvent<unknown, keyof unknown>) : [],
             functions: [...FunctionManager["Functions"].values()].map(x => x.data)
         })
-    }
+    } */
 }
