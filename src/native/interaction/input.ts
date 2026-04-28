@@ -25,6 +25,7 @@ export default new NativeFunction({
     async execute(ctx, [id, sep]) {
         if (!ctx.interaction?.isModalSubmit()) return this.success()
         const field = ctx.interaction.fields.getField(id)
+        console.log(field)
 
         return this.success(
             "value" in field

@@ -9,7 +9,6 @@ export interface IForgeFunctionParam {
 }
 export interface IForgeFunction {
     name: string;
-    description?: string;
     params?: Array<string | IForgeFunctionParam>;
     firstParamCondition?: boolean;
     brackets?: boolean;

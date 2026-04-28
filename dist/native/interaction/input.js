@@ -27,6 +27,7 @@ exports.default = new structures_1.NativeFunction({
         if (!ctx.interaction?.isModalSubmit())
             return this.success();
         const field = ctx.interaction.fields.getField(id);
+        console.log(field);
         return this.success("value" in field
             ? field.value
             : "attachments" in field

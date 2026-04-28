@@ -25,7 +25,7 @@ class ForgeFunction {
         const outer = this;
         return new __1.NativeFunction({
             name: `$${this.data.name}`,
-            description: this.data.description || "Custom function",
+            description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition),
             args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,

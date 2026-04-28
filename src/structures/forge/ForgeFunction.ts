@@ -14,7 +14,6 @@ export interface IForgeFunctionParam {
 
 export interface IForgeFunction {
     name: string
-    description?: string
     params?: Array<string | IForgeFunctionParam>
     firstParamCondition?: boolean
     brackets?: boolean
@@ -38,7 +37,7 @@ export class ForgeFunction {
         const outer = this
         return new NativeFunction({
             name: `$${this.data.name}`,
-            description: this.data.description || "Custom function",
+            description: "Custom function",
             unwrap: (!!this.data.params?.length && !this.data.firstParamCondition) as any,
             args: this.data.params?.length ? this.data.params.map((x, i) => ({
                 name: typeof x === "string" ? x : x.name,
