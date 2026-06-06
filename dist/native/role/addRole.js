@@ -28,7 +28,7 @@ exports.default = new structures_1.NativeFunction({
             name: "color",
             description: "The role color",
             rest: false,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Color,
         },
         {
             name: "icon",
@@ -65,13 +65,13 @@ exports.default = new structures_1.NativeFunction({
     async execute(ctx, [guild, name, color, icon, hoist, mentionable, pos, perms]) {
         const created = await guild.roles
             .create({
-            colors: !color ? undefined : { primaryColor: color },
+            name,
             icon: icon || undefined,
             hoist: hoist || false,
             mentionable: mentionable || false,
-            name,
-            permissions: perms || [],
             position: pos || undefined,
+            permissions: perms || [],
+            colors: typeof color === "number" ? { primaryColor: color } : undefined,
             reason: ctx.reason,
         })
             .catch(ctx.noop);

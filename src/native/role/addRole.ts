@@ -1,5 +1,5 @@
-import { ColorResolvable, PermissionFlagsBits, PermissionsString } from "discord.js"
-import { ArgType, NativeFunction, Return } from "../../structures"
+import { PermissionFlagsBits, PermissionsString } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$addRole",
@@ -27,7 +27,7 @@ export default new NativeFunction({
             name: "color",
             description: "The role color",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.Color,
         },
         {
             name: "icon",
@@ -64,13 +64,13 @@ export default new NativeFunction({
     async execute(ctx, [guild, name, color, icon, hoist, mentionable, pos, perms]) {
         const created = await guild.roles
             .create({
-                colors: !color ? undefined : { primaryColor: color as ColorResolvable },
+                name,
                 icon: icon || undefined,
                 hoist: hoist || false,
                 mentionable: mentionable || false,
-                name,
-                permissions: (perms as PermissionsString[]) || [],
                 position: pos || undefined,
+                permissions: (perms as PermissionsString[]) || [],
+                colors: typeof color === "number" ? { primaryColor: color } : undefined,
                 reason: ctx.reason,
             })
             .catch(ctx.noop)

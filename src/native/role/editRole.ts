@@ -1,5 +1,4 @@
-import { ArgType, NativeFunction, Return } from "../../structures"
-import { ColorResolvable } from "discord.js"
+import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$editRole",
@@ -33,7 +32,7 @@ export default new NativeFunction({
             name: "role color",
             description: "The new role color, leave empty to not modify",
             rest: false,
-            type: ArgType.String,
+            type: ArgType.Color,
         },
         {
             name: "role icon",
@@ -63,12 +62,12 @@ export default new NativeFunction({
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
         const edit = await role.edit({
-            colors: !color ? undefined : { primaryColor: color as ColorResolvable },
-            hoist: hoist || undefined,
-            icon: icon || undefined,
-            mentionable: mentionable || undefined,
             name: name || undefined,
+            icon: icon || undefined,
+            hoist: hoist || undefined,
+            mentionable: mentionable || undefined,
             permissions: perms || undefined,
+            colors: typeof color === "number" ? { primaryColor: color } : undefined,
             reason: ctx.reason,
         }).catch(ctx.noop)
 

@@ -20,6 +20,6 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.success(this.displayField(0))
+        return this.success(this.data.fields?.[0])
     },
 })

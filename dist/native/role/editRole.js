@@ -33,7 +33,7 @@ exports.default = new structures_1.NativeFunction({
             name: "role color",
             description: "The new role color, leave empty to not modify",
             rest: false,
-            type: structures_1.ArgType.String,
+            type: structures_1.ArgType.Color,
         },
         {
             name: "role icon",
@@ -63,12 +63,12 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     async execute(ctx, [, role, name, color, icon, hoist, mentionable, perms]) {
         const edit = await role.edit({
-            colors: !color ? undefined : { primaryColor: color },
-            hoist: hoist || undefined,
-            icon: icon || undefined,
-            mentionable: mentionable || undefined,
             name: name || undefined,
+            icon: icon || undefined,
+            hoist: hoist || undefined,
+            mentionable: mentionable || undefined,
             permissions: perms || undefined,
+            colors: typeof color === "number" ? { primaryColor: color } : undefined,
             reason: ctx.reason,
         }).catch(ctx.noop);
         ctx.clearAuditLogReason();
