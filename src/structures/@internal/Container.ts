@@ -146,7 +146,6 @@ export class Container {
         const response = await res.catch(noop)
         const result = (response instanceof InteractionCallbackResponse ? response.resource?.message : response) as T
 
-        console.log(result)
         if (this.deleteIn && result instanceof Message) {
             setTimeout(() => {
                 result.delete().catch(noop)

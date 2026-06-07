@@ -88,7 +88,6 @@ class Container {
         }
         const response = await res.catch(noop_1.default);
         const result = (response instanceof discord_js_1.InteractionCallbackResponse ? response.resource?.message : response);
-        console.log(result);
         if (this.deleteIn && result instanceof discord_js_1.Message) {
             setTimeout(() => {
                 result.delete().catch(noop_1.default);

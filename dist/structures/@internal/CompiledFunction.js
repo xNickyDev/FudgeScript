@@ -50,7 +50,7 @@ class CompiledFunction {
         };
     }
     displayField(i) {
-        const field = this.data.fields[i];
+        const field = this.data.fields?.[i];
         if (!field)
             return null;
         if ("op" in field) {

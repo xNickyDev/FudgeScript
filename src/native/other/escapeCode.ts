@@ -1,4 +1,4 @@
-import { ArgType, NativeFunction } from "../../structures"
+import { ArgType, IExtendedCompiledFunctionField, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
     name: "$escapeCode",
@@ -20,6 +20,7 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     execute(ctx) {
-        return this.success(this.data.fields?.[0])
+        const code = this.data.fields![0] as IExtendedCompiledFunctionField
+        return this.success(code.value)
     },
 })
