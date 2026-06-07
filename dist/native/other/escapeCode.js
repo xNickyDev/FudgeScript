@@ -22,7 +22,7 @@ exports.default = new structures_1.NativeFunction({
     output: structures_1.ArgType.String,
     execute(ctx) {
         const code = this.data.fields[0];
-        return this.success(code.value);
+        return this.success(code.functions.map((x) => x.display));
     },
 });
 //# sourceMappingURL=escapeCode.js.map
