@@ -21,6 +21,6 @@ export default new NativeFunction({
     output: ArgType.String,
     execute(ctx) {
         const code = this.data.fields![0] as IExtendedCompiledFunctionField
-        return this.success(code.functions.map((x) => x.display))
+        return this.success(code.value)
     },
 })
