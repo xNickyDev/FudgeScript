@@ -28,6 +28,7 @@ export type WrappedConditionCode = (lhs: unknown, rhs: unknown) => boolean
 
 export interface ICompiledFunctionField {
     value: string
+    rawValue: string
     functions: ICompiledFunction[]
     resolve: WrappedCode
 }
@@ -243,11 +244,14 @@ export class Compiler {
     }
 
     private parseFieldMatch(fns: Array<ICompiledFunction>, match: IRawFunctionMatch) {
+        const start = match.index
         const fn = this.parseFunction()
         fns.push(fn)
+        const raw = this.code!.slice(start, this.index)
         // Next match
         return {
             nextMatch: this.match,
+            raw,
             fn,
         }
     }
@@ -271,6 +275,7 @@ export class Compiler {
         const data = {} as ICompiledFunctionConditionField
 
         const functions = new Array<ICompiledFunction>()
+        let rawValue = ""
         let fieldValue = ""
         let closedGracefully = false
 
@@ -292,9 +297,10 @@ export class Compiler {
             }
 
             if (match?.index === this.index) {
-                const { fn, nextMatch } = this.parseFieldMatch(functions, match)
+                const { fn, raw, nextMatch } = this.parseFieldMatch(functions, match)
                 match = nextMatch
                 fieldValue += fn.id
+                rawValue += raw
                 continue
             }
 
@@ -306,8 +312,10 @@ export class Compiler {
                         functions: [...functions],
                         resolve: this.wrap(fieldValue),
                         value: fieldValue,
+                        rawValue
                     }
 
+                    rawValue = ""
                     fieldValue = ""
                     functions.length = 0
                     this.index += data.op.length
@@ -316,6 +324,7 @@ export class Compiler {
             }
 
             fieldValue += char
+            rawValue += char
             this.index++
         }
 
@@ -323,6 +332,7 @@ export class Compiler {
 
         const out: ICompiledFunctionField = {
             functions,
+            rawValue,
             value: fieldValue,
             resolve: this.wrap(fieldValue),
         }
@@ -338,6 +348,7 @@ export class Compiler {
 
     private parseNormalField(ref: IRawFunctionMatch): ICompiledFunctionField {
         const functions = new Array<ICompiledFunction>()
+        let rawValue = ""
         let fieldValue = ""
         let closedGracefully = false
 
@@ -359,13 +370,15 @@ export class Compiler {
             }
 
             if (match?.index === this.index) {
-                const { fn, nextMatch } = this.parseFieldMatch(functions, match)
+                const { fn, raw, nextMatch } = this.parseFieldMatch(functions, match)
                 match = nextMatch
                 fieldValue += fn.id
+                rawValue += raw
                 continue
             }
 
             fieldValue += char
+            rawValue += char
             this.index++
         }
 
@@ -374,7 +387,8 @@ export class Compiler {
         return {
             resolve: this.wrap(fieldValue),
             functions,
-            value: fieldValue,
+            rawValue,
+            value: fieldValue
         }
     }
 
