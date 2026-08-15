@@ -10,12 +10,14 @@ export interface IForgeFunctionParam {
     type?: ArgType | keyof typeof ArgType
     required?: boolean
     rest?: boolean
+    [x: PropertyKey]: unknown
 }
 
 export interface IForgeFunction {
     name: string
     params?: Array<string | IForgeFunctionParam>
     firstParamCondition?: boolean
+    [x: PropertyKey]: unknown
     brackets?: boolean
     code: string
     path?: string
@@ -70,7 +72,7 @@ export class ForgeFunction {
     }
 
     async call(ctx: Context, fn: CompiledFunction, args: string[]) {
-        this.compiled ??= Compiler.compile(this.data.code, this.data.path, ctx.hasSuppressedErrors())
+        this.compiled ??= Compiler.compile(this.data.code, this.data.path)
 
         const params = Array.isArray(this.data.params) ? this.data.params : []
         const required = params.filter(param => typeof param === "string" || param.required !== false)

@@ -58,7 +58,7 @@ class ForgeFunction {
         });
     }
     async call(ctx, fn, args) {
-        this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path, ctx.hasSuppressedErrors());
+        this.compiled ??= core_1.Compiler.compile(this.data.code, this.data.path);
         const params = Array.isArray(this.data.params) ? this.data.params : [];
         const required = params.filter(param => typeof param === "string" || param.required !== false);
         if (args.length < required.length)
