@@ -7,10 +7,7 @@ export default new DiscordEventHandler({
     description: "This event is fired when someone sends a message",
     listener: async function (message) {
         const prefix = await this.getPrefix(message)
-
-        const content = message.content.trim()
-        const hasPrefix = prefix !== null
-        const rawArgs = (hasPrefix ? content.slice(prefix.length) : content).trim().split(/ +/g)
+        const rawArgs = message.content.trim().slice(prefix?.length ?? 0).trim().split(/ +/g)
         const name = rawArgs[0]?.toLowerCase()
 
         const commands = this.commands.get("messageCreate").filter(
