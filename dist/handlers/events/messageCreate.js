@@ -8,8 +8,12 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
     description: "This event is fired when someone sends a message",
     listener: async function (message) {
         const prefix = await this.getPrefix(message);
-        const rawArgs = message.content.trim().slice(prefix?.length ?? 0).trim().split(/ +/g);
-        const name = rawArgs[0]?.toLowerCase();
+        const args = message.content
+            .trim()
+            .slice(prefix?.length ?? 0)
+            .trim()
+            .split(/ +/g);
+        const name = (prefix ? args.shift() : args[0])?.toLowerCase();
         const commands = this.commands.get("messageCreate").filter(
         // Allow always execute commands
         (cmd) => !cmd.name ||
@@ -18,7 +22,6 @@ exports.default = new DiscordEventHandler_1.DiscordEventHandler({
                 // If unprefixed there can be no prefix
                 (cmd.data.unprefixed ? true : !!prefix)));
         for (const command of commands) {
-            const args = command.name ? rawArgs.slice(1) : rawArgs;
             Interpreter_1.Interpreter.run({
                 obj: message,
                 command,
