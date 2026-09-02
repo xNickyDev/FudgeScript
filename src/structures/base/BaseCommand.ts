@@ -26,6 +26,7 @@ export interface IBaseCommand<T> {
     allowedInteractionTypes?: CommandInteractionTypes[]
     allowBots?: boolean
     disableConsoleErrors?: boolean
+    nameCaseInsensitive?: boolean
     suppressErrors?: boolean
     [x: PropertyKey]: unknown
 

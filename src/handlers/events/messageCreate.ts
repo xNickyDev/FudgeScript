@@ -13,17 +13,22 @@ export default new DiscordEventHandler({
             .slice(prefix?.length ?? 0)
             .trim()
             .split(/ +/g)
-        const name = (prefix ? args.shift() : args[0])?.toLowerCase()
+        const rawName = prefix ? args.shift() : args[0]
 
-        const commands = this.commands.get("messageCreate").filter(
+        const commands = this.commands.get("messageCreate").filter((cmd) => {
+            const ignoreCase = cmd.data.nameCaseInsensitive !== false
+            const name = ignoreCase ? rawName?.toLowerCase() : rawName
+            const cmdName = ignoreCase ? cmd.name?.toLowerCase() : cmd.name
+            const aliases = ignoreCase ? cmd.data.aliases?.map((x) => x.toLowerCase()) : cmd.data.aliases
+
             // Allow always execute commands
-            (cmd) =>
-                !cmd.name ||
-                (// Check if it matches the command name or one of aliases
-                    (cmd.name === name || !!cmd.data.aliases?.includes(name!)) &&
-                    // If unprefixed there can be no prefix
-                    (cmd.data.unprefixed ? true : !!prefix))
-        )
+            return !cmd.name || (
+                // Check if it matches the command name or one of aliases
+                (cmdName === name || !!aliases?.includes(name!)) &&
+                // If unprefixed there can be no prefix
+                (cmd.data.unprefixed ? !prefix : !!prefix)
+            )
+        })
 
         for (const command of commands) {
             Interpreter.run({
