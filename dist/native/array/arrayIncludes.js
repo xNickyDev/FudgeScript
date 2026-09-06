@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const parseJSON_1 = __importDefault(require("../../functions/parseJSON"));
 const structures_1 = require("../../structures");
 exports.default = new structures_1.NativeFunction({
     name: "$arrayIncludes",
@@ -26,7 +30,7 @@ exports.default = new structures_1.NativeFunction({
     brackets: true,
     execute(ctx, [name, value]) {
         const arr = ctx.getEnvironmentKey(name);
-        return this.success(Array.isArray(arr) ? arr.includes(value) : false);
+        return this.success(Array.isArray(arr) ? arr.includes((0, parseJSON_1.default)(value)) : false);
     },
 });
 //# sourceMappingURL=arrayIncludes.js.map
