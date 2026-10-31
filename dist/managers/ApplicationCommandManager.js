@@ -165,6 +165,8 @@ class ApplicationCommandManager {
     }
     validate(app, path) {
         const json = app.toJSON();
+        if (json.type !== discord_js_1.ApplicationCommandType.ChatInput)
+            return;
         if (json.options?.some((x) => x.type === discord_js_1.ApplicationCommandOptionType.Subcommand ||
             x.type === discord_js_1.ApplicationCommandOptionType.SubcommandGroup)) {
             throw new Error(`Attempted to define subcommand / subcommand group without using path tree definition. (${path ?? "index file"})`);

@@ -1,4 +1,4 @@
-import { Invite } from "discord.js";
+import { Invite, TargetUsersJobStatusForInvite } from "discord.js";
 export declare enum InviteProperty {
     authorID = "authorID",
     channelID = "channelID",
@@ -16,7 +16,17 @@ export declare enum InviteProperty {
     memberCount = "memberCount",
     presenceCount = "presenceCount",
     targetType = "targetType",
-    targetUser = "targetUser"
+    targetUser = "targetUser",
+    roles = "roles"
 }
 export declare const InviteProperties: import("..").Properties<typeof InviteProperty, Invite>;
+export declare enum InviteTargetUsersJobStatusProperty {
+    completedTimestamp = "completedTimestamp",
+    createdTimestamp = "createdTimestamp",
+    errorMessage = "errorMessage",
+    processedUsers = "processedUsers",
+    status = "status",
+    totalUsers = "totalUsers"
+}
+export declare const InviteTargetUsersJobStatusProperties: import("..").Properties<typeof InviteTargetUsersJobStatusProperty, TargetUsersJobStatusForInvite>;
 //# sourceMappingURL=invite.d.ts.map

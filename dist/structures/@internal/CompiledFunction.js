@@ -351,7 +351,7 @@ class CompiledFunction {
     }
     resolveInvite(ctx, arg, str, ref) {
         if (!CompiledFunction.IdRegex.test(str))
-            return;
+            return; // Incorrect check for invites?
         return ctx.client.fetchInvite(str).catch(ctx.noop);
     }
     resolveWebhook(ctx, arg, str, ref) {

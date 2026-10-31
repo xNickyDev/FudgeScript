@@ -423,7 +423,7 @@ export class CompiledFunction<T extends [...IArg[]] = IArg[], Unwrap extends boo
     }
 
     private resolveInvite(ctx: Context, arg: IArg, str: string, ref: Array<unknown>) {
-        if (!CompiledFunction.IdRegex.test(str)) return
+        if (!CompiledFunction.IdRegex.test(str)) return // Incorrect check for invites?
         return ctx.client.fetchInvite(str).catch(ctx.noop)
     }
 

@@ -31,11 +31,17 @@ exports.default = new structures_1.NativeFunction({
             type: structures_1.ArgType.Enum,
             enum: invite_1.InviteProperty
         },
+        {
+            name: "separator",
+            description: "The separator to use for each property",
+            rest: false,
+            type: structures_1.ArgType.String
+        }
     ],
-    async execute(ctx, [code, prop]) {
+    async execute(ctx, [code, prop, sep]) {
         const invite = await ctx.client.fetchInvite(code).catch(ctx.noop);
         if (prop && invite)
-            return this.success(invite_1.InviteProperties[prop](invite));
+            return this.success(invite_1.InviteProperties[prop](invite, sep));
         return this.successJSON(invite);
     },
 });

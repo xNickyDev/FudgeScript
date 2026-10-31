@@ -3,7 +3,7 @@
 * Copyright © 2026 BotForge
 */
 
-import { FileUploadBuilder } from "discord.js"
+import { FileUploadBuilder, type FileUploadType } from "discord.js"
 import { ArgType, NativeFunction } from "../../structures"
 
 export default new NativeFunction({
@@ -38,14 +38,21 @@ export default new NativeFunction({
             rest: false,
             type: ArgType.Boolean,
         },
+        {
+            name: "types",
+            description: "The allowed file types for this component",
+            rest: true,
+            type: ArgType.String,
+        },
     ],
-    execute(ctx, [id, min, max, required]) {
+    execute(ctx, [id, min, max, required, types]) {
         const field = new FileUploadBuilder()
             .setCustomId(id)
             .setRequired(required || false)
 
         if (min) field.setMinValues(min)
         if (max) field.setMaxValues(max)
+        if (types.length) field.setFileTypes(types as FileUploadType[])
 
         ctx.component.label?.setFileUploadComponent(field)
 

@@ -38,8 +38,14 @@ exports.default = new structures_1.NativeFunction({
             rest: false,
             type: structures_1.ArgType.Boolean,
         },
+        {
+            name: "types",
+            description: "The allowed file types for this component",
+            rest: true,
+            type: structures_1.ArgType.String,
+        },
     ],
-    execute(ctx, [id, min, max, required]) {
+    execute(ctx, [id, min, max, required, types]) {
         const field = new discord_js_1.FileUploadBuilder()
             .setCustomId(id)
             .setRequired(required || false);
@@ -47,6 +53,8 @@ exports.default = new structures_1.NativeFunction({
             field.setMinValues(min);
         if (max)
             field.setMaxValues(max);
+        if (types.length)
+            field.setFileTypes(types);
         ctx.component.label?.setFileUploadComponent(field);
         return this.success();
     },

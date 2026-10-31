@@ -38,10 +38,7 @@ export enum RegistrationType {
 }
 
 export interface IApplicationCommandData {
-    data:
-        | SlashCommandBuilder
-        | ContextMenuCommandBuilder
-        | RESTPostAPIApplicationCommandsJSONBody
+    data: SlashCommandBuilder | ContextMenuCommandBuilder | RESTPostAPIApplicationCommandsJSONBody
     code?: string
     type?: RegistrationType
     independent?: boolean
@@ -62,7 +59,7 @@ export class ApplicationCommandManager {
     >()
     private path!: string
 
-    public constructor(public readonly client: ForgeClient) {}
+    public constructor(public readonly client: ForgeClient) { }
 
     /**
      * PATH TREE MATTERS
@@ -143,15 +140,14 @@ export class ApplicationCommandManager {
             const subcommandName = input.options.getSubcommand(false)
             const subcommandGroupName = input.options.getSubcommandGroup(false)
             const filteredOptions = this.getDisplayOptions(input.options.data, hideName)
-            return `/${commandName}${
-                subcommandGroupName
-                    ? subcommandName
-                        ? ` ${subcommandGroupName} ${subcommandName}`
-                        : ` ${subcommandGroupName}`
-                    : subcommandName
+            return `/${commandName}${subcommandGroupName
+                ? subcommandName
+                    ? ` ${subcommandGroupName} ${subcommandName}`
+                    : ` ${subcommandGroupName}`
+                : subcommandName
                     ? ` ${subcommandName}`
                     : ""
-            } ${filteredOptions.join(" ")}`
+                } ${filteredOptions.join(" ")}`
         } else if (input instanceof ContextMenuCommandInteraction || input instanceof PrimaryEntryPointCommandInteraction) {
             return `/${input.commandName}`
         }
@@ -204,6 +200,9 @@ export class ApplicationCommandManager {
 
     private validate(app: ApplicationCommand, path: string | null) {
         const json = app.toJSON()
+
+        if (json.type !== ApplicationCommandType.ChatInput) return
+
         if (
             json.options?.some(
                 (x) =>

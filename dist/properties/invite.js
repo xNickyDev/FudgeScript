@@ -7,7 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InviteProperties = exports.InviteProperty = void 0;
+exports.InviteTargetUsersJobStatusProperties = exports.InviteTargetUsersJobStatusProperty = exports.InviteProperties = exports.InviteProperty = void 0;
 const discord_js_1 = require("discord.js");
 const defineProperties_1 = __importDefault(require("../functions/defineProperties"));
 var InviteProperty;
@@ -29,6 +29,7 @@ var InviteProperty;
     InviteProperty["presenceCount"] = "presenceCount";
     InviteProperty["targetType"] = "targetType";
     InviteProperty["targetUser"] = "targetUser";
+    InviteProperty["roles"] = "roles";
 })(InviteProperty || (exports.InviteProperty = InviteProperty = {}));
 exports.InviteProperties = (0, defineProperties_1.default)({
     authorID: (i) => i?.inviterId,
@@ -47,6 +48,24 @@ exports.InviteProperties = (0, defineProperties_1.default)({
     memberCount: (i) => i?.memberCount,
     presenceCount: (i) => i?.presenceCount,
     targetType: (i) => discord_js_1.InviteTargetType[i?.targetType],
-    targetUser: (i) => i?.targetUser?.id
+    targetUser: (i) => i?.targetUser?.id,
+    roles: (i, sep) => i?.roles?.map((x) => x.id).join(sep ?? ", ")
+});
+var InviteTargetUsersJobStatusProperty;
+(function (InviteTargetUsersJobStatusProperty) {
+    InviteTargetUsersJobStatusProperty["completedTimestamp"] = "completedTimestamp";
+    InviteTargetUsersJobStatusProperty["createdTimestamp"] = "createdTimestamp";
+    InviteTargetUsersJobStatusProperty["errorMessage"] = "errorMessage";
+    InviteTargetUsersJobStatusProperty["processedUsers"] = "processedUsers";
+    InviteTargetUsersJobStatusProperty["status"] = "status";
+    InviteTargetUsersJobStatusProperty["totalUsers"] = "totalUsers";
+})(InviteTargetUsersJobStatusProperty || (exports.InviteTargetUsersJobStatusProperty = InviteTargetUsersJobStatusProperty = {}));
+exports.InviteTargetUsersJobStatusProperties = (0, defineProperties_1.default)({
+    completedTimestamp: (i) => i?.completedAt?.getTime(),
+    createdTimestamp: (i) => i?.createdAt?.getTime(),
+    errorMessage: (i) => i?.errorMessage,
+    processedUsers: (i) => i?.processedUsers,
+    status: (i) => i?.status ? discord_js_1.InviteTargetUsersJobStatus[i?.status] : null,
+    totalUsers: (i) => i?.totalUsers
 });
 //# sourceMappingURL=invite.js.map
